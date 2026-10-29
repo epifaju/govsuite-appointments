@@ -1,0 +1,118 @@
+{
+  "exportedAt": "2026-10-28T23:01:00+01:00",
+  "n8nVersion": "2.32.6",
+  "source": "n8n export:workflow --all --pretty --separate",
+  "note": "Le bloc shared a ete retire car il contenait l'identite du proprietaire n8n. Les references de credentials conservent uniquement id et name.",
+  "workflows": [
+    {
+      "file": "G4DGUyeawxcZze2D.json",
+      "id": "G4DGUyeawxcZze2D",
+      "name": "01_API_GetServices",
+      "active": true,
+      "nodeCount": 3,
+      "versionId": "4330a501-f6d5-40c9-b6c7-314e18622fd9",
+      "updatedAt": "2026-07-29T18:48:39.226Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "CLnuFnZnejHNUkg9.json",
+      "id": "CLnuFnZnejHNUkg9",
+      "name": "02_API_GetAvailability",
+      "active": true,
+      "nodeCount": 5,
+      "versionId": "37f59d20-4687-4c2c-aed6-ac14aed1a232",
+      "updatedAt": "2026-08-26T16:29:31.055Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "SXCesRUmGrV5FMzm.json",
+      "id": "SXCesRUmGrV5FMzm",
+      "name": "03_API_CreateAppointment",
+      "active": true,
+      "nodeCount": 8,
+      "versionId": "93ebd7e4-ee13-4fd8-8104-564e0c6ca3c8",
+      "updatedAt": "2026-08-06T22:09:06.857Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "sLWErwgNoc3TDEPV.json",
+      "id": "sLWErwgNoc3TDEPV",
+      "name": "04_API_GetAppointment",
+      "active": true,
+      "nodeCount": 5,
+      "versionId": "516e0840-63ea-4608-9cf5-49fad90c76b2",
+      "updatedAt": "2026-08-07T20:42:03.036Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "IGc8cMlPqPKISuDz.json",
+      "id": "IGc8cMlPqPKISuDz",
+      "name": "05_API_CancelAppointment",
+      "active": true,
+      "nodeCount": 5,
+      "versionId": "a142db05-6972-403a-9022-e5e320f69a00",
+      "updatedAt": "2026-08-10T17:41:06.037Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "on120FN4hblm31jZ.json",
+      "id": "on120FN4hblm31jZ",
+      "name": "06_API_RescheduleAppointment",
+      "active": false,
+      "nodeCount": 5,
+      "versionId": "ae145a47-82eb-4584-8cdf-eac57f18254f",
+      "updatedAt": "2026-07-30T20:42:36.148Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "XQ4o7VjWeAOBkvTu.json",
+      "id": "XQ4o7VjWeAOBkvTu",
+      "name": "07_JOB_AppointmentReminders",
+      "active": false,
+      "nodeCount": 6,
+      "versionId": "b54006a0-9ea7-457a-a42d-e3b71d636963",
+      "updatedAt": "2026-07-31T21:31:53.528Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "ZbZoj4yF1s5a3B5E.json",
+      "id": "ZbZoj4yF1s5a3B5E",
+      "name": "08_JOB_SendConfirmationEmails",
+      "active": false,
+      "nodeCount": 5,
+      "versionId": "43167625-0a3b-42fa-861c-60f55f316379",
+      "updatedAt": "2026-08-06T21:23:26.746Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "iBPXUoYhm2Ztq0DJ.json",
+      "id": "iBPXUoYhm2Ztq0DJ",
+      "name": "09_JOB_SendReminderEmails",
+      "active": false,
+      "nodeCount": 5,
+      "versionId": "85155622-ac64-4d5c-8b3f-8984c6d00980",
+      "updatedAt": "2026-08-06T22:13:32.625Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "R7TKt5mqZYpeKapl.json",
+      "id": "R7TKt5mqZYpeKapl",
+      "name": "10_AI_ConsularAssistant_Complete",
+      "active": false,
+      "nodeCount": 84,
+      "versionId": "f71a06b3-1ccb-432a-b6ac-703720c166a2",
+      "updatedAt": "2026-09-21T21:17:43.319Z",
+      "removedSharedMetadata": true
+    },
+    {
+      "file": "p7MBug0Sjh3wjfHI.json",
+      "id": "p7MBug0Sjh3wjfHI",
+      "name": "10_AI_ConsularAssistant_old",
+      "active": false,
+      "nodeCount": 11,
+      "versionId": "56365e0d-d42f-40da-9cbf-3d6374883db6",
+      "updatedAt": "2026-08-07T18:15:46.344Z",
+      "removedSharedMetadata": true
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "updatedAt": "2026-08-06T22:13:32.625Z",
+  "createdAt": "2026-08-06T22:10:20.526Z",
+  "id": "iBPXUoYhm2Ztq0DJ",
+  "name": "09_JOB_SendReminderEmails",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "3ede3f2e-95c5-4ade-b258-d86f4fbd13b1",
+      "name": "Toutes les minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    n.id AS notification_id,\n    n.type,\n    n.destinataire,\n    n.statut,\n    r.id AS rendez_vous_id,\n    r.reference,\n    r.nom,\n    r.prenom,\n    r.email,\n    r.telephone,\n    r.token_gestion,\n    c.debut,\n    c.fin,\n    s.code AS service,\n    s.nom AS service_nom,\n    si.code AS site,\n    si.nom AS site_nom,\n    si.adresse AS site_adresse,\n    si.timezone AS site_timezone\nFROM notifications n\nJOIN rendez_vous r ON r.id = n.rendez_vous_id\nJOIN creneaux c ON c.id = r.creneau_id\nJOIN services s ON s.id = c.service_id\nJOIN sites si ON si.id = c.site_id\nWHERE n.statut = 'A_ENVOYER'\n  AND n.canal = 'EMAIL'\n  AND n.type IN ('RAPPEL_J7', 'RAPPEL_J1', 'RAPPEL_H2')\n  AND r.statut IN ('CONFIRME', 'REPLANIFIE')\nORDER BY n.created_at ASC;\n",
+        "options": {}
+      },
+      "id": "39ee793a-1930-41cb-ac46-138c70d4a1db",
+      "name": "Chercher rappels A_ENVOYER",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        640,
+        -96
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const r = item.json;\n  const timezone = r.site_timezone || 'Europe/Paris';\n  const date = new Date(r.debut);\n\n  const dateFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    dateStyle: 'full'\n  }).format(date);\n\n  const heureFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    hour: '2-digit',\n    minute: '2-digit'\n  }).format(date);\n\n  const nomComplet = [r.prenom, r.nom].filter(Boolean).join(' ');\n  const manageUrl =\n    `http://localhost:5680/manage-appointment?token=${r.token_gestion}`;\n\n  let rappelTexte;\n\n  switch (r.type) {\n    case 'RAPPEL_J7':\n      rappelTexte =\n        'Votre rendez-vous consulaire est prévu dans 7 jours.';\n      break;\n\n    case 'RAPPEL_J1':\n      rappelTexte =\n        'Votre rendez-vous consulaire est prévu demain.';\n      break;\n\n    case 'RAPPEL_H2':\n      rappelTexte =\n        'Votre rendez-vous consulaire est prévu dans environ 2 heures.';\n      break;\n\n    default:\n      throw new Error(`Type de rappel non pris en charge : ${r.type}`);\n  }\n\n  return {\n    json: {\n      ...r,\n      email_subject:\n        `Rappel rendez-vous ${r.service_nom} - ${r.reference}`,\n      email_text: `Bonjour ${nomComplet},\n\n${rappelTexte}\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nAdresse : ${r.site_adresse || 'À confirmer'}\nDate : ${dateFormatee}\nHeure : ${heureFormatee}\n\nMerci de vous présenter à l'heure prévue avec les documents nécessaires à votre démarche.\n\nGérer, annuler ou replanifier votre rendez-vous :\n${manageUrl}\n\nCordialement,\n\nService consulaire`\n    }\n  };\n});\n"
+      },
+      "id": "e7875b3a-53a4-41b2-ae44-c167134182d1",
+      "name": "Préparer email de rappel",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@govsuite.local",
+        "toEmail": "={{ $json.destinataire }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.email_text }}",
+        "options": {}
+      },
+      "id": "d8bd3920-1c4f-491a-9099-03d073ac74ae",
+      "name": "Envoyer email de rappel",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        -96
+      ],
+      "webhookId": "9c4db330-d051-44ed-b45f-95941d8511bd",
+      "credentials": {
+        "smtp": {
+          "id": "u0gMQOVgurvbLKtz",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE notifications\nSET\n    statut = 'ENVOYE',\n    sent_at = NOW(),\n    erreur = NULL\nWHERE id = '{{ $('Préparer email de rappel').item.json.notification_id }}'::uuid\n  AND statut = 'A_ENVOYER'\nRETURNING\n    id,\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut,\n    sent_at;\n",
+        "options": {}
+      },
+      "id": "94664559-d056-4cb6-8bac-acb85aa089fc",
+      "name": "Marquer rappel ENVOYE",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1472,
+        -96
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Toutes les minutes": {
+      "main": [
+        [
+          {
+            "node": "Chercher rappels A_ENVOYER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher rappels A_ENVOYER": {
+      "main": [
+        [
+          {
+            "node": "Préparer email de rappel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer email de rappel": {
+      "main": [
+        [
+          {
+            "node": "Envoyer email de rappel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer email de rappel": {
+      "main": [
+        [
+          {
+            "node": "Marquer rappel ENVOYE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "85155622-ac64-4d5c-8b3f-8984c6d00980",
+  "activeVersionId": null,
+  "versionCounter": 3,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

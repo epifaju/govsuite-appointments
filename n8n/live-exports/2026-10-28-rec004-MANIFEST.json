@@ -1,0 +1,20 @@
+{
+  "exportedAt": "2026-10-28T23:08:34.989Z",
+  "basedOn": "n8n/live-exports/2026-10-28-rec003/R7TKt5mqZYpeKapl.json",
+  "workflow": {
+    "id": "R7TKt5mqZYpeKapl",
+    "name": "10_AI_ConsularAssistant_Complete",
+    "active": false,
+    "nodeCount": 84,
+    "versionId": "88a1f42a-ab9e-4eff-bfd9-996c31976b16",
+    "updatedAt": "2026-09-21T21:17:43.319Z"
+  },
+  "changedNodes": [
+    "Parser intention",
+    "Demander paramètres création",
+    "Valider paramètres création"
+  ],
+  "october28Sha256": "6e8227584945b15bc506dd5448787062734aec9c489bddcfe3b2466995d53a5d",
+  "rec003Sha256": "20e5458980a4061446a5914a76f471b420141c8fd1a222e21bf95cbdb3c3208b",
+  "note": "Bloc shared retiré. Les exports du 28 octobre et de REC-003 ne sont pas écrasés."
+}

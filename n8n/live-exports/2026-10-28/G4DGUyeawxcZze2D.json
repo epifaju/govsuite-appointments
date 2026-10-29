@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-07-29T18:48:39.226Z",
+  "createdAt": "2026-07-29T17:26:08.780Z",
+  "id": "G4DGUyeawxcZze2D",
+  "name": "01_API_GetServices",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "services",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c8eed765-b56e-4a15-a4fd-52620a96a00d",
+      "name": "GET /services",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        -16
+      ],
+      "webhookId": "f7e51522-34e5-47ad-874f-ec363fccfe30"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, code, nom, description, duree_minutes, capacite_par_creneau\nFROM services\nWHERE actif = TRUE\nORDER BY nom;",
+        "options": {}
+      },
+      "id": "0f635d48-47b9-4d7b-93f3-293e15eeefb0",
+      "name": "Lister services",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1296,
+        -16
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, count: $input.all().length, services: $input.all().map(i => i.json) } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "fefb7801-4e6e-4f94-b40c-7c52ab61e60c",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1552,
+        -16
+      ]
+    }
+  ],
+  "connections": {
+    "GET /services": {
+      "main": [
+        [
+          {
+            "node": "Lister services",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lister services": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "4330a501-f6d5-40c9-b6c7-314e18622fd9",
+  "activeVersionId": "4330a501-f6d5-40c9-b6c7-314e18622fd9",
+  "versionCounter": 5,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": "Version 1.0",
+    "description": ""
+  }
+}

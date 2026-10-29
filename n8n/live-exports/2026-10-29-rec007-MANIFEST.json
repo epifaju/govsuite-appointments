@@ -1,0 +1,52 @@
+{
+  "exportedAt": "2026-10-29T01:05:00+01:00",
+  "n8nVersion": "2.32.6",
+  "source": "n8n export:workflow --id --pretty",
+  "note": "Bloc shared retire. Exports REC-001 a REC-006 non reecrits.",
+  "workflows": [
+    {
+      "file": "CLnuFnZnejHNUkg9.json",
+      "id": "CLnuFnZnejHNUkg9",
+      "name": "02_API_GetAvailability",
+      "active": true,
+      "nodeCount": 5,
+      "versionId": "37f59d20-4687-4c2c-aed6-ac14aed1a232",
+      "updatedAt": "2026-08-26T16:29:31.055Z",
+      "bytes": 9377,
+      "sha256": "970efa99d37b21a0f1fffad46d5436ab87c38dabf07d634a9cc167310b8c98b1"
+    },
+    {
+      "file": "R7TKt5mqZYpeKapl.json",
+      "id": "R7TKt5mqZYpeKapl",
+      "name": "10_AI_ConsularAssistant_Complete",
+      "active": false,
+      "nodeCount": 84,
+      "versionId": "88a1f42a-ab9e-4eff-bfd9-996c31976b16",
+      "updatedAt": "2026-09-21T21:17:43.319Z",
+      "bytes": 209609,
+      "sha256": "ea6588fe6682adf825daef4a76b35fe5bcf89b3868471eefb31849fa5ff5e3db"
+    },
+    {
+      "file": "SXCesRUmGrV5FMzm.json",
+      "id": "SXCesRUmGrV5FMzm",
+      "name": "03_API_CreateAppointment",
+      "active": true,
+      "nodeCount": 8,
+      "versionId": "93ebd7e4-ee13-4fd8-8104-564e0c6ca3c8",
+      "updatedAt": "2026-08-06T22:09:06.857Z",
+      "bytes": 8820,
+      "sha256": "0ab58c7ea25ffc21aa189b4f323b8299c000f0d3963275c32ffdd145e0c84daf"
+    },
+    {
+      "file": "ZbZoj4yF1s5a3B5E.json",
+      "id": "ZbZoj4yF1s5a3B5E",
+      "name": "08_JOB_SendConfirmationEmails",
+      "active": false,
+      "nodeCount": 5,
+      "versionId": "43167625-0a3b-42fa-861c-60f55f316379",
+      "updatedAt": "2026-08-06T21:23:26.746Z",
+      "bytes": 7621,
+      "sha256": "a2791c4a0cf8a8c263525b5cd707b656fe632bfe108c8b70c5a4905960cdba2a"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "name": "08_JOB_SendConfirmationEmails",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "d4a09c88-bf8c-4b82-bc98-a2bbefc1b263",
+      "name": "Toutes les minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    n.id AS notification_id,\n    n.type,\n    n.destinataire,\n    n.statut,\n    r.id AS rendez_vous_id,\n    r.reference,\n    r.nom,\n    r.prenom,\n    r.email,\n    r.telephone,\n    r.token_gestion,\n    r.motif_annulation,\n    c.debut,\n    c.fin,\n    s.code AS service,\n    s.nom AS service_nom,\n    si.code AS site,\n    si.nom AS site_nom,\n    si.adresse AS site_adresse,\n    si.timezone AS site_timezone\nFROM notifications n\nJOIN rendez_vous r ON r.id = n.rendez_vous_id\nJOIN creneaux c ON c.id = r.creneau_id\nJOIN services s ON s.id = c.service_id\nJOIN sites si ON si.id = c.site_id\nWHERE n.statut = 'A_ENVOYER'\n  AND n.canal = 'EMAIL'\n  AND n.type IN ('CONFIRMATION', 'ANNULATION', 'REPLANIFICATION')\nORDER BY n.created_at ASC;",
+        "options": {}
+      },
+      "id": "c212f511-b93e-45fc-954e-7c180fe711f4",
+      "name": "Chercher notifications transactionnelles",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const r = item.json;\n  const timezone = r.site_timezone || 'Europe/Paris';\n  const date = new Date(r.debut);\n\n  const dateFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    dateStyle: 'full'\n  }).format(date);\n\n  const heureFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    hour: '2-digit',\n    minute: '2-digit'\n  }).format(date);\n\n  const nomComplet = [r.prenom, r.nom].filter(Boolean).join(' ');\n  const manageUrl = `http://localhost:5680/manage-appointment?token=${r.token_gestion}`;\n\n  let emailSubject;\n  let emailText;\n\n  switch (r.type) {\n    case 'CONFIRMATION':\n      emailSubject = `Confirmation de rendez-vous ${r.service_nom} - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire est confirmé.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nAdresse : ${r.site_adresse || 'À confirmer'}\nDate : ${dateFormatee}\nHeure : ${heureFormatee}\n\nMerci de vous présenter à l'heure prévue avec les documents nécessaires à votre démarche.\n\nGérer, annuler ou replanifier votre rendez-vous :\n${manageUrl}\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    case 'ANNULATION':\n      emailSubject = `Annulation du rendez-vous - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire a bien été annulé.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nDate initialement prévue : ${dateFormatee}\nHeure : ${heureFormatee}\nMotif : ${r.motif_annulation || 'Non renseigné'}\n\nLa place associée à ce rendez-vous a été libérée.\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    case 'REPLANIFICATION':\n      emailSubject = `Replanification du rendez-vous - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire a bien été replanifié.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nNouveau lieu : ${r.site_nom}\nAdresse : ${r.site_adresse || 'À confirmer'}\nNouvelle date : ${dateFormatee}\nNouvelle heure : ${heureFormatee}\n\nGérer, annuler ou replanifier votre rendez-vous :\n${manageUrl}\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    default:\n      throw new Error(`Type de notification non pris en charge : ${r.type}`);\n  }\n\n  return {\n    json: {\n      ...r,\n      email_subject: emailSubject,\n      email_text: emailText\n    }\n  };\n});"
+      },
+      "id": "4f3a3cab-76ef-4904-8861-fab40b19dd6f",
+      "name": "Préparer email transactionnel",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@govsuite.local",
+        "toEmail": "={{ $json.destinataire }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.email_text }}",
+        "options": {}
+      },
+      "id": "bbbf6fd2-c08b-4442-830d-5c903d10d98c",
+      "name": "Envoyer email transactionnel",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE notifications\nSET\n    statut = 'ENVOYE',\n    sent_at = NOW(),\n    erreur = NULL\nWHERE id = '{{ $('Préparer email transactionnel').item.json.notification_id }}'::uuid\n  AND statut = 'A_ENVOYER'\nRETURNING\n    id,\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut,\n    sent_at;",
+        "options": {}
+      },
+      "id": "f5273ff1-7e76-421f-b371-cac5a62a086a",
+      "name": "Marquer notification transactionnelle ENVOYEE",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1100,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Toutes les minutes": {
+      "main": [
+        [
+          {
+            "node": "Chercher notifications transactionnelles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher notifications transactionnelles": {
+      "main": [
+        [
+          {
+            "node": "Préparer email transactionnel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer email transactionnel": {
+      "main": [
+        [
+          {
+            "node": "Envoyer email transactionnel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer email transactionnel": {
+      "main": [
+        [
+          {
+            "node": "Marquer notification transactionnelle ENVOYEE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "active": false,
+  "versionId": "645ad713-b750-49ed-bfc3-2f26a89f4c3f",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

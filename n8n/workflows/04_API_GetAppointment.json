@@ -1,0 +1,112 @@
+{
+  "name": "04_API_GetAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "appointments/manage",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1f20fc7d-3a6e-4f2a-b190-abe1e150ddbd",
+      "name": "GET /appointment",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "1ba7b5bc-7fb3-4fbe-9ae8-88ba6d6c355e"
+    },
+    {
+      "parameters": {
+        "jsCode": "const token=String(($json.query||{}).token||'').trim(); if(!/^[0-9a-fA-F-]{36}$/.test(token)) throw new Error('token invalide'); return [{json:{token}}];"
+      },
+      "id": "1e0a14c4-b7be-4f93-8087-9b9b4d0e0743",
+      "name": "Valider token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT r.reference,r.nom,r.prenom,r.email,r.telephone,r.langue,r.statut,r.token_gestion,\n       c.debut,c.fin,s.code AS service,s.nom AS service_nom,si.code AS site,si.nom AS site_nom,si.adresse,si.ville,si.pays\nFROM rendez_vous r JOIN creneaux c ON c.id=r.creneau_id JOIN services s ON s.id=r.service_id JOIN sites si ON si.id=r.site_id\nWHERE r.token_gestion='{{$json.token}}'::uuid;",
+        "options": {}
+      },
+      "id": "bbb56eea-226a-4ecc-95c4-4eb840e02eb0",
+      "name": "Lire rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $input.all().length ? {success:true, appointment:$input.first().json} : {success:false,error:\"Rendez-vous introuvable\"} }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "cd4416bc-250e-477c-a5e4-e640b0d26737",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "GET /appointment": {
+      "main": [
+        [
+          {
+            "node": "Valider token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token": {
+      "main": [
+        [
+          {
+            "node": "Lire rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "87b27a34-e168-4973-9237-20df86f1fcdb",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

@@ -1,0 +1,161 @@
+{
+  "updatedAt": "2026-08-26T16:29:31.055Z",
+  "createdAt": "2026-07-29T18:49:11.866Z",
+  "id": "CLnuFnZnejHNUkg9",
+  "name": "02_API_GetAvailability",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "appointments/availability",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "19c9154f-fd86-465c-94d2-951bdbddb6d6",
+      "name": "GET /availability",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -96
+      ],
+      "webhookId": "02d890c1-21e5-4e5d-8b22-15d54fff768d"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json;\n\n// ======================================================\n// 1. Récupération des paramètres\n// ======================================================\n\nconst service =\n  input.service ??\n  input.query?.service ??\n  null;\n\nconst site =\n  input.site ??\n  input.query?.site ??\n  null;\n\nconst dateDebut =\n  input.dateDebut ??\n  input.query?.dateDebut ??\n  null;\n\nconst dateFin =\n  input.dateFin ??\n  input.query?.dateFin ??\n  null;\n\n// ======================================================\n// 2. Vérification présence\n// ======================================================\n\nif (!service) {\n  throw new Error(\n    'Paramètre \"service\" manquant'\n  );\n}\n\nif (!site) {\n  throw new Error(\n    'Paramètre \"site\" manquant'\n  );\n}\n\nif (!dateDebut) {\n  throw new Error(\n    'Paramètre \"dateDebut\" manquant'\n  );\n}\n\nif (!dateFin) {\n  throw new Error(\n    'Paramètre \"dateFin\" manquant'\n  );\n}\n\n// ======================================================\n// 3. Normalisation\n// ======================================================\n\nconst serviceNormalized =\n  String(service)\n    .trim()\n    .toUpperCase();\n\nconst siteNormalized =\n  String(site)\n    .trim()\n    .toUpperCase();\n\nconst dateDebutNormalized =\n  String(dateDebut)\n    .trim();\n\nconst dateFinNormalized =\n  String(dateFin)\n    .trim();\n\n// ======================================================\n// 4. Validation service\n// Exemples acceptés :\n// PASSEPORT\n// VISA\n// ETAT_CIVIL\n// LEGALISATION\n// ======================================================\n\nif (\n  !/^[A-Z_]{2,30}$/.test(\n    serviceNormalized\n  )\n) {\n  throw new Error(\n    `Paramètre service invalide : ${serviceNormalized}`\n  );\n}\n\n// ======================================================\n// 5. Validation site\n// Exemples :\n// PARIS\n// LYON\n// BORDEAUX\n// ======================================================\n\nif (\n  !/^[A-Z_]{2,30}$/.test(\n    siteNormalized\n  )\n) {\n  throw new Error(\n    `Paramètre site invalide : ${siteNormalized}`\n  );\n}\n\n// ======================================================\n// 6. Validation format des dates\n// ======================================================\n\nconst dateRegex =\n  /^\\d{4}-\\d{2}-\\d{2}$/;\n\nif (\n  !dateRegex.test(\n    dateDebutNormalized\n  )\n) {\n  throw new Error(\n    `Paramètre dateDebut invalide : ${dateDebutNormalized}`\n  );\n}\n\nif (\n  !dateRegex.test(\n    dateFinNormalized\n  )\n) {\n  throw new Error(\n    `Paramètre dateFin invalide : ${dateFinNormalized}`\n  );\n}\n\n// ======================================================\n// 7. Validation réelle des dates\n// ======================================================\n\nfunction isValidDate(value) {\n  const d =\n    new Date(\n      `${value}T00:00:00Z`\n    );\n\n  return (\n    !Number.isNaN(d.getTime()) &&\n    d.toISOString().slice(0, 10) === value\n  );\n}\n\nif (\n  !isValidDate(\n    dateDebutNormalized\n  )\n) {\n  throw new Error(\n    `dateDebut n'est pas une date valide : ${dateDebutNormalized}`\n  );\n}\n\nif (\n  !isValidDate(\n    dateFinNormalized\n  )\n) {\n  throw new Error(\n    `dateFin n'est pas une date valide : ${dateFinNormalized}`\n  );\n}\n\n// ======================================================\n// 8. Vérifier ordre des dates\n// ======================================================\n\nconst start =\n  new Date(\n    `${dateDebutNormalized}T00:00:00Z`\n  );\n\nconst end =\n  new Date(\n    `${dateFinNormalized}T00:00:00Z`\n  );\n\nif (\n  start.getTime() >\n  end.getTime()\n) {\n  throw new Error(\n    `dateDebut (${dateDebutNormalized}) doit être antérieure ou égale à dateFin (${dateFinNormalized})`\n  );\n}\n\n// ======================================================\n// 9. Résultat final\n// ======================================================\n\nreturn [{\n  json: {\n\n    service:\n      serviceNormalized,\n\n    site:\n      siteNormalized,\n\n    dateDebut:\n      dateDebutNormalized,\n\n    dateFin:\n      dateFinNormalized,\n\n    // utile pendant les tests\n    validationDebug: {\n\n      serviceSource:\n        input.service !== undefined\n          ? 'direct'\n          : input.query?.service !== undefined\n            ? 'query'\n            : null,\n\n      siteSource:\n        input.site !== undefined\n          ? 'direct'\n          : input.query?.site !== undefined\n            ? 'query'\n            : null,\n\n      dateDebutSource:\n        input.dateDebut !== undefined\n          ? 'direct'\n          : input.query?.dateDebut !== undefined\n            ? 'query'\n            : null,\n\n      dateFinSource:\n        input.dateFin !== undefined\n          ? 'direct'\n          : input.query?.dateFin !== undefined\n            ? 'query'\n            : null\n    }\n  }\n}];"
+      },
+      "id": "021af989-8b37-487f-ab72-5b8b9abbf613",
+      "name": "Valider paramètres",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    COUNT(*) AS count,\n    COALESCE(\n        json_agg(t ORDER BY t.debut),\n        '[]'::json\n    ) AS slots\nFROM (\n    SELECT\n        c.id,\n        s.code AS service,\n        si.code AS site,\n        c.debut,\n        c.fin,\n        c.capacite,\n        c.places_reservees,\n        (c.capacite - c.places_reservees) AS places_disponibles\n    FROM creneaux c\n    JOIN services s\n        ON s.id = c.service_id\n    JOIN sites si\n        ON si.id = c.site_id\n    WHERE s.code = $1\n      AND si.code = $2\n      AND c.debut >= $3::date\n      AND c.debut < ($4::date + INTERVAL '1 day')\n      AND c.statut = 'DISPONIBLE'\n      AND c.places_reservees < c.capacite\n      AND c.debut > NOW()\n) t;",
+        "options": {
+          "queryReplacement": "={{ $json.service }}, {{ $json.site }}, {{ $json.dateDebut }}, {{ $json.dateFin }}"
+        }
+      },
+      "id": "7452e403-8adb-413f-9ebf-11285510e37e",
+      "name": "Chercher créneaux",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        800,
+        -96
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "f565d3f8-dab3-413e-b08b-0ae9888edf04",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1264,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const x = $json;\n\nconst slots =\n  Array.isArray(x.slots)\n    ? x.slots\n    : [];\n\nconst count =\n  Number(x.count ?? slots.length);\n\nreturn [{\n  json: {\n    success: true,\n    count,\n    slots\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        -96
+      ],
+      "id": "1fdbf13e-c153-4252-b06a-a16c46133a03",
+      "name": "Préparer réponse API disponibilité"
+    }
+  ],
+  "connections": {
+    "GET /availability": {
+      "main": [
+        [
+          {
+            "node": "Valider paramètres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider paramètres": {
+      "main": [
+        [
+          {
+            "node": "Chercher créneaux",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher créneaux": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse API disponibilité",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer réponse API disponibilité": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "37f59d20-4687-4c2c-aed6-ac14aed1a232",
+  "activeVersionId": "37f59d20-4687-4c2c-aed6-ac14aed1a232",
+  "versionCounter": 39,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": "Version v1.0.0",
+    "description": ""
+  }
+}

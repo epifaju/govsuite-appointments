@@ -1,0 +1,263 @@
+{
+  "updatedAt": "2026-08-06T22:09:06.857Z",
+  "createdAt": "2026-07-29T19:21:01.089Z",
+  "id": "SXCesRUmGrV5FMzm",
+  "name": "03_API_CreateAppointment",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "97d74272-a674-410c-939c-b23418e75c95",
+      "name": "POST /appointments",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "47f1b9b9-e630-48d5-b685-d8efc896fb44"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b=$json.body||{};\nconst required=['slotId','nom','prenom'];\nfor (const k of required) if (!b[k]) throw new Error(`Champ requis: ${k}`);\nconst clean=(v,max=255)=>String(v||'').trim().slice(0,max);\nif (!/^[0-9a-fA-F-]{36}$/.test(String(b.slotId))) throw new Error('slotId invalide');\nreturn [{json:{slotId:String(b.slotId),nom:clean(b.nom,100),prenom:clean(b.prenom,100),email:clean(b.email,255),telephone:clean(b.telephone,50),numeroDocument:clean(b.numeroDocument,100),langue:clean(b.langue||'fr',10)}}];"
+      },
+      "id": "7116ffb2-52f1-40eb-97f1-9131b78334cd",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH slot AS (\n  SELECT c.id,c.service_id,c.site_id,c.capacite,c.places_reservees\n  FROM creneaux c\n  WHERE c.id='{{$json.slotId}}'::uuid AND c.statut='DISPONIBLE' AND c.places_reservees<c.capacite\n  FOR UPDATE\n), ins AS (\n  INSERT INTO rendez_vous(reference,service_id,site_id,creneau_id,nom,prenom,email,telephone,numero_document,langue,statut)\n  SELECT 'GB-'||to_char(now(),'YYYY')||'-'||upper(substr(replace(gen_random_uuid()::text,'-',''),1,8)), service_id,site_id,id,\n         replace('{{$json.nom}}','''',''''''),replace('{{$json.prenom}}','''',''''''),NULLIF(replace('{{$json.email}}','''',''''''),''),NULLIF(replace('{{$json.telephone}}','''',''''''),''),NULLIF(replace('{{$json.numeroDocument}}','''',''''''),''),'{{$json.langue}}','CONFIRME'\n  FROM slot\n  RETURNING *\n), upd AS (\n  UPDATE creneaux c SET places_reservees=c.places_reservees+1,\n    statut=CASE WHEN c.places_reservees+1>=c.capacite THEN 'COMPLET' ELSE c.statut END, updated_at=now()\n  WHERE c.id IN (SELECT creneau_id FROM ins) RETURNING c.id\n), hist AS (\n  INSERT INTO historique_rendez_vous(rendez_vous_id,action,nouveau_statut,details)\n  SELECT id,'CREATION','CONFIRME',jsonb_build_object('reference',reference) FROM ins\n), notif AS (\n  INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut)\n  SELECT id,'CONFIRMATION','EMAIL',email,'A_ENVOYER' FROM ins WHERE email IS NOT NULL\n  ON CONFLICT DO NOTHING\n)\nSELECT i.id,i.reference,i.token_gestion,i.statut,i.email,i.telephone,c.debut,c.fin,s.code AS service,si.code AS site\nFROM ins i JOIN creneaux c ON c.id=i.creneau_id JOIN services s ON s.id=i.service_id JOIN sites si ON si.id=i.site_id;",
+        "options": {}
+      },
+      "id": "36c17325-2c1b-4a98-8da3-e10dd4512f53",
+      "name": "Créer rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        528,
+        0
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: true,\n  appointment: $('Créer rendez-vous').item.json\n}) }}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "17d0df3f-39d1-44f1-b22b-f3c6cd6af289",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1408,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO notifications (\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut\n)\nVALUES (\n    $1::uuid,\n    'CONFIRMATION',\n    'EMAIL',\n    $2,\n    'A_ENVOYER'\n)\nON CONFLICT (rendez_vous_id, type, canal)\nDO NOTHING\nRETURNING\n    id,\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut,\n    created_at;",
+        "options": {
+          "queryReplacement": "={{ [\n  $('Créer rendez-vous').item.json.id,\n  $('Créer rendez-vous').item.json.email\n] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.7,
+      "position": [
+        1152,
+        -80
+      ],
+      "id": "8e43e8da-2758-4372-82ed-9f30053e3dbc",
+      "name": "Créer notification CONFIRMATION",
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const appointment = $json || {};\n\nif (!appointment.id) {\n  return [{\n    json: {\n      success: false,\n      created: false,\n      message: 'Créneau introuvable ou complet'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    created: true,\n    appointment\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        0
+      ],
+      "id": "20980707-3094-4b86-91c1-3acc69b396f9",
+      "name": "Vérifier création"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "47265be2-9404-41c4-a4e4-e96fbc785a2e",
+              "leftValue": "={{ $json.created }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        0
+      ],
+      "id": "0a7e4589-2043-4807-ba38-9a055aae4970",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: false,\n  created: false,\n  message: $json.message || \"Ce créneau n'est plus disponible.\"\n}) }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "e2051621-b559-42db-8fc8-bbd9f97ca548",
+      "name": "Répondre créneau indisponible"
+    }
+  ],
+  "connections": {
+    "POST /appointments": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Créer rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Vérifier création",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer notification CONFIRMATION": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vérifier création": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Créer notification CONFIRMATION",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre créneau indisponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "93ebd7e4-ee13-4fd8-8104-564e0c6ca3c8",
+  "activeVersionId": "93ebd7e4-ee13-4fd8-8104-564e0c6ca3c8",
+  "versionCounter": 25,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": "Version 1.0",
+    "description": ""
+  }
+}

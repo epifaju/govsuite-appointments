@@ -1,0 +1,16 @@
+{
+  "exportedAt": "2026-10-28T22:45:44.134Z",
+  "sourceBackup": "n8n/live-exports/2026-10-28/R7TKt5mqZYpeKapl.json",
+  "sourceSha256": "6e8227584945b15bc506dd5448787062734aec9c489bddcfe3b2466995d53a5d",
+  "workflow": {
+    "id": "R7TKt5mqZYpeKapl",
+    "name": "10_AI_ConsularAssistant_Complete",
+    "active": false,
+    "nodeCount": 84,
+    "versionId": "0d34d7f2-abbf-47d3-983f-fd134622dd3a",
+    "updatedAt": "2026-09-21T21:17:43.319Z"
+  },
+  "changedNode": "Sauvegarder état conversation",
+  "queryMd5": "fef8008b58b71378e45490a19b4a1f75",
+  "note": "Bloc shared retiré. Les exports du 28 octobre ne sont pas écrasés. Seule la requête du nœud Sauvegarder état conversation change."
+}

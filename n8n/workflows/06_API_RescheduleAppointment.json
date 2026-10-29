@@ -1,0 +1,112 @@
+{
+  "name": "06_API_RescheduleAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments/reschedule",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "0e20aa27-8506-46bc-9ffa-a2719b69ea07",
+      "name": "POST /reschedule",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "05cec624-38c0-4fa1-8766-7a543e6df2c7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b=$json.body||{}; const token=String(b.token||'').trim(),slotId=String(b.slotId||'').trim(); if(!/^[0-9a-fA-F-]{36}$/.test(token)||!/^[0-9a-fA-F-]{36}$/.test(slotId)) throw new Error('token ou slotId invalide'); return [{json:{token,slotId}}];"
+      },
+      "id": "71580b3d-2f08-4af9-9304-6ac46f81dd58",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH rdv AS (SELECT * FROM rendez_vous WHERE token_gestion='{{$json.token}}'::uuid AND statut IN ('CONFIRME','EN_ATTENTE') FOR UPDATE),\nnewslot AS (SELECT * FROM creneaux WHERE id='{{$json.slotId}}'::uuid AND statut='DISPONIBLE' AND places_reservees<capacite FOR UPDATE),\nvalid AS (SELECT r.id AS rdv_id,r.creneau_id AS old_slot,n.id AS new_slot,n.service_id,n.site_id FROM rdv r CROSS JOIN newslot n),\nreserve_new AS (UPDATE creneaux SET places_reservees=places_reservees+1,statut=CASE WHEN places_reservees+1>=capacite THEN 'COMPLET' ELSE statut END,updated_at=now() WHERE id IN (SELECT new_slot FROM valid) RETURNING id),\nrelease_old AS (UPDATE creneaux SET places_reservees=GREATEST(places_reservees-1,0),statut=CASE WHEN statut='COMPLET' THEN 'DISPONIBLE' ELSE statut END,updated_at=now() WHERE id IN (SELECT old_slot FROM valid) RETURNING id),\nupd AS (UPDATE rendez_vous r SET creneau_id=v.new_slot,service_id=v.service_id,site_id=v.site_id,statut='REPLANIFIE',updated_at=now() FROM valid v WHERE r.id=v.rdv_id RETURNING r.*),\nh AS (INSERT INTO historique_rendez_vous(rendez_vous_id,action,ancien_statut,nouveau_statut,details) SELECT id,'REPLANIFICATION','CONFIRME','REPLANIFIE',jsonb_build_object('nouveau_creneau',creneau_id) FROM upd),\nn AS (INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut) SELECT id,'REPLANIFICATION','EMAIL',email,'A_ENVOYER' FROM upd WHERE email IS NOT NULL ON CONFLICT DO NOTHING)\nSELECT u.id,u.reference,u.statut,u.token_gestion,c.debut,c.fin,s.code AS service,si.code AS site FROM upd u JOIN creneaux c ON c.id=u.creneau_id JOIN services s ON s.id=u.service_id JOIN sites si ON si.id=u.site_id;",
+        "options": {}
+      },
+      "id": "c7150989-0f40-40d3-87d0-df8a2ce37b1b",
+      "name": "Replanifier",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $input.all().length ? {success:true, appointment:$input.first().json} : {success:false,error:\"Rendez-vous ou nouveau créneau indisponible\"} }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "d2a96e4f-4a2d-432f-8840-5314b9b0a07a",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "POST /reschedule": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Replanifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replanifier": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "550da74b-6591-425f-8a47-70d977c946c4",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

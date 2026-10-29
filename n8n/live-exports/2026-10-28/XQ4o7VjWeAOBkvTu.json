@@ -1,0 +1,212 @@
+{
+  "updatedAt": "2026-07-31T21:31:53.528Z",
+  "createdAt": "2026-07-31T20:22:32.409Z",
+  "id": "XQ4o7VjWeAOBkvTu",
+  "name": "07_JOB_AppointmentReminders",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "624a2545-ec1f-472b-8831-5ab7869bb4e0",
+      "name": "Toutes les heures",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1088,
+        -256
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH due AS (\n SELECT r.id,r.email,c.debut,\n CASE WHEN c.debut BETWEEN now()+interval '6 days 23 hours' AND now()+interval '7 days 1 hour' THEN 'RAPPEL_J7'\n      WHEN c.debut BETWEEN now()+interval '23 hours' AND now()+interval '25 hours' THEN 'RAPPEL_J1'\n      WHEN c.debut BETWEEN now()+interval '1 hour 45 minutes' AND now()+interval '2 hours 15 minutes' THEN 'RAPPEL_H2' END AS type\n FROM rendez_vous r JOIN creneaux c ON c.id=r.creneau_id\n WHERE r.statut IN ('CONFIRME','REPLANIFIE') AND r.email IS NOT NULL\n), ins AS (\n INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut)\n SELECT id,type,'EMAIL',email,'A_ENVOYER' FROM due WHERE type IS NOT NULL\n ON CONFLICT (rendez_vous_id,type,canal) DO NOTHING RETURNING *\n) SELECT * FROM ins ORDER BY created_at;",
+        "options": {}
+      },
+      "id": "8310acfc-e3bc-49f9-a510-c718d5848611",
+      "name": "Créer rappels à envoyer",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -832,
+        -256
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    n.id AS notification_id,\n    n.type,\n    n.destinataire,\n    n.statut,\n\n    r.id AS rendez_vous_id,\n    r.reference,\n    r.nom,\n    r.prenom,\n    r.email,\n    r.telephone,\n    r.token_gestion,\n\n    c.debut,\n    c.fin,\n\n    s.code AS service,\n    s.nom AS service_nom,\n\n    si.code AS site,\n    si.nom AS site_nom\n\nFROM notifications n\n\nJOIN rendez_vous r\n    ON r.id = n.rendez_vous_id\n\nJOIN creneaux c\n    ON c.id = r.creneau_id\n\nJOIN services s\n    ON s.id = c.service_id\n\nJOIN sites si\n    ON si.id = c.site_id\n\nWHERE n.statut = 'A_ENVOYER'\n  AND n.canal = 'EMAIL'\n  AND n.type IN (\n      'RAPPEL_J7',\n      'RAPPEL_J1',\n      'RAPPEL_H2'\n  )\n\nORDER BY\n    n.created_at ASC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.7,
+      "position": [
+        -624,
+        -256
+      ],
+      "id": "70e828d9-63a1-4c04-b21f-b2504b9cbf88",
+      "name": "Chercher notifications A_ENVOYER",
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const r = item.json;\n\n  let intro;\n\n  switch (r.type) {\n    case 'RAPPEL_J7':\n      intro = 'Votre rendez-vous consulaire est prévu dans 7 jours.';\n      break;\n\n    case 'RAPPEL_J1':\n      intro = 'Votre rendez-vous consulaire est prévu demain.';\n      break;\n\n    case 'RAPPEL_H2':\n      intro = 'Votre rendez-vous consulaire est prévu dans environ 2 heures.';\n      break;\n\n    default:\n      intro = 'Nous vous rappelons votre prochain rendez-vous consulaire.';\n  }\n\n  const date = new Date(r.debut);\n\n  const dateFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: 'Europe/Paris',\n    dateStyle: 'full'\n  }).format(date);\n\n  const heureFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: 'Europe/Paris',\n    hour: '2-digit',\n    minute: '2-digit'\n  }).format(date);\n\n  return {\n    json: {\n      ...r,\n\n      email_subject: `Rappel rendez-vous ${r.service_nom} - ${r.reference}`,\n\n      email_text: `Bonjour ${r.prenom || ''} ${r.nom || ''},\n\n${intro}\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nDate : ${dateFormatee}\nHeure : ${heureFormatee}\n\nMerci de vous présenter à l'heure prévue avec les documents nécessaires à votre démarche.\n\nEn cas d'empêchement, utilisez votre espace de gestion pour annuler ou replanifier votre rendez-vous.\n\nCordialement,\n\nService consulaire`\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        -256
+      ],
+      "id": "0fc191b1-04ed-49fd-8724-4796b9581fe0",
+      "name": "Préparer email"
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@govsuite.local",
+        "toEmail": "={{ $json.destinataire }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.email_text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        -256
+      ],
+      "id": "9bed93c6-8f6c-47ca-9c5f-ef5d96b389bf",
+      "name": "Envoyer email Mailpit",
+      "webhookId": "62ecc777-7ba0-496c-8788-02f9b8beeb43",
+      "credentials": {
+        "smtp": {
+          "id": "u0gMQOVgurvbLKtz",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE notifications\nSET\n    statut = 'ENVOYE',\n    sent_at = NOW()\nWHERE id = $1::uuid\nRETURNING\n    id,\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut,\n    sent_at;",
+        "options": {
+          "queryReplacement": "={{ $('Préparer email').item.json.notification_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.7,
+      "position": [
+        0,
+        -256
+      ],
+      "id": "3be59ff1-53b7-494b-a9f2-c9e1b580a9c0",
+      "name": "Marquer notification ENVOYEE",
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Toutes les heures": {
+      "main": [
+        [
+          {
+            "node": "Créer rappels à envoyer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer rappels à envoyer": {
+      "main": [
+        [
+          {
+            "node": "Chercher notifications A_ENVOYER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher notifications A_ENVOYER": {
+      "main": [
+        [
+          {
+            "node": "Préparer email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer email": {
+      "main": [
+        [
+          {
+            "node": "Envoyer email Mailpit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer email Mailpit": {
+      "main": [
+        [
+          {
+            "node": "Marquer notification ENVOYEE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "b54006a0-9ea7-457a-a42d-e3b71d636963",
+  "activeVersionId": null,
+  "versionCounter": 31,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

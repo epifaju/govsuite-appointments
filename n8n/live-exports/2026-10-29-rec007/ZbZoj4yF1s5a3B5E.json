@@ -1,0 +1,178 @@
+{
+  "updatedAt": "2026-08-06T21:23:26.746Z",
+  "createdAt": "2026-07-31T21:32:39.715Z",
+  "id": "ZbZoj4yF1s5a3B5E",
+  "name": "08_JOB_SendConfirmationEmails",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "4eddd5c8-717d-477a-a275-33142fa0e11b",
+      "name": "Toutes les minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    n.id AS notification_id,\n    n.type,\n    n.destinataire,\n    n.statut,\n    r.id AS rendez_vous_id,\n    r.reference,\n    r.nom,\n    r.prenom,\n    r.email,\n    r.telephone,\n    r.token_gestion,\n    r.motif_annulation,\n    c.debut,\n    c.fin,\n    s.code AS service,\n    s.nom AS service_nom,\n    si.code AS site,\n    si.nom AS site_nom,\n    si.adresse AS site_adresse,\n    si.timezone AS site_timezone\nFROM notifications n\nJOIN rendez_vous r ON r.id = n.rendez_vous_id\nJOIN creneaux c ON c.id = r.creneau_id\nJOIN services s ON s.id = c.service_id\nJOIN sites si ON si.id = c.site_id\nWHERE n.statut = 'A_ENVOYER'\n  AND n.canal = 'EMAIL'\n  AND n.type IN ('CONFIRMATION', 'ANNULATION', 'REPLANIFICATION')\nORDER BY n.created_at ASC;",
+        "options": {}
+      },
+      "id": "24acb44d-3e89-4412-ad14-8fc28ce28e14",
+      "name": "Chercher notifications transactionnelles",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -304,
+        -224
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const r = item.json;\n  const timezone = r.site_timezone || 'Europe/Paris';\n  const date = new Date(r.debut);\n\n  const dateFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    dateStyle: 'full'\n  }).format(date);\n\n  const heureFormatee = new Intl.DateTimeFormat('fr-FR', {\n    timeZone: timezone,\n    hour: '2-digit',\n    minute: '2-digit'\n  }).format(date);\n\n  const nomComplet = [r.prenom, r.nom].filter(Boolean).join(' ');\n  const manageUrl = `http://localhost:5680/manage-appointment?token=${r.token_gestion}`;\n\n  let emailSubject;\n  let emailText;\n\n  switch (r.type) {\n    case 'CONFIRMATION':\n      emailSubject = `Confirmation de rendez-vous ${r.service_nom} - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire est confirmé.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nAdresse : ${r.site_adresse || 'À confirmer'}\nDate : ${dateFormatee}\nHeure : ${heureFormatee}\n\nMerci de vous présenter à l'heure prévue avec les documents nécessaires à votre démarche.\n\nGérer, annuler ou replanifier votre rendez-vous :\n${manageUrl}\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    case 'ANNULATION':\n      emailSubject = `Annulation du rendez-vous - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire a bien été annulé.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nLieu : ${r.site_nom}\nDate initialement prévue : ${dateFormatee}\nHeure : ${heureFormatee}\nMotif : ${r.motif_annulation || 'Non renseigné'}\n\nLa place associée à ce rendez-vous a été libérée.\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    case 'REPLANIFICATION':\n      emailSubject = `Replanification du rendez-vous - ${r.reference}`;\n      emailText = `Bonjour ${nomComplet},\n\nVotre rendez-vous consulaire a bien été replanifié.\n\nRéférence : ${r.reference}\nService : ${r.service_nom}\nNouveau lieu : ${r.site_nom}\nAdresse : ${r.site_adresse || 'À confirmer'}\nNouvelle date : ${dateFormatee}\nNouvelle heure : ${heureFormatee}\n\nGérer, annuler ou replanifier votre rendez-vous :\n${manageUrl}\n\nCordialement,\n\nService consulaire`;\n      break;\n\n    default:\n      throw new Error(`Type de notification non pris en charge : ${r.type}`);\n  }\n\n  return {\n    json: {\n      ...r,\n      email_subject: emailSubject,\n      email_text: emailText\n    }\n  };\n});"
+      },
+      "id": "ff90431a-af77-4863-8e1b-37a11560926e",
+      "name": "Préparer email transactionnel",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@govsuite.local",
+        "toEmail": "={{ $json.destinataire }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.email_text }}",
+        "options": {}
+      },
+      "id": "38634623-d839-4e8a-bc54-9b5c704ce2e4",
+      "name": "Envoyer email transactionnel",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        272,
+        -224
+      ],
+      "webhookId": "2bae4e61-7ec8-47b5-9032-3adc0ba4fcf8",
+      "credentials": {
+        "smtp": {
+          "id": "u0gMQOVgurvbLKtz",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE notifications\nSET\n    statut = 'ENVOYE',\n    sent_at = NOW(),\n    erreur = NULL\nWHERE id = '{{ $('Préparer email transactionnel').item.json.notification_id }}'::uuid\n  AND statut = 'A_ENVOYER'\nRETURNING\n    id,\n    rendez_vous_id,\n    type,\n    canal,\n    destinataire,\n    statut,\n    sent_at;",
+        "options": {}
+      },
+      "id": "07c554b4-0a95-4272-8840-7053827a3291",
+      "name": "Marquer notification transactionnelle ENVOYEE",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        544,
+        -224
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Toutes les minutes": {
+      "main": [
+        [
+          {
+            "node": "Chercher notifications transactionnelles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher notifications transactionnelles": {
+      "main": [
+        [
+          {
+            "node": "Préparer email transactionnel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer email transactionnel": {
+      "main": [
+        [
+          {
+            "node": "Envoyer email transactionnel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer email transactionnel": {
+      "main": [
+        [
+          {
+            "node": "Marquer notification transactionnelle ENVOYEE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "43167625-0a3b-42fa-861c-60f55f316379",
+  "activeVersionId": null,
+  "versionCounter": 5,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "updatedAt": "2026-07-30T20:42:36.148Z",
+  "createdAt": "2026-07-30T19:33:38.170Z",
+  "id": "on120FN4hblm31jZ",
+  "name": "06_API_RescheduleAppointment",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments/reschedule",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b248e1fa-0293-48f4-8478-5039b82678dd",
+      "name": "POST /reschedule",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -208
+      ],
+      "webhookId": "05cec624-38c0-4fa1-8766-7a543e6df2c7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || {};\n\nconst token = String(body.token || '').trim();\nconst newSlotId = String(body.newSlotId || '').trim();\n\nconst uuidRegex =\n  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;\n\nif (!uuidRegex.test(token)) {\n  throw new Error('Token de gestion invalide');\n}\n\nif (!uuidRegex.test(newSlotId)) {\n  throw new Error('newSlotId invalide');\n}\n\nreturn [{\n  json: {\n    token,\n    newSlotId\n  }\n}];"
+      },
+      "id": "65fbcb7c-5eb7-417d-b332-8939d6f24f9f",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH current_rdv AS (\n    SELECT\n        rv.id,\n        rv.reference,\n        rv.creneau_id AS old_slot_id,\n        rv.statut\n    FROM rendez_vous rv\n    WHERE rv.token_gestion = $1::uuid\n    FOR UPDATE\n),\nnew_slot AS (\n    SELECT\n        c.id,\n        c.service_id,\n        c.site_id,\n        c.debut,\n        c.fin,\n        c.capacite,\n        c.places_reservees\n    FROM creneaux c\n    WHERE c.id = $2::uuid\n    FOR UPDATE\n),\neligible AS (\n    SELECT\n        r.id AS rdv_id,\n        r.reference,\n        r.old_slot_id,\n        n.id AS new_slot_id\n    FROM current_rdv r\n    JOIN new_slot n ON TRUE\n    WHERE r.statut = 'CONFIRME'\n      AND r.old_slot_id <> n.id\n      AND n.places_reservees < n.capacite\n),\nreserve_new AS (\n    UPDATE creneaux c\n    SET places_reservees = c.places_reservees + 1\n    FROM eligible e\n    WHERE c.id = e.new_slot_id\n    RETURNING c.id\n),\nrelease_old AS (\n    UPDATE creneaux c\n    SET places_reservees = GREATEST(c.places_reservees - 1, 0)\n    FROM eligible e\n    WHERE c.id = e.old_slot_id\n    RETURNING c.id\n),\nupdate_rdv AS (\n    UPDATE rendez_vous rv\n    SET\n        creneau_id = e.new_slot_id,\n        updated_at = CURRENT_TIMESTAMP\n    FROM eligible e\n    WHERE rv.id = e.rdv_id\n      AND EXISTS (SELECT 1 FROM reserve_new)\n      AND EXISTS (SELECT 1 FROM release_old)\n    RETURNING\n        rv.id,\n        rv.reference,\n        rv.statut,\n        rv.creneau_id\n)\nSELECT\n    u.id,\n    u.reference,\n    u.statut,\n    c.id AS creneau_id,\n    c.debut,\n    c.fin,\n    c.capacite,\n    c.places_reservees,\n    c.capacite - c.places_reservees AS places_disponibles,\n    s.code AS service,\n    si.code AS site\nFROM update_rdv u\nJOIN creneaux c ON c.id = u.creneau_id\nJOIN services s ON s.id = c.service_id\nJOIN sites si ON si.id = c.site_id;",
+        "options": {
+          "queryReplacement": "={{ [   $json.token,   $json.newSlotId ] }}"
+        }
+      },
+      "id": "4725b353-4b0a-4170-a917-af891ea0f8f8",
+      "name": "Replanifier",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        48,
+        -208
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "d204e4e6-168c-42a8-8d56-c7404289b711",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        512,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $json || {};\n\nif (!item.reference) {\n  return [{\n    json: {\n      success: false,\n      rescheduled: false,\n      message:\n        'Replanification impossible : rendez-vous introuvable, déjà annulé, créneau identique ou nouveau créneau complet'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    rescheduled: true,\n    appointment: {\n      reference: item.reference,\n      statut: item.statut,\n      service: item.service,\n      site: item.site,\n      debut: item.debut,\n      fin: item.fin\n    },\n    slot: {\n      id: item.creneau_id,\n      capacite: item.capacite,\n      places_reservees: item.places_reservees,\n      places_disponibles: item.places_disponibles\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        -208
+      ],
+      "id": "dd8aa553-0370-4c73-943a-6cb354f58700",
+      "name": "Préparer réponse"
+    }
+  ],
+  "connections": {
+    "POST /reschedule": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Replanifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replanifier": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer réponse": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "ae145a47-82eb-4584-8cdf-eac57f18254f",
+  "activeVersionId": null,
+  "versionCounter": 14,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

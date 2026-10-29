@@ -1,0 +1,112 @@
+{
+  "name": "03_API_CreateAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ac787df9-40e9-418a-ba2b-da58b0b97b5b",
+      "name": "POST /appointments",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "47f1b9b9-e630-48d5-b685-d8efc896fb44"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b=$json.body||{};\nconst required=['slotId','nom','prenom'];\nfor (const k of required) if (!b[k]) throw new Error(`Champ requis: ${k}`);\nconst clean=(v,max=255)=>String(v||'').trim().slice(0,max);\nif (!/^[0-9a-fA-F-]{36}$/.test(String(b.slotId))) throw new Error('slotId invalide');\nreturn [{json:{slotId:String(b.slotId),nom:clean(b.nom,100),prenom:clean(b.prenom,100),email:clean(b.email,255),telephone:clean(b.telephone,50),numeroDocument:clean(b.numeroDocument,100),langue:clean(b.langue||'fr',10)}}];"
+      },
+      "id": "a33fd193-eb4c-4849-b9cd-762a5fc74d07",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH slot AS (\n  SELECT c.id,c.service_id,c.site_id,c.capacite,c.places_reservees\n  FROM creneaux c\n  WHERE c.id='{{$json.slotId}}'::uuid AND c.statut='DISPONIBLE' AND c.places_reservees<c.capacite\n  FOR UPDATE\n), ins AS (\n  INSERT INTO rendez_vous(reference,service_id,site_id,creneau_id,nom,prenom,email,telephone,numero_document,langue,statut)\n  SELECT 'GB-'||to_char(now(),'YYYY')||'-'||upper(substr(replace(gen_random_uuid()::text,'-',''),1,8)), service_id,site_id,id,\n         replace('{{$json.nom}}','''',''''''),replace('{{$json.prenom}}','''',''''''),NULLIF(replace('{{$json.email}}','''',''''''),''),NULLIF(replace('{{$json.telephone}}','''',''''''),''),NULLIF(replace('{{$json.numeroDocument}}','''',''''''),''),'{{$json.langue}}','CONFIRME'\n  FROM slot\n  RETURNING *\n), upd AS (\n  UPDATE creneaux c SET places_reservees=c.places_reservees+1,\n    statut=CASE WHEN c.places_reservees+1>=c.capacite THEN 'COMPLET' ELSE c.statut END, updated_at=now()\n  WHERE c.id IN (SELECT creneau_id FROM ins) RETURNING c.id\n), hist AS (\n  INSERT INTO historique_rendez_vous(rendez_vous_id,action,nouveau_statut,details)\n  SELECT id,'CREATION','CONFIRME',jsonb_build_object('reference',reference) FROM ins\n), notif AS (\n  INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut)\n  SELECT id,'CONFIRMATION','EMAIL',email,'A_ENVOYER' FROM ins WHERE email IS NOT NULL\n  ON CONFLICT DO NOTHING\n)\nSELECT i.id,i.reference,i.token_gestion,i.statut,i.email,i.telephone,c.debut,c.fin,s.code AS service,si.code AS site\nFROM ins i JOIN creneaux c ON c.id=i.creneau_id JOIN services s ON s.id=i.service_id JOIN sites si ON si.id=i.site_id;",
+        "options": {}
+      },
+      "id": "6565b19e-8956-49f8-bacc-60267b11fbb6",
+      "name": "Créer rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $input.all().length ? { success:true, appointment:$input.first().json } : { success:false, error:\"Créneau indisponible ou inexistant\" } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "7448dd44-70bc-4701-8236-1124d67962df",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "POST /appointments": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Créer rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "02b87001-87ef-4095-8879-495c5dc4b8ba",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

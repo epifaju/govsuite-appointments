@@ -1,0 +1,1176 @@
+{
+  "name": "10_AI_ConsularAssistant_Complete",
+  "nodes": [
+    {
+      "parameters": {
+        "public": false,
+        "options": {
+          "responseMode": "lastNode",
+          "title": "GovSuite - Assistant consulaire",
+          "subtitle": "Services, disponibilités et gestion de rendez-vous",
+          "inputPlaceholder": "Décrivez votre demande consulaire…"
+        }
+      },
+      "id": "bfb2aacc-fb03-45d5-b6d7-70ca3833c712",
+      "name": "Lorsqu'un message de chat est reçu",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1100,
+        0
+      ],
+      "webhookId": "d755b4f6-7d28-4347-b39e-7b9b5d02c9ad"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Tu es le routeur d'intentions et extracteur de paramètres de GovSuite.\nRetourne uniquement un objet JSON valide, sans texte autour.\nIntentions autorisées: GET_SERVICES, GET_AVAILABILITY, CREATE_APPOINTMENT, GET_APPOINTMENT, CANCEL_APPOINTMENT, RESCHEDULE_APPOINTMENT, GENERAL.\nExtrais seulement les valeurs explicitement fournies; sinon null.\nChamps: intent, confidence, service, site, dateDebut, dateFin, slotId, token, newSlotId, nom, prenom, email, telephone.\nservice doit être en majuscules (PASSEPORT, VISA, LEGALISATION, ETAT_CIVIL). site en majuscules. Dates au format YYYY-MM-DD.\nN'invente jamais de valeur.\nFormat:\n{\"intent\":\"GET_SERVICES\",\"confidence\":0.99,\"service\":null,\"site\":null,\"dateDebut\":null,\"dateFin\":null,\"slotId\":null,\"token\":null,\"newSlotId\":null,\"nom\":null,\"prenom\":null,\"email\":null,\"telephone\":null}",
+              "type": "SystemMessagePromptTemplate"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "id": "d2644a74-8d4c-4254-8f4f-559f4dfa0457",
+      "name": "Comprendre la demande",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -860,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {
+          "temperature": 0,
+          "numCtx": 1024
+        }
+      },
+      "id": "9d997f36-d9d7-4573-b387-25c5e34e843c",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "let raw=$json.text??$json.output??$json.response??'';\nraw=String(raw).trim().replace(/^```json\\s*/i,'').replace(/^```\\s*/i,'').replace(/\\s*```$/i,'').trim();\nlet p={}; try{p=JSON.parse(raw)}catch(e){}\nconst allowed=['GET_SERVICES','GET_AVAILABILITY','CREATE_APPOINTMENT','GET_APPOINTMENT','CANCEL_APPOINTMENT','RESCHEDULE_APPOINTMENT','GENERAL'];\nconst t=$(\"Lorsqu'un message de chat est reçu\").item.json;\nreturn [{json:{intent:allowed.includes(p.intent)?p.intent:'GENERAL',confidence:Number(p.confidence??0),service:p.service??null,site:p.site??null,dateDebut:p.dateDebut??null,dateFin:p.dateFin??null,slotId:p.slotId??null,token:p.token??null,newSlotId:p.newSlotId??null,nom:p.nom??null,prenom:p.prenom??null,email:p.email??null,telephone:p.telephone??null,originalMessage:t.chatInput??'',sessionId:t.sessionId??null}}];"
+      },
+      "id": "798ca2ee-bb9b-4f8f-8d3e-e1deed7b7f3d",
+      "name": "Parser intention",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "24f25540-c69c-44fc-a838-ce6d16291548",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GET_SERVICES",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GET_SERVICES"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cdc9461a-81d6-4012-80ae-caa075ed7cf0",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GET_AVAILABILITY",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GET_AVAILABILITY"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "552433bb-275d-44a5-98ce-f0880043ce6e",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "CREATE_APPOINTMENT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CREATE_APPOINTMENT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ff45535a-8b14-44c4-b072-93ed0a722854",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GET_APPOINTMENT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GET_APPOINTMENT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "edac3557-ca95-4b07-9a36-c2f6f5158c82",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "CANCEL_APPOINTMENT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CANCEL_APPOINTMENT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "29b7bdc6-96a0-4c79-9850-65e1117ca3c0",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "RESCHEDULE_APPOINTMENT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "RESCHEDULE_APPOINTMENT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e9be7b1b-8ef5-44c9-aa38-f533d25c3836",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GENERAL",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GENERAL"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "8a6612f6-f876-4790-9a90-1b3d78ed186e",
+      "name": "Router intention",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -380,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/webhook/services",
+        "options": {}
+      },
+      "id": "843ca0ed-8e13-4e15-b2c8-dd7649afa6a6",
+      "name": "Appeler GetServices",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const s=$json.services??[]; if(!s.length)return[{json:{text:\"Aucun service consulaire n'est disponible actuellement.\"}}]; let text=\"Voici les services consulaires actuellement disponibles :\\n\\n\"; s.forEach((v,i)=>{text+=`${i+1}. ${v.nom??v.code}\\n`; if(v.description)text+=`   • ${v.description}\\n`; if(v.duree_minutes!=null)text+=`   • Durée indicative : ${v.duree_minutes} minutes\\n`; text+='\\n';}); return[{json:{text}}];"
+      },
+      "id": "634ac4b0-3e2e-41f2-945c-c953bb8b2335",
+      "name": "Préparer réponse services",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const x=$json,m=[]; if(!x.service)m.push(\"le service\"); if(!x.site)m.push(\"le site\"); if(!x.dateDebut)m.push(\"la date de début (YYYY-MM-DD)\"); if(!x.dateFin)m.push(\"la date de fin (YYYY-MM-DD)\"); return[{json:{...x,ready:m.length===0,missing:m}}];"
+      },
+      "id": "e4a140a9-ca6f-4ab4-8814-83829536954c",
+      "name": "Valider paramètres disponibilité",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c0c974a9-9e96-44cc-a5c3-1702ee5a43f2",
+              "leftValue": "={{ $json.ready }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "176798f6-1131-48cb-89a0-55d260d85e8f",
+      "name": "Disponibilité prête ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        -340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/webhook/appointments/availability",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "service",
+              "value": "={{ $json.service }}"
+            },
+            {
+              "name": "site",
+              "value": "={{ $json.site }}"
+            },
+            {
+              "name": "dateDebut",
+              "value": "={{ $json.dateDebut }}"
+            },
+            {
+              "name": "dateFin",
+              "value": "={{ $json.dateFin }}"
+            }
+          ]
+        }
+      },
+      "id": "3491da6a-81bc-4594-b839-73aa88c2a220",
+      "name": "Appeler GetAvailability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        -410
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const s=$json.slots??[]; if(!s.length)return[{json:{text:\"Aucun créneau disponible n'a été trouvé pour ces critères.\"}}]; let text=`J'ai trouvé ${s.length} créneau(x) disponible(s) :\\n\\n`; s.slice(0,10).forEach((v,i)=>{text+=`${i+1}. ${v.service??''} - ${v.site??''}\\n   Début : ${v.debut}\\n   Fin : ${v.fin}\\n   Places disponibles : ${v.places_disponibles}\\n   slotId : ${v.id}\\n\\n`;}); return[{json:{text}}];"
+      },
+      "id": "d49e8119-e51f-4ae0-9f45-1339221a8fe0",
+      "name": "Préparer réponse disponibilité",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        -410
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return[{json:{text:`Pour rechercher les disponibilités, j'ai besoin de ${($json.missing??[]).join(\", \")}.`}}];"
+      },
+      "id": "2e361392-e17e-48f6-ad33-ce442e8fcdb9",
+      "name": "Demander paramètres disponibilité",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        -270
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const x=$json,m=[]; for(const [k,l] of [['slotId',\"l'identifiant du créneau (slotId)\"],['nom',\"le nom\"],['prenom',\"le prénom\"],['email',\"l'adresse e-mail\"],['telephone',\"le numéro de téléphone\"]])if(!x[k])m.push(l); return[{json:{...x,ready:m.length===0,missing:m}}];"
+      },
+      "id": "46554535-2718-45dd-b5cf-97ebcc632063",
+      "name": "Valider paramètres création",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8e18b9be-5923-498f-bbe9-3fddab6397af",
+              "leftValue": "={{ $json.ready }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f8266251-4843-4736-bb9b-10af45836211",
+      "name": "Création prête ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5678/webhook/appointments",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({slotId:$json.slotId,nom:$json.nom,prenom:$json.prenom,email:$json.email,telephone:$json.telephone}) }}",
+        "options": {}
+      },
+      "id": "5a428285-5663-49d6-bcb4-24bf758f00a9",
+      "name": "Appeler CreateAppointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        -170
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "if(!$json.success)return[{json:{text:$json.message??\"La création du rendez-vous n'a pas pu être effectuée.\"}}]; const a=$json.appointment??$json; let text=\"Votre rendez-vous a été créé avec succès.\"; for(const [l,k] of [[\"Référence\",\"reference\"],[\"Début\",\"debut\"],[\"Fin\",\"fin\"],[\"Service\",\"service\"],[\"Site\",\"site\"],[\"Token de gestion\",\"token_gestion\"]])if(a[k]!=null)text+=`\\n${l} : ${a[k]}`; return[{json:{text}}];"
+      },
+      "id": "907ed1e3-0062-47e8-b620-7f5b6143a18d",
+      "name": "Préparer réponse création",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        -170
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return[{json:{text:`Pour créer le rendez-vous, il me manque : ${($json.missing??[]).join(\", \")}.`}}];"
+      },
+      "id": "03a3dec1-2715-462c-9ce7-a4e130866f4b",
+      "name": "Demander paramètres création",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        -30
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const x=$json,m=[]; if(!x.token)m.push(\"le token de gestion\"); return[{json:{...x,ready:m.length===0,missing:m}}];"
+      },
+      "id": "c8db16bf-8a33-450e-a296-238000e56c24",
+      "name": "Valider token consultation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "59d6e7df-cf5b-4925-ba3a-6fe1f185cc7d",
+              "leftValue": "={{ $json.ready }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0eeaa376-aaf0-4642-86f1-fad3f471119a",
+      "name": "Consultation prête ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/webhook/appointments/manage",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $json.token }}"
+            }
+          ]
+        }
+      },
+      "id": "aa2b7648-1fe5-49d9-99f8-f7ed7fe8dbf3",
+      "name": "Appeler GetAppointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        70
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "if(!$json.success||$json.found===false)return[{json:{text:$json.message??\"Rendez-vous introuvable.\"}}]; const a=$json.appointment??$json; let text=\"Voici les informations de votre rendez-vous :\"; for(const [l,k] of [[\"Référence\",\"reference\"],[\"Statut\",\"statut\"],[\"Service\",\"service\"],[\"Site\",\"site\"],[\"Début\",\"debut\"],[\"Fin\",\"fin\"],[\"Nom\",\"nom\"],[\"Prénom\",\"prenom\"],[\"E-mail\",\"email\"],[\"Téléphone\",\"telephone\"]])if(a[k]!=null)text+=`\\n${l} : ${a[k]}`; return[{json:{text}}];"
+      },
+      "id": "124e7467-cde7-4da9-85f2-b0c3777d7bbc",
+      "name": "Préparer réponse consultation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        70
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return [{json:{text:\"Pour consulter votre rendez-vous, j’ai besoin de votre token de gestion.\"}}];"
+      },
+      "id": "6a5ca7d0-a629-4d37-801b-97529227c18d",
+      "name": "Demander token consultation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        210
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const x=$json,m=[]; if(!x.token)m.push(\"le token de gestion\"); return[{json:{...x,ready:m.length===0,missing:m}}];"
+      },
+      "id": "d3ba0558-adcf-4fa3-bdee-b6a4e8b8317c",
+      "name": "Valider token annulation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bee35a5f-b695-4d1e-8153-97cf9332f7ad",
+              "leftValue": "={{ $json.ready }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1a8d0f42-4b7c-4e88-90f4-0f5b9561c8f2",
+      "name": "Annulation prête ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5678/webhook/appointments/cancel",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({token:$json.token}) }}",
+        "options": {}
+      },
+      "id": "3162e008-16b5-41f3-9428-2d4ca1e864d2",
+      "name": "Appeler CancelAppointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        310
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "if(!$json.success)return[{json:{text:$json.message??\"L'annulation n'a pas pu être effectuée.\"}}]; const a=$json.appointment??$json; let text=\"Votre rendez-vous a été annulé avec succès.\"; if(a.reference)text+=`\\nRéférence : ${a.reference}`; if(a.statut)text+=`\\nStatut : ${a.statut}`; return[{json:{text}}];"
+      },
+      "id": "840c6cb4-7b06-415b-9197-0526080303d3",
+      "name": "Préparer réponse annulation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        310
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return [{json:{text:\"Pour annuler votre rendez-vous, j’ai besoin de votre token de gestion.\"}}];"
+      },
+      "id": "5538a091-3369-47e8-9b94-2362c5eab988",
+      "name": "Demander token annulation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const x=$json,m=[]; if(!x.token)m.push(\"le token de gestion\"); if(!x.newSlotId)m.push(\"l'identifiant du nouveau créneau (newSlotId)\"); return[{json:{...x,ready:m.length===0,missing:m}}];"
+      },
+      "id": "ac131195-cd60-4130-bf28-2c2f560d6770",
+      "name": "Valider paramètres replanification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b9850dc3-d1c0-49b1-9d0b-d0e9eb607216",
+              "leftValue": "={{ $json.ready }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "659b9310-4166-4327-9a2c-b3781dc47b29",
+      "name": "Replanification prête ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5678/webhook/appointments/reschedule",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({token:$json.token,newSlotId:$json.newSlotId}) }}",
+        "options": {}
+      },
+      "id": "66787085-d1a9-415f-9d14-abcd16b5fc57",
+      "name": "Appeler RescheduleAppointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "if(!$json.success)return[{json:{text:$json.message??\"La replanification n'a pas pu être effectuée.\"}}]; const a=$json.appointment??$json; let text=\"Votre rendez-vous a été replanifié avec succès.\"; if(a.reference)text+=`\\nRéférence : ${a.reference}`; if(a.debut)text+=`\\nNouveau début : ${a.debut}`; if(a.fin)text+=`\\nNouvelle fin : ${a.fin}`; return[{json:{text}}];"
+      },
+      "id": "a6ef11f8-466f-4104-bb9b-01cfa7dc94fc",
+      "name": "Préparer réponse replanification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return[{json:{text:`Pour replanifier votre rendez-vous, il me manque : ${($json.missing??[]).join(\", \")}.`}}];"
+      },
+      "id": "c8744627-f569-42d6-9457-e18cdceea467",
+      "name": "Demander paramètres replanification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        690
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return[{json:{text:\"Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire.\"}}];"
+      },
+      "id": "8bc064ec-c26a-4fda-85e3-e266247dbb3f",
+      "name": "Réponse générale",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        860
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Lorsqu'un message de chat est reçu": {
+      "main": [
+        [
+          {
+            "node": "Comprendre la demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comprendre la demande": {
+      "main": [
+        [
+          {
+            "node": "Parser intention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Comprendre la demande",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser intention": {
+      "main": [
+        [
+          {
+            "node": "Router intention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router intention": {
+      "main": [
+        [
+          {
+            "node": "Appeler GetServices",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valider paramètres disponibilité",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valider paramètres création",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valider token consultation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valider token annulation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Valider paramètres replanification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Réponse générale",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Réponse générale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler GetServices": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse services",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider paramètres disponibilité": {
+      "main": [
+        [
+          {
+            "node": "Disponibilité prête ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disponibilité prête ?": {
+      "main": [
+        [
+          {
+            "node": "Appeler GetAvailability",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Demander paramètres disponibilité",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler GetAvailability": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse disponibilité",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider paramètres création": {
+      "main": [
+        [
+          {
+            "node": "Création prête ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Création prête ?": {
+      "main": [
+        [
+          {
+            "node": "Appeler CreateAppointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Demander paramètres création",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler CreateAppointment": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse création",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token consultation": {
+      "main": [
+        [
+          {
+            "node": "Consultation prête ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultation prête ?": {
+      "main": [
+        [
+          {
+            "node": "Appeler GetAppointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Demander token consultation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler GetAppointment": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse consultation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token annulation": {
+      "main": [
+        [
+          {
+            "node": "Annulation prête ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Annulation prête ?": {
+      "main": [
+        [
+          {
+            "node": "Appeler CancelAppointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Demander token annulation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler CancelAppointment": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse annulation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider paramètres replanification": {
+      "main": [
+        [
+          {
+            "node": "Replanification prête ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replanification prête ?": {
+      "main": [
+        [
+          {
+            "node": "Appeler RescheduleAppointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Demander paramètres replanification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler RescheduleAppointment": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse replanification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "versionId": "904c43a0-11e1-4289-b04d-09e870eb9585",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

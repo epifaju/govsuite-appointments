@@ -1,0 +1,63 @@
+{
+  "name": "07_JOB_AppointmentReminders",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "e0f2addc-5307-43eb-aa91-d3d254e3097c",
+      "name": "Toutes les heures",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH due AS (\n SELECT r.id,r.email,c.debut,\n CASE WHEN c.debut BETWEEN now()+interval '6 days 23 hours' AND now()+interval '7 days 1 hour' THEN 'RAPPEL_J7'\n      WHEN c.debut BETWEEN now()+interval '23 hours' AND now()+interval '25 hours' THEN 'RAPPEL_J1'\n      WHEN c.debut BETWEEN now()+interval '1 hour 45 minutes' AND now()+interval '2 hours 15 minutes' THEN 'RAPPEL_H2' END AS type\n FROM rendez_vous r JOIN creneaux c ON c.id=r.creneau_id\n WHERE r.statut IN ('CONFIRME','REPLANIFIE') AND r.email IS NOT NULL\n), ins AS (\n INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut)\n SELECT id,type,'EMAIL',email,'A_ENVOYER' FROM due WHERE type IS NOT NULL\n ON CONFLICT (rendez_vous_id,type,canal) DO NOTHING RETURNING *\n) SELECT * FROM ins ORDER BY created_at;",
+        "options": {}
+      },
+      "id": "84cfba8b-e646-4cc0-a820-288d023cbc19",
+      "name": "Créer rappels à envoyer",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        260,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Toutes les heures": {
+      "main": [
+        [
+          {
+            "node": "Créer rappels à envoyer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "de09c41d-633c-46bc-9c73-5178955ad40a",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

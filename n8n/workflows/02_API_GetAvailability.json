@@ -1,0 +1,112 @@
+{
+  "name": "02_API_GetAvailability",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "appointments/availability",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "cdfc2394-cbab-4033-b96f-53b93a29c716",
+      "name": "GET /availability",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "02d890c1-21e5-4e5d-8b22-15d54fff768d"
+    },
+    {
+      "parameters": {
+        "jsCode": "const q = $json.query || {};\nconst service = String(q.service || '').toUpperCase().trim();\nconst site = String(q.site || '').toUpperCase().trim();\nconst dateDebut = String(q.dateDebut || '').trim();\nconst dateFin = String(q.dateFin || dateDebut || '').trim();\nif (!/^[A-Z_]{2,30}$/.test(service)) throw new Error('Paramètre service invalide');\nif (!/^[A-Z_]{2,30}$/.test(site)) throw new Error('Paramètre site invalide');\nif (!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateDebut)) throw new Error('dateDebut doit être YYYY-MM-DD');\nif (!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateFin)) throw new Error('dateFin doit être YYYY-MM-DD');\nreturn [{json:{service,site,dateDebut,dateFin}}];"
+      },
+      "id": "d64fb765-5c9f-401c-8a37-6d10d0538445",
+      "name": "Valider paramètres",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT c.id, s.code AS service, si.code AS site, c.debut, c.fin, c.capacite, c.places_reservees,\n       (c.capacite - c.places_reservees) AS places_disponibles\nFROM creneaux c\nJOIN services s ON s.id=c.service_id\nJOIN sites si ON si.id=c.site_id\nWHERE s.code='{{$json.service}}'\n  AND si.code='{{$json.site}}'\n  AND c.statut='DISPONIBLE'\n  AND c.places_reservees < c.capacite\n  AND c.debut >= ('{{$json.dateDebut}}'::date)\n  AND c.debut <  ('{{$json.dateFin}}'::date + interval '1 day')\nORDER BY c.debut;",
+        "options": {}
+      },
+      "id": "01063ffc-946d-499f-a80b-16abc10c8138",
+      "name": "Chercher créneaux",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, count: $input.all().length, slots: $input.all().map(i => i.json) } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "fd7e4e2d-cd7d-4a41-966c-95ed2c636457",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "GET /availability": {
+      "main": [
+        [
+          {
+            "node": "Valider paramètres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider paramètres": {
+      "main": [
+        [
+          {
+            "node": "Chercher créneaux",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher créneaux": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "bee63a04-02d9-410a-a495-17d18c72095d",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

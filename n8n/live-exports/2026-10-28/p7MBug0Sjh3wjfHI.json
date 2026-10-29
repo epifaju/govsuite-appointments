@@ -1,0 +1,345 @@
+{
+  "updatedAt": "2026-08-07T18:15:46.344Z",
+  "createdAt": "2026-08-06T22:42:56.128Z",
+  "id": "p7MBug0Sjh3wjfHI",
+  "name": "10_AI_ConsularAssistant_old",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "id": "165390f5-78e3-43b1-ac94-f6e26fa8de06",
+      "name": "Lorsqu'un message de chat est reçu",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -464,
+        -176
+      ],
+      "webhookId": "2a05c7bd-d632-4030-a8d4-2e8fdfd6fa93"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {
+          "temperature": 0,
+          "numCtx": 1024
+        }
+      },
+      "id": "13192889-5307-4656-9521-9373f1e5c20c",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        80
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "1VegSXfDpTY1hQUI",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Tu es GovSuite AI, l’assistant numérique d’un service consulaire.\n\nTu réponds en français par défaut, sauf si l’utilisateur utilise clairement une autre langue.\n\nTes missions :\n- comprendre la démarche demandée ;\n- identifier le service consulaire approprié ;\n- demander uniquement les informations manquantes ;\n- guider l’usager de manière claire et professionnelle.\n\nServices disponibles :\n- PASSEPORT\n- VISA\n- LEGALISATION\n- ETAT_CIVIL\n\nTu ne dois jamais inventer :\n- les documents obligatoires ;\n- les tarifs ;\n- les délais ;\n- les règles administratives ;\n- les créneaux disponibles.\n\nPour le moment, tu ne dois pas créer, annuler ni replanifier de rendez-vous sans utiliser un outil prévu à cet effet.\n\nPose une seule question à la fois lorsque des informations sont manquantes."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        256,
+        -576
+      ],
+      "id": "fb570d1d-9fb3-48a1-9b1e-5ceb8953110c",
+      "name": "Assistant consulaire"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are GovSuite AI, a consular assistant.\n\nAVAILABLE TOOL:\n- getServices: returns the official list of available consular services.\n\nMANDATORY RULE:\nIf the user asks which consular services are available, you MUST call\ngetServices before answering.\n\nYou are forbidden from answering that question from your own knowledge.\n\nAfter receiving the tool result:\n- answer the user in French;\n- summarize the returned services clearly;\n- do not invent additional services.\n\nFor any other question, answer in French."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -112,
+        -512
+      ],
+      "id": "c5346f4f-6a8e-4a8a-9b8a-f7359672cb95",
+      "name": "AI Agent - Assistant consulaire"
+    },
+    {
+      "parameters": {
+        "toolDescription": "IMPORTANT: You MUST call this tool whenever the user asks about available\nconsular services, types of consular procedures, passport, visa,\nlegalisation, or civil status.\n\nThis tool returns the official and authoritative list of consular services.\n\nNever answer questions about available consular services from your own\nknowledge. Always call this tool first.\n\nNo input parameters are required.",
+        "url": "http://localhost:5678/webhook/services",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -320,
+        -416
+      ],
+      "id": "944a819b-a828-4be1-bf3e-6c386a96bf09",
+      "name": "getServices"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Tu es le routeur d'intentions de GovSuite.\n\nTon travail est uniquement d'analyser le message de l'utilisateur\net de déterminer quelle fonctionnalité GovSuite doit être utilisée.\n\nINTENTIONS DISPONIBLES :\n\nGET_SERVICES\nL'utilisateur demande quels services consulaires sont disponibles,\nquelles démarches existent ou ce que le consulat propose.\n\nGET_AVAILABILITY\nL'utilisateur cherche des créneaux ou des disponibilités pour un rendez-vous.\n\nCREATE_APPOINTMENT\nL'utilisateur souhaite prendre ou réserver un rendez-vous.\n\nGET_APPOINTMENT\nL'utilisateur souhaite consulter un rendez-vous existant.\n\nCANCEL_APPOINTMENT\nL'utilisateur souhaite annuler un rendez-vous.\n\nRESCHEDULE_APPOINTMENT\nL'utilisateur souhaite déplacer ou replanifier un rendez-vous.\n\nGENERAL\nQuestion générale qui ne correspond à aucune opération ci-dessus.\n\nRÈGLES IMPORTANTES :\n- Ne réponds jamais à la question de l'utilisateur.\n- Ne donne aucune explication.\n- N'invente aucune information.\n- Retourne uniquement un objet JSON valide.\n- intent doit toujours être l'une des valeurs définies ci-dessus.\n\nFormat obligatoire :\n\n{\n  \"intent\": \"GET_SERVICES\",\n  \"confidence\": 0.95\n}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -192,
+        -176
+      ],
+      "id": "a4958d6d-7e59-49ac-84d8-2eb3f3dd5361",
+      "name": "Comprendre la demande"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $json;\n\nlet raw =\n  item.text ??\n  item.output ??\n  item.response ??\n  '';\n\nif (typeof raw === 'object') {\n  return [{ json: raw }];\n}\n\nraw = String(raw).trim();\n\n// Enlève éventuellement les blocs ```json ... ```\nraw = raw\n  .replace(/^```json\\s*/i, '')\n  .replace(/^```\\s*/i, '')\n  .replace(/\\s*```$/i, '')\n  .trim();\n\ntry {\n  const parsed = JSON.parse(raw);\n\n  const allowed = [\n    'GET_SERVICES',\n    'GET_AVAILABILITY',\n    'CREATE_APPOINTMENT',\n    'GET_APPOINTMENT',\n    'CANCEL_APPOINTMENT',\n    'RESCHEDULE_APPOINTMENT',\n    'GENERAL'\n  ];\n\n  const intent = allowed.includes(parsed.intent)\n    ? parsed.intent\n    : 'GENERAL';\n\n  return [{\n    json: {\n      intent,\n      confidence: Number(parsed.confidence ?? 0),\n      originalMessage:\n        $('Lorsqu\\'un message de chat est reçu').item.json.chatInput\n    }\n  }];\n} catch (e) {\n  return [{\n    json: {\n      intent: 'GENERAL',\n      confidence: 0,\n      originalMessage:\n        $('Lorsqu\\'un message de chat est reçu').item.json.chatInput,\n      parsingError: true,\n      rawResponse: raw\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -176
+      ],
+      "id": "355f05e2-b134-42c5-99c1-4bd2bc4542ea",
+      "name": "Parser intention"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GET_SERVICES",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "186ed5a8-c2c1-4109-89f3-fe1c3148eaa7"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7b5b1c3c-afda-4cbf-ad1a-076763a61839",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "GENERAL",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        -176
+      ],
+      "id": "df43cacb-9b54-4d9f-8255-74a301cd0e89",
+      "name": "Router intention"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"text\": \"Je peux vous aider pour les services consulaires, les disponibilités et les rendez-vous.\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        576,
+        -80
+      ],
+      "id": "8882c74f-9d9e-4135-a663-b71565f99641",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/webhook/services",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        544,
+        -288
+      ],
+      "id": "4d03cfa6-0256-4b4a-9def-8195ee0297d9",
+      "name": "Appeler GetServices"
+    },
+    {
+      "parameters": {
+        "jsCode": "const services = $json.services ?? [];\n\nif (services.length === 0) {\n  return [{\n    json: {\n      text: \"Aucun service consulaire n'est disponible actuellement.\"\n    }\n  }];\n}\n\nlet text = \"Voici les services consulaires actuellement disponibles :\\n\\n\";\n\nservices.forEach((service, index) => {\n\n  text += `${index + 1}. ${service.nom}\\n`;\n  text += `   • ${service.description}\\n`;\n  text += `   • Durée : ${service.duree_minutes} minutes\\n\\n`;\n\n});\n\nreturn [{\n  json: {\n    text\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        -288
+      ],
+      "id": "1a1fc288-a9a4-4d3e-8204-530365ea32e9",
+      "name": "Préparer réponse services"
+    }
+  ],
+  "connections": {
+    "Lorsqu'un message de chat est reçu": {
+      "main": [
+        [
+          {
+            "node": "Comprendre la demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Comprendre la demande",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getServices": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "AI Agent - Assistant consulaire": {
+      "main": [
+        []
+      ]
+    },
+    "Comprendre la demande": {
+      "main": [
+        [
+          {
+            "node": "Parser intention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser intention": {
+      "main": [
+        [
+          {
+            "node": "Router intention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router intention": {
+      "main": [
+        [
+          {
+            "node": "Appeler GetServices",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appeler GetServices": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse services",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "56365e0d-d42f-40da-9cbf-3d6374883db6",
+  "activeVersionId": null,
+  "versionCounter": 101,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

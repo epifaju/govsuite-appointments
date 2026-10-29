@@ -1,0 +1,112 @@
+{
+  "name": "05_API_CancelAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments/cancel",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "631f519a-80a4-4424-b09f-a1110764a447",
+      "name": "POST /cancel",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "8e4297eb-f5a8-433f-a2b2-2ca23a3f573f"
+    },
+    {
+      "parameters": {
+        "jsCode": "const token=String(($json.body||{}).token||'').trim(); const motif=String(($json.body||{}).motif||'').trim().slice(0,500); if(!/^[0-9a-fA-F-]{36}$/.test(token)) throw new Error('token invalide'); return [{json:{token,motif}}];"
+      },
+      "id": "289a233b-f4b4-4d29-9553-1440579b4378",
+      "name": "Valider token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH target AS (SELECT * FROM rendez_vous WHERE token_gestion='{{$json.token}}'::uuid AND statut IN ('CONFIRME','EN_ATTENTE') FOR UPDATE),\nupd_r AS (UPDATE rendez_vous SET statut='ANNULE',motif_annulation=NULLIF(replace('{{$json.motif}}','''',''''''),''),cancelled_at=now(),updated_at=now() WHERE id IN (SELECT id FROM target) RETURNING *),\nupd_c AS (UPDATE creneaux SET places_reservees=GREATEST(places_reservees-1,0),statut=CASE WHEN statut='COMPLET' THEN 'DISPONIBLE' ELSE statut END,updated_at=now() WHERE id IN (SELECT creneau_id FROM upd_r)),\nh AS (INSERT INTO historique_rendez_vous(rendez_vous_id,action,ancien_statut,nouveau_statut,details) SELECT id,'ANNULATION',statut,'ANNULE',jsonb_build_object('motif',motif_annulation) FROM target),\nn AS (INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut) SELECT id,'ANNULATION','EMAIL',email,'A_ENVOYER' FROM upd_r WHERE email IS NOT NULL ON CONFLICT DO NOTHING)\nSELECT id,reference,statut,cancelled_at FROM upd_r;",
+        "options": {}
+      },
+      "id": "722cf4c3-5fc4-40b3-8737-b62848f91f8b",
+      "name": "Annuler rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $input.all().length ? {success:true, appointment:$input.first().json} : {success:false,error:\"Rendez-vous non annulable ou introuvable\"} }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "84fe3e6a-6e60-4579-8a80-6b368d788c95",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "POST /cancel": {
+      "main": [
+        [
+          {
+            "node": "Valider token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token": {
+      "main": [
+        [
+          {
+            "node": "Annuler rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Annuler rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "versionId": "bd637fbc-8da0-4302-981c-8334b9e6b9b4",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

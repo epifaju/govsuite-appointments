@@ -1,0 +1,329 @@
+{
+  "name": "03_API_CreateAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "97d74272-a674-410c-939c-b23418e75c95",
+      "name": "POST /appointments",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "47f1b9b9-e630-48d5-b685-d8efc896fb44"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body || {};\nconst clean = (v, max = 255) => String(v || '').trim().slice(0, max);\nconst missing = (v) => v === undefined || v === null || String(v).trim() === '';\nconst fail = (message) => [{ json: { ok: false, error: { code: 'VALIDATION_ERROR', message } } }];\nif (missing(b.slotId)) return fail('Le champ slotId est obligatoire.');\nif (missing(b.nom)) return fail('Le champ nom est obligatoire.');\nif (missing(b.prenom)) return fail('Le champ prénom est obligatoire.');\nconst slotId = String(b.slotId).trim();\nif (!/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slotId)) return fail('Le champ slotId est invalide.');\nreturn [{\n  json: {\n    ok: true,\n    slotId,\n    nom: clean(b.nom, 100),\n    prenom: clean(b.prenom, 100),\n    email: clean(b.email, 255),\n    telephone: clean(b.telephone, 50),\n    numeroDocument: clean(b.numeroDocument, 100),\n    langue: clean(b.langue || 'fr', 10)\n  }\n}];"
+      },
+      "id": "7116ffb2-52f1-40eb-97f1-9131b78334cd",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH slot AS (\n  SELECT c.id,c.service_id,c.site_id,c.capacite,c.places_reservees\n  FROM creneaux c\n  WHERE c.id=$1::uuid\n    AND c.statut='DISPONIBLE'\n    AND c.places_reservees<c.capacite\n    AND c.debut > now()\n  FOR UPDATE\n), ins AS (\n  INSERT INTO rendez_vous(reference,service_id,site_id,creneau_id,nom,prenom,email,telephone,numero_document,langue,statut)\n  SELECT 'GB-'||to_char(now(),'YYYY')||'-'||upper(substr(replace(gen_random_uuid()::text,'-',''),1,8)),\n         service_id,site_id,id,\n         $2,$3,NULLIF($4,''),NULLIF($5,''),NULLIF($6,''),$7,'CONFIRME'\n  FROM slot\n  RETURNING *\n), upd AS (\n  UPDATE creneaux c SET places_reservees=c.places_reservees+1,\n    statut=CASE WHEN c.places_reservees+1>=c.capacite THEN 'COMPLET' ELSE c.statut END, updated_at=now()\n  WHERE c.id IN (SELECT creneau_id FROM ins) RETURNING c.id\n), hist AS (\n  INSERT INTO historique_rendez_vous(rendez_vous_id,action,nouveau_statut,details)\n  SELECT id,'CREATION','CONFIRME',jsonb_build_object('reference',reference) FROM ins\n), notif AS (\n  INSERT INTO notifications(rendez_vous_id,type,canal,destinataire,statut)\n  SELECT id,'CONFIRMATION','EMAIL',email,'A_ENVOYER' FROM ins WHERE email IS NOT NULL\n  ON CONFLICT DO NOTHING\n)\nSELECT i.id,i.reference,i.token_gestion,i.statut,i.email,i.telephone,c.debut,c.fin,s.code AS service,si.code AS site\nFROM ins i JOIN creneaux c ON c.id=i.creneau_id JOIN services s ON s.id=i.service_id JOIN sites si ON si.id=i.site_id;",
+        "options": {
+          "queryReplacement": "={{ [$json.slotId, $json.nom, $json.prenom, $json.email, $json.telephone, $json.numeroDocument, $json.langue] }}"
+        }
+      },
+      "id": "36c17325-2c1b-4a98-8da3-e10dd4512f53",
+      "name": "Créer rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        528,
+        0
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: true,\n  appointment: $('Créer rendez-vous').item.json\n}) }}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "17d0df3f-39d1-44f1-b22b-f3c6cd6af289",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1408,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const appointment = $json || {};\n\nif (!appointment.id) {\n  return [{\n    json: {\n      success: false,\n      created: false,\n      message: 'Créneau introuvable ou complet'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    created: true,\n    appointment\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        0
+      ],
+      "id": "20980707-3094-4b86-91c1-3acc69b396f9",
+      "name": "Vérifier création"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "47265be2-9404-41c4-a4e4-e96fbc785a2e",
+              "leftValue": "={{ $json.created }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        0
+      ],
+      "id": "0a7e4589-2043-4807-ba38-9a055aae4970",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: false,\n  created: false,\n  message: $json.message || \"Ce créneau n'est plus disponible.\"\n}) }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "e2051621-b559-42db-8fc8-bbd9f97ca548",
+      "name": "Répondre créneau indisponible"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e97a0eee-8ee6-4ae6-898c-e7f3de85eed5",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        400,
+        0
+      ],
+      "id": "eced2180-72fc-49c5-ab34-e7c5eedf95d5",
+      "name": "Demande valide ?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: $json.error }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        400,
+        220
+      ],
+      "id": "33fa62d8-30db-44e3-9944-eda5e2f9d25a",
+      "name": "Répondre validation"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: { code: \"INTERNAL_ERROR\", message: \"La création du rendez-vous n'a pas pu être traitée.\" } }) }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        700,
+        220
+      ],
+      "id": "f963a181-7808-47c4-9608-3775ee4c6a6a",
+      "name": "Répondre erreur interne"
+    },
+    {
+      "parameters": {
+        "jsCode": "let errorItems = [];\ntry {\n  errorItems = $items('Créer rendez-vous', 1) || [];\n} catch (e) {\n  errorItems = [];\n}\nif (errorItems.length > 0) return [];\nreturn $input.all();"
+      },
+      "id": "7bac1cbb-8343-4ea9-87d3-53f81c8d18a4",
+      "name": "Conserver le résultat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "POST /appointments": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Demande valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Conserver le résultat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre erreur interne",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vérifier création": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre créneau indisponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Demande valide ?": {
+      "main": [
+        [
+          {
+            "node": "Créer rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conserver le résultat": {
+      "main": [
+        [
+          {
+            "node": "Vérifier création",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": {},
+  "nodeGroups": []
+}

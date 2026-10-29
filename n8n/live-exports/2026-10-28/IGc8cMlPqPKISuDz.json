@@ -1,0 +1,162 @@
+{
+  "updatedAt": "2026-08-10T17:41:06.037Z",
+  "createdAt": "2026-07-30T19:13:19.906Z",
+  "id": "IGc8cMlPqPKISuDz",
+  "name": "05_API_CancelAppointment",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments/cancel",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "49a94ec0-9487-40d8-abbc-97be41381699",
+      "name": "POST /cancel",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -496,
+        -240
+      ],
+      "webhookId": "8e4297eb-f5a8-433f-a2b2-2ca23a3f573f"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || {};\n\nconst token = String(body.token || '').trim();\nconst motif = String(body.motif || '').trim();\n\nif (!/^[0-9a-fA-F-]{36}$/.test(token)) {\n  throw new Error('Token de gestion invalide');\n}\n\nif (motif.length > 500) {\n  throw new Error('Motif trop long');\n}\n\nreturn [{\n  json: {\n    token,\n    motif: motif || null\n  }\n}];"
+      },
+      "id": "9045630b-bc5b-489a-90a6-6bce21bb3307",
+      "name": "Valider token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH cible AS (\n    SELECT\n        rv.id,\n        rv.reference,\n        rv.creneau_id,\n        rv.statut\n    FROM rendez_vous rv\n    WHERE rv.token_gestion = $1::uuid\n    FOR UPDATE\n),\nannulation AS (\n    UPDATE rendez_vous rv\n    SET\n        statut = 'ANNULE',\n        motif_annulation = $2,\n        cancelled_at = CURRENT_TIMESTAMP,\n        updated_at = CURRENT_TIMESTAMP\n    FROM cible c\n    WHERE rv.id = c.id\n      AND c.statut = 'CONFIRME'\n    RETURNING\n        rv.id,\n        rv.reference,\n        rv.creneau_id,\n        rv.statut,\n        rv.cancelled_at\n),\nliberation AS (\n    UPDATE creneaux cr\n    SET places_reservees = GREATEST(cr.places_reservees - 1, 0)\n    FROM annulation a\n    WHERE cr.id = a.creneau_id\n    RETURNING\n        cr.id,\n        cr.capacite,\n        cr.places_reservees\n)\nSELECT\n    a.id,\n    a.reference,\n    a.statut,\n    a.cancelled_at,\n    l.capacite,\n    l.places_reservees,\n    l.capacite - l.places_reservees AS places_disponibles\nFROM annulation a\nJOIN liberation l ON l.id = a.creneau_id;",
+        "options": {
+          "queryReplacement": "={{ [   $json.token,   $json.motif ] }}"
+        }
+      },
+      "id": "4da3f4c0-4df2-4c65-8ef2-b1ff45c1ec04",
+      "name": "Annuler rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        32,
+        -240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "e94ded7d-9637-4354-b739-b165d38349ec",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        496,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $json || {};\n\nif (!item.reference) {\n  return [{\n    json: {\n      success: false,\n      cancelled: false,\n      message: 'Rendez-vous introuvable ou déjà annulé'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    cancelled: true,\n    appointment: {\n      reference: item.reference,\n      statut: item.statut,\n      cancelled_at: item.cancelled_at\n    },\n    slot: {\n      capacite: item.capacite,\n      places_reservees: item.places_reservees,\n      places_disponibles: item.places_disponibles\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -240
+      ],
+      "id": "464fc70a-4451-4eb9-98e2-cb71c49201cc",
+      "name": "Préparer réponse"
+    }
+  ],
+  "connections": {
+    "POST /cancel": {
+      "main": [
+        [
+          {
+            "node": "Valider token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token": {
+      "main": [
+        [
+          {
+            "node": "Annuler rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Annuler rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer réponse": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "a142db05-6972-403a-9022-e5e320f69a00",
+  "activeVersionId": "a142db05-6972-403a-9022-e5e320f69a00",
+  "versionCounter": 15,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": "Version v1.0",
+    "description": ""
+  }
+}

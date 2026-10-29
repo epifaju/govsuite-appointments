@@ -1,0 +1,161 @@
+{
+  "updatedAt": "2026-08-07T20:42:03.036Z",
+  "createdAt": "2026-07-29T19:47:35.042Z",
+  "id": "sLWErwgNoc3TDEPV",
+  "name": "04_API_GetAppointment",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "appointments/manage",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c46b1901-edcd-443e-b57f-b612f188fa0c",
+      "name": "GET /appointment",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        -128
+      ],
+      "webhookId": "1ba7b5bc-7fb3-4fbe-9ae8-88ba6d6c355e"
+    },
+    {
+      "parameters": {
+        "jsCode": "const q = $json.query || {};\nconst token = String(q.token || '').trim();\n\nif (!/^[0-9a-fA-F-]{36}$/.test(token)) {\n  throw new Error('Token de gestion invalide');\n}\n\nreturn [{\n  json: {\n    token\n  }\n}];"
+      },
+      "id": "db8098c9-3fba-467f-ab68-0f8f383e1b4e",
+      "name": "Valider token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    rv.id,\n    rv.reference,\n    rv.statut,\n    rv.nom,\n    rv.prenom,\n    rv.email,\n    rv.telephone,\n    rv.token_gestion,\n    rv.created_at,\n    s.code AS service,\n    s.nom AS service_nom,\n    si.code AS site,\n    si.nom AS site_nom,\n    c.debut,\n    c.fin\nFROM rendez_vous rv\nJOIN creneaux c ON c.id = rv.creneau_id\nJOIN services s ON s.id = c.service_id\nJOIN sites si ON si.id = c.site_id\nWHERE rv.token_gestion = $1\nLIMIT 1;",
+        "options": {
+          "queryReplacement": "={{ [$json.token] }}"
+        }
+      },
+      "id": "e44a7f9e-3738-463f-ba82-1943cd143fc4",
+      "name": "Lire rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        192,
+        -128
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "2c83e68a-008e-43cf-b767-fb22a09f1e2b",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        656,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $json || {};\n\nif (!item.reference) {\n  return [{\n    json: {\n      success: false,\n      found: false,\n      message: 'Rendez-vous introuvable'\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    success: true,\n    found: true,\n    appointment: item\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        -128
+      ],
+      "id": "8841396f-0f0b-47dc-83b1-791f8c221bd7",
+      "name": "Préparer réponse"
+    }
+  ],
+  "connections": {
+    "GET /appointment": {
+      "main": [
+        [
+          {
+            "node": "Valider token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider token": {
+      "main": [
+        [
+          {
+            "node": "Lire rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Préparer réponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer réponse": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "516e0840-63ea-4608-9cf5-49fad90c76b2",
+  "activeVersionId": "516e0840-63ea-4608-9cf5-49fad90c76b2",
+  "versionCounter": 18,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "versionMetadata": {
+    "name": "Version v1.0",
+    "description": ""
+  }
+}
