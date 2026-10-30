@@ -1,0 +1,14 @@
+WITH input AS (
+  SELECT $1::jsonb AS data
+),
+entropy AS (
+  SELECT 'own-' || encode(public.gen_random_bytes(16), 'hex') AS lease_owner
+)
+SELECT f.acquired, f.attempt_id::text, f.attempt_status, f.request_payload, f.idempotency_key, f.request_fingerprint, f.resume_count, e.lease_owner
+FROM input
+CROSS JOIN entropy e
+CROSS JOIN LATERAL public.reprendre_tentative_rendez_vous(
+  (input.data->>'attemptId')::uuid,
+  input.data->>'sessionId',
+  e.lease_owner
+) AS f;

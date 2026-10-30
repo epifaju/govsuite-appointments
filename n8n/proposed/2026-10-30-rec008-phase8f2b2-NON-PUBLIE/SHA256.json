@@ -1,0 +1,12 @@
+{
+  "sourceInstalled": "36259a0f8400570c22a3a255611c3a2e18ccc3fa83945b29fd492a4d37812e78",
+  "proposed": "0fa348271753909b4faf3248e2374e83dbba7387eb8acbdf33c13f1f1dda6cb2",
+  "proposedBytes": 287727,
+  "nodes": 134,
+  "edges": 137,
+  "nePasPublier": "6ec3f20cea5ec34a6930c78654b70437a566e95f938912400c39dc0b32d006e3",
+  "diffNodes": "e8969b8732bfbf2f44a39e464ed596fa489424c36880319dff31af7240a7dc3e",
+  "offlineTests": "98cbca1e031df42f9b0584435e6a410dfd0866062814cf1d1da52de3e8660f4d",
+  "fusionBefore": "f5c98a993d7ed0cebc0768ac6be71b26721063caa4adfe0574d6bd10d1f90656",
+  "fusionAfter": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1"
+}

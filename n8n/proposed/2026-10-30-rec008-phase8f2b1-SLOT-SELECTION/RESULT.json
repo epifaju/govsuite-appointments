@@ -1,0 +1,333 @@
+{
+  "phase": "8F-2B1",
+  "sessionId": "rec008-8f2b1-slot-01",
+  "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+  "pass": false,
+  "stopped": true,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "versionCounter": 4,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "columns": [
+      "id",
+      "session_id",
+      "intent",
+      "service",
+      "site",
+      "date_debut",
+      "date_fin",
+      "slot_id",
+      "token",
+      "new_slot_id",
+      "reference",
+      "nom",
+      "prenom",
+      "email",
+      "telephone",
+      "last_user_message",
+      "created_at",
+      "updated_at",
+      "expires_at",
+      "available_slots",
+      "selected_slot_index",
+      "pending_action",
+      "conversation_step"
+    ],
+    "pg": {
+      "rdv": 1,
+      "sessions": 5,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|5|0|0"
+    },
+    "sessions": [
+      "rec008-8f1c-services-01",
+      "rec008-8f1d-availability-01",
+      "rec008-8f1fd-memory-01",
+      "rec008-8f1fe-full-01",
+      "rec008-session-synthetique"
+    ],
+    "sessionExists": false,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /appointments/availability 200": 4
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "msg1": {
+    "status": 200,
+    "elapsedMs": 119931,
+    "responsePreview": "{\"type\":\"availability\",\"title\":\"Créneaux disponibles\",\"slots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"availableSlots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"text\":\"📅 J'ai trouvé 1 créneau(x) disponible(s) :\\n\\n1. **PASSEPORT - PARIS**\\n   📆 mardi 03/11/2026\\n   🕒 09:00 - 09:30\\n   👥 Places disponibles : 2\\n\\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 ».\"}",
+    "responseJson": {
+      "type": "availability",
+      "title": "Créneaux disponibles",
+      "slots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "availableSlots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "text": "📅 J'ai trouvé 1 créneau(x) disponible(s) :\n\n1. **PASSEPORT - PARIS**\n   📆 mardi 03/11/2026\n   🕒 09:00 - 09:30\n   👥 Places disponibles : 2\n\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 »."
+    },
+    "memoryBefore": "77.73MiB / 1.5GiB",
+    "memoryAfter": "1.085GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /appointments/availability 200": 4
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 1,
+    "hasPost": false,
+    "session": {
+      "session_id": "rec008-8f2b1-slot-01",
+      "intent": "GET_AVAILABILITY",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "GET_AVAILABILITY",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "",
+      "last_user_message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026.",
+      "nom_null": "t",
+      "prenom_null": "t"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 6,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|6|0|0"
+    },
+    "has900": true,
+    "no1000": true,
+    "slotsMemorized": true,
+    "ok": true
+  },
+  "msg2": {
+    "status": 200,
+    "elapsedMs": 35947,
+    "responsePreview": "{\"sessionId\":\"rec008-8f2b1-slot-01\",\"conversationStep\":\"ASK_CREATE_SERVICE\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":null,\"telephone\":null,\"missing\":[\"le créneau choisi\",\"le nom\",\"le prénom\",\"l'adresse e-mail\",\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":false,\"emailValide\":false,\"telephoneValide\":false},\"type\":\"create_appointment_question\",\"text\":\"🗓️ **Création d'un rendez-vous**\\n\\nPour quel service souhaitez-vous prendre rendez-vous ?\\n\\nExemple : **Passeport**\"}",
+    "responseJson": {
+      "sessionId": "rec008-8f2b1-slot-01",
+      "conversationStep": "ASK_CREATE_SERVICE",
+      "attemptAction": "COLLECT",
+      "modifyField": null,
+      "openAttempt": null,
+      "reference": null,
+      "ready": false,
+      "claimAcquired": false,
+      "pendingAction": null,
+      "telephone": null,
+      "missing": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": false,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "type": "create_appointment_question",
+      "text": "🗓️ **Création d'un rendez-vous**\n\nPour quel service souhaitez-vous prendre rendez-vous ?\n\nExemple : **Passeport**"
+    },
+    "memoryBefore": "1.087GiB / 1.5GiB",
+    "memoryAfter": "1.112GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 0,
+    "postIncreased": false,
+    "hasPost": false,
+    "session": {
+      "session_id": "rec008-8f2b1-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "ASK_CREATE_SERVICE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[]",
+      "selected_slot_index": "1",
+      "last_user_message": "Je prends le 1.",
+      "nom_null": "t",
+      "prenom_null": "t"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 6,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|6|0|0"
+    },
+    "asksNom": true,
+    "ok": false,
+    "noPostEver": true
+  },
+  "reason": "msg2-fail",
+  "suspectNode": "Gérer collecte progressive / Parser intention",
+  "deactivate": {
+    "tag": "msg2-fail",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "versionCounter": 4,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 6,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|6|0|0"
+    },
+    "sessions": [
+      "rec008-8f1c-services-01",
+      "rec008-8f1d-availability-01",
+      "rec008-8f1fd-memory-01",
+      "rec008-8f1fe-full-01",
+      "rec008-8f2b1-slot-01",
+      "rec008-session-synthetique"
+    ],
+    "session": {
+      "session_id": "rec008-8f2b1-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "ASK_CREATE_SERVICE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[]",
+      "selected_slot_index": "1",
+      "last_user_message": "Je prends le 1.",
+      "nom_null": "t",
+      "prenom_null": "t"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "consultationOk": true,
+    "slotDisplayed": true,
+    "uuidSelected": false,
+    "memoryPreserved": false,
+    "createPending": true,
+    "askNom": false,
+    "noAttempt": true,
+    "noPost": true,
+    "rdvUnchanged": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

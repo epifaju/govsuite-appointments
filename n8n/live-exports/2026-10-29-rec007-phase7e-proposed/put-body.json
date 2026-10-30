@@ -1,0 +1,439 @@
+{
+  "name": "03_API_CreateAppointment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointments",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "97d74272-a674-410c-939c-b23418e75c95",
+      "name": "POST /appointments",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "47f1b9b9-e630-48d5-b685-d8efc896fb44"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body || {};\nconst headers = $json.headers || {};\nconst clean = (v) => String(v ?? '').trim().normalize('NFC');\nconst missing = (v) => v === undefined || v === null || String(v).trim() === '';\nconst fail = (message) => [{ json: { ok: false, error: { code: 'VALIDATION_ERROR', message } } }];\nif (missing(b.slotId)) return fail('Le champ slotId est obligatoire.');\nif (missing(b.nom)) return fail('Le champ nom est obligatoire.');\nif (missing(b.prenom)) return fail('Le champ prénom est obligatoire.');\nconst slotId = String(b.slotId).trim();\nif (!/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slotId)) return fail('Le champ slotId est invalide.');\nconst fromBody = b.cleIdempotence === undefined || b.cleIdempotence === null ? '' : String(b.cleIdempotence).trim();\nconst rawHeader = headers['idempotency-key'] ?? headers['Idempotency-Key'];\nconst fromHeader = rawHeader === undefined || rawHeader === null ? '' : String(rawHeader).trim();\nif (fromBody && fromHeader && fromBody !== fromHeader) return fail('Les alias de la clé d\\'idempotence ne correspondent pas.');\nconst cleIdempotence = fromBody || fromHeader || null;\nif (cleIdempotence && !/^[A-Za-z0-9._~-]{16,128}$/.test(cleIdempotence)) return fail('Le champ cleIdempotence est invalide.');\nreturn [{\n  json: {\n    ok: true,\n    slotId,\n    nom: clean(b.nom),\n    prenom: clean(b.prenom),\n    email: clean(b.email),\n    telephone: clean(b.telephone),\n    numeroDocument: clean(b.numeroDocument),\n    langue: clean(b.langue || 'fr'),\n    cleIdempotence\n  }\n}];"
+      },
+      "id": "7116ffb2-52f1-40eb-97f1-9131b78334cd",
+      "name": "Valider demande",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT issue, id, reference, token_gestion, statut, email, telephone, debut, fin, service, site\nFROM public.creer_rendez_vous_idempotent(\n  $1::uuid,\n  $2,\n  $3,\n  NULLIF($4, ''),\n  NULLIF($5, ''),\n  NULLIF($6, ''),\n  NULLIF($7, ''),\n  NULLIF($8, '')\n);",
+        "options": {
+          "queryReplacement": "={{ [$json.slotId, $json.nom, $json.prenom, $json.email, $json.telephone, $json.numeroDocument, $json.langue, $json.cleIdempotence] }}"
+        }
+      },
+      "id": "36c17325-2c1b-4a98-8da3-e10dd4512f53",
+      "name": "Créer rendez-vous",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        528,
+        0
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "LlHYqyFvq4IkYbhP",
+          "name": "credentials PostgreSQL"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: true,\n  appointment: {\n    id: $json.id,\n    reference: $json.reference,\n    token_gestion: $json.token_gestion,\n    statut: $json.statut,\n    email: $json.email,\n    telephone: $json.telephone,\n    debut: $json.debut,\n    fin: $json.fin,\n    service: $json.service,\n    site: $json.site\n  }\n}) }}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "17d0df3f-39d1-44f1-b22b-f3c6cd6af289",
+      "name": "Répondre",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1408,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: false,\n  created: false,\n  message: \"Créneau introuvable ou complet\"\n}) }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "e2051621-b559-42db-8fc8-bbd9f97ca548",
+      "name": "Répondre créneau indisponible"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e97a0eee-8ee6-4ae6-898c-e7f3de85eed5",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        400,
+        0
+      ],
+      "id": "eced2180-72fc-49c5-ab34-e7c5eedf95d5",
+      "name": "Demande valide ?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: $json.error }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        400,
+        220
+      ],
+      "id": "33fa62d8-30db-44e3-9944-eda5e2f9d25a",
+      "name": "Répondre validation"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: { code: \"INTERNAL_ERROR\", message: \"La création du rendez-vous n'a pas pu être traitée.\" } }) }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        700,
+        220
+      ],
+      "id": "f963a181-7808-47c4-9608-3775ee4c6a6a",
+      "name": "Répondre erreur interne"
+    },
+    {
+      "parameters": {
+        "jsCode": "let errorItems = [];\ntry {\n  errorItems = $items('Créer rendez-vous', 1) || [];\n} catch (e) {\n  errorItems = [];\n}\nif (errorItems.length > 0) return [];\nreturn $input.all();"
+      },
+      "id": "7bac1cbb-8343-4ea9-87d3-53f81c8d18a4",
+      "name": "Conserver le résultat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "values": [
+            {
+              "outputKey": "CREATED",
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "6a1c0e44-2d8b-4f0a-9c55-1b7e3a9d0c21",
+                    "leftValue": "={{ $json.issue }}",
+                    "rightValue": "CREATED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "outputKey": "REPLAYED",
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7b2d1f55-3e9c-4a1b-8d66-2c8f4b0e1d32",
+                    "leftValue": "={{ $json.issue }}",
+                    "rightValue": "REPLAYED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "outputKey": "KEY_CONFLICT",
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8c3e2a66-4f0d-4b2c-9e77-3d9a5c1f2e43",
+                    "leftValue": "={{ $json.issue }}",
+                    "rightValue": "KEY_CONFLICT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "outputKey": "SLOT_UNAVAILABLE",
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9d4f3b77-5a1e-4c3d-af88-4e0b6d2a3f54",
+                    "leftValue": "={{ $json.issue }}",
+                    "rightValue": "SLOT_UNAVAILABLE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Inattendu"
+        }
+      },
+      "id": "4c1a9e2b-7d55-4f18-9c3a-6e8b0a1d2f47",
+      "name": "Classer le résultat",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: true,\n  created: false,\n  replayed: true,\n  appointment: {\n    id: $json.id,\n    reference: $json.reference,\n    token_gestion: $json.token_gestion,\n    statut: $json.statut,\n    email: $json.email,\n    telephone: $json.telephone,\n    debut: $json.debut,\n    fin: $json.fin,\n    service: $json.service,\n    site: $json.site\n  }\n}) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a9e3c1d4-2b67-4e90-8f15-3c7d6a0b5e28",
+      "name": "Répondre replay",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1408,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({\n  success: false,\n  error: {\n    code: 'IDEMPOTENCY_KEY_CONFLICT',\n    message: \"La clé d'idempotence est déjà utilisée pour une autre demande.\"\n  }\n}) }}",
+        "options": {
+          "responseCode": 409
+        }
+      },
+      "id": "b2d4f6a8-1c35-4a79-9e02-5f8c7b6d4e10",
+      "name": "Répondre conflit idempotence",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1408,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "POST /appointments": {
+      "main": [
+        [
+          {
+            "node": "Valider demande",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider demande": {
+      "main": [
+        [
+          {
+            "node": "Demande valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Demande valide ?": {
+      "main": [
+        [
+          {
+            "node": "Créer rendez-vous",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer rendez-vous": {
+      "main": [
+        [
+          {
+            "node": "Conserver le résultat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre erreur interne",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conserver le résultat": {
+      "main": [
+        [
+          {
+            "node": "Classer le résultat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classer le résultat": {
+      "main": [
+        [
+          {
+            "node": "Répondre",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre replay",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre conflit idempotence",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre créneau indisponible",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Répondre erreur interne",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": {},
+  "nodeGroups": []
+}

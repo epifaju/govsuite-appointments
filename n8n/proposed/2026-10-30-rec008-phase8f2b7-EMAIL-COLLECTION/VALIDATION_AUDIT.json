@@ -1,0 +1,45 @@
+{
+  "phase": "8F-2B7",
+  "validationAnomaly": {
+    "slotIdPersisted": true,
+    "nomPersisted": true,
+    "prenomPersisted": true,
+    "emailPersisted": true,
+    "slotIdValide": false,
+    "emailValide": false,
+    "missingHasCreneau": true,
+    "missingHasNom": true,
+    "missingHasPrenom": true,
+    "missingHasEmail": true,
+    "conversationStep": "ASK_TELEPHONE",
+    "responseStep": "ASK_TELEPHONE",
+    "ready": false,
+    "claimAcquired": false,
+    "asksTelephone": true,
+    "rootCauseNode": "Décider action tentative",
+    "validationNode": "Valider paramètres création",
+    "rootCause": "Décider action tentative reconstruit un JSON réduit (sessionId, conversationStep, attemptAction, …) sans slotId/nom/prenom/email/telephone/intent/pendingAction. COLLECT n’est pas une règle Aiguiller → fallback extra → Valider paramètres création, qui calcule missing/slotIdValide sur ce payload vide. conversationStep reste celui de Gérer car le bloc de réécriture de Valider exige intent/pendingAction absents du payload.",
+    "executionPath": "Fusionner état conversation → Gérer collecte progressive → Sauvegarder → Router intention → Décider action tentative (projection destructive) → Aiguiller tentative (fallback COLLECT) → Valider paramètres création → Création prête ? (ready=false) → Demander paramètres création",
+    "timing": "après fusion/session, mais sur une projection appauvrie — pas avant la fusion",
+    "c5Impact": "Tant que attemptAction reste COLLECT, Valider verra toujours des champs vides. Le passage C5 dépend de createDecision/INSERT/CLAIM dans Décider/Gérer, pas de Valider.ready (qui exige claimAcquired). Risque : missing trompeur dans le JSON jusqu’à confirmation ; ready reste false sur la branche COLLECT."
+  },
+  "observed": {
+    "missing": [
+      "le créneau choisi",
+      "le nom",
+      "le prénom",
+      "l'adresse e-mail",
+      "le numéro de téléphone"
+    ],
+    "validation": {
+      "slotIdValide": false,
+      "emailValide": false,
+      "telephoneValide": false
+    },
+    "conversationStep": "ASK_TELEPHONE",
+    "ready": false,
+    "claimAcquired": false,
+    "text": "📱 Quel est votre **numéro de téléphone** ?",
+    "type": "create_appointment_question"
+  }
+}

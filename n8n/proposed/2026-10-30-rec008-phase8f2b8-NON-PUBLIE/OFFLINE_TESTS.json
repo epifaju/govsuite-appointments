@@ -1,0 +1,401 @@
+{
+  "phase": "8F-2B8",
+  "option": "B",
+  "allPass": true,
+  "tests": [
+    {
+      "id": "T15",
+      "title": "Anomalie reproduite (code actuel)",
+      "pass": true,
+      "detail": {
+        "sessionId": "rec008-8f2b4-slot-01",
+        "conversationStep": "ASK_TELEPHONE",
+        "attemptAction": "COLLECT",
+        "modifyField": null,
+        "openAttempt": null,
+        "reference": null,
+        "ready": false,
+        "claimAcquired": false,
+        "pendingAction": null,
+        "telephone": null,
+        "missing": [
+          "le créneau choisi",
+          "le nom",
+          "le prénom",
+          "l'adresse e-mail",
+          "le numéro de téléphone"
+        ],
+        "validation": {
+          "slotIdValide": false,
+          "emailValide": false,
+          "telephoneValide": false
+        }
+      }
+    },
+    {
+      "id": "T1",
+      "title": "Slot valide correctement reconnu",
+      "pass": true,
+      "detail": {
+        "slotIdValide": true,
+        "emailValide": true,
+        "telephoneValide": false
+      }
+    },
+    {
+      "id": "T2",
+      "title": "Nom correctement reconnu",
+      "pass": true,
+      "detail": [
+        "le numéro de téléphone"
+      ]
+    },
+    {
+      "id": "T3",
+      "title": "Prénom correctement reconnu",
+      "pass": true,
+      "detail": [
+        "le numéro de téléphone"
+      ]
+    },
+    {
+      "id": "T4",
+      "title": "E-mail valide correctement reconnu",
+      "pass": true,
+      "detail": {
+        "slotIdValide": true,
+        "emailValide": true,
+        "telephoneValide": false
+      }
+    },
+    {
+      "id": "T5",
+      "title": "Téléphone manquant correctement signalé",
+      "pass": true,
+      "detail": [
+        "le numéro de téléphone"
+      ]
+    },
+    {
+      "id": "T6",
+      "title": "missing reflète les données collectées",
+      "pass": true,
+      "detail": [
+        "le numéro de téléphone"
+      ]
+    },
+    {
+      "id": "T16",
+      "title": "Correction de l’anomalie (code proposé)",
+      "pass": true,
+      "detail": {
+        "missing": [
+          "le numéro de téléphone"
+        ],
+        "validation": {
+          "slotIdValide": true,
+          "emailValide": true,
+          "telephoneValide": false
+        },
+        "ready": false
+      }
+    },
+    {
+      "id": "T7",
+      "title": "COLLECT ne déclenche pas de POST",
+      "pass": true,
+      "detail": {
+        "attemptAction": "COLLECT",
+        "target": "Valider paramètres création",
+        "ready": false
+      }
+    },
+    {
+      "id": "T8",
+      "title": "INSERT ne déclenche pas de POST",
+      "pass": true,
+      "detail": {
+        "sessionId": "s",
+        "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+        "attemptAction": "INSERT",
+        "modifyField": null,
+        "openAttempt": null,
+        "reference": null,
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "T9",
+      "title": "CLAIM sans lease acquis ne déclenche pas de POST",
+      "pass": true,
+      "detail": {
+        "sessionId": "s",
+        "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+        "attemptAction": "CLAIM",
+        "modifyField": null,
+        "openAttempt": {
+          "status": "AWAITING_CONFIRMATION",
+          "leaseUntil": "2026-10-30T23:09:58.553Z",
+          "expiresAt": "2026-10-30T23:18:58.559Z",
+          "reference": "REF-1"
+        },
+        "reference": "REF-1",
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "T10",
+      "title": "RESUME sans lease acquis ne déclenche pas de POST",
+      "pass": true,
+      "detail": {
+        "sessionId": "s",
+        "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+        "attemptAction": "RESUME",
+        "modifyField": null,
+        "openAttempt": {
+          "status": "UNCERTAIN",
+          "leaseUntil": "2026-10-30T23:08:57.559Z",
+          "expiresAt": "2026-10-30T23:18:58.559Z"
+        },
+        "reference": null,
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "T11",
+      "title": "CLAIM avec lease acquis conserve ready=claimAcquired seulement",
+      "pass": true,
+      "detail": {
+        "ready": true,
+        "missing": []
+      }
+    },
+    {
+      "id": "T12",
+      "title": "UNCERTAIN ne devient jamais automatiquement CONFIRMED",
+      "pass": true,
+      "detail": {
+        "sessionId": "s",
+        "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+        "attemptAction": "RESUME",
+        "modifyField": null,
+        "openAttempt": {
+          "status": "UNCERTAIN",
+          "leaseUntil": "2026-10-30T23:08:57.561Z",
+          "expiresAt": "2026-10-30T23:18:58.561Z",
+          "reference": "REF-U"
+        },
+        "reference": "REF-U",
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "T13",
+      "title": "Nouvelle demande indépendante ne réutilise pas les données précédentes",
+      "pass": true,
+      "detail": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ]
+    },
+    {
+      "id": "T14",
+      "title": "Tentative ABANDONED non réutilisée (reste COLLECT)",
+      "pass": true,
+      "detail": {
+        "sessionId": "s",
+        "conversationStep": "ASK_TELEPHONE",
+        "attemptAction": "COLLECT",
+        "modifyField": null,
+        "openAttempt": {
+          "status": "ABANDONED",
+          "reference": "REF-OLD"
+        },
+        "reference": "REF-OLD",
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "T17",
+      "title": "Aucune modification de clé d’idempotence",
+      "pass": true,
+      "detail": {
+        "empreinte": "Calculer empreinte du corps",
+        "empreinteSha": "38a9f8099dd9fc4c1ad4d9b085ee30559ea3e38e8b47eecb5a176b4b8c5d16bb",
+        "corpsSha": "a33c780bd55a6c37167f79531a34df73149125af0ca38fce2154633bbaf27ed8"
+      }
+    },
+    {
+      "id": "T18",
+      "title": "Aucun nouveau chemin vers Appeler CreateAppointment",
+      "pass": true,
+      "detail": {
+        "createPred": [
+          "Corps figé présent ?"
+        ],
+        "createReachCollect": false,
+        "createReachInsert": false,
+        "nodes": 134,
+        "edges": 137
+      }
+    },
+    {
+      "id": "T19",
+      "title": "ready reste false sans claimAcquired même si champs complets",
+      "pass": true,
+      "detail": {
+        "ready": false,
+        "missing": []
+      }
+    },
+    {
+      "id": "T20",
+      "title": "Décider inchangé (projection routing conservée)",
+      "pass": true,
+      "detail": "Décider does not pass slotId"
+    },
+    {
+      "id": "T21",
+      "title": "Credentials/URL/webhook/settings conservés",
+      "pass": true,
+      "detail": {
+        "urls": 10,
+        "webhook": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603"
+      }
+    }
+  ],
+  "anomalyBefore": {
+    "sessionId": "rec008-8f2b4-slot-01",
+    "conversationStep": "ASK_TELEPHONE",
+    "attemptAction": "COLLECT",
+    "modifyField": null,
+    "openAttempt": null,
+    "reference": null,
+    "ready": false,
+    "claimAcquired": false,
+    "pendingAction": null,
+    "telephone": null,
+    "missing": [
+      "le créneau choisi",
+      "le nom",
+      "le prénom",
+      "l'adresse e-mail",
+      "le numéro de téléphone"
+    ],
+    "validation": {
+      "slotIdValide": false,
+      "emailValide": false,
+      "telephoneValide": false
+    }
+  },
+  "fixedAfter": {
+    "sessionId": "rec008-8f2b4-slot-01",
+    "conversationStep": "ASK_TELEPHONE",
+    "attemptAction": "COLLECT",
+    "modifyField": null,
+    "openAttempt": null,
+    "reference": null,
+    "ready": false,
+    "claimAcquired": false,
+    "pendingAction": "CREATE_APPOINTMENT",
+    "telephone": null,
+    "missing": [
+      "le numéro de téléphone"
+    ],
+    "validation": {
+      "slotIdValide": true,
+      "emailValide": true,
+      "telephoneValide": false
+    }
+  },
+  "pathAudit": {
+    "steps": [
+      {
+        "node": "Fusionner état conversation",
+        "has": [
+          "slotId",
+          "nom",
+          "prenom",
+          "email",
+          "telephone",
+          "intent",
+          "pendingAction",
+          "conversationStep",
+          "availableSlots"
+        ]
+      },
+      {
+        "node": "Gérer collecte progressive",
+        "has": [
+          "slotId",
+          "nom",
+          "prenom",
+          "email",
+          "telephone",
+          "intent",
+          "pendingAction",
+          "conversationStep",
+          "createDecision"
+        ]
+      },
+      {
+        "node": "Sauvegarder état conversation",
+        "has": [
+          "persists PG fields"
+        ],
+        "note": "slot_id/nom/prenom/email en base"
+      },
+      {
+        "node": "Router intention",
+        "has": [
+          "full saved json"
+        ]
+      },
+      {
+        "node": "Décider action tentative",
+        "has": [
+          "sessionId",
+          "conversationStep",
+          "attemptAction",
+          "ready:false",
+          "claimAcquired:false"
+        ],
+        "missing": [
+          "slotId",
+          "nom",
+          "prenom",
+          "email",
+          "telephone",
+          "intent",
+          "pendingAction"
+        ],
+        "destructive": true
+      },
+      {
+        "node": "Aiguiller tentative",
+        "note": "COLLECT → fallback extra → Valider"
+      },
+      {
+        "node": "Valider paramètres création",
+        "before": "valide le payload réduit",
+        "after": "hydrate depuis Gérer pour missing/validation"
+      },
+      {
+        "node": "Création prête ?",
+        "note": "ready === true seulement si claimAcquired"
+      },
+      {
+        "node": "Demander paramètres création",
+        "note": "utilise conversationStep"
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+Parser intention: extraction dateDebut/dateFin qualifiee + validation calendaire
+Fusionner etat conversation: branche else utilise pick() au lieu de current ?? null
+Gerer collecte progressive: pendingAction GET_AVAILABILITY conserve pour les tours suivants
+nodes=134 edges=137

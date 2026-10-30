@@ -1,0 +1,3 @@
+SELECT
+  gen_random_uuid()::text AS "attemptId",
+  'rec008-' || encode(public.gen_random_bytes(32), 'hex') AS "idempotencyKey";

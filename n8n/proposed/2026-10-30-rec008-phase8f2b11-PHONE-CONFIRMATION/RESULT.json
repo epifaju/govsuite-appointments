@@ -1,0 +1,285 @@
+{
+  "phase": "8F-2B11",
+  "sessionId": "rec008-8f2b4-slot-01",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "pass": true,
+  "stopped": false,
+  "contract": {
+    "safeToActivate": true,
+    "samplePhoneValidByRule": true,
+    "phoneMinDigits": 8,
+    "createParents": [
+      "Corps figé présent ?"
+    ],
+    "insertReachableIncludesCreate": false,
+    "insertReachableIncludesComposer": true,
+    "readyRequiresClaimAcquired": true
+  },
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "validerSha": "7b237d3fd446d30cca1cc56ff406cc3a9fc3afccdee50cad62c3248b8607f162",
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_TELEPHONE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "",
+      "last_user_message": "abc"
+    },
+    "openAttempts": 0,
+    "attempts": [],
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 94470,
+    "responsePreview": "{\"type\":\"create_appointment_question\",\"conversationStep\":\"AWAIT_CREATE_CONFIRMATION\",\"text\":\"Veuillez confirmer la création du rendez-vous.\\n\\nService : PASSEPORT\\nSite : PARIS\\nDate : mardi 03 novembre 2026\\nHeure : 09:00 – 09:30\\nNom : Dupont\\nPrénom : Camille\\nAdresse : camille.essai@example.test\\nTéléphone : +33000000000\\n\\nRépondez exactement oui pour créer ce rendez-vous, non pour abandonner, ou indiquez le champ à modifier.\"}",
+    "responseJson": {
+      "type": "create_appointment_question",
+      "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+      "text": "Veuillez confirmer la création du rendez-vous.\n\nService : PASSEPORT\nSite : PARIS\nDate : mardi 03 novembre 2026\nHeure : 09:00 – 09:30\nNom : Dupont\nPrénom : Camille\nAdresse : camille.essai@example.test\nTéléphone : +33000000000\n\nRépondez exactement oui pour créer ce rendez-vous, non pour abandonner, ou indiquez le champ à modifier."
+    },
+    "memoryBefore": "79.27MiB / 1.5GiB",
+    "memoryAfter": "1.165GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 0,
+    "hasPost": false,
+    "sessionBefore": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_TELEPHONE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "",
+      "last_user_message": "abc"
+    },
+    "sessionAfter": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "attempts": [
+      {
+        "status": "AWAITING_CONFIRMATION",
+        "hasLeaseOwner": false,
+        "hasLeaseUntil": false,
+        "hasAppointmentReference": false,
+        "hasIdempotencyKey": true,
+        "hasRequestPayload": true,
+        "requestPayloadPreviewRedacted": "{\"nom\": \"Dupont\", \"email\":\"[REDACTED]\", \"langue\": \"fr\", \"prenom\": \"Camille\", \"slotId\": \"33333333-3333-4333-8333-333333333333\", \"telephone\":\"[REDACTED]\", \"cleIdempotence\":\"[REDACTED]\", \"numeroDocument\": \"\"}",
+        "hasFingerprint": true,
+        "hasSubmittedAt": false,
+        "hasConfirmedAt": false
+      }
+    ],
+    "phonePersisted": true,
+    "stepOk": true,
+    "asksConfirm": true,
+    "recapHasFields": true,
+    "claimsAlreadyBooked": false,
+    "exposesManagementToken": false,
+    "exposesFinalReference": false,
+    "validation": null,
+    "missing": [],
+    "bodyLooksConsistent": true,
+    "note": "Branche INSERT → Composer: pas de validation/missing/ready dans le JSON récap (contrat).",
+    "ok": true
+  },
+  "reason": null,
+  "suspectNode": "Composer récapitulatif",
+  "deactivate": {
+    "tag": "scenario-fail",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000"
+    },
+    "openAttempts": 1,
+    "attempts": [
+      {
+        "status": "AWAITING_CONFIRMATION",
+        "hasLeaseOwner": false,
+        "hasLeaseUntil": false,
+        "hasAppointmentReference": false,
+        "hasIdempotencyKey": true,
+        "hasRequestPayload": true,
+        "requestPayloadPreviewRedacted": "{\"nom\": \"Dupont\", \"email\":\"[REDACTED]\", \"langue\": \"fr\", \"prenom\": \"Camille\", \"slotId\": \"33333333-3333-4333-8333-333333333333\", \"telephone\":\"[REDACTED]\", \"cleIdempotence\":\"[REDACTED]\", \"numeroDocument\": \"\"}",
+        "hasFingerprint": true,
+        "hasSubmittedAt": false,
+        "hasConfirmedAt": false
+      }
+    ],
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "phonePersisted": true,
+    "awaitConfirmation": true,
+    "asksConfirm": true,
+    "recapHasFields": true,
+    "noFalseBookingClaim": true,
+    "attemptAwaiting": true,
+    "noPost": true,
+    "readyNotGranted": true,
+    "claimNotGranted": true,
+    "deactivated": true,
+    "postOk": true,
+    "bodyLooksConsistent": true,
+    "reevalOffline": true
+  },
+  "reevalNote": "bodyLooksConsistent recalculé hors ligne: le corps figé ne contient pas service/site (contrat payload), seulement slotId/identité/téléphone/cleIdempotence. Aucun second message."
+}

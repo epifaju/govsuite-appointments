@@ -1,0 +1,38 @@
+let prep = {};
+try { prep = $('Appliquer corps gagnant').item.json ?? {}; } catch (e) { prep = {}; }
+let status = Number($json.statusCode || 0);
+let body = $json.body ?? $json.data ?? null;
+if (typeof body === 'string') {
+  try { body = JSON.parse(body); } catch (e) { body = null; }
+}
+const errorCode = body && body.error && body.error.code;
+const message = body && (body.message || (body.error && body.error.message));
+let httpOutcome = 'UNCERTAIN';
+if (!status || body === null) {
+  httpOutcome = 'UNCERTAIN';
+} else if (status === 201 || (status === 200 && body && body.replayed === true && body.created === false)) {
+  httpOutcome = 'CONFIRMED';
+} else if (status === 400) {
+  httpOutcome = 'REJECTED';
+} else if (status === 409 && errorCode === 'IDEMPOTENCY_KEY_CONFLICT') {
+  httpOutcome = 'REJECTED';
+} else if (status === 409 && message === 'Créneau introuvable ou complet') {
+  httpOutcome = 'SLOT_UNAVAILABLE';
+} else {
+  httpOutcome = 'UNCERTAIN';
+}
+const appointment = body && body.appointment ? body.appointment : null;
+return [{
+  json: {
+    httpOutcome,
+    attemptId: prep.attemptId,
+    sessionId: prep.sessionId,
+    leaseOwner: prep.leaseOwner,
+    appointmentId: appointment && appointment.id ? appointment.id : null,
+    appointmentReference: appointment && appointment.reference ? appointment.reference : null,
+    appointment: appointment,
+    success: body && body.success === true,
+    created: body && body.created === true,
+    replayed: body && body.replayed === true
+  }
+}];

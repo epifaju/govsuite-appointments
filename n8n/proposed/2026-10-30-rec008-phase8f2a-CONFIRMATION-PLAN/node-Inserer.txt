@@ -1,0 +1,18 @@
+WITH input AS (
+  SELECT $1::jsonb AS data
+)
+INSERT INTO public.ai_appointment_attempt (
+  id, session_id, idempotency_key, request_payload, request_fingerprint, status, expires_at
+)
+SELECT
+  (data->>'attemptId')::uuid,
+  data->>'sessionId',
+  data->>'idempotencyKey',
+  data->'requestPayload',
+  data->>'fingerprint',
+  'AWAITING_CONFIRMATION',
+  NOW() + INTERVAL '2 hours'
+FROM input
+WHERE (data->>'idempotencyKey') ~ '^[A-Za-z0-9._~-]{16,128}$'
+  AND (data->'requestPayload'->>'cleIdempotence') = data->>'idempotencyKey'
+RETURNING id::text AS attempt_id, status;

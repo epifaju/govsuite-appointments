@@ -1,0 +1,135 @@
+{
+  "ok": true,
+  "putStatus": 200,
+  "putMessage": null,
+  "candidateSha": "d90d5e77165579949b2f520c3fb85ad9f544f8dba3afe8b022ee0a8eb96c6a91",
+  "beforeSha": "be5037e4664875c0a927d21181ea4bc81a6d11ffb70889956993c8ddb67ed8d4",
+  "payloadSha": "be5fc6c03c00c812a31b76dfc1f5dc6d1fb4d4b33e7cb77b86ba96edd4e65371",
+  "afterSha": "cbb56243bf997dbda3c97c1418593297d2a6858fb17c07132a456b564b526ba1",
+  "afterValiderSha": "7b237d3fd446d30cca1cc56ff406cc3a9fc3afccdee50cad62c3248b8607f162",
+  "validerMatch": true,
+  "decideUnchangedAfter": true,
+  "newVersionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "newVersionCounter": 6,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "urls": [
+      "http://rec008-mock:8080/services",
+      "http://rec008-mock:8080/appointments/availability",
+      "http://rec008-mock:8080/appointments",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/cancel",
+      "http://rec008-mock:8080/appointments/reschedule",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/availability",
+      "http://rec008-mock:8080/appointments/manage"
+    ],
+    "settings": {
+      "availableInMCP": false,
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "saveExecutionProgress": false
+    },
+    "pg": "1|7|0|0",
+    "session": {
+      "intent": "CREATE_APPOINTMENT",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_TELEPHONE",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true,
+    "beforeSha": "be5037e4664875c0a927d21181ea4bc81a6d11ffb70889956993c8ddb67ed8d4",
+    "liveValiderBeforeSha": "6fa62389cdecbc5024081ca51d306e26ffa98b1b27808ba30ee72c22a66772be",
+    "liveDecideSha": "eb7b8e3e3da17a1c5c514cf6ef149af6ba8b0c238fd27b3c8549d1f9390c9f95"
+  },
+  "after": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "parameterDiffs": [
+      "Valider paramètres création"
+    ],
+    "credentialDiffs": [],
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "webhooksRows": 0
+  },
+  "postflight": {
+    "pg": "1|7|0|0",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "security": {
+    "validerHydratesFromGerer": true,
+    "readyIsClaimOnly": true,
+    "decideUnchanged": true,
+    "claimSqlUnchanged": true,
+    "classerUnchanged": true,
+    "uncertainMarkerUnchanged": true,
+    "corpsFigeUnchanged": true,
+    "empreinteUnchanged": true,
+    "createParents": true
+  }
+}

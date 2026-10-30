@@ -1,0 +1,14 @@
+{
+  "pg": "1|7|0|0",
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "govOk": true,
+  "mock": {
+    "scenario": "created",
+    "total": 6,
+    "byPath": {
+      "GET /appointments/availability 200": 6
+    },
+    "distinctKeys": 0
+  },
+  "mockOk": true
+}

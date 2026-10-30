@@ -1,0 +1,90 @@
+# Copie 8E-2B-4 du Compose déployé. Le fichier 8E-2B-2 n'est pas modifié.
+# Ajout : rec008-ollama, réseau interne seulement, aucun port publié.
+
+name: govsuite-rec008-test
+
+services:
+  rec008-postgres:
+    image: postgres:16.14-alpine
+    environment:
+      POSTGRES_DB: govsuite_rec008_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${REC008_POSTGRES_PASSWORD:?mot de passe bootstrap requis}
+      TZ: Europe/Paris
+    volumes:
+      - rec008_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d govsuite_rec008_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - rec008_test
+
+  rec008-mock:
+    image: node:24-alpine
+    command: ["node", "/opt/rec008-mock/server.mjs"]
+    volumes:
+      - ../2026-10-30-rec008-phase8e2b2-TEST-DEPLOY/mock/server.mjs:/opt/rec008-mock/server.mjs:ro
+    environment:
+      REC008_MOCK_SCENARIO: created
+    networks:
+      - rec008_test
+
+  rec008-n8n:
+    image: docker.n8n.io/n8nio/n8n:2.32.6
+    depends_on:
+      rec008-postgres:
+        condition: service_healthy
+      rec008-mock:
+        condition: service_started
+    environment:
+      GENERIC_TIMEZONE: Europe/Paris
+      TZ: Europe/Paris
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      N8N_EDITOR_BASE_URL: http://localhost:5682/
+      WEBHOOK_URL: http://localhost:5682/
+      N8N_ENCRYPTION_KEY: ${REC008_N8N_ENCRYPTION_KEY:?clef de test requise}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_SECURE_COOKIE: "false"
+    volumes:
+      - rec008_n8n_data:/home/node/.n8n
+    networks:
+      - rec008_test
+
+  rec008-publish:
+    image: node:24-alpine
+    command: ["node", "/opt/rec008-publish/proxy.mjs"]
+    depends_on:
+      - rec008-n8n
+    volumes:
+      - ../2026-10-30-rec008-phase8e2b2-TEST-DEPLOY/publish/proxy.mjs:/opt/rec008-publish/proxy.mjs:ro
+    ports:
+      - "127.0.0.1:5682:5682"
+    networks:
+      - rec008_test
+      - rec008_publish
+
+  rec008-ollama:
+    image: ollama/ollama@sha256:1868fd51253099b8f48b89b981e5d8ba23e4db161a501b86e29593071c1c069b
+    restart: unless-stopped
+    mem_limit: 1536m
+    cpus: 1.5
+    volumes:
+      - rec008_ollama_data:/root/.ollama
+    networks:
+      - rec008_test
+
+volumes:
+  rec008_postgres_data:
+  rec008_n8n_data:
+  rec008_ollama_data:
+
+networks:
+  rec008_test:
+    internal: true
+  rec008_publish:
+    internal: false

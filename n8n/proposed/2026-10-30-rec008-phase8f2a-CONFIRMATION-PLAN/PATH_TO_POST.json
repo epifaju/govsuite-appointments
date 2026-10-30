@@ -1,0 +1,1008 @@
+{
+  "graph": {
+    "Router intention": {
+      "in": [
+        {
+          "from": "Sauvegarder état conversation",
+          "out": 0,
+          "to": "Router intention"
+        }
+      ],
+      "out": [
+        {
+          "from": "Router intention",
+          "out": 0,
+          "type": "main",
+          "to": "Appeler GetServices"
+        },
+        {
+          "from": "Router intention",
+          "out": 1,
+          "type": "main",
+          "to": "Valider paramètres disponibilité"
+        },
+        {
+          "from": "Router intention",
+          "out": 2,
+          "type": "main",
+          "to": "Décider action tentative"
+        },
+        {
+          "from": "Router intention",
+          "out": 3,
+          "type": "main",
+          "to": "Valider token consultation"
+        },
+        {
+          "from": "Router intention",
+          "out": 4,
+          "type": "main",
+          "to": "Confirmation déjà demandée ?"
+        },
+        {
+          "from": "Router intention",
+          "out": 5,
+          "type": "main",
+          "to": "Router étape replanification"
+        },
+        {
+          "from": "Router intention",
+          "out": 6,
+          "type": "main",
+          "to": "Réponse générale"
+        },
+        {
+          "from": "Router intention",
+          "out": 7,
+          "type": "main",
+          "to": "Réponse générale"
+        }
+      ]
+    },
+    "Valider paramètres création": {
+      "in": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 11,
+          "to": "Valider paramètres création"
+        }
+      ],
+      "out": [
+        {
+          "from": "Valider paramètres création",
+          "out": 0,
+          "type": "main",
+          "to": "Création prête ?"
+        }
+      ]
+    },
+    "Création prête ?": {
+      "in": [
+        {
+          "from": "Valider paramètres création",
+          "out": 0,
+          "to": "Création prête ?"
+        }
+      ],
+      "out": [
+        {
+          "from": "Création prête ?",
+          "out": 0,
+          "type": "main",
+          "to": "Refus création sans réclamation"
+        },
+        {
+          "from": "Création prête ?",
+          "out": 1,
+          "type": "main",
+          "to": "Demander paramètres création"
+        }
+      ]
+    },
+    "Demander paramètres création": {
+      "in": [
+        {
+          "from": "Création prête ?",
+          "out": 1,
+          "to": "Demander paramètres création"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 6,
+          "to": "Demander paramètres création"
+        }
+      ],
+      "out": []
+    },
+    "Décider action tentative": {
+      "in": [
+        {
+          "from": "Router intention",
+          "out": 2,
+          "to": "Décider action tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Décider action tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Aiguiller tentative"
+        }
+      ]
+    },
+    "Aiguiller tentative": {
+      "in": [
+        {
+          "from": "Décider action tentative",
+          "out": 0,
+          "to": "Aiguiller tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Tirer aléa de tentative"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 1,
+          "type": "main",
+          "to": "Préparer réclamation ou reprise"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 2,
+          "type": "main",
+          "to": "Préparer reprise"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 3,
+          "type": "main",
+          "to": "Préparer abandon ou modification"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 4,
+          "type": "main",
+          "to": "Préparer abandon ou modification"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 5,
+          "type": "main",
+          "to": "Préparer abandon ou modification"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 6,
+          "type": "main",
+          "to": "Demander paramètres création"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 7,
+          "type": "main",
+          "to": "Réponse attente de bail"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 8,
+          "type": "main",
+          "to": "Réponse référence déjà connue"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 9,
+          "type": "main",
+          "to": "Expirer tentatives en attente"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 10,
+          "type": "main",
+          "to": "Effacer collecte orpheline"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 11,
+          "type": "main",
+          "to": "Valider paramètres création"
+        }
+      ]
+    },
+    "Tirer aléa de tentative": {
+      "in": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 0,
+          "to": "Tirer aléa de tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Tirer aléa de tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Préparer corps figé"
+        }
+      ]
+    },
+    "Insérer tentative": {
+      "in": [
+        {
+          "from": "Calculer empreinte du corps",
+          "out": 0,
+          "to": "Insérer tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Insérer tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Composer récapitulatif"
+        }
+      ]
+    },
+    "Composer récapitulatif": {
+      "in": [
+        {
+          "from": "Insérer tentative",
+          "out": 0,
+          "to": "Composer récapitulatif"
+        }
+      ],
+      "out": []
+    },
+    "Préparer réclamation ou reprise": {
+      "in": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 1,
+          "to": "Préparer réclamation ou reprise"
+        }
+      ],
+      "out": [
+        {
+          "from": "Préparer réclamation ou reprise",
+          "out": 0,
+          "type": "main",
+          "to": "Réclamer tentative"
+        }
+      ]
+    },
+    "Préparer reprise": {
+      "in": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 2,
+          "to": "Préparer reprise"
+        }
+      ],
+      "out": [
+        {
+          "from": "Préparer reprise",
+          "out": 0,
+          "type": "main",
+          "to": "Reprendre tentative"
+        }
+      ]
+    },
+    "Réclamer tentative": {
+      "in": [
+        {
+          "from": "Préparer réclamation ou reprise",
+          "out": 0,
+          "to": "Réclamer tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Réclamer tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Normaliser acquisition"
+        }
+      ]
+    },
+    "Reprendre tentative": {
+      "in": [
+        {
+          "from": "Préparer reprise",
+          "out": 0,
+          "to": "Reprendre tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Reprendre tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Normaliser acquisition"
+        }
+      ]
+    },
+    "Corps figé présent ?": {
+      "in": [
+        {
+          "from": "Appliquer corps gagnant",
+          "out": 0,
+          "to": "Corps figé présent ?"
+        }
+      ],
+      "out": [
+        {
+          "from": "Corps figé présent ?",
+          "out": 0,
+          "type": "main",
+          "to": "Appeler CreateAppointment"
+        },
+        {
+          "from": "Corps figé présent ?",
+          "out": 1,
+          "type": "main",
+          "to": "Réponse corps absent"
+        }
+      ]
+    },
+    "Appeler CreateAppointment": {
+      "in": [
+        {
+          "from": "Corps figé présent ?",
+          "out": 0,
+          "to": "Appeler CreateAppointment"
+        }
+      ],
+      "out": [
+        {
+          "from": "Appeler CreateAppointment",
+          "out": 0,
+          "type": "main",
+          "to": "Classer réponse HTTP"
+        },
+        {
+          "from": "Appeler CreateAppointment",
+          "out": 1,
+          "type": "main",
+          "to": "Classer délai HTTP"
+        }
+      ]
+    },
+    "Classer réponse HTTP": {
+      "in": [
+        {
+          "from": "Appeler CreateAppointment",
+          "out": 0,
+          "to": "Classer réponse HTTP"
+        }
+      ],
+      "out": [
+        {
+          "from": "Classer réponse HTTP",
+          "out": 0,
+          "type": "main",
+          "to": "Aiguiller résultat HTTP"
+        }
+      ]
+    },
+    "Classer délai HTTP": {
+      "in": [
+        {
+          "from": "Appeler CreateAppointment",
+          "out": 1,
+          "to": "Classer délai HTTP"
+        }
+      ],
+      "out": [
+        {
+          "from": "Classer délai HTTP",
+          "out": 0,
+          "type": "main",
+          "to": "Marquer tentative incertaine"
+        }
+      ]
+    },
+    "Aiguiller résultat HTTP": {
+      "in": [
+        {
+          "from": "Classer réponse HTTP",
+          "out": 0,
+          "to": "Aiguiller résultat HTTP"
+        }
+      ],
+      "out": [
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 0,
+          "type": "main",
+          "to": "Paramètres clôture confirmation"
+        },
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 1,
+          "type": "main",
+          "to": "Clôturer refus"
+        },
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 2,
+          "type": "main",
+          "to": "Clôturer créneau indisponible"
+        },
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 3,
+          "type": "main",
+          "to": "Marquer tentative incertaine"
+        }
+      ]
+    },
+    "Marquer tentative incertaine": {
+      "in": [
+        {
+          "from": "Classer délai HTTP",
+          "out": 0,
+          "to": "Marquer tentative incertaine"
+        },
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 3,
+          "to": "Marquer tentative incertaine"
+        }
+      ],
+      "out": [
+        {
+          "from": "Marquer tentative incertaine",
+          "out": 0,
+          "type": "main",
+          "to": "Réponse résultat incertain"
+        }
+      ]
+    },
+    "Paramètres clôture confirmation": {
+      "in": [
+        {
+          "from": "Aiguiller résultat HTTP",
+          "out": 0,
+          "to": "Paramètres clôture confirmation"
+        }
+      ],
+      "out": [
+        {
+          "from": "Paramètres clôture confirmation",
+          "out": 0,
+          "type": "main",
+          "to": "Clôturer confirmation"
+        }
+      ]
+    },
+    "Clôturer confirmation": {
+      "in": [
+        {
+          "from": "Paramètres clôture confirmation",
+          "out": 0,
+          "to": "Clôturer confirmation"
+        }
+      ],
+      "out": [
+        {
+          "from": "Clôturer confirmation",
+          "out": 0,
+          "type": "main",
+          "to": "Normaliser clôture confirmation"
+        }
+      ]
+    },
+    "Préparer abandon ou modification": {
+      "in": [
+        {
+          "from": "Aiguiller tentative",
+          "out": 3,
+          "to": "Préparer abandon ou modification"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 4,
+          "to": "Préparer abandon ou modification"
+        },
+        {
+          "from": "Aiguiller tentative",
+          "out": 5,
+          "to": "Préparer abandon ou modification"
+        }
+      ],
+      "out": [
+        {
+          "from": "Préparer abandon ou modification",
+          "out": 0,
+          "type": "main",
+          "to": "Abandonner tentative"
+        }
+      ]
+    },
+    "Abandonner tentative": {
+      "in": [
+        {
+          "from": "Préparer abandon ou modification",
+          "out": 0,
+          "to": "Abandonner tentative"
+        }
+      ],
+      "out": [
+        {
+          "from": "Abandonner tentative",
+          "out": 0,
+          "type": "main",
+          "to": "Abandon sans reprise de collecte ?"
+        }
+      ]
+    }
+  },
+  "ancestorsOfPost": [
+    "Aiguiller tentative",
+    "Appeler CreateAppointment",
+    "Appliquer corps gagnant",
+    "Charger état conversation",
+    "Comprendre la demande",
+    "Corps figé présent ?",
+    "Décider action tentative",
+    "Fusionner état conversation",
+    "Gérer collecte progressive",
+    "Joindre tentative de session",
+    "Lire tentative de session",
+    "Lorsqu'un message de chat est reçu",
+    "Normaliser acquisition",
+    "Ollama Chat Model",
+    "Parser intention",
+    "Préparer reprise",
+    "Préparer réclamation ou reprise",
+    "Reprendre tentative",
+    "Router intention",
+    "Réclamation gagnée ?",
+    "Réclamer tentative",
+    "Sauvegarder état conversation"
+  ],
+  "parents": {
+    "Appeler CreateAppointment": [
+      "Corps figé présent ?#0"
+    ],
+    "Corps figé présent ?": [
+      "Appliquer corps gagnant#0"
+    ],
+    "Appliquer corps gagnant": [
+      "Réclamation gagnée ?#0"
+    ],
+    "Réclamation gagnée ?": [
+      "Normaliser acquisition#0"
+    ],
+    "Normaliser acquisition": [
+      "Réclamer tentative#0",
+      "Reprendre tentative#0"
+    ],
+    "Réclamer tentative": [
+      "Préparer réclamation ou reprise#0"
+    ],
+    "Reprendre tentative": [
+      "Préparer reprise#0"
+    ],
+    "Préparer réclamation ou reprise": [
+      "Aiguiller tentative#1"
+    ],
+    "Préparer reprise": [
+      "Aiguiller tentative#2"
+    ],
+    "Aiguiller tentative": [
+      "Décider action tentative#0"
+    ],
+    "Décider action tentative": [
+      "Router intention#2"
+    ],
+    "Router intention": [
+      "Sauvegarder état conversation#0"
+    ],
+    "Sauvegarder état conversation": [
+      "Gérer collecte progressive#0"
+    ],
+    "Gérer collecte progressive": [
+      "Fusionner état conversation#0"
+    ],
+    "Fusionner état conversation": [
+      "Parser intention#0"
+    ],
+    "Parser intention": [
+      "Comprendre la demande#0"
+    ],
+    "Comprendre la demande": [
+      "Ollama Chat Model#0",
+      "Joindre tentative de session#0"
+    ],
+    "Joindre tentative de session": [
+      "Lire tentative de session#0"
+    ],
+    "Lire tentative de session": [
+      "Charger état conversation#0"
+    ],
+    "Charger état conversation": [
+      "Lorsqu'un message de chat est reçu#0"
+    ]
+  },
+  "creationPrete": [
+    {
+      "from": "Création prête ?",
+      "out": 0,
+      "type": "main",
+      "to": "Refus création sans réclamation"
+    },
+    {
+      "from": "Création prête ?",
+      "out": 1,
+      "type": "main",
+      "to": "Demander paramètres création"
+    }
+  ],
+  "corpsFige": [
+    {
+      "from": "Corps figé présent ?",
+      "out": 0,
+      "type": "main",
+      "to": "Appeler CreateAppointment"
+    },
+    {
+      "from": "Corps figé présent ?",
+      "out": 1,
+      "type": "main",
+      "to": "Réponse corps absent"
+    }
+  ],
+  "aiguillerOuts": [
+    {
+      "from": "Aiguiller tentative",
+      "out": 0,
+      "type": "main",
+      "to": "Tirer aléa de tentative"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 1,
+      "type": "main",
+      "to": "Préparer réclamation ou reprise"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 2,
+      "type": "main",
+      "to": "Préparer reprise"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 3,
+      "type": "main",
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 4,
+      "type": "main",
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 5,
+      "type": "main",
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 6,
+      "type": "main",
+      "to": "Demander paramètres création"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 7,
+      "type": "main",
+      "to": "Réponse attente de bail"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 8,
+      "type": "main",
+      "to": "Réponse référence déjà connue"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 9,
+      "type": "main",
+      "to": "Expirer tentatives en attente"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 10,
+      "type": "main",
+      "to": "Effacer collecte orpheline"
+    },
+    {
+      "from": "Aiguiller tentative",
+      "out": 11,
+      "type": "main",
+      "to": "Valider paramètres création"
+    }
+  ],
+  "aiguillerParams": {
+    "rules": {
+      "values": [
+        {
+          "outputKey": "INSERT",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e41",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "INSERT"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "CLAIM",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e42",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "CLAIM"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "RESUME",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e43",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "RESUME"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "ABANDON",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e44",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "ABANDON"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "MODIFY",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e45",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "MODIFY"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "RESTART",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e46",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "RESTART"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "ASK",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e47",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "ASK"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "WAIT",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e48",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "WAIT"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "RECALL",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e49",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "RECALL"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "EXPIRE",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e4a",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "EXPIRE"
+              }
+            ]
+          }
+        },
+        {
+          "outputKey": "RESET_STALE",
+          "renameOutput": true,
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "00000000-0000-4000-8000-000000008e4f",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "leftValue": "={{ $json.attemptAction }}",
+                "rightValue": "RESET_STALE"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "fallbackOutput": "extra"
+    }
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "createSteps": [
+    "ASK_CANCEL_CONFIRMATION",
+    "ASK_CREATE_DATE_RANGE",
+    "ASK_CREATE_SERVICE",
+    "ASK_CREATE_SITE",
+    "ASK_CREATE_SLOT",
+    "ASK_EMAIL",
+    "ASK_NOM",
+    "ASK_PRENOM",
+    "ASK_RESCHEDULE_CONFIRMATION",
+    "ASK_RESCHEDULE_DATE_RANGE",
+    "ASK_RESCHEDULE_SLOT",
+    "ASK_RESCHEDULE_TOKEN",
+    "ASK_TELEPHONE",
+    "ASK_TOKEN",
+    "AWAIT_CREATE_CONFIRMATION",
+    "CREATE_APPOINTMENT",
+    "CREATE_RECALL",
+    "CREATE_UNCERTAIN",
+    "INSERT",
+    "READY_CANCEL_LOOKUP",
+    "READY_CREATE",
+    "READY_CREATE_SEARCH",
+    "READY_GET_APPOINTMENT",
+    "READY_RESCHEDULE_SEARCH",
+    "READY_RESCHEDULE_TOKEN",
+    "RESUME"
+  ],
+  "gererSnippets": {
+    "awaitConfirm": "= 'RESUME') conversationStep = 'CREATE_UNCERTAIN';\n    else conversationStep = 'AWAIT_CREATE_CONFIRMATION';\n  }\n\n  else if (slotId) {\n\n    if (!nom) {\n\n      conversationStep =\n        'ASK_NOM';\n\n    } else if (!prenom) {\n\n      conversationStep =\n        'ASK_PRENOM';\n\n    } el",
+    "createDecision": "==================================================\n\nlet parserCurrent = {};\nlet createDecision = null;\nlet modifyField = null;\nlet skipCreateProgression = false;\n\ntry {\n  parserCurrent =\n    $('Parser intention').item.json ?? {};\n} catch (e) {\n  parserCurrent = {};\n}\n\ncreateDecis",
+    "insert": " = parserCurrent.modifyField || null;\nif (createDecision && createDecision !== 'INSERT') {\n  skipCreateProgression = true;\n}\n\n// ======================================================\n// 3. UTILITAIRES\n// ======================================================\n\nfunction hasValue(v",
+    "oui": "==================================================\n\nlet parserCurrent = {};\nlet createDecision = null;\nlet modifyField = null;\nlet skipCreateProgression = false;\n\ntry {\n  parserCurrent =\n    $('Parser intention').item.json ?? {};\n} catch (e) {\n  parserCurrent = {};\n}\n\ncreateDecis"
+  },
+  "parserConfirm": {
+    "hasConfirmLogic": true,
+    "ouiPatterns": [],
+    "snippet": "ext.replace(/[’']/g, '');\nconst openAttempt = previous.openAttempt || null;\nlet createDecision = null;\nlet modifyField = null;\n\nif (openAttempt && (openAttempt.status === 'UNCERTAIN' || openAttempt.status === 'SUBMITTING')) {\n  createDecision = 'RESUME';\n} else if (\n  previousCon"
+  },
+  "decider": {
+    "actions": [],
+    "snippetClaim": "ttempt.expiresAt ? new Date(openAttempt.expiresAt).getTime() : null;\nconst leaseExpired = leaseUntil !== null && leaseUntil <= now;\nconst waitExpired = expiresAt !== null && expiresAt <= now;\n\nlet attemptAction = 'COLLECT';\n\nif (status === 'UNCERTAIN' || (status === 'SUBMITTING' ",
+    "fullPreview": "const saved = $json;\nlet collected = {};\nlet joined = {};\n\ntry { collected = $('Gérer collecte progressive').item.json ?? {}; } catch (e) { collected = {}; }\ntry { joined = $('Joindre tentative de session').item.json ?? {}; } catch (e) { joined = {}; }\n\nconst decision = collected.createDecision || null;\nconst openAttempt = joined.openAttempt || null;\nconst status = openAttempt ? openAttempt.status : null;\nconst now = Date.now();\nconst leaseUntil = openAttempt && openAttempt.leaseUntil ? new Date(openAttempt.leaseUntil).getTime() : null;\nconst expiresAt = openAttempt && openAttempt.expiresAt ? new Date(openAttempt.expiresAt).getTime() : null;\nconst leaseExpired = leaseUntil !== null && leaseUntil <= now;\nconst waitExpired = expiresAt !== null && expiresAt <= now;\n\nlet attemptAction = 'COLLECT';\n\nif (status === 'UNCERTAIN' || (status === 'SUBMITTING' && leaseExpired)) {\n  attemptAction = 'RESUME';\n} else if (status === 'SUBMITTING') {\n  attemptAction = 'WAIT';\n} else if (status === 'AWAITING_CONFIRMATION' && waitExpired) {\n  attemptAction = 'EXPIRE';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'AFFIRM') {\n  attemptAction = 'CLAIM';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'NEGATIVE') {\n  attemptAction = 'ABANDON';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'MODIFY') {\n  attemptAction = 'MODIFY';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'RESTART') {\n  attemptAction = 'RESTART';\n} else if (status === 'AWAITING_CONFIRMATION') {\n  attemptAction = 'ASK';\n} else if (decision === 'INSERT') {\n  attemptAction = 'INSERT';\n} else if (!status && (saved.conversationStep === 'AWAIT_CREATE_CONFIRMATION' || collected.conversationStep === 'AWAIT_CREATE_CONFIRMATION')) {\n  attemptAction = 'RESET_STALE';\n} else if (decision === 'RECALL' || (status === 'CONFIRMED' && decision === 'AFFIRM')) {\n  attemptAction = 'RECALL';\n} else if (decision === 'RESUME') {\n  attemptAction = 'RESUME';\n} else if (decision === 'EXPIRE') {\n  attemptAction = 'EXPIRE';\n}\n\nreturn [{\n  json: {\n    sessionId: saved.sessionId || joined.sessionId || null,\n    conversationStep: saved.conversationStep || collected.conversationStep || null,\n    attemptAction,\n    modifyField: collected.modifyField || null,\n    openAttempt,\n    reference: saved.reference || (openAttempt && openAttempt.reference) || null,\n    ready: false,\n    claimAcquired: false\n  }\n}];"
+  },
+  "aiguillerConnections": {
+    "main": [
+      [
+        "Tirer aléa de tentative:main#0"
+      ],
+      [
+        "Préparer réclamation ou reprise:main#0"
+      ],
+      [
+        "Préparer reprise:main#0"
+      ],
+      [
+        "Préparer abandon ou modification:main#0"
+      ],
+      [
+        "Préparer abandon ou modification:main#0"
+      ],
+      [
+        "Préparer abandon ou modification:main#0"
+      ],
+      [
+        "Demander paramètres création:main#0"
+      ],
+      [
+        "Réponse attente de bail:main#0"
+      ],
+      [
+        "Réponse référence déjà connue:main#0"
+      ],
+      [
+        "Expirer tentatives en attente:main#0"
+      ],
+      [
+        "Effacer collecte orpheline:main#0"
+      ],
+      [
+        "Valider paramètres création:main#0"
+      ]
+    ]
+  },
+  "deciderConnections": {
+    "main": [
+      [
+        "Aiguiller tentative:main#0"
+      ]
+    ]
+  },
+  "reclamerSql": "WITH input AS (\n  SELECT $1::jsonb AS data\n),\nentropy AS (\n  SELECT 'own-' || encode(public.gen_random_bytes(16), 'hex') AS lease_owner\n)\nSELECT f.acquired, f.attempt_id::text, f.attempt_status, f.request_payload, f.idempotency_key, f.request_fingerprint, f.resume_count, e.lease_owner\nFROM input\nCROSS JOIN entropy e\nCROSS JOIN LATERAL public.reclamer_tentative_rendez_vous(\n  (input.data->>'attemptId')::uuid,\n  input.data->>'sessionId',\n  e.lease_owner\n) AS f;",
+  "reprendreSql": "WITH input AS (\n  SELECT $1::jsonb AS data\n),\nentropy AS (\n  SELECT 'own-' || encode(public.gen_random_bytes(16), 'hex') AS lease_owner\n)\nSELECT f.acquired, f.attempt_id::text, f.attempt_status, f.request_payload, f.idempotency_key, f.request_fingerprint, f.resume_count, e.lease_owner\nFROM input\nCROSS JOIN entropy e\nCROSS JOIN LATERAL public.reprendre_tentative_rendez_vous(\n  (input.data->>'attemptId')::uuid,\n  input.data->>'sessionId',\n  e.lease_owner\n) AS f;",
+  "insererSql": "WITH input AS (\n  SELECT $1::jsonb AS data\n)\nINSERT INTO public.ai_appointment_attempt (\n  id, session_id, idempotency_key, request_payload, request_fingerprint, status, expires_at\n)\nSELECT\n  (data->>'attemptId')::uuid,\n  data->>'sessionId',\n  data->>'idempotencyKey',\n  data->'requestPayload',\n  data->>'fingerprint',\n  'AWAITING_CONFIRMATION',\n  NOW() + INTERVAL '2 hours'\nFROM input\nWHERE (data->>'idempotencyKey') ~ '^[A-Za-z0-9._~-]{16,128}$'\n  AND (data->'requestPayload'->>'cleIdempotence') = data->>'idempotencyKey'\nRETURNING id::text AS attempt_id, status;",
+  "aléaCode": "SELECT\n  gen_random_uuid()::text AS \"attemptId\",\n  'rec008-' || encode(public.gen_random_bytes(32), 'hex') AS \"idempotencyKey\";",
+  "classerPreview": "let prep = {};\ntry { prep = $('Appliquer corps gagnant').item.json ?? {}; } catch (e) { prep = {}; }\nlet status = Number($json.statusCode || 0);\nlet body = $json.body ?? $json.data ?? null;\nif (typeof body === 'string') {\n  try { body = JSON.parse(body); } catch (e) { body = null; }\n}\nconst errorCode = body && body.error && body.error.code;\nconst message = body && (body.message || (body.error && body.error.message));\nlet httpOutcome = 'UNCERTAIN';\nif (!status || body === null) {\n  httpOutcome = 'UNCERTAIN';\n} else if (status === 201 || (status === 200 && body && body.replayed === true && body.created === false)) {\n  httpOutcome = 'CONFIRMED';\n} else if (status === 400) {\n  httpOutcome = 'REJECTED';\n} else if (status === 409 && errorCode === 'IDEMPOTENCY_KEY_CONFLICT') {\n  httpOutcome = 'REJECTED';\n} else if (status === 409 && message === 'Créneau introuvable ou complet') {\n  httpOutcome = 'SLOT_UNAVAILABLE';\n} else {\n  httpOutcome = 'UNCERTAIN';\n}\nconst appointment = body && body.appointment ? body.appointment : null;\nreturn [{\n  json: {\n    httpOutcome,\n    attemptId: prep.attemptId,\n    sessionId: prep.sessionId,\n    leaseOwner: prep.leaseOwner,\n    appointmentId: appointment && appointment.id ? appointment.id : null,\n    appointmentReference: appointment && appointment.reference ? appointment.reference : null,\n    appointment: appointment,\n    success: body && body.success === true,\n    created: body && body.created === true,\n    replayed: body && body.replayed === true\n  }\n}];",
+  "classerDelayPreview": "let prep = {};\ntry { prep = $('Appliquer corps gagnant').item.json ?? {}; } catch (e) { prep = {}; }\nreturn [{\n  json: {\n    httpOutcome: 'UNCERTAIN',\n    timeout: true,\n    attemptId: prep.attemptId,\n    sessionId: prep.sessionId,\n    leaseOwner: prep.leaseOwner,\n    text: 'Le résultat de la création n\\'est pas connu. Cela ne prouve pas qu\\'aucun rendez-vous a été créé. La même demande sera rejouée au prochain message, sans nouvelle clé.'\n  }\n}];",
+  "validerPreview": "const x = $json;\n\nconst missing = [];\n\n// ------------------------------------------------------\n// Vérification des champs obligatoires\n// ------------------------------------------------------\n\nif (!x.slotId) {\n  missing.push(\"le créneau choisi\");\n}\n\nif (!x.nom) {\n  missing.push(\"le nom\");\n}\n\nif (!x.prenom) {\n  missing.push(\"le prénom\");\n}\n\nif (!x.email) {\n  missing.push(\"l'adresse e-mail\");\n}\n\nif (!x.telephone) {\n  missing.push(\"le numéro de téléphone\");\n}\n\n// ------------------------------------------------------\n// Validation UUID\n// ------------------------------------------------------\n\nconst uuidRegex =\n  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;\n\nconst slotIdValide =\n  !!x.slotId &&\n  uuidRegex.test(\n    String(x.slotId).trim()\n  );\n\n// ------------------------------------------------------\n// Validation email\n// ------------------------------------------------------\n\nconst emailValide =\n  !!x.email &&\n  /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(\n    String(x.email).trim()\n  );\n\n// ------------------------------------------------------\n// Validation téléphone\n// ------------------------------------------------------\n\nconst telephoneNormalise =\n  x.telephone\n    ? String(x.telephone)\n        .replace(/[^\\d+]/g, '')\n        .trim()\n    : '';\n\nconst telephoneValide =\n  telephoneNormalise.replace(/\\D/g, '').length >= 8;\n\n// ------------------------------------------------------\n// Détermination de l'étape conversationnelle\n// -----------------",
+  "appelerHttp": {
+    "type": "n8n-nodes-base.httpRequest",
+    "url": "http://rec008-mock:8080/appointments",
+    "method": "POST",
+    "connectionsIn": [
+      "Corps figé présent ?"
+    ],
+    "connectionsOut": {
+      "main": [
+        [
+          "Classer réponse HTTP:main#0"
+        ],
+        [
+          "Classer délai HTTP:main#0"
+        ]
+      ]
+    }
+  },
+  "creationPrete": {
+    "name": "Création prête ?",
+    "parameters": {
+      "options": {},
+      "conditions": {
+        "options": {
+          "version": 2,
+          "leftValue": "",
+          "caseSensitive": true,
+          "typeValidation": "strict"
+        },
+        "combinator": "and",
+        "conditions": [
+          {
+            "id": "8e18b9be-5923-498f-bbe9-3fddab6397af",
+            "operator": {
+              "type": "boolean",
+              "operation": "true",
+              "singleValue": true
+            },
+            "leftValue": "={{ $json.ready }}",
+            "rightValue": true
+          }
+        ]
+      }
+    },
+    "connections": {
+      "main": [
+        [
+          "Refus création sans réclamation:main#0"
+        ],
+        [
+          "Demander paramètres création:main#0"
+        ]
+      ]
+    }
+  },
+  "parentsOfPost": [
+    {
+      "from": "Corps figé présent ?",
+      "c": {
+        "main": [
+          [
+            {
+              "node": "Appeler CreateAppointment",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Réponse corps absent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "extractMeta": {
+    "Gérer collecte progressive": {
+      "exists": true,
+      "len": 26724,
+      "connections": {
+        "main": [
+          [
+            "Sauvegarder état conversation:main#0"
+          ]
+        ]
+      }
+    },
+    "Décider action tentative": {
+      "exists": true,
+      "len": 2420,
+      "connections": {
+        "main": [
+          [
+            "Aiguiller tentative:main#0"
+          ]
+        ]
+      }
+    },
+    "Aiguiller tentative": {
+      "exists": true,
+      "len": 3768,
+      "connections": {
+        "main": [
+          [
+            "Tirer aléa de tentative:main#0"
+          ],
+          [
+            "Préparer réclamation ou reprise:main#0"
+          ],
+          [
+            "Préparer reprise:main#0"
+          ],
+          [
+            "Préparer abandon ou modification:main#0"
+          ],
+          [
+            "Préparer abandon ou modification:main#0"
+          ],
+          [
+            "Préparer abandon ou modification:main#0"
+          ],
+          [
+            "Demander paramètres création:main#0"
+          ],
+          [
+            "Réponse attente de bail:main#0"
+          ],
+          [
+            "Réponse référence déjà connue:main#0"
+          ],
+          [
+            "Expirer tentatives en attente:main#0"
+          ],
+          [
+            "Effacer collecte orpheline:main#0"
+          ],
+          [
+            "Valider paramètres création:main#0"
+          ]
+        ]
+      }
+    },
+    "Insérer tentative": {
+      "exists": true,
+      "len": 565,
+      "connections": {
+        "main": [
+          [
+            "Composer récapitulatif:main#0"
+          ]
+        ]
+      }
+    },
+    "Composer récapitulatif": {
+      "exists": true,
+      "len": 1794,
+      "connections": null
+    },
+    "Réclamer tentative": {
+      "exists": true,
+      "len": 463,
+      "connections": {
+        "main": [
+          [
+            "Normaliser acquisition:main#0"
+          ]
+        ]
+      }
+    },
+    "Reprendre tentative": {
+      "exists": true,
+      "len": 464,
+      "connections": {
+        "main": [
+          [
+            "Normaliser acquisition:main#0"
+          ]
+        ]
+      }
+    },
+    "Appeler CreateAppointment": {
+      "exists": true,
+      "len": 365,
+      "connections": {
+        "main": [
+          [
+            "Classer réponse HTTP:main#0"
+          ],
+          [
+            "Classer délai HTTP:main#0"
+          ]
+        ]
+      }
+    },
+    "Classer réponse HTTP": {
+      "exists": true,
+      "len": 1505,
+      "connections": {
+        "main": [
+          [
+            "Aiguiller résultat HTTP:main#0"
+          ]
+        ]
+      }
+    },
+    "Classer délai HTTP": {
+      "exists": true,
+      "len": 451,
+      "connections": {
+        "main": [
+          [
+            "Marquer tentative incertaine:main#0"
+          ]
+        ]
+      }
+    },
+    "Aiguiller résultat HTTP": {
+      "exists": true,
+      "len": 1411,
+      "connections": {
+        "main": [
+          [
+            "Paramètres clôture confirmation:main#0"
+          ],
+          [
+            "Clôturer refus:main#0"
+          ],
+          [
+            "Clôturer créneau indisponible:main#0"
+          ],
+          [
+            "Marquer tentative incertaine:main#0"
+          ]
+        ]
+      }
+    },
+    "Valider paramètres création": {
+      "exists": true,
+      "len": 3162,
+      "connections": {
+        "main": [
+          [
+            "Création prête ?:main#0"
+          ]
+        ]
+      }
+    },
+    "Création prête ?": {
+      "exists": true,
+      "len": 314,
+      "connections": {
+        "main": [
+          [
+            "Refus création sans réclamation:main#0"
+          ],
+          [
+            "Demander paramètres création:main#0"
+          ]
+        ]
+      }
+    },
+    "Demander paramètres création": {
+      "exists": true,
+      "len": 4786,
+      "connections": null
+    },
+    "Tirer aléa de tentative": {
+      "exists": true,
+      "len": 127,
+      "connections": {
+        "main": [
+          [
+            "Préparer corps figé:main#0"
+          ]
+        ]
+      }
+    },
+    "Parser intention": {
+      "exists": true,
+      "len": 18842,
+      "connections": {
+        "main": [
+          [
+            "Fusionner état conversation:main#0"
+          ]
+        ]
+      }
+    },
+    "Préparer abandon ou modification": {
+      "exists": true,
+      "len": 670,
+      "connections": {
+        "main": [
+          [
+            "Abandonner tentative:main#0"
+          ]
+        ]
+      }
+    },
+    "Marquer tentative incertaine": {
+      "exists": true,
+      "len": 186,
+      "connections": {
+        "main": [
+          [
+            "Réponse résultat incertain:main#0"
+          ]
+        ]
+      }
+    }
+  },
+  "askCreateSteps": [
+    "ASK_CREATE_DATE_RANGE",
+    "ASK_CREATE_SERVICE",
+    "ASK_CREATE_SITE",
+    "ASK_CREATE_SLOT"
+  ],
+  "createDecisionAssignments": [
+    " =\n        'AWAIT_CREATE_CONFIRMATION';\n      if (previous.conversation_step !== 'AWAIT_CREATE_CONFIRMATION') {\n        createDecision = 'INSERT';\n      }\n    }\n  }\n\n  // -----------------------------"
+  ],
+  "parserAwaitBlock": "tatus === 'SUBMITTING')) {\n  createDecision = 'RESUME';\n} else if (\n  previousConversationStep === 'AWAIT_CREATE_CONFIRMATION' ||\n  (openAttempt && openAttempt.status === 'AWAITING_CONFIRMATION')\n) {\n  modifyField = modifyFieldOf(decisionFolded);\n  if (modifyField) createDecision = 'MODIFY';\n  else if (affirmativeDecisions.has(decisionText) || affirmativeDecisions.has(decisionFolded)) createDecision = 'AFFIRM';\n  else if (negativeDecisions.has(decisionText) || negativeDecisions.has(decisionFolded)) createDecision = 'NEGATIVE';\n  else if (/\\b(prendre|reserver|creer)\\b/.test(decisionFolded) && /\\b(rendez-vous|rdv)\\b/.test(decisionFolded)) createDecision = 'RESTART';\n  else createDecision = 'AMBIGUOUS';\n} else if (\n  openAttempt &&\n  openAttempt.status === 'CONFIRMED' &&\n  (affirmativeDecisions.has(decisionText) || affirmativeDecisions.has(decisionFolded)) &&\n  !modifyFieldOf(decisionFolded)\n) {\n  createDecision = 'RECALL';\n}\n\n\n// ======================================================\n// INTENTIONS AUTORISEES\n// ======================================================\n\nconst allowed = [\n  'GET_SERVICES',\n  'GET_AVAILABILITY',\n  'CREATE_APPOINTMENT',\n  'GET_APPOINTMENT',\n  'CANCEL_APPOINTMENT',\n  'RESCHEDULE_APPOINTMENT',\n  'GENERAL'\n];\n\n\n// ============================================"
+}

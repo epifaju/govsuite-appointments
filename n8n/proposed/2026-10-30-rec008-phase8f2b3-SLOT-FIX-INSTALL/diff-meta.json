@@ -1,0 +1,21 @@
+{
+  "changed": [
+    "Fusionner état conversation"
+  ],
+  "fusionBeforeSha": "f5c98a993d7ed0cebc0768ac6be71b26721063caa4adfe0574d6bd10d1f90656",
+  "fusionAfterSha": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1",
+  "candidateSha": "0fa348271753909b4faf3248e2374e83dbba7387eb8acbdf33c13f1f1dda6cb2",
+  "beforeSha": "36259a0f8400570c22a3a255611c3a2e18ccc3fa83945b29fd492a4d37812e78",
+  "payloadSha": "8967913fb1a30cafaca057c6f66a03809811c1c4d59a03f80a21cfa97d497838",
+  "security": {
+    "hasSlotSelectionFromAvailability": true,
+    "keepsPreviousSlots": true,
+    "createFlowLocked": true,
+    "noHttpPost": true,
+    "awaitCreateStillElsewhere": true,
+    "claimSqlUnchanged": true,
+    "classerUnchanged": true,
+    "uncertainMarkerUnchanged": true,
+    "createAppointmentParentsSame": true
+  }
+}

@@ -1,0 +1,3 @@
+Fusionner etat conversation: conserver service/site/dates/availableSlots
+lors de GET_AVAILABILITY -> CREATE via selectedSlotIndex (Je prends le N).
+nodes=134 edges=137

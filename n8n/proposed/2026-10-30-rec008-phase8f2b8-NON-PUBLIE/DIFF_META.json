@@ -1,0 +1,20 @@
+{
+  "modifiedNodes": [
+    "Valider paramètres création"
+  ],
+  "unchangedCritical": [
+    "Décider action tentative",
+    "Aiguiller tentative",
+    "Création prête ?",
+    "Appeler CreateAppointment",
+    "Calculer empreinte du corps",
+    "Fusionner état conversation",
+    "Gérer collecte progressive"
+  ],
+  "optionRetained": "B",
+  "rationale": "Modifier uniquement Valider pour hydrater les champs informatifs depuis Gérer, sans élargir le payload de Décider (évite régression multi-branches et exposition PII). ready reste claimAcquired===true.",
+  "beforeSha": "6fa62389cdecbc5024081ca51d306e26ffa98b1b27808ba30ee72c22a66772be",
+  "afterSha": "7b237d3fd446d30cca1cc56ff406cc3a9fc3afccdee50cad62c3248b8607f162",
+  "beforeBytes": 3173,
+  "afterBytes": 4271
+}

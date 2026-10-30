@@ -1,0 +1,3 @@
+Payload de création REC-008 phase 8E-2A.
+Workflow de test distinct, inactif.
+Ne pas activer. Ne pas envoyer de message. Ne pas appeler /webhook/appointments.

@@ -1,0 +1,22 @@
+{
+  "changed": [
+    "Valider paramètres création"
+  ],
+  "validerBeforeSha": "6fa62389cdecbc5024081ca51d306e26ffa98b1b27808ba30ee72c22a66772be",
+  "validerAfterSha": "7b237d3fd446d30cca1cc56ff406cc3a9fc3afccdee50cad62c3248b8607f162",
+  "decideSha": "eb7b8e3e3da17a1c5c514cf6ef149af6ba8b0c238fd27b3c8549d1f9390c9f95",
+  "candidateSha": "d90d5e77165579949b2f520c3fb85ad9f544f8dba3afe8b022ee0a8eb96c6a91",
+  "beforeSha": "be5037e4664875c0a927d21181ea4bc81a6d11ffb70889956993c8ddb67ed8d4",
+  "payloadSha": "be5fc6c03c00c812a31b76dfc1f5dc6d1fb4d4b33e7cb77b86ba96edd4e65371",
+  "security": {
+    "validerHydratesFromGerer": true,
+    "readyIsClaimOnly": true,
+    "decideUnchanged": true,
+    "claimSqlUnchanged": true,
+    "classerUnchanged": true,
+    "uncertainMarkerUnchanged": true,
+    "corpsFigeUnchanged": true,
+    "empreinteUnchanged": true,
+    "createParents": true
+  }
+}

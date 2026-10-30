@@ -1,0 +1,116 @@
+{
+  "ok": true,
+  "putStatus": 200,
+  "putMessage": null,
+  "candidateSha": "0fa348271753909b4faf3248e2374e83dbba7387eb8acbdf33c13f1f1dda6cb2",
+  "beforeSha": "36259a0f8400570c22a3a255611c3a2e18ccc3fa83945b29fd492a4d37812e78",
+  "payloadSha": "8967913fb1a30cafaca057c6f66a03809811c1c4d59a03f80a21cfa97d497838",
+  "afterSha": "be5037e4664875c0a927d21181ea4bc81a6d11ffb70889956993c8ddb67ed8d4",
+  "afterFusionSha": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1",
+  "fusionMatch": true,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "versionCounter": 4,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "urls": [
+      "http://rec008-mock:8080/services",
+      "http://rec008-mock:8080/appointments/availability",
+      "http://rec008-mock:8080/appointments",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/cancel",
+      "http://rec008-mock:8080/appointments/reschedule",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/manage",
+      "http://rec008-mock:8080/appointments/availability",
+      "http://rec008-mock:8080/appointments/manage"
+    ],
+    "settings": {
+      "availableInMCP": false,
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "saveExecutionProgress": false
+    },
+    "pg": "1|6|0|0",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true,
+    "beforeSha": "36259a0f8400570c22a3a255611c3a2e18ccc3fa83945b29fd492a4d37812e78"
+  },
+  "after": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "parameterDiffs": [
+      "Fusionner état conversation"
+    ],
+    "credentialDiffs": [],
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "webhooksRows": 0
+  },
+  "postflight": {
+    "pg": "1|6|0|0",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /appointments/availability 200": 5
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "security": {
+    "hasSlotSelectionFromAvailability": true,
+    "keepsPreviousSlots": true,
+    "createFlowLocked": true,
+    "noHttpPost": true,
+    "awaitCreateStillElsewhere": true,
+    "claimSqlUnchanged": true,
+    "classerUnchanged": true,
+    "uncertainMarkerUnchanged": true,
+    "createAppointmentParentsSame": true
+  }
+}

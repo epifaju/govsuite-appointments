@@ -1,0 +1,274 @@
+{
+  "phase": "8F-2B6",
+  "sessionId": "rec008-8f2b4-slot-01",
+  "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+  "pass": true,
+  "stopped": false,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "",
+      "last_user_message": "Dupont"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 82033,
+    "responsePreview": "{\"sessionId\":\"rec008-8f2b4-slot-01\",\"conversationStep\":\"ASK_EMAIL\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":null,\"telephone\":null,\"missing\":[\"le créneau choisi\",\"le nom\",\"le prénom\",\"l'adresse e-mail\",\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":false,\"emailValide\":false,\"telephoneValide\":false},\"type\":\"create_appointment_question\",\"text\":\"📧 Quelle est votre **adresse e-mail** ?\"}",
+    "responseJson": {
+      "sessionId": "rec008-8f2b4-slot-01",
+      "conversationStep": "ASK_EMAIL",
+      "attemptAction": "COLLECT",
+      "modifyField": null,
+      "openAttempt": null,
+      "reference": null,
+      "ready": false,
+      "claimAcquired": false,
+      "pendingAction": null,
+      "telephone": null,
+      "missing": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": false,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "type": "create_appointment_question",
+      "text": "📧 Quelle est votre **adresse e-mail** ?"
+    },
+    "memoryBefore": "89.71MiB / 1.5GiB",
+    "memoryAfter": "1.193GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 0,
+    "hasPost": false,
+    "sessionBefore": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "",
+      "last_user_message": "Dupont"
+    },
+    "sessionAfter": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_EMAIL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "last_user_message": "Camille"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "asksEmail": true,
+    "validation": {
+      "missing": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": false,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "conversationStep": "ASK_EMAIL",
+      "ready": false,
+      "claimAcquired": false,
+      "text": "📧 Quelle est votre **adresse e-mail** ?",
+      "type": "create_appointment_question"
+    },
+    "validationAnomaly": {
+      "slotIdPersisted": true,
+      "nomPersisted": true,
+      "prenomPersisted": true,
+      "slotIdValide": false,
+      "missingHasCreneau": true,
+      "missingHasNom": true,
+      "missingHasPrenom": true,
+      "conversationStep": "ASK_EMAIL",
+      "responseStep": "ASK_EMAIL",
+      "ready": false,
+      "claimAcquired": false,
+      "asksEmail": true,
+      "suspectNode": "Valider paramètres création",
+      "c5Impact": "Sur C5 (récap/confirmation), une validation obsolète peut bloquer ready=true, empêcher le claim, ou réafficher des champs déjà collectés — risque de non-passage en CONFIRM malgré une mémoire PostgreSQL complète.",
+      "note": "La validation semble recalculer missing/slotIdValide sans slot_id/nom/prenom déjà persistés, tandis que Gérer/Demander suivent ASK_EMAIL."
+    },
+    "ok": true
+  },
+  "deactivate": {
+    "tag": "success",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_EMAIL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "last_user_message": "Camille"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "nomPreserved": true,
+    "prenomPersisted": true,
+    "askEmail": true,
+    "memoryPreserved": true,
+    "noPost": true,
+    "noAttempt": true,
+    "validationStaleDocumented": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

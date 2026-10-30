@@ -1,0 +1,289 @@
+{
+  "phase": "8F-2B12",
+  "sessionId": "rec008-8f2b4-slot-01",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "pass": true,
+  "stopped": false,
+  "contract": {
+    "safeToActivate": true,
+    "parserMapsNonToNegative": true,
+    "decideMapsNegativeToAbandon": true,
+    "abandonFirstNode": "Préparer abandon ou modification",
+    "createReachFromAbandon": false,
+    "cancelReachFromAbandon": false,
+    "sqlAbandonPurges": true
+  },
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000"
+    },
+    "openAttempts": 1,
+    "attempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "AWAITING_CONFIRMATION",
+        "hasLeaseOwner": false,
+        "hasLeaseUntil": false,
+        "hasAppointmentReference": false,
+        "hasIdempotencyKey": true,
+        "hasRequestPayload": true,
+        "hasFingerprint": true
+      }
+    ],
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 97324,
+    "responsePreview": "{\"type\":\"create_abandoned\",\"text\":\"La demande de rendez-vous est abandonnée. Aucun rendez-vous n'a été créé.\"}",
+    "responseJson": {
+      "type": "create_abandoned",
+      "text": "La demande de rendez-vous est abandonnée. Aucun rendez-vous n'a été créé."
+    },
+    "memoryBefore": "89.19MiB / 1.5GiB",
+    "memoryAfter": "1.195GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 0,
+    "hasPost": false,
+    "hasCancelCall": false,
+    "sessionBefore": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000"
+    },
+    "sessionAfter": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "available_slots": "",
+      "selected_slot_index": "1",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "non"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "attemptBefore": {
+      "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+      "status": "AWAITING_CONFIRMATION",
+      "hasIdempotencyKey": true,
+      "hasRequestPayload": true
+    },
+    "attemptAfter": {
+      "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+      "status": "ABANDONED",
+      "hasLeaseOwner": false,
+      "hasLeaseUntil": false,
+      "hasAppointmentReference": false,
+      "hasIdempotencyKey": false,
+      "hasRequestPayload": false,
+      "hasFingerprint": true,
+      "hasSubmittedAt": false,
+      "hasConfirmedAt": false,
+      "hasAppointmentId": false
+    },
+    "sameAttempt": true,
+    "abandonedOk": true,
+    "saysAbandoned": true,
+    "claimsExistingCancelled": false,
+    "rdvFingerprintBefore": "986b715d53127eb16058910a3280834c",
+    "rdvFingerprintAfter": "986b715d53127eb16058910a3280834c",
+    "rdvUnchanged": true,
+    "openAttemptsAfter": 0,
+    "ok": true,
+    "stepCleared": true,
+    "draftCleared": true
+  },
+  "deactivate": {
+    "tag": "success",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "available_slots": "",
+      "selected_slot_index": "1",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "non"
+    },
+    "openAttempts": 0,
+    "attempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "hasLeaseOwner": false,
+        "hasAppointmentReference": false
+      }
+    ],
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "abandoned": true,
+    "purged": true,
+    "noOpenAttempt": true,
+    "noPost": true,
+    "noCancel": true,
+    "rdvUnchanged": true,
+    "saysAbandoned": true,
+    "draftCleared": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "phase": "8F-2B7",
+  "sessionId": "rec008-8f2b4-slot-01",
+  "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+  "pass": true,
+  "stopped": false,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_EMAIL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Camille"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 117230,
+    "responsePreview": "{\"sessionId\":\"rec008-8f2b4-slot-01\",\"conversationStep\":\"ASK_TELEPHONE\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":null,\"telephone\":null,\"missing\":[\"le créneau choisi\",\"le nom\",\"le prénom\",\"l'adresse e-mail\",\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":false,\"emailValide\":false,\"telephoneValide\":false},\"type\":\"create_appointment_question\",\"text\":\"📱 Quel est votre **numéro de téléphone** ?\"}",
+    "responseJson": {
+      "sessionId": "rec008-8f2b4-slot-01",
+      "conversationStep": "ASK_TELEPHONE",
+      "attemptAction": "COLLECT",
+      "modifyField": null,
+      "openAttempt": null,
+      "reference": null,
+      "ready": false,
+      "claimAcquired": false,
+      "pendingAction": null,
+      "telephone": null,
+      "missing": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": false,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "type": "create_appointment_question",
+      "text": "📱 Quel est votre **numéro de téléphone** ?"
+    },
+    "memoryBefore": "94.55MiB / 1.5GiB",
+    "memoryAfter": "1.141GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 0,
+    "hasPost": false,
+    "sessionBefore": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_EMAIL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Camille"
+    },
+    "sessionAfter": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_TELEPHONE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "",
+      "last_user_message": "camille.essai@example.test"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "asksTelephone": true,
+    "validation": {
+      "missing": [
+        "le créneau choisi",
+        "le nom",
+        "le prénom",
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": false,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "conversationStep": "ASK_TELEPHONE",
+      "ready": false,
+      "claimAcquired": false,
+      "text": "📱 Quel est votre **numéro de téléphone** ?",
+      "type": "create_appointment_question"
+    },
+    "validationAnomaly": {
+      "slotIdPersisted": true,
+      "nomPersisted": true,
+      "prenomPersisted": true,
+      "emailPersisted": true,
+      "slotIdValide": false,
+      "emailValide": false,
+      "missingHasCreneau": true,
+      "missingHasNom": true,
+      "missingHasPrenom": true,
+      "missingHasEmail": true,
+      "conversationStep": "ASK_TELEPHONE",
+      "responseStep": "ASK_TELEPHONE",
+      "ready": false,
+      "claimAcquired": false,
+      "asksTelephone": true,
+      "rootCauseNode": "Décider action tentative",
+      "validationNode": "Valider paramètres création",
+      "rootCause": "Décider action tentative reconstruit un JSON réduit (sessionId, conversationStep, attemptAction, …) sans slotId/nom/prenom/email/telephone/intent/pendingAction. COLLECT n’est pas une règle Aiguiller → fallback extra → Valider paramètres création, qui calcule missing/slotIdValide sur ce payload vide. conversationStep reste celui de Gérer car le bloc de réécriture de Valider exige intent/pendingAction absents du payload.",
+      "executionPath": "Fusionner état conversation → Gérer collecte progressive → Sauvegarder → Router intention → Décider action tentative (projection destructive) → Aiguiller tentative (fallback COLLECT) → Valider paramètres création → Création prête ? (ready=false) → Demander paramètres création",
+      "timing": "après fusion/session, mais sur une projection appauvrie — pas avant la fusion",
+      "c5Impact": "Tant que attemptAction reste COLLECT, Valider verra toujours des champs vides. Le passage C5 dépend de createDecision/INSERT/CLAIM dans Décider/Gérer, pas de Valider.ready (qui exige claimAcquired). Risque : missing trompeur dans le JSON jusqu’à confirmation ; ready reste false sur la branche COLLECT."
+    },
+    "ok": true
+  },
+  "deactivate": {
+    "tag": "success",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "12e6b201-6173-457e-97c4-a17cc1900eb6",
+    "versionCounter": 5,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|7|0|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "ASK_TELEPHONE",
+      "pending_action": "CREATE_APPOINTMENT",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "",
+      "last_user_message": "camille.essai@example.test"
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 6,
+      "byPath": {
+        "GET /appointments/availability 200": 6
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "nomPreserved": true,
+    "prenomPreserved": true,
+    "emailPersisted": true,
+    "askTelephone": true,
+    "memoryPreserved": true,
+    "noPost": true,
+    "noAttempt": true,
+    "validationRootCauseDocumented": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

@@ -1,0 +1,19 @@
+DIFF 8F-2B8 — Valider paramètres création uniquement
+
+Option retenue : B (validation informative séparée de l’autorisation POST).
+Option A rejetée : enrichir Décider toucherait INSERT/CLAIM/RESUME/… et exposerait le PII via ...x.
+
+SHA before: 6fa62389cdecbc5024081ca51d306e26ffa98b1b27808ba30ee72c22a66772be
+SHA after : 7b237d3fd446d30cca1cc56ff406cc3a9fc3afccdee50cad62c3248b8607f162
+
+Ajouts :
+- Lecture $('Gérer collecte progressive') pour hydrater slotId/nom/prenom/email/telephone/intent/pendingAction
+- claimAcquired uniquement depuis le payload routé
+- return basé sur routed (sans réémettre le PII collecté)
+- commentaire : ready = autorisation claim, pas complétude des champs
+
+Inchangé :
+- formule ready = claimAcquired === true
+- règles missing / UUID / email / téléphone
+- graphe, credentials, URL mock, webhook, settings
+- Décider action tentative

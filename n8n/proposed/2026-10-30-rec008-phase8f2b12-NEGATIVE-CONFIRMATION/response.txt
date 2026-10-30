@@ -1,0 +1,1 @@
+{"type":"create_abandoned","text":"La demande de rendez-vous est abandonnée. Aucun rendez-vous n'a été créé."}

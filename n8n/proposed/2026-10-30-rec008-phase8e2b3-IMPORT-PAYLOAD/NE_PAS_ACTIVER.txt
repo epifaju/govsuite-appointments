@@ -1,0 +1,3 @@
+Payload d'import pour n8n TEST sur 127.0.0.1:5682 uniquement.
+Ne pas l'envoyer à l'instance GovSuite du port 5680.
+Ne pas activer le workflow après création.

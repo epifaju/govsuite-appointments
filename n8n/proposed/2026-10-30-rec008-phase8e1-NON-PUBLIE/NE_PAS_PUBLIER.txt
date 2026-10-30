@@ -1,0 +1,7 @@
+NON PUBLIÉ — REC-008 phase 8E-1.
+
+Ne pas importer ce JSON dans n8n.
+Ne pas activer le workflow 10.
+Ne pas appeler le webhook de création.
+La version de référence à 84 nœuds reste n8n/live-exports/2026-10-30-rec008-phase8e1-before/R7TKt5mqZYpeKapl.json.
+Ne jamais la remplacer par le fichier historique à 33 nœuds.

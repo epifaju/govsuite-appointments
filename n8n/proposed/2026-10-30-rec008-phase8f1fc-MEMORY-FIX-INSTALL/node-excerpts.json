@@ -1,0 +1,44 @@
+{
+  "excerpts": {
+    "Parser intention": {
+      "beforeLen": 17147,
+      "afterLen": 18842,
+      "beforeSha": "72e1c19cad655342e2279773b0e14b8b309d9e9c3406e514c29643b7f3af6bce",
+      "afterSha": "c423a6322fdb2e403f117d116cd712475731b20c969ea4964e561321b7f3d160"
+    },
+    "Fusionner état conversation": {
+      "beforeLen": 22465,
+      "afterLen": 23044,
+      "beforeSha": "3bdfb6a2a80c224986e0221ecb402500d1f7c57dc681082c718bb62a37e7cd54",
+      "afterSha": "f5c98a993d7ed0cebc0768ac6be71b26721063caa4adfe0574d6bd10d1f90656"
+    },
+    "Gérer collecte progressive": {
+      "beforeLen": 26710,
+      "afterLen": 26724,
+      "beforeSha": "de3ded17c45166ea45136a6648e1f8ce01b398972ee877831e9546c990e32f68",
+      "afterSha": "55c0542357683d610fd80950367051b25caa43473e1c2b7f744d475cb4e0886d"
+    }
+  },
+  "security": {
+    "parserHasDateFinQualifier": true,
+    "parserHasIsValid": true,
+    "parserDoesNotMapOnlyToDebutOnly": true,
+    "fusionElseUsesPick": true,
+    "fusionPickService": true,
+    "gererPendingGetAvail": true,
+    "gererNoNullPendingForGetAvail": true,
+    "noCreateAppointmentPathAdded": true,
+    "noPostInPatched": true,
+    "noHttpPostLiteral": true,
+    "noAppointmentsPostUrl": true,
+    "httpNodesUnchanged": true,
+    "concurrencySqlUnchanged": true,
+    "uncertainSame": true,
+    "createNodeCountSame": true
+  },
+  "changed": [
+    "Parser intention",
+    "Fusionner état conversation",
+    "Gérer collecte progressive"
+  ]
+}

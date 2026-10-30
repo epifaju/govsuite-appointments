@@ -1,0 +1,251 @@
+{
+  "total": 16,
+  "passed": 16,
+  "failed": [],
+  "results": [
+    {
+      "name": "T15",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": null,
+        "site": null,
+        "dateDebut": null,
+        "dateFin": null,
+        "slotId": null,
+        "selectedSlotIndex": 1,
+        "availableSlots": [],
+        "conversationStep": "ASK_CREATE_SERVICE",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T1",
+      "pass": true,
+      "detail": "PASSEPORT"
+    },
+    {
+      "name": "T2",
+      "pass": true,
+      "detail": "PARIS"
+    },
+    {
+      "name": "T3",
+      "pass": true,
+      "detail": "2026-11-03"
+    },
+    {
+      "name": "T4",
+      "pass": true,
+      "detail": "2026-11-03"
+    },
+    {
+      "name": "T5",
+      "pass": true,
+      "detail": [
+        {
+          "id": "33333333-3333-4333-8333-333333333333",
+          "index": 1,
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ]
+    },
+    {
+      "name": "T6",
+      "pass": true,
+      "detail": "33333333-3333-4333-8333-333333333333"
+    },
+    {
+      "name": "T7",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "selectedSlotIndex": 1,
+        "availableSlots": [
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "index": 1,
+            "service": "PASSEPORT",
+            "site": "PARIS",
+            "debut": "2026-11-03T09:00:00+01:00",
+            "fin": "2026-11-03T09:30:00+01:00",
+            "placesDisponibles": 2
+          }
+        ],
+        "conversationStep": "ASK_NOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T8",
+      "pass": true,
+      "detail": "ASK_NOM"
+    },
+    {
+      "name": "T16",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "selectedSlotIndex": 1,
+        "availableSlots": [
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "index": 1,
+            "service": "PASSEPORT",
+            "site": "PARIS",
+            "debut": "2026-11-03T09:00:00+01:00",
+            "fin": "2026-11-03T09:30:00+01:00",
+            "placesDisponibles": 2
+          }
+        ],
+        "conversationStep": "ASK_NOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T9",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": null,
+        "selectedSlotIndex": 9,
+        "availableSlots": [
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "index": 1,
+            "service": "PASSEPORT",
+            "site": "PARIS",
+            "debut": "2026-11-03T09:00:00+01:00",
+            "fin": "2026-11-03T09:30:00+01:00",
+            "placesDisponibles": 2
+          }
+        ],
+        "conversationStep": "ASK_CREATE_SITE",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T10",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": null,
+        "selectedSlotIndex": 1,
+        "availableSlots": [],
+        "conversationStep": "ASK_CREATE_SITE",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T11",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": null,
+        "dateDebut": null,
+        "dateFin": null,
+        "slotId": null,
+        "selectedSlotIndex": null,
+        "availableSlots": [],
+        "conversationStep": "ASK_CREATE_SITE",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": null
+      }
+    },
+    {
+      "name": "T12",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "selectedSlotIndex": 1,
+        "availableSlots": [
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "index": 1,
+            "service": "PASSEPORT",
+            "site": "PARIS",
+            "debut": "2026-11-03T09:00:00+01:00",
+            "fin": "2026-11-03T09:30:00+01:00",
+            "placesDisponibles": 2
+          }
+        ],
+        "conversationStep": "ASK_NOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": true,
+        "createFlowLocked": false
+      }
+    },
+    {
+      "name": "T13",
+      "pass": true,
+      "detail": {
+        "intent": "CREATE_APPOINTMENT",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03",
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "selectedSlotIndex": 1,
+        "availableSlots": [
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "index": 1,
+            "service": "PASSEPORT",
+            "site": "PARIS",
+            "debut": "2026-11-03T09:00:00+01:00",
+            "fin": "2026-11-03T09:30:00+01:00",
+            "placesDisponibles": 2
+          }
+        ],
+        "conversationStep": "ASK_NOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "actionChanged": false,
+        "createFlowLocked": true
+      }
+    },
+    {
+      "name": "T14",
+      "pass": true,
+      "detail": "no extra POST path"
+    }
+  ]
+}

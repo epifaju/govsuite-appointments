@@ -1,0 +1,228 @@
+{
+  "phase": "8F-1F-E",
+  "sessionId": "rec008-8f1fe-full-01",
+  "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+  "pass": true,
+  "stopped": false,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "versionCounter": 4,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "model": "qwen2.5:1.5b",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 4,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|4|0|0"
+    },
+    "sessions": [
+      "rec008-8f1c-services-01",
+      "rec008-8f1d-availability-01",
+      "rec008-8f1fd-memory-01",
+      "rec008-session-synthetique"
+    ],
+    "sessionExists": false,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 3,
+      "byPath": {
+        "GET /appointments/availability 200": 3
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "message": null,
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 48854,
+    "responseBytes": 701,
+    "responsePreview": "{\"type\":\"availability\",\"title\":\"Créneaux disponibles\",\"slots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"availableSlots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"text\":\"📅 J'ai trouvé 1 créneau(x) disponible(s) :\\n\\n1. **PASSEPORT - PARIS**\\n   📆 mardi 03/11/2026\\n   🕒 09:00 - 09:30\\n   👥 Places disponibles : 2\\n\\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 ».\"}",
+    "responseJson": {
+      "type": "availability",
+      "title": "Créneaux disponibles",
+      "slots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "availableSlots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "text": "📅 J'ai trouvé 1 créneau(x) disponible(s) :\n\n1. **PASSEPORT - PARIS**\n   📆 mardi 03/11/2026\n   🕒 09:00 - 09:30\n   👥 Places disponibles : 2\n\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 »."
+    },
+    "memoryBefore": "1.082GiB / 1.5GiB",
+    "memoryAfter": "1.099GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 3,
+      "byPath": {
+        "GET /appointments/availability 200": 3
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /appointments/availability 200": 4
+      },
+      "distinctKeys": 0
+    },
+    "newAvailabilityCalls": 1,
+    "hasPost": false,
+    "session": {
+      "session_id": "rec008-8f1fe-full-01",
+      "intent": "GET_AVAILABILITY",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "",
+      "pending_action": "GET_AVAILABILITY",
+      "last_user_message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026."
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 5,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|5|0|0"
+    },
+    "hasSlot900": true,
+    "excludes1000": true,
+    "httpParams": {
+      "observedInMockLogs": [],
+      "deducedFromSessionAndResponse": {
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "dateDebut": "2026-11-03",
+        "dateFin": "2026-11-03"
+      },
+      "note": "Le mock _meta/calls ne journalise pas la query string. Les paramètres « observés » ne sont retenus que s’ils apparaissent dans docker logs ; sinon seuls les paramètres déduits sont rapportés."
+    },
+    "ok": true
+  },
+  "deactivate": {
+    "tag": "success",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+    "versionCounter": 4,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 5,
+      "attempts": 0,
+      "notifs": 0,
+      "raw": "1|5|0|0"
+    },
+    "sessions": [
+      "rec008-8f1c-services-01",
+      "rec008-8f1d-availability-01",
+      "rec008-8f1fd-memory-01",
+      "rec008-8f1fe-full-01",
+      "rec008-session-synthetique"
+    ],
+    "session": {
+      "session_id": "rec008-8f1fe-full-01",
+      "intent": "GET_AVAILABILITY",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "",
+      "pending_action": "GET_AVAILABILITY",
+      "last_user_message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026."
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /appointments/availability 200": 4
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "intent": true,
+    "service": true,
+    "site": true,
+    "dateDebut": true,
+    "dateFin": true,
+    "oneGet": true,
+    "slot900": true,
+    "no1000": true,
+    "noPost": true,
+    "noAttempt": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

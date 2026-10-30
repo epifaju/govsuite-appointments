@@ -1,0 +1,83 @@
+# Déploiement 8E-2B-2. Copie adaptée du Compose 8E-2B-1.
+# Le fichier d'origine n'est pas modifié.
+# Écarts : superutilisateur bootstrap postgres, rôle rec008_test créé ensuite
+# sans superuser, port hôte 5682 parce que 5681 est déjà occupé.
+# Le réseau interne n'expose aucun port : rec008-publish relaie seulement
+# 127.0.0.1:5682 vers rec008-n8n:5678.
+
+name: govsuite-rec008-test
+
+services:
+  rec008-postgres:
+    image: postgres:16.14-alpine
+    environment:
+      POSTGRES_DB: govsuite_rec008_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${REC008_POSTGRES_PASSWORD:?mot de passe bootstrap requis}
+      TZ: Europe/Paris
+    volumes:
+      - rec008_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d govsuite_rec008_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - rec008_test
+
+  rec008-mock:
+    image: node:24-alpine
+    command: ["node", "/opt/rec008-mock/server.mjs"]
+    volumes:
+      - ./mock/server.mjs:/opt/rec008-mock/server.mjs:ro
+    environment:
+      REC008_MOCK_SCENARIO: created
+    networks:
+      - rec008_test
+
+  rec008-n8n:
+    image: docker.n8n.io/n8nio/n8n:2.32.6
+    depends_on:
+      rec008-postgres:
+        condition: service_healthy
+      rec008-mock:
+        condition: service_started
+    environment:
+      GENERIC_TIMEZONE: Europe/Paris
+      TZ: Europe/Paris
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      N8N_EDITOR_BASE_URL: http://localhost:5682/
+      WEBHOOK_URL: http://localhost:5682/
+      N8N_ENCRYPTION_KEY: ${REC008_N8N_ENCRYPTION_KEY:?clef de test requise}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_SECURE_COOKIE: "false"
+    volumes:
+      - rec008_n8n_data:/home/node/.n8n
+    networks:
+      - rec008_test
+
+  rec008-publish:
+    image: node:24-alpine
+    command: ["node", "/opt/rec008-publish/proxy.mjs"]
+    depends_on:
+      - rec008-n8n
+    volumes:
+      - ./publish/proxy.mjs:/opt/rec008-publish/proxy.mjs:ro
+    ports:
+      - "127.0.0.1:5682:5682"
+    networks:
+      - rec008_test
+      - rec008_publish
+
+volumes:
+  rec008_postgres_data:
+  rec008_n8n_data:
+
+networks:
+  rec008_test:
+    internal: true
+  rec008_publish:
+    internal: false

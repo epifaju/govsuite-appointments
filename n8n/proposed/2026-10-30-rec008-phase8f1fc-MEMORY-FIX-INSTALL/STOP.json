@@ -1,0 +1,19 @@
+{
+  "ok": false,
+  "stopped": true,
+  "reason": "security-static",
+  "detail": {
+    "parserHasDateFinQualifier": true,
+    "parserHasIsValid": true,
+    "parserDoesNotMapOnlyToDebutOnly": true,
+    "fusionElseUsesPick": true,
+    "fusionPickService": true,
+    "gererPendingGetAvail": true,
+    "gererNoNullPendingForGetAvail": true,
+    "noCreateAppointmentPathAdded": true,
+    "noPostInPatched": false,
+    "createNodeCountSame": true,
+    "concurrencySqlUnchanged": true,
+    "uncertainSame": false
+  }
+}

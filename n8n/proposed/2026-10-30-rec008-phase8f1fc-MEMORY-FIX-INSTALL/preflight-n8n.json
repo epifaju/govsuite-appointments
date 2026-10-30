@@ -1,0 +1,39 @@
+{
+  "id": "OCD9It1uKFhOoWNF",
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "bb9aad73-3cf5-4c1b-bb08-132df3ccbb45",
+  "versionCounter": 3,
+  "nodes": 134,
+  "edges": 137,
+  "executions": 0,
+  "activeIds": [],
+  "chatPublic": true,
+  "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+  "postgresDistinct": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "postgresCount": 30,
+  "ollamaId": "dxzHqBq8Q60R8BOz",
+  "urlsOk": true,
+  "urls": [
+    "http://rec008-mock:8080/services",
+    "http://rec008-mock:8080/appointments/availability",
+    "http://rec008-mock:8080/appointments",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/cancel",
+    "http://rec008-mock:8080/appointments/reschedule",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/availability",
+    "http://rec008-mock:8080/appointments/manage"
+  ],
+  "settings": {
+    "availableInMCP": false,
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "rules": {
+    "values": [
+      {
+        "outputKey": "INSERT",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e41",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "INSERT"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "CLAIM",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e42",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "CLAIM"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "RESUME",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e43",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "RESUME"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "ABANDON",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e44",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "ABANDON"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "MODIFY",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e45",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "MODIFY"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "RESTART",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e46",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "RESTART"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "ASK",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e47",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "ASK"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "WAIT",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e48",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "WAIT"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "RECALL",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e49",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "RECALL"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "EXPIRE",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e4a",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "EXPIRE"
+            }
+          ]
+        }
+      },
+      {
+        "outputKey": "RESET_STALE",
+        "renameOutput": true,
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000008e4f",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.attemptAction }}",
+              "rightValue": "RESET_STALE"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "options": {
+    "fallbackOutput": "extra"
+  }
+}

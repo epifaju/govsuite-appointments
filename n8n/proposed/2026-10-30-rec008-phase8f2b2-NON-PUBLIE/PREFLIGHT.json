@@ -1,0 +1,26 @@
+{
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "2fea54b3-ed59-4b83-a404-7166bad06fb2",
+  "versionCounter": 4,
+  "nodes": 134,
+  "edges": 137,
+  "pg": "1|6|0|0",
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mock": {
+    "scenario": "created",
+    "total": 5,
+    "byPath": {
+      "GET /appointments/availability 200": 5
+    },
+    "distinctKeys": 0
+  },
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  },
+  "networkForbiddenOpen": [],
+  "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+  "sourceSha": "36259a0f8400570c22a3a255611c3a2e18ccc3fa83945b29fd492a4d37812e78"
+}

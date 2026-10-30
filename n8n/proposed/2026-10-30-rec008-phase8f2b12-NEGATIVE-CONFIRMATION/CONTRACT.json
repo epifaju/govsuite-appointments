@@ -1,0 +1,36 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "decideMapsNegativeToAbandon": true,
+  "aiguillerHasAbandon": true,
+  "abandonFirstNode": "Préparer abandon ou modification",
+  "abandonQuerySnippet": "WITH input AS (\n  SELECT $1::jsonb AS data\n)\nSELECT public.cloturer_tentative_rendez_vous(\n  (data->>'attemptId')::uuid,\n  data->>'sessionId',\n  NULL,\n  'ABANDONED',\n  NULL,\n  NULL\n) AS closed\nFROM input;",
+  "abandonSetsAbandoned": true,
+  "abandonPurgesPayload": false,
+  "createReachFromAbandon": false,
+  "cancelReachFromAbandon": false,
+  "cancelNodes": [
+    "Appeler CancelAppointment"
+  ],
+  "abandonReachableIncludesCreate": false,
+  "abandonReachableIncludesCancel": false,
+  "abandonReachableSample": [
+    "Préparer abandon ou modification"
+  ],
+  "gererNegativeSample": [
+    "36: let createDecision = null;",
+    "47: createDecision = parserCurrent.createDecision || null;",
+    "49: if (createDecision && createDecision !== 'INSERT') {",
+    "954: if (createDecision === 'RECALL') conversationStep = 'CREATE_RECALL';",
+    "955: else if (createDecision === 'RESUME') conversationStep = 'CREATE_UNCERTAIN';",
+    "956: else conversationStep = 'AWAIT_CREATE_CONFIRMATION';",
+    "984: 'AWAIT_CREATE_CONFIRMATION';",
+    "985: if (previous.conversation_step !== 'AWAIT_CREATE_CONFIRMATION') {",
+    "986: createDecision = 'INSERT';",
+    "1256: createDecision,"
+  ],
+  "safeToActivate": true,
+  "sqlAbandonPurges": true,
+  "parserMapsNonToNegative": true,
+  "responseAbandonedTextExpected": "La demande de rendez-vous est abandonnée. Aucun rendez-vous n'a été créé."
+}

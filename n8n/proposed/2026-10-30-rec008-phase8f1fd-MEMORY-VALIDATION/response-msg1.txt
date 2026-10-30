@@ -1,0 +1,1 @@
+{"text":"Pour rechercher les disponibilités, j'ai besoin de la date de fin (YYYY-MM-DD)."}

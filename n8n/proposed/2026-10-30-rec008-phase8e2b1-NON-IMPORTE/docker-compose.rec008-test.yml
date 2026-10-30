@@ -1,0 +1,67 @@
+# Phase 8E-2B-1 : fichier proposé, non démarré.
+# Ne pas lancer ce projet avant une autorisation distincte.
+# Il ne rejoint pas le réseau govsuite et n'utilise pas la base govsuite.
+
+name: govsuite-rec008-test
+
+services:
+  rec008-postgres:
+    image: postgres:16.14-alpine
+    environment:
+      POSTGRES_DB: govsuite_rec008_test
+      POSTGRES_USER: rec008_test
+      POSTGRES_PASSWORD: ${REC008_TEST_DB_PASSWORD:?mot de passe de test requis}
+      TZ: Europe/Paris
+    volumes:
+      - rec008_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rec008_test -d govsuite_rec008_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - rec008_test
+
+  rec008-mock:
+    image: node:24-alpine
+    command: ["node", "/opt/rec008-mock/server.mjs"]
+    volumes:
+      - ./mock/server.mjs:/opt/rec008-mock/server.mjs:ro
+    environment:
+      REC008_MOCK_SCENARIO: ${REC008_MOCK_SCENARIO:-created}
+    networks:
+      - rec008_test
+
+  rec008-n8n:
+    image: docker.n8n.io/n8nio/n8n:2.32.6
+    depends_on:
+      rec008-postgres:
+        condition: service_healthy
+      rec008-mock:
+        condition: service_started
+    environment:
+      GENERIC_TIMEZONE: Europe/Paris
+      TZ: Europe/Paris
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      N8N_EDITOR_BASE_URL: http://localhost:5681/
+      WEBHOOK_URL: http://localhost:5681/
+      N8N_ENCRYPTION_KEY: ${REC008_N8N_ENCRYPTION_KEY:?clef de test requise}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_SECURE_COOKIE: "false"
+    ports:
+      - "127.0.0.1:5681:5678"
+    volumes:
+      - rec008_n8n_data:/home/node/.n8n
+    networks:
+      - rec008_test
+
+volumes:
+  rec008_postgres_data:
+  rec008_n8n_data:
+
+networks:
+  rec008_test:
+    internal: true
