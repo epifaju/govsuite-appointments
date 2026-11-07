@@ -1,0 +1,80 @@
+{
+  "mission": "R01-RUNNER-READINESS-021",
+  "pass": true,
+  "total": 18,
+  "failed": [],
+  "tests": [
+    {
+      "name": "warmup_verified_via_api_ps",
+      "ok": true
+    },
+    {
+      "name": "model_absent_from_api_ps",
+      "ok": true
+    },
+    {
+      "name": "model_expires_too_soon",
+      "ok": true
+    },
+    {
+      "name": "http_timeout_abort_uncertain",
+      "ok": true
+    },
+    {
+      "name": "socket_close_uncertain",
+      "ok": true
+    },
+    {
+      "name": "late_response_ok_business_pass",
+      "ok": true
+    },
+    {
+      "name": "pg_write_after_abort",
+      "ok": true
+    },
+    {
+      "name": "execution_still_active_after_deactivate",
+      "ok": true
+    },
+    {
+      "name": "executions_api_unavailable",
+      "ok": true
+    },
+    {
+      "name": "deactivate_error",
+      "ok": true
+    },
+    {
+      "name": "postflight_verify_failed",
+      "ok": true
+    },
+    {
+      "name": "no_automatic_retry_in_runner",
+      "ok": true
+    },
+    {
+      "name": "no_claim_create_appointment_in_runner",
+      "ok": true
+    },
+    {
+      "name": "fix008_invariants_preserved",
+      "ok": true
+    },
+    {
+      "name": "timeout_default_180s_only_when_ready",
+      "ok": true
+    },
+    {
+      "name": "correlation_events_no_pii_fields",
+      "ok": true
+    },
+    {
+      "name": "webhooks_clear_not_enough_for_pass",
+      "ok": true
+    },
+    {
+      "name": "r01_contract_doc_present",
+      "ok": true
+    }
+  ]
+}

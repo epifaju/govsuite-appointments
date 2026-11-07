@@ -1,0 +1,14 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "collectsEmailFromAskEmail": true,
+  "emailValidationPresent": true,
+  "transitionsToAskTelephoneWhenEmailValid": true,
+  "preservesIdentityAndSlot": true,
+  "insertOnlyWhenPhoneComplete": true,
+  "decideDefaultCollect": true,
+  "validerReachCreate": false,
+  "demanderReachCreate": false,
+  "askTelephoneTextPresent": true,
+  "safeToActivate": true
+}

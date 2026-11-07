@@ -1,0 +1,53 @@
+{
+  "_comment": "États de conversation synthétiques pour tests hors ligne.",
+  "sessions": [
+    {
+      "session_id": "rec008-syn-ask-prenom-01",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_PRENOM",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "11111111-1111-4111-8111-111111111111",
+      "nom": "Dupont",
+      "prenom": null,
+      "email": null,
+      "telephone": null,
+      "available_slots": [],
+      "expires_at_offset_minutes": 120,
+      "expired": false
+    },
+    {
+      "session_id": "rec008-syn-expired-01",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_PRENOM",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "11111111-1111-4111-8111-111111111111",
+      "nom": "Dupont",
+      "prenom": null,
+      "email": null,
+      "telephone": null,
+      "available_slots": [],
+      "expires_at_offset_minutes": -30,
+      "expired": true
+    },
+    {
+      "session_id": "rec008-syn-await-confirm-01",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "11111111-1111-4111-8111-111111111111",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.dupont@example.test",
+      "telephone": "+33000000001",
+      "available_slots": [],
+      "expires_at_offset_minutes": 90,
+      "expired": false
+    }
+  ]
+}

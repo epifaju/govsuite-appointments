@@ -1,0 +1,37 @@
+{
+  "mission": "TEST-INSTALL-RETRY-012",
+  "scriptPath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/install-fix008.js",
+  "scriptExists": true,
+  "dedicatedNotP4F": true,
+  "noRequireP4F": true,
+  "headerBanP4F": true,
+  "expectedCandidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "candidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "shaMatch": true,
+  "candidateActive": false,
+  "target": "Gérer collecte progressive",
+  "gererUniqueCand": true,
+  "gererUniqueBefore": true,
+  "candJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "beforeJsSha": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+  "jsAfterMatch": true,
+  "jsBeforeMatch": true,
+  "marker": true,
+  "simulatedChanged": [
+    "Gérer collecte progressive"
+  ],
+  "uniqueTargetChange": true,
+  "payloadKeys": [
+    "name",
+    "nodes",
+    "connections",
+    "settings",
+    "staticData",
+    "pinData"
+  ],
+  "payloadHasActive": false,
+  "omitActiveGuardInScript": true,
+  "putOnceNoRetry": true,
+  "verdict": "GO",
+  "checksOk": true
+}

@@ -1,0 +1,274 @@
+{
+  "phase": "8F-2B36",
+  "sessionId": "rec008-8f2b28-new-01",
+  "targetAttemptId": "57bf7de8-9a5e-469d-858a-a6bd389223e6",
+  "chatInput": "oui",
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "networkOk": true,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "expireNodePresent": true,
+    "expireQuery": "SELECT public.expirer_tentatives_en_attente() AS expired_count;",
+    "pg": "1|9|3|0",
+    "open": "1",
+    "statusCounts": [
+      "ABANDONED|1",
+      "AWAITING_CONFIRMATION|1",
+      "CONFIRMED|1"
+    ],
+    "expiredScope": [
+      "57bf7de8-9a5e-469d-858a-a6bd389223e6|rec008-8f2b28-new-01|AWAITING_CONFIRMATION"
+    ],
+    "target": {
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000",
+      "available_slots": [
+        {
+          "id": "33333333-3333-4333-8333-333333333333",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "index": 1,
+          "service": "PASSEPORT",
+          "placesDisponibles": 2
+        }
+      ]
+    },
+    "historical": {
+      "intent": "",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "REC008-MOCK-0001",
+      "token": "",
+      "slot_id": "",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui",
+      "available_slots": []
+    },
+    "attempt": {
+      "status": "AWAITING_CONFIRMATION",
+      "appointmentReference": "",
+      "hasIdempotencyKey": true,
+      "hasRequestPayload": true,
+      "leaseOwner": "",
+      "updatedAt": "2026-10-31 22:30:40.559864+01",
+      "appointmentId": "",
+      "submittedAt": "",
+      "confirmedAt": "",
+      "hasLeaseUntil": false,
+      "fingerprintFp12": "81bd3c88c8e5",
+      "temporallyExpired": true,
+      "expiresAt": "2026-11-01 00:30:40.55687+01",
+      "secondsSinceExpiry": 41337,
+      "idempotencyKeyLength": 71,
+      "idempotencyKeyFp12": "3864497c21f6",
+      "keyMatchesPayload": true
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01|55555555-5555-4555-8555-555555555555|2026-10-31 16:14:05.717271+01|2026-10-31 16:14:06.425766+01|f|70be27adb09e",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01||||f|b036e25bd8b5",
+    "otherFp": "f997dc2ace8e8a06197a12243ead6ac1",
+    "histAttemptsFp": "d8f8fce311723e9f34e84ecdb60c0279",
+    "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "mockBaseline": {
+      "scenario": "created",
+      "total": 0,
+      "posts": 0,
+      "getAvailability": 0,
+      "byPath": {},
+      "distinctKeys": 0
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 59092,
+    "transportFailure": null,
+    "responsePreview": "{\"type\":\"create_expired\",\"text\":\"La demande en attente a expiré. Aucun rendez-vous n'a été créé. Vous pouvez recommencer la collecte.\"}",
+    "responseJson": {
+      "type": "create_expired",
+      "text": "La demande en attente a expiré. Aucun rendez-vous n'a été créé. Vous pouvez recommencer la collecte."
+    },
+    "mockBefore": {
+      "total": 0,
+      "posts": 0,
+      "getAvailability": 0
+    },
+    "mockAfter": {
+      "total": 0,
+      "posts": 0,
+      "getAvailability": 0,
+      "byPath": {}
+    },
+    "postDelta": 0,
+    "getAvailabilityDelta": 0,
+    "cancelSeen": false
+  },
+  "deactivate": {
+    "tag": "after-message",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "after": {
+    "target": {
+      "intent": "CREATE_APPOINTMENT",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "",
+      "token": "",
+      "slot_id": "",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui",
+      "available_slots": []
+    },
+    "historical": {
+      "intent": "",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "REC008-MOCK-0001",
+      "token": "",
+      "slot_id": "",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui",
+      "available_slots": []
+    },
+    "attempt": {
+      "status": "EXPIRED",
+      "appointmentReference": "",
+      "hasIdempotencyKey": false,
+      "hasRequestPayload": false,
+      "leaseOwner": "",
+      "updatedAt": "2026-11-01 12:00:48.944651+01",
+      "appointmentId": "",
+      "submittedAt": "",
+      "confirmedAt": "",
+      "hasLeaseUntil": false,
+      "fingerprintFp12": "81bd3c88c8e5"
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01|55555555-5555-4555-8555-555555555555|2026-10-31 16:14:05.717271+01|2026-10-31 16:14:06.425766+01|f|70be27adb09e",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01||||f|b036e25bd8b5",
+    "pg": "1|9|3|0",
+    "open": "0",
+    "statusCounts": [
+      "ABANDONED|1",
+      "CONFIRMED|1",
+      "EXPIRED|1"
+    ],
+    "expiredAwaitingCount": "0",
+    "otherFp": "f997dc2ace8e8a06197a12243ead6ac1",
+    "histAttemptsFp": "d8f8fce311723e9f34e84ecdb60c0279",
+    "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "mockPosts": 0,
+    "getAvailability": 0,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "sessionCleaned": true
+  },
+  "checks": {
+    "functionalOk": true,
+    "attemptOk": true,
+    "sessionCleaned": true,
+    "integrityOk": true,
+    "deactivateOk": true,
+    "expiredMsg": true,
+    "claimsCreated": false,
+    "claimAcquired": false,
+    "ready": false,
+    "postDelta": 0
+  },
+  "pass": true,
+  "uncertain": false,
+  "verdict": "PASS",
+  "goRebuildValidAttempt": "GO",
+  "noClaim": true,
+  "noPost": true,
+  "singleMessage": true,
+  "branchExpected": "EXPIRE → Expirer tentatives en attente → Effacer collecte expirée → Réponse attente expirée"
+}

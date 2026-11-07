@@ -1,0 +1,26 @@
+{
+  "tag": "success",
+  "ts": "2026-11-06T21:38:14.598Z",
+  "activatedFlag": false,
+  "verified": true,
+  "safeDeclared": true,
+  "note": "Webhooks cleared alone never proves server idle",
+  "workflow": {
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "transportError": null
+  },
+  "activeIds": [],
+  "activeTransportError": null,
+  "running": {
+    "available": true,
+    "count": 0,
+    "status": 200,
+    "transportError": null
+  },
+  "webhookRows": 0,
+  "webhooksClear": true
+}

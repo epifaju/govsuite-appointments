@@ -1,0 +1,40 @@
+{
+  "ts": "2026-11-05T22:05:49.367Z",
+  "mission": "R013-FIXTURES-REALIGN-019",
+  "pass": true,
+  "tests": [
+    {
+      "name": "fixture_r01_shape",
+      "ok": true
+    },
+    {
+      "name": "fixture_r02_expired_shape",
+      "ok": true
+    },
+    {
+      "name": "fixture_r03_independent_expired",
+      "ok": true
+    },
+    {
+      "name": "r01_camille_ask_email",
+      "ok": true
+    },
+    {
+      "name": "r02_camille_expired_no_capture",
+      "ok": true
+    },
+    {
+      "name": "r03_reprendre_no_prenom",
+      "ok": true
+    },
+    {
+      "name": "no_confirm_without_slot",
+      "ok": true
+    },
+    {
+      "name": "no_claim_post_in_mission",
+      "ok": true
+    }
+  ],
+  "note": "offline simulation only; CLAIM/POST not invoked"
+}

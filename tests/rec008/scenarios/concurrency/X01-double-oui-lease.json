@@ -1,0 +1,16 @@
+{
+  "id": "X01-double-oui-lease",
+  "family": "concurrency",
+  "mode": "offline",
+  "matrixRef": "C8",
+  "required": true,
+  "handler": "concurrency.submittingLease",
+  "description": "Lease SUBMITTING concurrent simulé (1 gagnant) + Décider WAIT — pas une preuve FOR UPDATE PostgreSQL.",
+  "expects": {
+    "winners": 1,
+    "losers": 1,
+    "attemptAction": "WAIT",
+    "runtimeRequired": true,
+    "runtimeRequiredReason": "Double UPDATE concurrent réel (C8)"
+  }
+}

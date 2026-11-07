@@ -1,0 +1,82 @@
+{
+  "mission": "CHAT-TIMEOUT-DIAG-016",
+  "ts": "2026-11-05T21:25:00.000Z",
+  "liveTouched": false,
+  "chatSent": false,
+  "activated": false,
+  "workflow": {
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "responseMode": "lastNode"
+  },
+  "executionRetention": {
+    "execution_entity_count": 0,
+    "apiExecListCount": 0,
+    "note": "Absence d'exécution API/sqlite ≠ absence d'exécution runtime"
+  },
+  "chronologyUtc": {
+    "preflight": "2026-11-05T21:00:47Z",
+    "activate": "2026-11-05T21:00:53Z",
+    "httpAbort": "2026-11-05T21:01:43Z",
+    "deactivate": "2026-11-05T21:02:07Z",
+    "pgLateWriteLocal": "2026-11-05 22:04:30.575+01",
+    "pgLateWriteUtc": "2026-11-05T21:04:30Z"
+  },
+  "pgAfter015Immediate": {
+    "step": "ASK_PRENOM",
+    "prenomNull": true,
+    "lastUserMessageEmpty": true
+  },
+  "pgNow": {
+    "step": "ASK_CREATE_DATE_RANGE",
+    "prenomNull": true,
+    "lastUserMessage": "Camille",
+    "lastUserMessageLen": 7,
+    "fingerprint": "1|14|4|0",
+    "attemptsForSession": 0
+  },
+  "ollama": {
+    "modelConfigured": "qwen2.5:1.5b",
+    "modelOnDisk": true,
+    "sizeDisk": "986 MB",
+    "memLimit": 1610612736,
+    "memUsageIdleObserved": "~53 MiB",
+    "coldLoadStartUtc": "2026-11-05T21:01:18Z",
+    "runnerReadyUtc": "2026-11-05T21:02:23Z",
+    "ginChatUtc": "2026-11-05T21:04:27Z",
+    "ginDuration": "3m10s",
+    "ginSourceIp": "n8n (192.168.224.5)",
+    "inferenceIssuedByDiag016": false,
+    "logsInWindow": "cold-load + GIN /api/chat (devops) — not empty",
+    "source": "devops-engineer ec048e18"
+  },
+  "evidenceReviewer": {
+    "id": "878be002-ad8d-40dd-b588-cdfba34e00bd",
+    "verdict": "INCONCLUSIVE",
+    "r01RerunAuto": "NO-GO"
+  },
+  "publish": {
+    "type": "raw TCP pipe",
+    "logs": "empty by design"
+  },
+  "pathPrefix": [
+    "Chat Trigger (responseMode=lastNode)",
+    "Charger état conversation",
+    "Lire tentative de session",
+    "Joindre… / Fusionner…",
+    "Comprendre la demande (chainLlm + Ollama qwen2.5:1.5b)",
+    "Parser intention",
+    "… Router → Gérer → Sauvegarder → réponse lastNode"
+  ],
+  "hypotheses": {
+    "H1_not_at_relay": { "confidence": "REFUTED", "why": "PG later has last_user_message=Camille" },
+    "H2_relay_not_to_n8n": { "confidence": "REFUTED", "why": "same" },
+    "H3_trigger_no_start": { "confidence": "REFUTED", "why": "Sauvegarder-side effect implies start" },
+    "H4_started_blocked_node": { "confidence": "HIGH", "why": "45s client abort + ~3.5min to PG write; Ollama cold path likely" },
+    "H5_done_http_not_delivered": { "confidence": "HIGH", "why": "client aborted; responseMode lastNode; server likely continued" },
+    "H6_insufficient_node_trace": { "confidence": "CONFIRMED", "why": "execution_entity=0" }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "phase": "8F-2B13",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "parserMapsOuiToAffirmOnlyInAwaitOrOpenAwaiting": true,
+  "parserGate": "previousConversationStep === 'AWAIT_CREATE_CONFIRMATION' || openAttempt.status === 'AWAITING_CONFIRMATION'",
+  "outsideAwaitOuiCreatesNoCreateDecision": true,
+  "lireTentativeStatuses": [
+    "AWAITING_CONFIRMATION",
+    "SUBMITTING",
+    "UNCERTAIN",
+    "CONFIRMED"
+  ],
+  "abandonedSelectableAsOpen": false,
+  "decideClaimRequiresAwaitingAndAffirm": true,
+  "decideInsertRequiresDecisionInsert": true,
+  "decideDefaultWithoutOpen": "COLLECT",
+  "collectFallbackNode": "Valider paramètres création",
+  "collectReachCreateAppointment": false,
+  "collectReachCancelAppointment": false,
+  "claimReachCreateAppointment": true,
+  "resumeReachCreateAppointment": true,
+  "insertReachCreateAppointment": false,
+  "cannotReuseAbandonedAttempt": true,
+  "cannotPostFromOuiAlone": true,
+  "cannotCreateNewAttemptFromOuiAlone": true,
+  "safeToActivate": true,
+  "notes": [
+    "After 8F-2B12: conversation_step empty, draft cleared, attempt ABANDONED with purged key/payload.",
+    "Parser does not emit AFFIRM for bare 'oui' outside AWAIT_CREATE_CONFIRMATION without an open AWAITING_CONFIRMATION attempt.",
+    "Lire tentative de session excludes ABANDONED, so openAttempt is null.",
+    "Décider falls through to COLLECT; Aiguiller fallback → Valider paramètres création, which cannot reach Appeler CreateAppointment."
+  ]
+}

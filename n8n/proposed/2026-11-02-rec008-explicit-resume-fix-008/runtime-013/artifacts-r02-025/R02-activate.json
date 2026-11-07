@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "ok": true,
+  "aborted": false,
+  "error": null,
+  "active": true,
+  "activeVersionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+  "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+  "versionCounter": 10
+}

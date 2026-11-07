@@ -1,0 +1,461 @@
+{
+  "phase": "8F-2B23",
+  "pass": true,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+    "versionCounter": 7,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "networkOk": true,
+    "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+    "pg": "1|8|2|0",
+    "statuses": "ABANDONED|1\nCONFIRMED|1",
+    "open": "0",
+    "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT|CREATE_APPOINTMENT|Dupont|+33000000000|f",
+    "attempt": "ad71a155-4d3a-45b9-8445-2ec98377feaa|CONFIRMED|REC008-MOCK-0001|55555555-5555-4555-8555-555555555555|f|f||70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8|2026-10-31 16:14:05.717271+01|2026-10-31 16:14:06.425766+01",
+    "abandoned": "8ae63b62-9f87-4a15-9011-4554b7766918|ABANDONED|f|f",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "postAppointments": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "ok": true
+  },
+  "routing": {
+    "lireStatuses": "'AWAITING_CONFIRMATION', 'SUBMITTING', 'UNCERTAIN', 'CONFIRMED'",
+    "lireIncludesConfirmed": true,
+    "decideHasConfirmedBranch": true,
+    "decideAffirmClaim": true,
+    "decideDefaultCollect": true,
+    "aiguillerKeys": [
+      "INSERT",
+      "CLAIM",
+      "RESUME",
+      "ABANDON",
+      "MODIFY",
+      "RESTART",
+      "ASK",
+      "WAIT",
+      "RECALL",
+      "EXPIRE",
+      "RESET_STALE"
+    ],
+    "ruleMap": {
+      "INSERT": "Tirer aléa de tentative",
+      "CLAIM": "Préparer réclamation ou reprise",
+      "RESUME": "Préparer reprise",
+      "ABANDON": "Préparer abandon ou modification",
+      "MODIFY": "Préparer abandon ou modification",
+      "RESTART": "Préparer abandon ou modification",
+      "ASK": "Demander paramètres création",
+      "WAIT": "Réponse attente de bail",
+      "RECALL": "Réponse référence déjà connue",
+      "EXPIRE": "Expirer tentatives en attente",
+      "RESET_STALE": "Effacer collecte orpheline"
+    },
+    "claimReachCreate": true,
+    "collectReachCreate": false,
+    "insertReachCreate": false,
+    "collectReachInsert": false,
+    "collectReachClaim": false,
+    "simOuiOnConfirmed": "RECALL",
+    "simOuiOnAwaiting": "CLAIM",
+    "simOtherOnConfirmed": "COLLECT",
+    "recallNode": "Réponse référence déjà connue",
+    "recallReachesCreate": false,
+    "fallbackTarget": "Valider paramètres création",
+    "joindreSetsOpenAttempt": true,
+    "joindreCodeHead": "const trigger = $('Lorsqu\\'un message de chat est reçu').item.json || {};\nlet previous = {};\ntry { previous = $('Charger état conversation').item.json ?? {}; } catch (e) { previous = {}; }\nconst row = $json || {};\nconst openAttempt = row.attempt_id ? {\n  id: row.attempt_id,\n  status: row.attempt_status,\n  reference: row.appointment_reference || null,\n  leaseUntil: row.lease_until || null,\n  expiresAt: row.expires_at || null,\n  resumeCount: row.resume_count\n} : null;\nreturn [{\n  json: {\n    ...previous,\n    sessionId: previous.sessionId || previous.session_id || trigger.sessionId || null,\n    openAttempt\n  }\n}];",
+    "decideConfirmedMentions": 1,
+    "parserAffirmOnlyAwait": true,
+    "finaliserQuery": "UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = NULLIF($2::text, ''),\n    token = NULLIF($3::text, ''),\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+    "finaliserReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+    "createParents": [
+      "Corps figé présent ?"
+    ]
+  },
+  "risks": {
+    "retrievesConfirmedAttempt": true,
+    "ouiRoutesTo": "RECALL",
+    "mayAskConfirmAgain": false,
+    "mayCreateNewAttempt": false,
+    "mayClaim": false,
+    "mayPost": false,
+    "recallCleansSession": false,
+    "recallMessageSafe": true,
+    "otherMessageFallsToCollectFallback": true,
+    "fallbackIsValider": true,
+    "canCleanWithoutBusinessCall": true,
+    "notes": [
+      "Lire tentative includes CONFIRMED → openAttempt status CONFIRMED with reference.",
+      "Décider: (status===CONFIRMED && decision===AFFIRM) → RECALL (not CLAIM).",
+      "RECALL → Réponse référence déjà connue: ack with reference; no CLAIM/POST; does not finalize session.",
+      "Non-AFFIRM on CONFIRMED → COLLECT → Aiguiller fallback → Valider paramètres création (ready=claimAcquired only; no CreateAppointment).",
+      "Session remains AWAIT_CREATE_CONFIRMATION until explicit RECONCILE_CONFIRMED_SESSION."
+    ],
+    "gererMentionsInsert": true,
+    "collectReachInsert": false,
+    "collectReachCreate": false,
+    "summary": "If oui is sent again: Décider sees CONFIRMED+AFFIRM → RECALL → safe ack with reference; no CLAIM/POST; session not cleaned. CreateAppointment only via Corps figé présent ? after CLAIM/RESUME. Reconcile must be a separate authorized SQL/session finalize.",
+    "workflowFixRequiredForReconcile": false,
+    "workflowFixRequiredForDollar3": false
+  },
+  "reconcileSqlPath": "RECONCILE_CONFIRMED_SESSION.proposed.sql",
+  "methods": {
+    "A": {
+      "name": "Isolated Finaliser / synthetic session",
+      "description": "Create a disposable synthetic ai_conversation_state row (or use a throwaway session_id). Invoke only Finaliser-equivalent SQL with three bound params (session, reference, token empty/present) via read-write psql under a later authorized phase — OR dry-run EXPLAIN with bound params. Prefer: execute the exact Finaliser UPDATE on a synthetic session that has no attempt, proving $1/$2/$3 bind and NULLIF behavior, then delete the synthetic session.",
+      "provesDollar3": true,
+      "needsClaim": false,
+      "needsPost": false,
+      "doubleCreateRisk": "none",
+      "pgEffects": "synthetic session only (insert+update+delete) if authorized; zero effect on rec008-8f2b14-new-01 and attempts",
+      "rollback": "easy (delete synthetic session)",
+      "traceability": "high (SQL logs / RETURNING)",
+      "safety": "highest"
+    },
+    "B": {
+      "name": "Full conversational path on new session",
+      "description": "Activate workflow, run full create flow on a new session through mock → one POST → Finaliser. Proves end-to-end including $3.",
+      "provesDollar3": true,
+      "needsClaim": true,
+      "needsPost": true,
+      "doubleCreateRisk": "one intentional mock POST; must not touch confirmed session",
+      "pgEffects": "new attempt + session mutations",
+      "rollback": "harder (new attempt residual)",
+      "traceability": "high but noisy",
+      "safety": "lower than A"
+    },
+    "recommendation": "A",
+    "recommendationReason": "Validates real PostgreSQL binding of $3 (including empty→NULL) with zero CLAIM/POST and no impact on the inconsistent confirmed session. Method B remains useful later as an integration test under separate authorization."
+  },
+  "tests": [
+    {
+      "id": "T1",
+      "title": "Session attente + tentative CONFIRMED",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T2",
+      "title": "Réconciliation idempotente répétée",
+      "pass": true,
+      "detail": {
+        "g1": {
+          "ok": true,
+          "updated": true,
+          "claim": false,
+          "post": false,
+          "inventToken": false,
+          "touchAttempt": false,
+          "touchAbandoned": false,
+          "clearFields": [
+            "intent",
+            "service",
+            "site",
+            "dates",
+            "slot",
+            "pending_action",
+            "conversation_step",
+            "identity"
+          ],
+          "setReference": "REC008-MOCK-0001",
+          "setToken": null
+        },
+        "g2": {
+          "ok": true,
+          "updated": false,
+          "reason": "already-finalized"
+        },
+        "r1Step": null,
+        "r1Ref": "REC008-MOCK-0001"
+      }
+    },
+    {
+      "id": "T3",
+      "title": "Tentative ABANDONED",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-ABANDONED"
+      }
+    },
+    {
+      "id": "T4",
+      "title": "Tentative UNCERTAIN",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-UNCERTAIN"
+      }
+    },
+    {
+      "id": "T5",
+      "title": "Tentative SUBMITTING",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-SUBMITTING"
+      }
+    },
+    {
+      "id": "T6",
+      "title": "Tentative AWAITING_CONFIRMATION",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-AWAITING_CONFIRMATION"
+      }
+    },
+    {
+      "id": "T7",
+      "title": "Référence confirmée absente",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "no-reference"
+      }
+    },
+    {
+      "id": "T8",
+      "title": "Tentative autre session",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "attempt-other-session"
+      }
+    },
+    {
+      "id": "T9",
+      "title": "Session déjà finalisée",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": false,
+        "reason": "already-finalized"
+      }
+    },
+    {
+      "id": "T10",
+      "title": "Aucun CLAIM",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T11",
+      "title": "Aucun POST",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T12",
+      "title": "Aucun nouveau token",
+      "pass": true,
+      "detail": {
+        "g": {
+          "ok": true,
+          "updated": true,
+          "claim": false,
+          "post": false,
+          "inventToken": false,
+          "touchAttempt": false,
+          "touchAbandoned": false,
+          "clearFields": [
+            "intent",
+            "service",
+            "site",
+            "dates",
+            "slot",
+            "pending_action",
+            "conversation_step",
+            "identity"
+          ],
+          "setReference": "REC008-MOCK-0001",
+          "setToken": null
+        },
+        "token": null
+      }
+    },
+    {
+      "id": "T13",
+      "title": "Tentative confirmée inchangée",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "id": "T14",
+      "title": "ABANDONED inchangée",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "id": "T15",
+      "title": "Binding $3 toujours lié (token absent)",
+      "pass": true,
+      "detail": {
+        "bindEmpty": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "queryHasNullif": true
+      }
+    },
+    {
+      "id": "T16",
+      "title": "Token présent",
+      "pass": true,
+      "detail": {
+        "stored": "tok-real"
+      }
+    },
+    {
+      "id": "T17",
+      "title": "Aucun accès LIVE",
+      "pass": true,
+      "detail": {
+        "live": false
+      }
+    },
+    {
+      "id": "T18",
+      "title": "Credentials/URL inchangés",
+      "pass": true,
+      "detail": {
+        "postgres": [
+          "Fs0l0058q5CEadRw"
+        ],
+        "urlsCount": 10
+      }
+    },
+    {
+      "id": "T19",
+      "title": "Graphe installé inchangé",
+      "pass": true,
+      "detail": {
+        "nodes": 134,
+        "edges": 137,
+        "fSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d"
+      }
+    },
+    {
+      "id": "T20",
+      "title": "Aucune écriture pendant audit",
+      "pass": true,
+      "detail": {
+        "pg1": "1|8|2|0",
+        "session1": "AWAIT_CREATE_CONFIRMATION|oui|",
+        "post": 1
+      }
+    }
+  ],
+  "failed": [],
+  "postflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+    "versionCounter": 7,
+    "pg": "1|8|2|0",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "putExecuted": false,
+    "activationExecuted": false,
+    "chatExecuted": false,
+    "reconcileExecuted": false
+  },
+  "workflowFixRequired": false,
+  "recommendedNextPhase": {
+    "reconcile": "GO-with-authorization",
+    "runtimeDollar3": "GO-method-A",
+    "chatbotFullPath": "NO-GO-until-A-and-reconcile-authorized",
+    "sendOuiOnExistingSession": "NO-GO"
+  }
+}

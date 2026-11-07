@@ -1,0 +1,26 @@
+{
+  "session": {
+    "sessionId": "rec008-runtime013-r01-active",
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_PRENOM",
+    "expiresAt": "2026-11-05 23:35:23.065946+01",
+    "updatedAt": "2026-11-05 21:35:23.065946+01",
+    "ttlActive": true,
+    "sessionExpiredNow": false,
+    "nomPresent": true,
+    "nomLen": 6,
+    "nom": "Dupont",
+    "prenomIsNull": true,
+    "prenomLen": 0,
+    "prenom": null,
+    "hasService": true,
+    "hasSite": true,
+    "hasAvailableSlots": true,
+    "lastUserMessagePreview": ""
+  },
+  "fingerprint": "1|14|4|0",
+  "mockPosts": 0,
+  "mockClaims": 0,
+  "open": 0
+}

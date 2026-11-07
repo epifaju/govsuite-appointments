@@ -1,0 +1,22 @@
+{
+  "proposalPath": "C:/Open Source PME/govsuite-appointments/n8n/proposed/2026-10-31-rec008-phase8f2b23-RECONCILIATION-RUNTIME-AUDIT/RECONCILE_CONFIRMED_SESSION.proposed.sql",
+  "proposalSha256": "b574d34edd4df8e6c8b3870aaae0648963a5dc6b196a7cb2710c4282193c409c",
+  "executedFormMatchesProposalCore": true,
+  "columns": "available_slots:jsonb:null=YES\nconversation_step:varchar:null=YES\ndate_debut:date:null=YES\ndate_fin:date:null=YES\nemail:varchar:null=YES\nexpires_at:timestamptz:null=YES\nintent:varchar:null=YES\nnew_slot_id:uuid:null=YES\nnom:varchar:null=YES\npending_action:varchar:null=YES\nprenom:varchar:null=YES\nreference:varchar:null=YES\nselected_slot_index:int4:null=YES\nservice:varchar:null=YES\nsession_id:varchar:null=NO\nsite:varchar:null=YES\nslot_id:uuid:null=YES\ntelephone:varchar:null=YES\ntoken:uuid:null=YES\nupdated_at:timestamptz:null=NO",
+  "attemptCols": "appointment_id:uuid\nappointment_reference:varchar\nid:uuid\nidempotency_key:varchar\nlease_owner:varchar\nrequest_payload:jsonb\nsession_id:varchar\nstatus:varchar",
+  "bindings": {
+    "$1": "rec008-8f2b14-new-01",
+    "$2": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+    "$3": "REC008-MOCK-0001"
+  },
+  "securityConditions": [
+    "session_id exact match on attempt and state",
+    "attempt id exact uuid",
+    "status = CONFIRMED",
+    "appointment_reference = expected reference",
+    "UPDATE only when step AWAIT OR pending CREATE OR empty reference",
+    "no write to ai_appointment_attempt",
+    "token forced NULL (never invent)",
+    "RETURNING for atomic row count"
+  ]
+}

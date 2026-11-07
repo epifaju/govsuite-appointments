@@ -1,0 +1,14 @@
+{
+  "ok": false,
+  "status": 500,
+  "elapsedMs": 40629,
+  "type": null,
+  "textPreview": "{\"message\":\"Error in workflow\"}",
+  "aborted": false,
+  "error": null,
+  "transportError": null,
+  "causeCode": null,
+  "timeoutMs": 180000,
+  "retried": false,
+  "messageClass": "email_like_valid_synthetic"
+}

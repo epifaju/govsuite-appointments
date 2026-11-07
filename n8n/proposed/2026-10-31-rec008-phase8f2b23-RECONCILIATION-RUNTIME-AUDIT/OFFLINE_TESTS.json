@@ -1,0 +1,283 @@
+{
+  "pass": true,
+  "tests": [
+    {
+      "id": "T1",
+      "title": "Session attente + tentative CONFIRMED",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T2",
+      "title": "Réconciliation idempotente répétée",
+      "pass": true,
+      "detail": {
+        "g1": {
+          "ok": true,
+          "updated": true,
+          "claim": false,
+          "post": false,
+          "inventToken": false,
+          "touchAttempt": false,
+          "touchAbandoned": false,
+          "clearFields": [
+            "intent",
+            "service",
+            "site",
+            "dates",
+            "slot",
+            "pending_action",
+            "conversation_step",
+            "identity"
+          ],
+          "setReference": "REC008-MOCK-0001",
+          "setToken": null
+        },
+        "g2": {
+          "ok": true,
+          "updated": false,
+          "reason": "already-finalized"
+        },
+        "r1Step": null,
+        "r1Ref": "REC008-MOCK-0001"
+      }
+    },
+    {
+      "id": "T3",
+      "title": "Tentative ABANDONED",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-ABANDONED"
+      }
+    },
+    {
+      "id": "T4",
+      "title": "Tentative UNCERTAIN",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-UNCERTAIN"
+      }
+    },
+    {
+      "id": "T5",
+      "title": "Tentative SUBMITTING",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-SUBMITTING"
+      }
+    },
+    {
+      "id": "T6",
+      "title": "Tentative AWAITING_CONFIRMATION",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "status-AWAITING_CONFIRMATION"
+      }
+    },
+    {
+      "id": "T7",
+      "title": "Référence confirmée absente",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "no-reference"
+      }
+    },
+    {
+      "id": "T8",
+      "title": "Tentative autre session",
+      "pass": true,
+      "detail": {
+        "ok": false,
+        "reason": "attempt-other-session"
+      }
+    },
+    {
+      "id": "T9",
+      "title": "Session déjà finalisée",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": false,
+        "reason": "already-finalized"
+      }
+    },
+    {
+      "id": "T10",
+      "title": "Aucun CLAIM",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T11",
+      "title": "Aucun POST",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "updated": true,
+        "claim": false,
+        "post": false,
+        "inventToken": false,
+        "touchAttempt": false,
+        "touchAbandoned": false,
+        "clearFields": [
+          "intent",
+          "service",
+          "site",
+          "dates",
+          "slot",
+          "pending_action",
+          "conversation_step",
+          "identity"
+        ],
+        "setReference": "REC008-MOCK-0001",
+        "setToken": null
+      }
+    },
+    {
+      "id": "T12",
+      "title": "Aucun nouveau token",
+      "pass": true,
+      "detail": {
+        "g": {
+          "ok": true,
+          "updated": true,
+          "claim": false,
+          "post": false,
+          "inventToken": false,
+          "touchAttempt": false,
+          "touchAbandoned": false,
+          "clearFields": [
+            "intent",
+            "service",
+            "site",
+            "dates",
+            "slot",
+            "pending_action",
+            "conversation_step",
+            "identity"
+          ],
+          "setReference": "REC008-MOCK-0001",
+          "setToken": null
+        },
+        "token": null
+      }
+    },
+    {
+      "id": "T13",
+      "title": "Tentative confirmée inchangée",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "id": "T14",
+      "title": "ABANDONED inchangée",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "id": "T15",
+      "title": "Binding $3 toujours lié (token absent)",
+      "pass": true,
+      "detail": {
+        "bindEmpty": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "queryHasNullif": true
+      }
+    },
+    {
+      "id": "T16",
+      "title": "Token présent",
+      "pass": true,
+      "detail": {
+        "stored": "tok-real"
+      }
+    },
+    {
+      "id": "T17",
+      "title": "Aucun accès LIVE",
+      "pass": true,
+      "detail": {
+        "live": false
+      }
+    },
+    {
+      "id": "T18",
+      "title": "Credentials/URL inchangés",
+      "pass": true,
+      "detail": {
+        "postgres": [
+          "Fs0l0058q5CEadRw"
+        ],
+        "urlsCount": 10
+      }
+    },
+    {
+      "id": "T19",
+      "title": "Graphe installé inchangé",
+      "pass": true,
+      "detail": {
+        "nodes": 134,
+        "edges": 137,
+        "fSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d"
+      }
+    },
+    {
+      "id": "T20",
+      "title": "Aucune écriture pendant audit",
+      "pass": true,
+      "detail": {
+        "pg1": "1|8|2|0",
+        "session1": "AWAIT_CREATE_CONFIRMATION|oui|",
+        "post": 1
+      }
+    }
+  ]
+}

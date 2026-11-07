@@ -1,0 +1,14 @@
+{
+  "id": "O01-transport-timeout",
+  "family": "timeout",
+  "mode": "offline",
+  "required": true,
+  "handler": "http.classifyTimeout",
+  "description": "Timeout transport CreateAppointment : Classer délai HTTP → UNCERTAIN + sim sans retry auto.",
+  "expects": {
+    "httpOutcome": "UNCERTAIN",
+    "timeout": true,
+    "noAutomaticRetry": true,
+    "runtimeRequired": true
+  }
+}

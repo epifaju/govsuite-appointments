@@ -1,0 +1,10 @@
+{
+  "id": "K02-negative-non",
+  "family": "confirmation",
+  "mode": "offline",
+  "matrixRef": "C3",
+  "required": true,
+  "handler": "confirm.abandon",
+  "description": "Abandon explicite en collecte identité → NEGATIVE + authorized nulls; simulation save nulls.",
+  "expects": { "createDecision": "NEGATIVE", "noCreateAppointmentPost": true }
+}

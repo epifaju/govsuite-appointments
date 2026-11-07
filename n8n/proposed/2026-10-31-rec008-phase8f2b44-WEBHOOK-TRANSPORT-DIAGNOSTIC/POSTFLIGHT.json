@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-01T12:54:28.402Z",
+  "pg": "1|10|4|0",
+  "open": "1",
+  "statusCounts": [
+    "ABANDONED|1",
+    "AWAITING_CONFIRMATION|1",
+    "CONFIRMED|1",
+    "EXPIRED|1"
+  ],
+  "attempt": {
+    "status": "AWAITING_CONFIRMATION",
+    "secsLeft": 4403,
+    "stillValid": true,
+    "clockNow": "2026-11-01 13:54:29.16274+01",
+    "hasLease": false,
+    "reference": "",
+    "hasKey": true,
+    "hasPayload": true,
+    "submittedAt": "",
+    "confirmedAt": "",
+    "updatedAt": "2026-11-01 13:07:51.746023+01"
+  },
+  "mock": {
+    "scenario": "created",
+    "total": 2,
+    "posts": 0,
+    "getAvailability": 2,
+    "distinctKeys": 0
+  },
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  },
+  "fetchFailedCauseBaselineRefused": {
+    "name": "TypeError",
+    "message": "fetch failed",
+    "elapsedHint": "n/a",
+    "cause": {
+      "code": "ECONNREFUSED",
+      "errno": -4078,
+      "syscall": "connect",
+      "address": "127.0.0.1",
+      "port": 59999,
+      "message": "connect ECONNREFUSED 127.0.0.1:59999"
+    },
+    "elapsedMs": 79
+  },
+  "publishListen": "PID   USER     TIME  COMMAND\n    1 root      0:01 {MainThread} node /opt/rec008-publish/proxy.mjs\n   41 root      0:00 sh -lc ps aux; (netstat -lntp 2>/dev/null || ss -lntp 2>/dev/null || true)\n   47 root      0:00 ps aux\nActive Internet connections (only servers)\nProto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    \ntcp        0      0 127.0.0.11:36229        0.0.0.0:*               LISTEN      -\ntcp        0      0 0.0.0.0:5682            0.0.0.0:*               LISTEN      1/node",
+  "hostNetstat": "TCP    127.0.0.1:5682         0.0.0.0:0              LISTENING       24660\r\n  TCP    127.0.0.1:5682         127.0.0.1:52120        TIME_WAIT       0\r\n  TCP    127.0.0.1:52121        127.0.0.1:5682         TIME_WAIT       0\r\n  TCP    127.0.0.1:52147        127.0.0.1:5682         TIME_WAIT       0\r\n  TCP    127.0.0.1:52148        127.0.0.1:5682         TIME_WAIT       0\r\n  TCP    127.0.0.1:52149        127.0.0.1:5682         TIME_WAIT       0\r\n  TCP    127.0.0.1:52333        127.0.0.1:5682         TIME_WAIT       0\r\n  TCP    127.0.0.1:52334        127.0.0.1:5682         TIME_WAIT       0",
+  "containers": {
+    "n8n": "Status=running Started=2026-11-01T10:33:58.920577134Z Restarts=0",
+    "publish": "Status=running Started=2026-11-01T10:33:59.108477811Z Restarts=0",
+    "postgres": "Status=running Health=healthy",
+    "mock": "Status=running"
+  },
+  "integrity": {
+    "noNewAttempt": true,
+    "stillAwaiting": true,
+    "mockUnchanged": true,
+    "govUnchanged": true,
+    "mailUnchanged": true,
+    "openStillOne": true
+  },
+  "integrityOk": true
+}

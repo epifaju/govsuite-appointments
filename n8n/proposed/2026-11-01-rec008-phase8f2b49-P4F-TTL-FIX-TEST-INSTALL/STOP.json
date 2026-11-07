@@ -1,0 +1,7 @@
+{
+  "ok": false,
+  "stopped": true,
+  "phase": "build-candidate",
+  "reason": "fix-c-ttl",
+  "detail": {}
+}

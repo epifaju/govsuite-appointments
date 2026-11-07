@@ -1,0 +1,244 @@
+{
+  "id": "R01-PREFLIGHT-023",
+  "shortId": "R023",
+  "title": "QA verdict — préflight R01 (stack + TTL gate + ollama gate + runner SHA assertR01) ; pas de chat",
+  "mode": "offline-evidence-review",
+  "tsReview": "2026-11-06T18:39:00.000Z",
+  "executedRuntime": false,
+  "executedBusiness": false,
+  "chatTriggerUsed": false,
+  "activationExecuted": false,
+  "postCreateAppointment": false,
+  "pgMutated": false,
+  "ttlRefreshExecuted": false,
+  "ollamaInference": false,
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "preflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/preflight-023/PREFLIGHT.json",
+    "offlineResults": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/preflight-023/OFFLINE-TEST-RESULTS.json",
+    "offlineTests": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/preflight-023/offline-preflight-023.test.cjs",
+    "ttlSqlPrepared": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/preflight-023/TTL-REFRESH-R01.sql",
+    "warmupProcedure": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/preflight-023/WARMUP-PROCEDURE.md",
+    "priorQa022": "tests/rec008/readiness/R022-stack-recovery-qa-verdict.json"
+  },
+  "parentFactsAccepted": {
+    "PREFLIGHT.ok": true,
+    "offline": "14/14 PASS",
+    "TTL_REFRESH_REQUIRED": true,
+    "ollama.gateReady": false,
+    "runner.changedSince021": true,
+    "chat": "none",
+    "gateR01Campaign": "NO-GO",
+    "gateR01PrepNext": "GO-CONDITIONAL-need-TTL-and-warm"
+  },
+  "httpVsBusiness": {
+    "httpTransport": "PASS",
+    "businessSuccess": "NOT_EVALUATED",
+    "note": "healthz/login HTTP 200 = transport uniquement ; aucun chat → aucun succès métier affirmé"
+  },
+  "preflightAssertions": {
+    "status": "PASS",
+    "checks": [
+      {
+        "id": "PF-01-stack-ok",
+        "assert": "PREFLIGHT.ok === true ; issues=[] ; 5 conteneurs TEST Up ; healthz/login 200",
+        "observed": {
+          "ok": true,
+          "issues": [],
+          "dockerUpCount": 5,
+          "healthz": 200,
+          "login": 200,
+          "cookiePresent": true
+        },
+        "verdict": "PASS",
+        "scope": "transport-and-stack"
+      },
+      {
+        "id": "PF-02-workflow-vc10-inactive",
+        "assert": "workflow inactive ; VC10 ; 134/137 ; webhooks=0 ; running=0 ; n8nActivated=false",
+        "observed": {
+          "active": false,
+          "activeVersionId": null,
+          "versionCounter": 10,
+          "nodeCount": 134,
+          "edgeCount": 137,
+          "webhookRows": 0,
+          "runningExecutions": 0,
+          "n8nActivated": false
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-03-safety-flags",
+        "assert": "liveProbed=false ; pgMutated=false ; ttlSqlExecuted=false ; chatTriggerUsed=false ; ollamaInference=false",
+        "observed": {
+          "liveProbed": false,
+          "pgMutated": false,
+          "ttlSqlExecuted": false,
+          "chatTriggerUsed": false,
+          "ollamaInference": false
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-04-fixtures-fingerprint",
+        "assert": "fingerprint 1|14|4|0 ; openAttempts=0 ; R01/R02/R03 synthétiques présentes (SELECT)",
+        "observed": {
+          "fingerprint": "1|14|4|0",
+          "openAttempts": 0,
+          "r01_session": "rec008-runtime013-r01-active",
+          "r01_step": "ASK_PRENOM",
+          "r01_slot_id_present": true,
+          "r01_prenom_null": true
+        },
+        "verdict": "PASS",
+        "mode": "read-only-select"
+      },
+      {
+        "id": "PF-05-ttl-refresh-required",
+        "assert": "R01 ttl_future=false → TTL_REFRESH_REQUIRED=true ; SQL préparé non exécuté en 023",
+        "observed": {
+          "r01_ttl_future": false,
+          "TTL_REFRESH_REQUIRED": true,
+          "ttlSqlPrepared": true,
+          "executedIn023": false
+        },
+        "verdict": "PASS",
+        "gateImpact": "blocks campagne R01 until distinct TTL refresh mission"
+      },
+      {
+        "id": "PF-06-ollama-gate-not-ready",
+        "assert": "gateReady=false ; model_absent_from_api_ps ; warmupRequiredBeforeR01 ; pas d'inférence",
+        "observed": {
+          "modelListed": true,
+          "apiPsModels": [],
+          "gateReady": false,
+          "gateReason": "model_absent_from_api_ps",
+          "warmupRequiredBeforeR01": true,
+          "inferencePerformed": false
+        },
+        "verdict": "PASS",
+        "gateImpact": "blocks campagne R01 until warm + /api/ps ready"
+      },
+      {
+        "id": "PF-07-runner-sha-assertR01-slot",
+        "assert": "SHA runner changé vs 021 (attendu) ; hasSlotAssert ; offline assertR01_slotIdPresent_after PASS",
+        "observed": {
+          "sha256": "ef79972a87f1f6796b646864912fc495ddd65cac5ee1df71545386ff5462fe23",
+          "sha021": "1ab9465a720aa64925e633e5665eea3bafbe42225ac3e728bceea9f177ac5826",
+          "changedSince021": true,
+          "changeNote": "assertR01 +slotIdPresent before/after (023)",
+          "hasGate": true,
+          "has180": true,
+          "hasNoRetry": true,
+          "hasClassify": true,
+          "hasSlotAssert": true,
+          "offlineAssertR01": "PASS"
+        },
+        "verdict": "PASS",
+        "note": "changement SHA = renforcement assertR01 (risque résiduel 021 traité hors ligne) ; pas une régression"
+      },
+      {
+        "id": "PF-08-offline-14-14",
+        "assert": "OFFLINE-TEST-RESULTS pass=true ; total=14 ; failed=[] ; SHA aligné PREFLIGHT",
+        "observed": {
+          "pass": true,
+          "total": 14,
+          "failed": [],
+          "runnerSha256": "ef79972a87f1f6796b646864912fc495ddd65cac5ee1df71545386ff5462fe23"
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-09-no-chat",
+        "assert": "aucun Chat Trigger / message métier dans 023",
+        "observed": {
+          "chatTriggerUsed": false,
+          "parentFact": "Pas de chat"
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-10-observability-retention",
+        "assert": "retentionBlocksR01=false ; alternatives acceptées ; pas de PUT 023",
+        "observed": {
+          "saveDataSuccessExecution": "all",
+          "executionEntityCount": 0,
+          "retentionCause": "INCONCLUSIVE",
+          "retentionBlocksR01": false
+        },
+        "verdict": "PASS",
+        "residual": "execution_entity=0 toujours INCONCLUSIVE (preuve alternative)"
+      }
+    ]
+  },
+  "knownResiduals": [
+    {
+      "id": "RES-01-ttl-r01-expired",
+      "class": "BLOCKER-CAMPAIGN",
+      "note": "R01 expires_at passé ; TTL_REFRESH_REQUIRED — mission SQL distincte requise"
+    },
+    {
+      "id": "RES-02-ollama-cold",
+      "class": "BLOCKER-CAMPAIGN",
+      "note": "qwen2.5:1.5b listé mais absent de /api/ps ; warm requis avant R01"
+    },
+    {
+      "id": "RES-03-execution-entity-zero",
+      "class": "INCONCLUSIVE",
+      "note": "execution_entity=0 malgré saveData*=all — n'autorise pas PUT ; alternatives documentées"
+    }
+  ],
+  "goNoGo": {
+    "stackTestOperational": "GO",
+    "preflightMission023": "PASS",
+    "prepCampaignR01": {
+      "decision": "GO-CONDITIONAL",
+      "conditions": [
+        "refresh TTL R01 autorisé (mission/auth distincte ; SQL préparé non exécuté)",
+        "warm Ollama + gate /api/ps ready (procédure WARMUP-PROCEDURE.md)",
+        "re-préflight frais après TTL+warm (VC10 / fixtures / gates)",
+        "runner SHA 023 + assertR01 slotIdPresent (déjà OK hors ligne)"
+      ],
+      "authorizedNow": false
+    },
+    "campaignR01Conversational": "NO-GO",
+    "campaignR02": "NO-GO",
+    "campaignR03": "NO-GO",
+    "autoNextPhase": "NO-GO",
+    "reason": "Préflight 023 ok + offline 14/14 ; TTL_REFRESH_REQUIRED et ollama gate not ready ; pas de chat ; SHA runner 023 attendu (assertR01) ; campagne conversationnelle interdite"
+  },
+  "stopCriteriaHonored": [
+    "0 retry réseau auto",
+    "pas de chat / activation / PUT",
+    "pas de POST CreateAppointment",
+    "pas de refresh TTL exécuté dans 023",
+    "pas d'inférence Ollama",
+    "pas de mutation PG métier",
+    "LIVE non sondé",
+    "pas d'auto-next phase"
+  ],
+  "verdictThisMission": {
+    "value": "PASS",
+    "scope": "R01-PREFLIGHT-023 offline evidence + stack/TTL/ollama/runner gates",
+    "preflightOk": true,
+    "offlineOk": true,
+    "campaignsAuthorized": false,
+    "ttlRefreshRequired": true,
+    "ollamaWarmRequired": true,
+    "reason": "PREFLIGHT.ok=true ; offline 14/14 ; stack Up VC10 inactive ; TTL + ollama gates correctement NO-GO campagne ; SHA runner changé pour assertR01 slot (PASS hors ligne) ; HTTP≠métier ; aucun chat."
+  },
+  "commandsDocumented": {
+    "offlineNote": "Aucun runtime métier lancé dans R023 QA. Revue d'artefacts uniquement.",
+    "alreadyDone": [
+      "préflight 023 → ok=true ; gateR01Campaign=NO-GO",
+      "node …/preflight-023/offline-preflight-023.test.cjs → 14/14"
+    ],
+    "futureWhenAuthorized": [
+      "mission TTL refresh R01 (auth distincte ; TTL-REFRESH-R01.sql)",
+      "warm Ollama /api/ps (WARMUP-PROCEDURE.md)",
+      "re-préflight + campagne R01 (auth distincte)"
+    ]
+  }
+}

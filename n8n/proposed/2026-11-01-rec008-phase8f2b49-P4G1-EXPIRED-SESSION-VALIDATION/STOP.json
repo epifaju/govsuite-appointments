@@ -1,0 +1,12 @@
+{
+  "ok": false,
+  "stopped": true,
+  "reason": "activate",
+  "detail": {
+    "status": 400,
+    "active": false,
+    "activeVersionId": null,
+    "versionCounter": null
+  },
+  "verdict": "FAIL"
+}

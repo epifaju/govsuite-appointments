@@ -1,0 +1,257 @@
+{
+  "id": "TEST-INSTALL-RETRY-012",
+  "shortId": "R012",
+  "title": "QA verdict — postflight install FIX-008 (retry) + catalogue R01–R03 (pas d'exécution)",
+  "mode": "offline-postflight-review",
+  "executedRuntime": false,
+  "executedBusiness": false,
+  "executedCampaignsR01R03": false,
+  "installExecuted": true,
+  "putExecuted": true,
+  "putCount": 1,
+  "activationExecuted": false,
+  "postCreateAppointment": false,
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/RESULT.json",
+    "postflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/POSTFLIGHT.json",
+    "preflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/PREFLIGHT.json",
+    "check": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/CHECK.json",
+    "campaignCatalog": "tests/rec008/readiness/R009-install-runtime-campaigns.json",
+    "priorInstallGate": "tests/rec008/readiness/R010-install-010-qa-verdict.json",
+    "priorStackRecovery": "tests/rec008/readiness/R011-stack-recovery-qa-verdict.json"
+  },
+  "parentInstallSummary": {
+    "mission": "TEST-INSTALL-RETRY-012",
+    "verdict": "PASS",
+    "putStatus": 200,
+    "putCount": 1,
+    "putAttempted": true,
+    "candidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+    "payloadSha": "baafc1d99341cb4cbc1dcc38f024d1f0592ada75ae56f1083eb88c1ce2f26154",
+    "backupSha": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "before": {
+      "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "versionCounter": 9,
+      "gererJsSha": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961"
+    },
+    "after": {
+      "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+      "versionCounter": 10,
+      "gererJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+      "active": false,
+      "activeVersionId": null
+    },
+    "changedNodes": ["Gérer collecte progressive"],
+    "dockerMutate": false,
+    "activation": false,
+    "chat": false,
+    "liveTouch": false
+  },
+  "postflightAssertions": {
+    "status": "PASS",
+    "httpVsBusiness": {
+      "httpTransport": "PASS",
+      "putHttp": "PASS (200, 1×, no retry)",
+      "businessSuccess": "NOT_EVALUATED",
+      "note": "PUT 200 + empreinte Gérer = install technique OK ; aucun succès métier campagne affirmé"
+    },
+    "checks": [
+      {
+        "id": "PF-01-put-once-200",
+        "assert": "PUT unique HTTP 200 ; putCount=1 ; 0 retry",
+        "observed": { "putStatus": 200, "putCount": 1, "putAttempted": true },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-02-gerer-sha-candidate",
+        "assert": "after.gererJsSha = candidat FIX-008 f75d4984…",
+        "observed": {
+          "gererJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+          "matchCandidate": true,
+          "marker": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-03-version-counter-10",
+        "assert": "versionCounter 9 → 10 ; versionId bumpé ; same workflow id",
+        "observed": {
+          "beforeCounter": 9,
+          "afterCounter": 10,
+          "afterVersionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+          "sameId": true,
+          "versionBumped": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-04-inactive",
+        "assert": "workflow inactive post-PUT ; activeVersionId null ; noActiveWorkflows",
+        "observed": {
+          "active": false,
+          "activeVersionId": null,
+          "activeIds": [],
+          "inactive": true,
+          "noActiveWorkflows": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-05-graph-delta-gerer-only",
+        "assert": "134 nodes / 137 edges ; only Gérer changed ; connections/settings/Finaliser inchangés",
+        "observed": {
+          "nodes134": true,
+          "edges137": true,
+          "onlyGererChanged": true,
+          "connectionsUnchanged": true,
+          "settingsUnchanged": true,
+          "finaliserUnchanged": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-06-pg-unchanged",
+        "assert": "empreinte PG avant = après ; open attempts = 0",
+        "observed": {
+          "before": "1|11|4|0",
+          "after": "1|11|4|0",
+          "openBefore": "0",
+          "openAfter": "0",
+          "pgUnchanged": true,
+          "openZero": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-07-mock-unchanged",
+        "assert": "mock total/POST CreateAppointment inchangés (0)",
+        "observed": {
+          "beforeTotal": 0,
+          "afterTotal": 0,
+          "postCreateBefore": 0,
+          "postCreateAfter": 0,
+          "mockPostUnchanged": true
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-08-urls-pg-cred-test",
+        "assert": "URLs mock ; credential PG TEST-only",
+        "observed": { "urlsMock": true, "pgCred": true },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PF-09-safety-bounds",
+        "assert": "pas d'activation, chat, docker mutate, LIVE touch",
+        "observed": {
+          "activation": false,
+          "chat": false,
+          "dockerMutate": false,
+          "liveTouch": false
+        },
+        "verdict": "PASS"
+      }
+    ],
+    "aggregate": "PASS",
+    "allParentChecksTrue": true
+  },
+  "campaignCatalogueR01R03": {
+    "catalog": "R009",
+    "executionStatus": "NOT_EXECUTED",
+    "autoNext": "NO-GO",
+    "fixtureApply": "NO-GO until authorized mission",
+    "activation": "NO-GO until authorized mission",
+    "live": "NO-GO",
+    "businessMessage": "NO-GO this mission",
+    "postCreateAppointment": "NO-GO",
+    "rule": "Install PASS ≠ autorisation campagne ; chaque R0x = mission runtime distincte + préflight/postflight propres ; jamais auto après install",
+    "R01": {
+      "decision": "GO-CONDITIONAL",
+      "executeNow": false,
+      "condition": "Mission runtime distincte + autorisation humaine + fixture R009-R01 appliquée + préflight/postflight campagne ; candidat FIX-008 installé (satisfait VC10 / f75d4984…)",
+      "note": "R01 tolère aussi VC9 offline ; post-install FIX-008 reste le chemin recommandé"
+    },
+    "R02": {
+      "decision": "GO-CONDITIONAL",
+      "executeNow": false,
+      "condition": "Mission runtime distincte + autorisation humaine + fixture R009-R02 appliquée + préflight/postflight campagne ; ne pas chaîner vers R03 sur la même session",
+      "note": "R02 tolère aussi VC9 offline ; post-install FIX-008 reste le chemin recommandé"
+    },
+    "R03": {
+      "decision": "GO-CONDITIONAL",
+      "executeNow": false,
+      "condition": "Mission runtime distincte + autorisation humaine + fixture R009-R03 + préflight SHA candidat FIX-008 (installée) + postflight ; contrat FIX-008 (pas VC9-actual)",
+      "prerequisiteInstall": "SATISFIED — gererJsSha f75d4984… / VC10 inactive TEST",
+      "note": "Prérequis install FIX-008 levé ; exécution toujours conditionnée à une mission runtime distincte"
+    }
+  },
+  "goNoGoRuntimeCampaigns": {
+    "decision": "GO-CONDITIONAL",
+    "campaignsAuthorizedNow": false,
+    "activationAuthorizedNow": false,
+    "reason": "Postflight install PASS + candidat FIX-008 présent TEST (Gérer f75d4984…, VC10, inactive, PG/mock inchangés). R01–R03 = GO technique conditionnel uniquement sous mission runtime distincte + autorisation écrite — pas d'auto-next depuis R012.",
+    "blockedUntil": [
+      "autorisation humaine écrite pour chaque campagne R01 / R02 / R03 (séparément)",
+      "mission runtime dédiée (pas cette mission catalogue)",
+      "préflight campagne PASS (fixture, inactive avant activate, anchors)",
+      "activation temporaire autorisée explicitement puis deactivate postflight",
+      "0 retry après timeout ; STOP/UNCERTAIN si ambigu"
+    ],
+    "stillForbiddenWithoutAuth": [
+      "activate / publish / webhook enable",
+      "sendMessage / chat métier",
+      "POST CreateAppointment",
+      "SQL métier mutate / fixture apply",
+      "enchaînement auto R01→R02→R03"
+    ]
+  },
+  "stopCriteriaHonored": [
+    "0 retry réseau post-PUT",
+    "PUT unique (putCount=1)",
+    "pas d'activation / webhook enable",
+    "pas de POST CreateAppointment",
+    "pas de chat / sendMessage",
+    "pas de SQL métier mutate",
+    "PG/mock inchangés",
+    "LIVE non touché",
+    "pas d'exécution catalogue R01–R03",
+    "pas d'auto-next phase"
+  ],
+  "verdictThisMission": {
+    "value": "PASS",
+    "scope": "install-postflight + catalogue-gate",
+    "installOk": true,
+    "postflightOk": true,
+    "campaignsAuthorized": false,
+    "campaignsExecuted": false,
+    "reason": "Postflight install FIX-008 PASS (Gérer f75d4984…, VC counter 10, inactive, PG/mock inchangés). R01–R03 = GO-CONDITIONAL sous mission runtime distincte — non exécutés, non auto-autorisés."
+  },
+  "resumeRequires": [
+    "mission runtime distincte par campagne (R01 puis halt, R02 puis halt, R03)",
+    "autorisation humaine écrite activation + message unique par campagne",
+    "préflight campagne (fixture indépendante, inactive→activate gardé, anchors PG/mock)",
+    "postflight campagne (deactivate, CLAIM/POST=0, invariants métier R009)",
+    "R03 : vérifier SHA Gérer toujours f75d4984… avant sendMessage"
+  ],
+  "commandsDocumented": {
+    "offlineNote": "Aucun R0x lancé dans R012. Revue postflight + catalogue hors ligne uniquement.",
+    "installDone": [
+      "préflight install-012 — done (preflightOk)",
+      "PUT candidat FIX-008 (1×) — done (200)",
+      "postflight install-012 — done (all checks true)"
+    ],
+    "futureWhenAuthorized": [
+      "campagne R01 — mission runtime distincte + fixture R009-R01",
+      "campagne R02 — mission runtime distincte + fixture R009-R02 (session ≠ R03)",
+      "campagne R03 — mission runtime distincte + fixture R009-R03 + SHA FIX-008",
+      "jamais enchaîner sans postflight + deactivate + nouvelle autorisation"
+    ],
+    "doNotRunHere": [
+      "tests/rec008 runtime sendMessage",
+      "activation workflow OCD9It1uKFhOoWNF",
+      "apply fixtures install-readiness-009"
+    ]
+  }
+}

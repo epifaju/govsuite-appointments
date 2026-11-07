@@ -1,0 +1,37 @@
+{
+  "main": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+    "versionCounter": 7,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+    "unchangedFromInstalled": true
+  },
+  "pg": "1|8|2|0",
+  "syntheticRemaining": "0",
+  "realSession": {
+    "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+    "pending_action": "CREATE_APPOINTMENT",
+    "intent": "CREATE_APPOINTMENT",
+    "reference": "",
+    "token": "",
+    "hasToken": false,
+    "nom": "Dupont",
+    "telephone": "+33000000000",
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "last_user_message": "oui"
+  },
+  "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+  "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+  "histFp": "bc130f1e5d86669f9650ffa8b8f83cbb",
+  "mockPosts": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  }
+}

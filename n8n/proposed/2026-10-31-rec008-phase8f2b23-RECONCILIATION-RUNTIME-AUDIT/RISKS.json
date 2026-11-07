@@ -1,0 +1,26 @@
+{
+  "retrievesConfirmedAttempt": true,
+  "ouiRoutesTo": "RECALL",
+  "mayAskConfirmAgain": false,
+  "mayCreateNewAttempt": false,
+  "mayClaim": false,
+  "mayPost": false,
+  "recallCleansSession": false,
+  "recallMessageSafe": true,
+  "otherMessageFallsToCollectFallback": true,
+  "fallbackIsValider": true,
+  "canCleanWithoutBusinessCall": true,
+  "notes": [
+    "Lire tentative includes CONFIRMED → openAttempt status CONFIRMED with reference.",
+    "Décider: (status===CONFIRMED && decision===AFFIRM) → RECALL (not CLAIM).",
+    "RECALL → Réponse référence déjà connue: ack with reference; no CLAIM/POST; does not finalize session.",
+    "Non-AFFIRM on CONFIRMED → COLLECT → Aiguiller fallback → Valider paramètres création (ready=claimAcquired only; no CreateAppointment).",
+    "Session remains AWAIT_CREATE_CONFIRMATION until explicit RECONCILE_CONFIRMED_SESSION."
+  ],
+  "gererMentionsInsert": true,
+  "collectReachInsert": false,
+  "collectReachCreate": false,
+  "summary": "If oui is sent again: Décider sees CONFIRMED+AFFIRM → RECALL → safe ack with reference; no CLAIM/POST; session not cleaned. CreateAppointment only via Corps figé présent ? after CLAIM/RESUME. Reconcile must be a separate authorized SQL/session finalize.",
+  "workflowFixRequiredForReconcile": false,
+  "workflowFixRequiredForDollar3": false
+}

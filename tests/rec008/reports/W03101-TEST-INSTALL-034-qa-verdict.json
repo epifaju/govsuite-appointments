@@ -1,0 +1,60 @@
+{
+  "mission": "034",
+  "title": "W03101-TEST-INSTALL-034 QA post-install (lecture seule / offline)",
+  "verdict": "PASS",
+  "scope": "offline-readonly-artifact-review",
+  "mutated": {
+    "n8n": false,
+    "postgres": false,
+    "docker": false,
+    "live": false
+  },
+  "artifacts": {
+    "result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-034/RESULT.json",
+    "sha256": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-034/SHA256.json",
+    "postflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-034/POSTFLIGHT.json",
+    "afterExport": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-034/after-OCD9It1uKFhOoWNF.json",
+    "afterJsPin": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/Gerer_collecte_progressive.AFTER.js"
+  },
+  "checks": {
+    "resultOk": true,
+    "resultVerdictPass": true,
+    "allResultChecksTrue": true,
+    "resultCheckCount": 20,
+    "postflightAllChecksTrue": true,
+    "gererShaBefore": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "gererShaAfter": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "gererShaAfterRecomputedFromExport": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "afterJsPinMatchesInstall": true,
+    "vcBefore": 10,
+    "vcAfter": 11,
+    "onlyGererChanged": true,
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "inactive": true,
+    "putCount": 1,
+    "method": "jsCode-only",
+    "fullCandidateImport": false,
+    "chat": false,
+    "activation": false,
+    "liveTouched": false
+  },
+  "optionalOfflineReplay": {
+    "suite": "w03101-install-readiness-033.test.cjs",
+    "passed": 16,
+    "failed": 0,
+    "verdict": "PASS",
+    "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f"
+  },
+  "gates": {
+    "postInstallArtifactQa": "PASS",
+    "r04Runtime": "NO-GO",
+    "live": "NO-GO",
+    "autoNextPhase": "NO-GO"
+  },
+  "notes": [
+    "HTTP PUT 200 + checks artefact ≠ preuve métier R04-RUNTIME",
+    "Install confirmée sur artefacts diag-034 uniquement ; aucun chat runtime",
+    "Batterie offline verte n'autorise pas la phase suivante"
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "id": "TEST-STACK-RECOVERY-011",
+  "shortId": "R011",
+  "title": "QA verdict — post-recovery stack TEST + catalogue R01–R03 (pas d'exécution métier)",
+  "mode": "offline-catalogue-review",
+  "executedRuntime": false,
+  "executedBusiness": false,
+  "installExecuted": false,
+  "putExecuted": false,
+  "activationExecuted": false,
+  "postCreateAppointment": false,
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "diagnostic": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/DIAGNOSTIC.json",
+    "safety": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/SAFETY-CHECKS.md",
+    "commands": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/COMMANDS.json",
+    "postcheck": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/POSTCHECK.json",
+    "pgCheck": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/PG-CHECK.json",
+    "n8nCheck": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-011/N8N-CHECK.json",
+    "campaignCatalog": "tests/rec008/readiness/R009-install-runtime-campaigns.json",
+    "priorInstallGate": "tests/rec008/readiness/R010-install-010-qa-verdict.json"
+  },
+  "recoveryScope": {
+    "action": "docker start only",
+    "containers": [
+      "govsuite-rec008-test-rec008-postgres-1",
+      "govsuite-rec008-test-rec008-mock-1",
+      "govsuite-rec008-test-rec008-n8n-1",
+      "govsuite-rec008-test-rec008-publish-1"
+    ],
+    "forbiddenHonored": [
+      "no compose down/up",
+      "no force-recreate",
+      "no prune",
+      "no volume mutate",
+      "no LIVE touch",
+      "no PUT n8n",
+      "no workflow activate",
+      "no POST CreateAppointment",
+      "0 network retry after ambiguity"
+    ]
+  },
+  "postRecoveryAssertions": {
+    "status": "PASS",
+    "httpVsBusiness": {
+      "httpTransport": "PASS",
+      "businessSuccess": "NOT_EVALUATED",
+      "note": "healthz 200 = transport only ; aucun succès métier affirmé"
+    },
+    "checks": [
+      {
+        "id": "PR-01-containers-up",
+        "assert": "postgres/mock/n8n/publish Up ; postgres healthy",
+        "observed": "POSTCHECK containersAfter Up (postgres healthy)",
+        "verdict": "PASS"
+      },
+      {
+        "id": "PR-02-healthz-transport",
+        "assert": "GET http://127.0.0.1:5682/healthz → HTTP 200 {\"status\":\"ok\"}",
+        "observed": { "httpStatus": 200, "body": { "status": "ok" } },
+        "verdict": "PASS",
+        "scope": "transport-only"
+      },
+      {
+        "id": "PR-03-pg-counts-anchor-p4f",
+        "assert": "SELECT counts pipe = 1|11|4|0 ; open attempts = 0 (= ancre P4F historique)",
+        "observed": {
+          "countsPipe": "1|11|4|0",
+          "openAttempts": 0,
+          "vsP4F": "match",
+          "delta": {
+            "rendez_vous": 0,
+            "ai_conversation_state": 0,
+            "ai_appointment_attempt": 0,
+            "notifications": 0,
+            "openAttempts": 0
+          }
+        },
+        "anchor": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/PREFLIGHT.json",
+        "verdict": "PASS",
+        "mode": "read-only-select"
+      },
+      {
+        "id": "PR-04-mock-meta",
+        "assert": "mock _meta scenario=created ; total=0",
+        "observed": { "scenario": "created", "total": 0 },
+        "source": "parent-facts / lecture mock TEST",
+        "verdict": "PASS",
+        "note": "ancre mémoire mock post-restart ; pas de claim métier"
+      },
+      {
+        "id": "PR-05-n8n-vc9-inactive",
+        "assert": "workflow OCD9It1uKFhOoWNF inactive ; versionId e7867799… ; counter 9 ; graph 134/137 ; URLs mock ; PG credential TEST-only",
+        "observed": {
+          "id": "OCD9It1uKFhOoWNF",
+          "active": false,
+          "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+          "versionCounter": 9,
+          "nodes": 134,
+          "edges": 137,
+          "urlsAllMock": true,
+          "pgTestOnly": true,
+          "allPass": true
+        },
+        "verdict": "PASS",
+        "note": "empreinte VC9 baseline — FIX-008 non installé"
+      },
+      {
+        "id": "PR-06-live-isolation",
+        "assert": "govsuite-n8n / govsuite-postgres non touchés ; ports distincts (5680/5433 vs TEST 5682)",
+        "observed": {
+          "govsuite-n8n": "Up unchanged (5680)",
+          "govsuite-postgres": "Up healthy unchanged (5433)",
+          "touched": false
+        },
+        "verdict": "PASS"
+      }
+    ],
+    "gatesForInstallFix008": {
+      "n8n": "PASS",
+      "pg": "PASS",
+      "isolation": "PASS",
+      "aggregate": "PASS"
+    }
+  },
+  "goNoGoInstallFix008": {
+    "decision": "GO-CONDITIONAL",
+    "condition": "N8N + PG + isolation PASS (satisfaits post-recovery)",
+    "installAuthorizedNow": false,
+    "putAuthorizedNow": false,
+    "reason": "Stack TEST reprise ; ancres PG/mock/VC9 OK ; isolation LIVE OK — GO technique pour reprendre le préflight install FIX-008, sous autorisation humaine PUT distincte. Ne constitue pas une autorisation d'install ni d'activation.",
+    "blockedUntil": [
+      "autorisation humaine écrite PUT install FIX-008",
+      "préflight install re-mesuré (connectivity + SHA candidat + anchors) avec preflightOk=true",
+      "backup workflow TEST documenté avant PUT",
+      "postflight install obligatoire si PUT fait"
+    ],
+    "stillForbiddenWithoutAuth": [
+      "PUT workflow",
+      "activate / publish / webhook enable",
+      "POST CreateAppointment",
+      "SQL métier mutate",
+      "campagne R01/R02/R03"
+    ],
+    "priorMission": {
+      "R010": "FAIL preflight-gate (test-stack-down) — débloqué côté connectivité par R011",
+      "fix008Offline": "catalogue/assertions offline R009 prêts ; candidat non installé TEST"
+    }
+  },
+  "campaignCatalogueR01R03": {
+    "catalog": "R009",
+    "executionStatus": "NO-GO",
+    "autoNext": "NO-GO",
+    "fixtureApply": "NO-GO",
+    "activation": "NO-GO",
+    "live": "NO-GO",
+    "businessMessage": "NO-GO",
+    "R01": "NO-GO exécution auto — stack recovery ≠ autorisation campagne ; FIX-008 non installé ; autorisation distincte requise",
+    "R02": "NO-GO exécution auto — stack recovery ≠ autorisation campagne ; FIX-008 non installé ; autorisation distincte requise",
+    "R03": "NO-GO exécution auto — exige candidat FIX-008 installé TEST + autorisation distincte ; jamais auto après recovery",
+    "rule": "R01–R03 toujours NO-GO auto après R011 ; une phase recovery n'autorise pas la suivante"
+  },
+  "stopCriteriaHonored": [
+    "0 retry réseau",
+    "docker start only (noms exacts)",
+    "pas de compose mutate / prune / volume rm",
+    "pas de PUT / activation / webhook",
+    "pas de POST CreateAppointment",
+    "pas de SQL métier (SELECT only)",
+    "LIVE non touché",
+    "pas d'exécution catalogue R01–R03",
+    "pas d'auto-next phase"
+  ],
+  "verdictThisMission": {
+    "value": "PASS",
+    "scope": "stack-recovery-postcheck + catalogue-gate",
+    "recoveryOk": true,
+    "installAuthorized": false,
+    "campaignsAuthorized": false,
+    "reason": "Post-recovery assertions PASS (transport healthz, PG=P4F, mock total=0, VC9 inactive, LIVE isolé). Install FIX-008 = GO-CONDITIONAL technique uniquement. R01–R03 = NO-GO auto. Aucune exécution métier."
+  },
+  "resumeRequires": [
+    "autorisation humaine PUT install FIX-008 (mission install distincte)",
+    "préflight install FIX-008 PASS documenté",
+    "postflight install PASS avant toute campagne",
+    "autorisations distinctes R01 puis R02 puis R03 (jamais chaînées auto)"
+  ],
+  "commandsDocumented": {
+    "offlineNote": "Aucun runtime métier lancé dans R011. Verdict catalogue hors ligne uniquement.",
+    "recoveryDone": [
+      "docker start (4 conteneurs TEST) — done",
+      "curl healthz 5682 — done (transport)",
+      "PG SELECT anchors — done",
+      "N8N-CHECK VC9 inactive — done"
+    ],
+    "futureWhenAuthorized": [
+      "préflight install FIX-008 — si autorisation install",
+      "PUT install candidat — uniquement après préflight PASS + autorisation écrite",
+      "postflight install — uniquement si install faite",
+      "campagnes R01→R02→R03 — autorisations distinctes, jamais auto"
+    ]
+  }
+}

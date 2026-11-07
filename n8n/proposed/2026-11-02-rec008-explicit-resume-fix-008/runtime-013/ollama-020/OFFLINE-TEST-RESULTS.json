@@ -1,0 +1,29 @@
+{
+  "pass": true,
+  "tests": [
+    {
+      "name": "measures_present",
+      "ok": true
+    },
+    {
+      "name": "two_useful_ollama_calls_cold_warm",
+      "ok": true
+    },
+    {
+      "name": "no_r01_campaign",
+      "ok": true
+    },
+    {
+      "name": "formula_beats_45s",
+      "ok": true
+    },
+    {
+      "name": "no_retry_flag",
+      "ok": true
+    },
+    {
+      "name": "warmup_verified_via_ps",
+      "ok": true
+    }
+  ]
+}

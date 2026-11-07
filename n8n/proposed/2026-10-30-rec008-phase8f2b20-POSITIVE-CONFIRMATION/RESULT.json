@@ -1,0 +1,449 @@
+{
+  "phase": "8F-2B20",
+  "sessionId": "rec008-8f2b14-new-01",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "chatInput": "oui",
+  "pass": false,
+  "stopped": true,
+  "contract": {
+    "safeToActivate": true,
+    "parserAffirmOnlyInAwait": true,
+    "decideAffirmToClaim": true,
+    "claimFirstNode": "Préparer réclamation ou reprise",
+    "claimReachCreate": true,
+    "claimReachCancel": false,
+    "claimReachLive": false,
+    "createUrl": "http://rec008-mock:8080/appointments",
+    "createMethod": "POST",
+    "createTargetsMockOnly": true,
+    "mockCreatedReturns201": true,
+    "claimPathSample": [
+      "Préparer réclamation ou reprise",
+      "Réclamer tentative",
+      "Réclamation gagnée ?",
+      "Appliquer corps gagnant",
+      "Réponse réclamation perdue",
+      "Corps figé présent ?",
+      "Appeler CreateAppointment",
+      "Réponse corps absent",
+      "Classer réponse HTTP",
+      "Classer délai HTTP",
+      "Aiguiller résultat HTTP",
+      "Réponse résultat incertain",
+      "Préparer réponse création",
+      "Finaliser état création"
+    ]
+  },
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 8,
+      "attempts": 2,
+      "notifs": 0,
+      "raw": "1|8|2|0"
+    },
+    "session": {
+      "session_id": "rec008-8f2b14-new-01",
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "selected_slot_index": "1"
+    },
+    "slotsCount": 1,
+    "attemptValidity": {
+      "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+      "status": "AWAITING_CONFIRMATION",
+      "stillValid": true,
+      "secsLeft": 6510,
+      "expiresAt": "2026-10-31 18:01:06.298972+01",
+      "hasIdempotencyKey": true,
+      "idempotencyKeyLength": 71,
+      "hasRequestPayload": true,
+      "keyMatchesPayload": true,
+      "hasFingerprint": true,
+      "fingerprint": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+      "keyHash": "581b0cc44129b9c71c36e514a3b045d3818d8cee71957402ea3e725dc9aa6201",
+      "expectedBodyHash": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+      "expectedBodyLength": 272,
+      "payloadMd5": "5f8b8b1fe3a888591cfb4508f61420ef",
+      "hasLease": false,
+      "hasReference": false,
+      "hasAppointmentId": false,
+      "payloadFields": {
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.essai@example.test",
+        "telephone": "+33000000000"
+      },
+      "createdAt": "2026-10-31 16:01:06.300723+01",
+      "updatedAt": "2026-10-31 16:01:06.300723+01",
+      "bodyUnchangedSinceCreate": true
+    },
+    "oldAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false
+      }
+    ],
+    "newAttempts": [
+      {
+        "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+        "status": "AWAITING_CONFIRMATION",
+        "hasIdempotencyKey": true,
+        "hasRequestPayload": true,
+        "hasFingerprint": true,
+        "hasLeaseOwner": false,
+        "hasAppointmentReference": false
+      }
+    ],
+    "openAttemptsGlobal": 1,
+    "allAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "session_id": "rec008-8f2b4-slot-01",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "appointmentReference": "",
+        "appointmentId": ""
+      },
+      {
+        "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+        "session_id": "rec008-8f2b14-new-01",
+        "status": "AWAITING_CONFIRMATION",
+        "hasIdempotencyKey": true,
+        "hasRequestPayload": true,
+        "appointmentReference": "",
+        "appointmentId": ""
+      }
+    ],
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 3,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true,
+    "mockNoise": {
+      "meta404": 1,
+      "explained": true
+    },
+    "checks": {
+      "sessionOk": true,
+      "attemptOk0": true,
+      "attemptsOk0": true,
+      "mockOk": true,
+      "preOk": true
+    }
+  },
+  "preActivationValidity": {
+    "stillValid": true,
+    "secsLeft": 6483,
+    "status": "AWAITING_CONFIRMATION"
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 500,
+    "elapsedMs": 54310,
+    "responsePreview": "{\"message\":\"Error in workflow\"}",
+    "responseJson": {
+      "appointment": null
+    },
+    "memoryBefore": "68.66MiB / 1.5GiB",
+    "memoryAfter": "1.116GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 3,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "postCount": 1,
+    "post201": 1,
+    "postDelta": 1,
+    "distinctKeys": 1,
+    "hasCancelCall": false,
+    "sessionAfter": {
+      "intent": "CREATE_APPOINTMENT",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "reference": "",
+      "hasToken": false,
+      "last_user_message": "oui",
+      "identityCleared": false
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 8,
+      "attempts": 2,
+      "notifs": 0,
+      "raw": "1|8|2|0"
+    },
+    "attemptBefore": {
+      "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+      "status": "AWAITING_CONFIRMATION",
+      "fingerprint": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+      "keyHash": "581b0cc44129b9c71c36e514a3b045d3818d8cee71957402ea3e725dc9aa6201",
+      "expectedBodyHash": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+      "payloadMd5": "5f8b8b1fe3a888591cfb4508f61420ef"
+    },
+    "attemptAfter": {
+      "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+      "status": "CONFIRMED",
+      "hasIdempotencyKey": false,
+      "hasRequestPayload": false,
+      "hasLease": false,
+      "appointmentReference": "REC008-MOCK-0001",
+      "appointmentId": "55555555-5555-4555-8555-555555555555",
+      "fingerprint": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+      "fingerprintUnchanged": true,
+      "hasSubmittedAt": true,
+      "hasConfirmedAt": true,
+      "secretsPurged": true
+    },
+    "oldAttemptsAfter": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false
+      }
+    ],
+    "allAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "session_id": "rec008-8f2b4-slot-01",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "appointmentReference": "",
+        "appointmentId": ""
+      },
+      {
+        "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+        "session_id": "rec008-8f2b14-new-01",
+        "status": "CONFIRMED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "appointmentReference": "REC008-MOCK-0001",
+        "appointmentId": "55555555-5555-4555-8555-555555555555"
+      }
+    ],
+    "confirmedOk": true,
+    "claimOnce": true,
+    "sessionCleared": false,
+    "mockNominal": true,
+    "successMessage": false,
+    "mentionsMockRef": false,
+    "leaksSecrets": false,
+    "falseSuccess": false,
+    "uncertainOk": false,
+    "oldStillAbandoned": true,
+    "rdvFingerprintBefore": "986b715d53127eb16058910a3280834c",
+    "rdvFingerprintAfter": "986b715d53127eb16058910a3280834c",
+    "rdvUnchanged": true,
+    "govBefore": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "govAfter": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "govUnchanged": true,
+    "openAttemptsGlobalAfter": 0,
+    "expectedBodyHash": "70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8",
+    "expectedKeyHash": "581b0cc44129b9c71c36e514a3b045d3818d8cee71957402ea3e725dc9aa6201",
+    "ok": false,
+    "typeOk": false
+  },
+  "reason": "scenario-fail",
+  "deactivate": {
+    "tag": "scenario-fail",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 8,
+      "attempts": 2,
+      "notifs": 0,
+      "raw": "1|8|2|0"
+    },
+    "session": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "reference": "",
+      "hasToken": false,
+      "last_user_message": "oui"
+    },
+    "openAttemptsGlobal": 0,
+    "oldAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false
+      }
+    ],
+    "newAttempts": [
+      {
+        "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+        "status": "CONFIRMED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "hasFingerprint": true,
+        "appointmentReference": "REC008-MOCK-0001",
+        "appointmentId": "55555555-5555-4555-8555-555555555555",
+        "hasSubmittedAt": true,
+        "hasConfirmedAt": true,
+        "hasLeaseOwner": false
+      }
+    ],
+    "allAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "session_id": "rec008-8f2b4-slot-01",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "appointmentReference": "",
+        "appointmentId": ""
+      },
+      {
+        "id": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+        "session_id": "rec008-8f2b14-new-01",
+        "status": "CONFIRMED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "appointmentReference": "REC008-MOCK-0001",
+        "appointmentId": "55555555-5555-4555-8555-555555555555"
+      }
+    ],
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "verdict": "FAIL",
+  "goNext": {
+    "repetitionScenarios": "NO-GO",
+    "errorScenarios": "NO-GO"
+  },
+  "criteria": {
+    "http200": false,
+    "oneClaim": true,
+    "onePost201": true,
+    "confirmed": true,
+    "bodyHashPrepared": true,
+    "keyHashPrepared": true,
+    "fingerprintUnchanged": true,
+    "secretsPurged": true,
+    "mockRef": true,
+    "noSecondAttempt": true,
+    "noNewRdv": true,
+    "noNotif": true,
+    "noLeak": true,
+    "noFalseSuccess": true,
+    "liveUnchanged": true,
+    "mailpitUnchanged": true,
+    "deactivated": true,
+    "postOk": true
+  },
+  "rootCause": {
+    "node": "Finaliser etat creation",
+    "postgresError": "there is no parameter dollar-3",
+    "explanation": "token_gestion/token absent from mock appointment; Finaliser binds dollar-3 and fails after CONFIRMED already committed",
+    "businessPath": "CLAIM + POST 201 + CONFIRMED OK",
+    "conversationalPath": "HTTP 500; session not cleared"
+  },
+  "report": "docs/recovery/REC_008_PHASE8F2B20_POSITIVE_CONFIRMATION_REPORT.md"
+}

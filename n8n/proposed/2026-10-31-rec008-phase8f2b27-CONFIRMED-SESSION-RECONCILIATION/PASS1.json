@@ -1,0 +1,8 @@
+{
+  "label": "PASS1",
+  "raw": "1|1|REC008-MOCK-0001|",
+  "confirmed_matched": 1,
+  "sessions_updated": 1,
+  "reference_set": "REC008-MOCK-0001",
+  "step_after": null
+}

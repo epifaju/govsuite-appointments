@@ -1,0 +1,13 @@
+{
+  "sourceLiveSha256": "2df97627118c840d59d8b3b9b97226106df082382b02b6c3c973d761142f8fb8",
+  "candidateSha256": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+  "finaliserBeforeSha256": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "finaliserAfterSha256": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "modifiedNodes": [
+    "Finaliser état création"
+  ],
+  "nodes": 134,
+  "edges": 137,
+  "published": false,
+  "putOnMain": false
+}

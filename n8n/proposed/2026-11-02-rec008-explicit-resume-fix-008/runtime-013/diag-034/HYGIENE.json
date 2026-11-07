@@ -1,0 +1,14 @@
+{
+  "mission": "W03101-TEST-INSTALL-034",
+  "metaFilesScanned": [
+    "RESULT.json",
+    "PREFLIGHT.json",
+    "BACKUP.json",
+    "POSTFLIGHT.json",
+    "PAYLOAD-META.json",
+    "put-response.json",
+    "SHA256.json"
+  ],
+  "secretOrCredentialHits": [],
+  "verdict": "PASS"
+}

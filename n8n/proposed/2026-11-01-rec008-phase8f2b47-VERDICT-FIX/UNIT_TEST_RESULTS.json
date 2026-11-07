@@ -1,0 +1,450 @@
+{
+  "phase": "8F-2B47",
+  "mode": "offline-unit",
+  "total": 14,
+  "passed": 14,
+  "failed": 0,
+  "allPass": true,
+  "results": [
+    {
+      "id": 1,
+      "name": "Succès métier + REST vide + politique none → PASS",
+      "pass": true,
+      "expected": {
+        "verdict": "PASS",
+        "pass": true
+      },
+      "actual": {
+        "verdict": "PASS",
+        "pass": true,
+        "goNoGo": "GO",
+        "finalizationEvidenceLevel": "event_corroborated",
+        "observabilityOk": true,
+        "reason": "ok",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": true,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Succès métier + exécution REST disponible → PASS",
+      "pass": true,
+      "expected": {
+        "verdict": "PASS",
+        "pass": true,
+        "evidence": "direct"
+      },
+      "actual": {
+        "verdict": "PASS",
+        "pass": true,
+        "goNoGo": "GO",
+        "finalizationEvidenceLevel": "direct",
+        "observabilityOk": true,
+        "reason": "ok",
+        "declaresRestDirectProof": true,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": true,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "HTTP 500 → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": false,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": false,
+          "notHttp500": false,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Tentative non CONFIRMED → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": false,
+          "sessionOk": true,
+          "postOk": false,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 0,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Session non nettoyée → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": false,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Référence incohérente → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": false,
+          "attemptOk": false,
+          "sessionOk": false,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Mock POST delta 0 → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": false,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 0,
+          "postDelta": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Mock POST delta > 1 → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": false,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 2
+        }
+      }
+    },
+    {
+      "id": 9,
+      "name": "CLAIM supérieur à 1 → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": false,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 2,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 10,
+      "name": "Transport incertain sans état final → UNCERTAIN",
+      "pass": true,
+      "expected": {
+        "verdict": "UNCERTAIN",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "UNCERTAIN",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "transport_failure_without_final_state",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": false,
+          "attemptOk": false,
+          "sessionOk": false,
+          "postOk": false,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": false,
+          "notHttp500": true,
+          "claimCount": 0,
+          "postDelta": 0
+        }
+      }
+    },
+    {
+      "id": 11,
+      "name": "Workflow encore actif après test → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": false,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 12,
+      "name": "Intégrité LIVE modifiée → FAIL",
+      "pass": true,
+      "expected": {
+        "verdict": "FAIL",
+        "pass": false
+      },
+      "actual": {
+        "verdict": "FAIL",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "business_checks_failed",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": false,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 13,
+      "name": "Politique inconnue + REST vide → INCONCLUSIVE",
+      "pass": true,
+      "expected": {
+        "verdict": "INCONCLUSIVE",
+        "pass": false,
+        "neverPass": true
+      },
+      "actual": {
+        "verdict": "INCONCLUSIVE",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "insufficient",
+        "observabilityOk": false,
+        "reason": "unknown_retention_policy_and_empty_rest",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "Événement échec Finaliser malgré HTTP 200 → FAIL/INCONCLUSIVE",
+      "pass": true,
+      "expected": {
+        "verdictIn": [
+          "FAIL",
+          "INCONCLUSIVE"
+        ],
+        "pass": false,
+        "neverPass": true
+      },
+      "actual": {
+        "verdict": "INCONCLUSIVE",
+        "pass": false,
+        "goNoGo": "NO-GO",
+        "finalizationEvidenceLevel": "contradicted",
+        "observabilityOk": false,
+        "reason": "event_finaliser_failure",
+        "declaresRestDirectProof": false,
+        "checks": {
+          "functionalOk": true,
+          "attemptOk": true,
+          "sessionOk": true,
+          "postOk": true,
+          "integrityOk": true,
+          "deactivateOk": true,
+          "observabilityOk": false,
+          "httpOk": true,
+          "notHttp500": true,
+          "claimCount": 1,
+          "postDelta": 1
+        }
+      }
+    }
+  ]
+}

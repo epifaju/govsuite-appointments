@@ -1,0 +1,279 @@
+{
+  "id": "READINESS-031-SQL",
+  "mission": "R04-ASK-EMAIL-SQL-031",
+  "title": "Contrat états SQL R04-A/B/C (ASK_EMAIL) — offline only",
+  "status": "catalog-only",
+  "executed": false,
+  "sqlMutationForbidden": true,
+  "dockerForbidden": true,
+  "liveForbidden": true,
+  "disclaimer": "Contrat d'assertions lecture / snapshots Present|Len. Aucune preuve runtime PostgreSQL. Aucun INSERT/UPDATE/DELETE. Pas de PII clair.",
+  "piiRule": {
+    "forbid": ["nom", "prenom", "email", "telephone", "last_user_message clair"],
+    "allow": [
+      "conversation_step",
+      "nomPresent", "nomLen",
+      "prenomPresent", "prenomLen",
+      "emailPresent", "emailLen", "emailValide",
+      "telephonePresent", "telephoneLen",
+      "slotIdPresent",
+      "ttlActive", "sessionExpired",
+      "openAttempts",
+      "mockClaimsDelta", "mockPostsDelta",
+      "claimAcquired",
+      "sessionIdHash",
+      "lastUserMessageLen", "lastUserMessageClass"
+    ]
+  },
+  "sources": {
+    "analogAskPrenom": "tests/rec008/readiness/R007-ask-prenom-ttl-sql-contract.json",
+    "redaction": "docs/recovery/REC008_ARTIFACT_REDACTION_CONTRACT.md",
+    "r04Prep": "docs/recovery/REC008_R04_PREP_READINESS.md",
+    "securityCriteria": "docs/recovery/REC008_R04_R07_SECURITY_TEST_CRITERIA.md#2.2",
+    "emailGate": "Gérer collecte — isValidEmail → step ASK_TELEPHONE ; sinon ASK_EMAIL ; session_expired early-return sans capture"
+  },
+  "sharedInitial": {
+    "note": "État avant 1 message email synthétique. Commun A/B ; C = même profil identité/créneau mais TTL expiré.",
+    "conversation_step": "ASK_EMAIL",
+    "slotIdPresent": true,
+    "nomPresent": true,
+    "nomLen": { "min": 1 },
+    "prenomPresent": true,
+    "prenomLen": { "min": 1 },
+    "emailPresent": false,
+    "emailLen": 0,
+    "telephonePresent": false,
+    "telephoneLen": 0,
+    "openAttempts": 0,
+    "claimAcquired": false,
+    "ttl": {
+      "A": { "ttlActive": true, "sessionExpired": false },
+      "B": { "ttlActive": true, "sessionExpired": false },
+      "C": { "ttlActive": false, "sessionExpired": true }
+    }
+  },
+  "preflightSelectContract": {
+    "purpose": "Lecture seule future (autorisation runtime distincte). Ne pas exécuter dans 031.",
+    "sharedTemplate": "SELECT conversation_step, (nom IS NOT NULL AND btrim(nom) <> '') AS \"nomPresent\", COALESCE(length(nom), 0) AS \"nomLen\", (prenom IS NOT NULL AND btrim(prenom) <> '') AS \"prenomPresent\", COALESCE(length(prenom), 0) AS \"prenomLen\", (email IS NOT NULL AND btrim(email) <> '') AS \"emailPresent\", COALESCE(length(email), 0) AS \"emailLen\", (telephone IS NOT NULL AND btrim(telephone) <> '') AS \"telephonePresent\", COALESCE(length(telephone), 0) AS \"telephoneLen\", (slot_id IS NOT NULL) AS \"slotIdPresent\", (expires_at IS NOT NULL AND expires_at > NOW()) AS \"ttlActive\", (expires_at IS NOT NULL AND expires_at <= NOW()) AS \"sessionExpired\", expires_at, updated_at FROM ai_conversation_state WHERE session_id = $1 LIMIT 1;",
+    "attemptsSideCheck": "SELECT COUNT(*)::int AS \"openAttempts\" FROM ai_appointment_attempt WHERE session_id = $1 AND status IN ('AWAITING_CONFIRMATION','SUBMITTING','UNCERTAIN','CONFIRMED');",
+    "deltaSideCheck": "mockClaimsDelta=0 ; mockPostsDelta=0 (empreinte mock / compteurs runner — hors SELECT métier)",
+    "note": "Ne jamais SELECT nom/prenom/email/telephone en clair dans les preuves ; Present/Len uniquement."
+  },
+  "scenarios": {
+    "R04-A": {
+      "title": "Email valide → ASK_TELEPHONE",
+      "inputClass": "email_like_valid_synthetic",
+      "ttlBefore": "ACTIVE",
+      "before": {
+        "conversation_step": "ASK_EMAIL",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "emailPresent": false,
+        "emailLen": 0,
+        "ttlActive": true,
+        "sessionExpired": false,
+        "openAttempts": 0
+      },
+      "after": {
+        "conversation_step": "ASK_TELEPHONE",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "identityPreserved": "nomLen/prenomLen inchangés vs before",
+        "slotPreserved": "slotIdPresent=true inchangé",
+        "emailPresent": true,
+        "emailLen": { "min": 5 },
+        "emailValide": true,
+        "telephonePresent": false,
+        "ttlActive": true,
+        "sessionExpired": false,
+        "openAttempts": 0,
+        "mockClaimsDelta": 0,
+        "mockPostsDelta": 0,
+        "claimAcquired": false
+      },
+      "mustPass": [
+        "before: step=ASK_EMAIL ; slotIdPresent ; nomPresent ; prenomPresent ; emailPresent=false ; ttlActive ; openAttempts=0",
+        "after: step=ASK_TELEPHONE ; emailPresent=true ; emailLen>=5 ; identité+slot conservés",
+        "ΔCLAIM=0 ; ΔPOST=0"
+      ],
+      "stopIf": [
+        "after step ≠ ASK_TELEPHONE",
+        "emailPresent=false après message valide",
+        "nomPresent/prenomPresent/slotIdPresent perdus",
+        "openAttempts>0",
+        "mockClaimsDelta≠0 OR mockPostsDelta≠0"
+      ]
+    },
+    "R04-B": {
+      "title": "Email invalide → reste ASK_EMAIL",
+      "inputClass": "email_like_invalid_or_non_email",
+      "ttlBefore": "ACTIVE",
+      "before": {
+        "conversation_step": "ASK_EMAIL",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "emailPresent": false,
+        "emailLen": 0,
+        "ttlActive": true,
+        "sessionExpired": false,
+        "openAttempts": 0
+      },
+      "after": {
+        "conversation_step": "ASK_EMAIL",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "identityPreserved": true,
+        "slotPreserved": true,
+        "emailPresent": false,
+        "emailLen": 0,
+        "emailValide": false,
+        "telephonePresent": false,
+        "ttlActive": true,
+        "openAttempts": 0,
+        "mockClaimsDelta": 0,
+        "mockPostsDelta": 0,
+        "claimAcquired": false
+      },
+      "mustPass": [
+        "step reste ASK_EMAIL",
+        "emailPresent=false ; emailLen=0 (pas de capture invalide)",
+        "identité/créneau conservés",
+        "ΔCLAIM=0 ; ΔPOST=0"
+      ],
+      "stopIf": [
+        "step avancé (ASK_TELEPHONE ou autre)",
+        "emailPresent=true",
+        "ΔCLAIM≠0 OR ΔPOST≠0"
+      ]
+    },
+    "R04-C": {
+      "title": "TTL expiré → pas de capture email implicite",
+      "inputClass": "email_like_valid_synthetic",
+      "ttlBefore": "EXPIRED",
+      "analogy": "R02 ASK_PRENOM expiré (P4G1) — early-return session_expired ; refreshSessionTtl=false",
+      "before": {
+        "conversation_step": "ASK_EMAIL",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "emailPresent": false,
+        "emailLen": 0,
+        "ttlActive": false,
+        "sessionExpired": true,
+        "openAttempts": 0,
+        "expires_at_before": "mémoriser pour assert inchangé"
+      },
+      "after": {
+        "conversation_step": "ASK_EMAIL",
+        "slotIdPresent": true,
+        "nomPresent": true,
+        "prenomPresent": true,
+        "emailPresent": false,
+        "emailLen": 0,
+        "emailNotCaptured": true,
+        "ttlActive": false,
+        "sessionExpired": true,
+        "expires_at": "UNCHANGED (= expires_at_before)",
+        "refreshSessionTtlEffective": false,
+        "replyTypeExpected": "session_expired",
+        "openAttempts": 0,
+        "mockClaimsDelta": 0,
+        "mockPostsDelta": 0,
+        "claimAcquired": false
+      },
+      "mustPass": [
+        "before: sessionExpired=true ; ttlActive=false ; step=ASK_EMAIL ; email absent",
+        "after: emailPresent=false ; step=ASK_EMAIL ; expires_at figé",
+        "pas de capture implicite malgré message email_like_valid",
+        "ΔCLAIM=0 ; ΔPOST=0"
+      ],
+      "stopIf": [
+        "emailPresent=true après message (capture implicite)",
+        "step → ASK_TELEPHONE",
+        "expires_at renouvelé",
+        "ΔCLAIM≠0 OR ΔPOST≠0",
+        "openAttempts>0"
+      ]
+    }
+  },
+  "deltaContract": {
+    "R04-A": { "mockClaimsDelta": 0, "mockPostsDelta": 0 },
+    "R04-B": { "mockClaimsDelta": 0, "mockPostsDelta": 0 },
+    "R04-C": { "mockClaimsDelta": 0, "mockPostsDelta": 0 },
+    "note": "R04 = contact seul ; aucun CLAIM/POST CreateAppointment"
+  },
+  "evidenceChecksNoPii": [
+    "Flags Present/Len uniquement (identité, email, téléphone, slot)",
+    "conversation_step enum before/after",
+    "ttlActive / sessionExpired / expires_at égalité (C)",
+    "openAttempts=0",
+    "mockClaimsDelta=0 ; mockPostsDelta=0",
+    "sessionIdHash (pas session_id long si rapport exporté)",
+    "lastUserMessageClass ∈ {email_like_valid_synthetic, email_like_invalid_or_non_email, none} + lastUserMessageLen — jamais le texte email"
+  ],
+  "stopOnDrift": [
+    {
+      "id": "STOP_PREFLIGHT_NOT_ASK_EMAIL",
+      "scenarios": ["R04-A", "R04-B", "R04-C"],
+      "when": "conversation_step ≠ ASK_EMAIL",
+      "action": "STOP — fixture hors contrat R04"
+    },
+    {
+      "id": "STOP_PREFLIGHT_EMAIL_ALREADY_SET",
+      "scenarios": ["R04-A", "R04-B", "R04-C"],
+      "when": "emailPresent=true avant message",
+      "action": "STOP — état non initial"
+    },
+    {
+      "id": "STOP_PREFLIGHT_MISSING_IDENTITY_OR_SLOT",
+      "scenarios": ["R04-A", "R04-B", "R04-C"],
+      "when": "nomPresent=false OR prenomPresent=false OR slotIdPresent=false",
+      "action": "STOP — OPTION A / post-R01 requis"
+    },
+    {
+      "id": "STOP_PREFLIGHT_TTL_MISMATCH",
+      "scenarios": ["R04-A", "R04-B", "R04-C"],
+      "when": "A/B: ttlActive=false ; C: ttlActive=true",
+      "action": "STOP — profil TTL incorrect"
+    },
+    {
+      "id": "STOP_ANY_OPEN_ATTEMPT_OR_CLAIM_POST",
+      "scenarios": ["R04-A", "R04-B", "R04-C"],
+      "when": "openAttempts>0 OR ΔCLAIM≠0 OR ΔPOST≠0",
+      "action": "FAIL anti-réservation ; STOP"
+    },
+    {
+      "id": "STOP_C_IMPLICIT_EMAIL_CAPTURE",
+      "scenarios": ["R04-C"],
+      "when": "après: emailPresent=true OR step=ASK_TELEPHONE OR expires_at changé",
+      "action": "FAIL conservation TTL/brouillon ; STOP"
+    },
+    {
+      "id": "STOP_LIVE_OR_MUTATION_WITHOUT_AUTH",
+      "scenarios": ["*"],
+      "when": "cible LIVE, Docker mutate, ou SQL écriture sans ordre",
+      "action": "STOP immédiat"
+    }
+  ],
+  "syntheticSessionIdTemplates": [
+    "rec008-syn-r031-r04a-active-email-valid",
+    "rec008-syn-r031-r04b-active-email-invalid",
+    "rec008-syn-r031-r04c-expired-email"
+  ],
+  "gates": {
+    "mission031OfflineContract": "PASS",
+    "r04PrepP5": "SATISFIED_DOCS",
+    "sqlExecution": "NOT_RUN",
+    "runtimeR04": "NO-GO",
+    "live": "NO-GO",
+    "autoNext": "NO-GO"
+  },
+  "verdict": {
+    "contract": "PASS",
+    "reason": "Contrat SQL R04-A/B/C formalisé (Present/Len, TTL C, Δ0). Aucune mutation PG. Runtime R04 reste NO-GO."
+  }
+}

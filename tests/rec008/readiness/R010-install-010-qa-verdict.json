@@ -1,0 +1,83 @@
+{
+  "id": "TEST-INSTALL-010",
+  "shortId": "R010",
+  "title": "QA verdict — STOP préflight FIX-008 install (pas d'install)",
+  "mode": "offline-review-only",
+  "executedRuntime": false,
+  "installExecuted": false,
+  "putExecuted": false,
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "preflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-010/PREFLIGHT.json",
+    "stop": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-010/STOP.json",
+    "campaignCatalog": "tests/rec008/readiness/R009-install-runtime-campaigns.json"
+  },
+  "preflightSummary": {
+    "preflightOk": false,
+    "stop": true,
+    "stopReason": "connectivity",
+    "stopReasonSecondary": "test-stack-down",
+    "baseUrl": "http://127.0.0.1:5682",
+    "tcpReachable": false,
+    "healthz": "fail",
+    "n8nTestContainerPresent": false,
+    "dockerMutate": false,
+    "putAttempted": false,
+    "liveTouched": false,
+    "networkRetries": 0,
+    "candidateShaLocalOk": true
+  },
+  "postflightAssertions": {
+    "status": "N/A",
+    "reason": "install non faite — préflight FAIL ; aucun PUT ; aucun postflight applicable",
+    "checksSkipped": [
+      "active=false after install",
+      "SHA after = candidat",
+      "Gérer-only delta vs backup",
+      "mock/PG/LIVE/Mailpit anchors",
+      "deactivate / webhooks"
+    ]
+  },
+  "campaignCatalogueR01R03": {
+    "catalog": "R009",
+    "executionStatus": "NO-GO",
+    "R01": "NO-GO exécution — install FIX-008 non réalisée (préflight STOP)",
+    "R02": "NO-GO exécution — install FIX-008 non réalisée (préflight STOP)",
+    "R03": "NO-GO exécution — exige candidat FIX-008 installé TEST ; non installé",
+    "fixtureApply": "NO-GO",
+    "activation": "NO-GO",
+    "autoNext": "NO-GO",
+    "live": "NO-GO"
+  },
+  "stopCriteriaHonored": [
+    "0 retry réseau",
+    "pas de docker mutate",
+    "pas de PUT",
+    "pas d'activation / webhook",
+    "pas de POST CreateAppointment",
+    "pas de SQL métier",
+    "LIVE non touché"
+  ],
+  "verdictThisMission": {
+    "value": "FAIL",
+    "scope": "preflight-gate",
+    "installAuthorized": false,
+    "reason": "FAIL préflight (connectivity / test-stack-down) — install non autorisée ; postflight N/A ; R01–R03 restent NO-GO exécution"
+  },
+  "resumeRequires": [
+    "stack TEST n8n joignable sur 127.0.0.1:5682 (autorisation Docker distincte si besoin)",
+    "préflight re-mesuré avec preflightOk=true",
+    "autorisation humaine PUT distincte",
+    "autorisation distincte avant toute campagne R01/R02/R03"
+  ],
+  "commandsDocumented": {
+    "offlineNote": "Aucun runtime lancé dans cette mission. Catalogue offline R009 inchangé côté fixtures.",
+    "futureWhenAuthorized": [
+      "préflight install (hors stubs) — uniquement si stack up + autorisation",
+      "PUT install — uniquement après préflight PASS + autorisation écrite",
+      "postflight install — uniquement si install faite",
+      "campagnes R01→R02→R03 — autorisations distinctes, jamais auto"
+    ]
+  }
+}

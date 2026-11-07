@@ -1,0 +1,217 @@
+{
+  "excludedSession": "rec008-8f2b49-edit-01",
+  "candidateCount": 10,
+  "eligibleCount": 6,
+  "candidatesSafe": [
+    {
+      "sessionId": "rec008-8f2b49-edit-01",
+      "expired": true,
+      "intent": "GET_SERVICES",
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 0
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "7b7595401139f12019e60605dda03973",
+      "excluded": true
+    },
+    {
+      "sessionId": "rec008-8f2b37-new-01",
+      "expired": true,
+      "intent": null,
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": false,
+        "slotsLen": -1
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "dd6859744f6a03945754a44f00196d20",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f2b28-new-01",
+      "expired": true,
+      "intent": "CREATE_APPOINTMENT",
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": false,
+        "slotsLen": -1
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "92b96e2ad8f6ad8b408396b00de610f5",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f2b14-new-01",
+      "expired": true,
+      "intent": null,
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": false,
+        "slotsLen": -1
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "dd6859744f6a03945754a44f00196d20",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f2b4-slot-01",
+      "expired": true,
+      "intent": "GET_SERVICES",
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 0
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "7b7595401139f12019e60605dda03973",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f2b1-slot-01",
+      "expired": true,
+      "intent": "CREATE_APPOINTMENT",
+      "pendingAction": "CREATE_APPOINTMENT",
+      "conversationStep": "ASK_CREATE_SERVICE",
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 0
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "37df03c884bc12ee2e5849ac36c9f4e1",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f1fe-full-01",
+      "expired": true,
+      "intent": "GET_AVAILABILITY",
+      "pendingAction": "GET_AVAILABILITY",
+      "conversationStep": null,
+      "flags": {
+        "service": true,
+        "site": true,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 1
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "624601a890ffa009b2d03217a63a82f3",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f1fd-memory-01",
+      "expired": true,
+      "intent": "GET_AVAILABILITY",
+      "pendingAction": "GET_AVAILABILITY",
+      "conversationStep": null,
+      "flags": {
+        "service": true,
+        "site": true,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 1
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "624601a890ffa009b2d03217a63a82f3",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f1d-availability-01",
+      "expired": true,
+      "intent": "GET_AVAILABILITY",
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 0
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "dbd1dc0ef3bfb018d4ba68adda11f7d6",
+      "excluded": false
+    },
+    {
+      "sessionId": "rec008-8f1c-services-01",
+      "expired": true,
+      "intent": "GET_SERVICES",
+      "pendingAction": null,
+      "conversationStep": null,
+      "flags": {
+        "service": false,
+        "site": false,
+        "slot": false,
+        "nom": false,
+        "availableSlots": true,
+        "slotsLen": 0
+      },
+      "openAttempts": 0,
+      "resumeAttempts": 0,
+      "draftFingerprint": "7b7595401139f12019e60605dda03973",
+      "excluded": false
+    }
+  ],
+  "selected": {
+    "sessionId": "rec008-8f2b1-slot-01",
+    "expired": true,
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_CREATE_SERVICE",
+    "hasService": false,
+    "hasSite": false,
+    "hasDateDebut": false,
+    "hasSlot": false,
+    "hasNom": false,
+    "hasAvailableSlots": true,
+    "slotsLen": 0,
+    "expiresAt": "2026-10-31 00:59:54.370387+01",
+    "updatedAt": "2026-10-30 22:59:54.370387+01",
+    "openAttempts": 0,
+    "resumeAttempts": 0,
+    "draftFingerprint": "37df03c884bc12ee2e5849ac36c9f4e1",
+    "score": 160
+  }
+}

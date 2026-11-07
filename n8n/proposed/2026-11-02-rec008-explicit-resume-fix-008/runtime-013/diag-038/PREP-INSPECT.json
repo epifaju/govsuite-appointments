@@ -1,0 +1,16 @@
+{
+  "managedStep": "ASK_EMAIL",
+  "managedEmailPresent": false,
+  "prepKeys": [
+    "type",
+    "success",
+    "title",
+    "appointment",
+    "text"
+  ],
+  "textPresent": true,
+  "textLen": 468,
+  "textHasEmailWord": false,
+  "textHasTelephoneWord": false,
+  "type": "appointment_created"
+}

@@ -1,0 +1,101 @@
+{
+  "mission": "OLLAMA-READINESS-020",
+  "ts": "2026-11-05T22:16:51.208Z",
+  "liveProbed": false,
+  "pgMutated": false,
+  "dockerMutated": false,
+  "n8nActivated": false,
+  "chatTriggerUsed": false,
+  "ollamaCalls": 0,
+  "maxOllamaCalls": 4,
+  "issues": [],
+  "docker": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 4 hours",
+    "govsuite-rec008-test-rec008-publish-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 2 hours (healthy)"
+  ],
+  "healthz": {
+    "status": 200,
+    "elapsedMs": 3206
+  },
+  "ollamaResources": {
+    "memLimitBytes": 1610612736,
+    "memLimitGiB": 1.5,
+    "nanoCpus": 1500000000,
+    "cpuLimitApprox": 1.5,
+    "statsSample": {
+      "memUsage": "63.64MiB / 1.5GiB",
+      "cpu": "0.00%",
+      "memPerc": "4.14%"
+    }
+  },
+  "ollamaVersion": "ollama version is 0.11.6",
+  "models": [
+    {
+      "name": "qwen2.5:1.5b",
+      "size": 986061892,
+      "digest": "65ec06548149b04c"
+    }
+  ],
+  "loadedBefore": [],
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "http": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "activeWorkflowIds": [],
+  "webhookRows": 0,
+  "runningExecutions": 0,
+  "n8nObservability": {
+    "settingsHttp": 200,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": true,
+    "executionTimeout": -1,
+    "maxExecutionTimeout": 3600,
+    "note": "readonly audit — not modified in 020",
+    "executionEntityCount": 0
+  },
+  "fingerprint": "1|14|4|0",
+  "fixtures": [
+    {
+      "session_id": "rec008-runtime013-r01-active",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": true,
+      "msg_len": 0
+    },
+    {
+      "session_id": "rec008-runtime013-r02-expired",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": false,
+      "msg_len": 0
+    },
+    {
+      "session_id": "rec008-runtime013-r03-resume",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": false,
+      "msg_len": 0
+    }
+  ],
+  "openAttempts": 0,
+  "preflightOk": true
+}

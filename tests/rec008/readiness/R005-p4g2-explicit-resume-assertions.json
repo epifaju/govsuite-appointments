@@ -1,0 +1,269 @@
+{
+  "id": "READINESS-005",
+  "title": "Assertions PASS/FAIL/UNCERTAIN — future runtime P4G2 (reprise explicite)",
+  "status": "catalog-only",
+  "executed": false,
+  "executeForbiddenUntilAuthorized": true,
+  "phaseRef": "8F-2B49-P4G2",
+  "offlineScenarioRef": "T03-explicit-resume",
+  "historicalArtefacts": {
+    "report": "docs/recovery/REC_008_PHASE8F2B49_P4G2_EXPLICIT_RESUME_REPORT.md",
+    "proposedDir": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4G2-EXPLICIT-RESUME/",
+    "note": "Historique PASS déjà réalisé ; ce catalogue formalise les critères pour une future rejouée autorisée. Ne pas relancer sans mission + préflight."
+  },
+  "target": {
+    "env": "TEST",
+    "live": false,
+    "sessionId": "rec008-8f2b1-slot-01",
+    "chatInput": "reprendre",
+    "messageCount": 1,
+    "retryForbidden": true,
+    "webhookPostCreateAppointmentForbidden": true,
+    "workflowId": "OCD9It1uKFhOoWNF",
+    "versionCounter": 9,
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766"
+  },
+  "preconditions": {
+    "evidenceClass": "runtimeRequired",
+    "required": [
+      "Préflight TEST ≠ LIVE (ports, PG, mock, empreinte LIVE)",
+      "Workflow VC9 inactif avant activation temporaire autorisée",
+      "Session cible existe et est expirée (expires_at ≤ NOW)",
+      "État type post-P4G1: intent=GENERAL, pending=CREATE_APPOINTMENT, step=ASK_CREATE_SERVICE, pas d'identité/service/slot métier",
+      "Tentatives ouvertes = 0 ; CLAIM/POST mock = 0 avant message",
+      "Autorisation humaine explicite pour activation + un seul sendMessage"
+    ],
+    "stopIf": [
+      "Session absente",
+      "Session non expirée (rejouée P4G2 déjà active) sans reset expires_at autorisé",
+      "Empreinte LIVE divergente au préflight",
+      "Workflow déjà actif ou webhooks résiduels non expliqués"
+    ],
+    "readinessNote": "Si rec008-8f2b1-slot-01 n'est plus expirée (TTL déjà renouvelé par P4G2 historique), STOP/UNCERTAIN readiness — exiger reset expires_at autorisé ou nouvelle session synthétique équivalente, pas de force-replay."
+  },
+  "evidenceClasses": {
+    "offlineAlreadyOk": {
+      "description": "Couvert par T03 (VM jsCode VC9) — preuve partielle, pas substitut runtime.",
+      "scenarioId": "T03-explicit-resume",
+      "disclaimer": "simulation:true — HTTP réel, PG TTL, compteurs mock/CLAIM, deactivate hors périmètre."
+    },
+    "runtimeRequired": {
+      "description": "Exige préflight + un sendMessage TEST autorisé + postflight. Non exécuté dans READINESS-005."
+    }
+  },
+  "assertions": [
+    {
+      "id": "R005-A01-http-200",
+      "group": "transport",
+      "evidenceClass": "runtimeRequired",
+      "title": "HTTP 200 sur sendMessage (≠ succès métier seul)",
+      "measure": "message.status",
+      "pass": "status === 200 et corps JSON parseable",
+      "fail": "status ∈ {400,401,403,404,409,422,5xx clairement reçu} ou corps métier clairement faux avec status non-2xx",
+      "uncertain": "timeout / ECONNRESET / réponse tronquée / status ambigu / pas de corps malgré 200 apparent",
+      "notes": "HTTP 200 est nécessaire mais insuffisant ; croiser type/TTL/anti-réservation."
+    },
+    {
+      "id": "R005-A02-response-type",
+      "group": "response",
+      "evidenceClass": "runtimeRequired",
+      "title": "Type de réponse create_appointment_question",
+      "measure": "responseJson.type + conversationStep + ready + claimAcquired",
+      "pass": "type=create_appointment_question AND conversationStep=ASK_CREATE_SERVICE AND ready=false AND claimAcquired=false AND appointment_created absent/false",
+      "fail": "type=session_expired (reprise non reconnue) OR type de confirmation/finalisation OR ready=true OR claimAcquired=true OR appointment_created=true",
+      "uncertain": "JSON illisible, type manquant, texte hors contrat sans type",
+      "offlineAlreadyOkPartial": false,
+      "historicalExpected": {
+        "type": "create_appointment_question",
+        "conversationStep": "ASK_CREATE_SERVICE",
+        "ready": false,
+        "claimAcquired": false
+      }
+    },
+    {
+      "id": "R005-A03-ttl-renew",
+      "group": "ttl",
+      "evidenceClass": "runtimeRequired",
+      "offlineAlreadyOkPartial": true,
+      "offlinePartialRef": "T03 refresh_ttl_true (flag managed.refreshSessionTtl seulement)",
+      "title": "TTL session renouvelé (+2 h) en PostgreSQL",
+      "measure": "expires_at / updated_at avant-après",
+      "pass": "avant expired AND après expires_at > NOW AND expires_at ≈ updated_at + 2h (± tolérance horloge documentée)",
+      "fail": "expires_at inchangé / toujours ≤ NOW / politique ≠ 2h clairement",
+      "uncertain": "horloge PG/agent divergente, snapshot after manquant, écriture TTL non observable",
+      "historicalExpected": {
+        "ttlRenewed": true,
+        "ttlPolicyOk": true,
+        "policyHours": 2
+      }
+    },
+    {
+      "id": "R005-A04-intent-pending-step",
+      "group": "state",
+      "evidenceClass": "runtimeRequired",
+      "offlineAlreadyOkPartial": true,
+      "offlinePartialRef": "T03 resume_intent_create (VM) — pending/step PG runtime requis",
+      "title": "intent / pending_action / conversation_step après reprise",
+      "measure": "snap after",
+      "pass": "intent=CREATE_APPOINTMENT (depuis GENERAL) AND pendingAction=CREATE_APPOINTMENT AND conversationStep=ASK_CREATE_SERVICE",
+      "fail": "intent reste GENERAL sans reprise OR pending/step purgés OR step sauté vers collecte/confirm OR intent métier autre (CANCEL/RESCHEDULE)",
+      "uncertain": "lecture session échouée après message OK, champs absents",
+      "historicalExpected": {
+        "intentBefore": "GENERAL",
+        "intentAfter": "CREATE_APPOINTMENT",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "conversationStep": "ASK_CREATE_SERVICE"
+      }
+    },
+    {
+      "id": "R005-A05-draft-preserved",
+      "group": "draft",
+      "evidenceClass": "runtimeRequired",
+      "offlineAlreadyOkPartial": true,
+      "offlinePartialRef": "T03 preserve_draft (flag) — fingerprints/flags PG runtime requis",
+      "title": "Brouillon métier préservé (pas d'invention)",
+      "measure": "flags métier + slotsFingerprint + attempts",
+      "pass": "pending/step conservés ; service/site/slot/identité toujours absents ; slotsFingerprint inchangé ; attempts=0 ; pas d'invention de champs",
+      "fail": "service/site/slot/identité inventés OR slotsFingerprint changé sans cause OR tentative créée OR purge non autorisée du pending/step",
+      "uncertain": "fingerprint non comparable, flags incomplets",
+      "notes": "draftFingerprint peut changer (intent + lastUserMessage) — ne PAS exiger égalité stricte du fingerprint global. Exiger préservation métier (flags + slots).",
+      "historicalExpected": {
+        "draftMetierPreserved": true,
+        "slotsPreserved": true,
+        "flagsPreserved": true,
+        "pendingPreserved": true,
+        "attemptsTotal": 0,
+        "slotsFingerprint": "fd838dea4b2d12b826297cc085b00469"
+      }
+    },
+    {
+      "id": "R005-A06-claim-zero-post-zero",
+      "group": "anti-reservation",
+      "evidenceClass": "runtimeRequired",
+      "offlineAlreadyOkPartial": true,
+      "offlinePartialRef": "T03 no_claim_post (chemin VM sans nœud Claim/POST) — compteurs mock/PG runtime requis",
+      "title": "CLAIM=0 et POST CreateAppointment Δ=0",
+      "measure": "claimAcquired + mock posts Δ + open attempts + idempotency keys",
+      "pass": "claimAcquired=false AND postDelta=0 AND getAvailabilityDelta=0 AND getServicesDelta=0 AND openAttempts=0 AND hasIdempotencyKey=0 AND cancel/reschedule absents",
+      "fail": "CLAIM observé OR postDelta>0 OR tentative ouverte créée OR clé d'idempotence créée",
+      "uncertain": "compteurs mock indisponibles, PG attempts illisibles",
+      "hardStop": true
+    },
+    {
+      "id": "R005-A07-deactivate",
+      "group": "lifecycle",
+      "evidenceClass": "runtimeRequired",
+      "title": "Désactivation immédiate post-message",
+      "measure": "deactivate.active / activeVersionId / webhookRows",
+      "pass": "active=false AND activeVersionId=null AND webhookRows=0 AND versionCounter toujours 9",
+      "fail": "workflow reste active=true OR webhooks résiduels >0 après désactivation",
+      "uncertain": "API deactivate timeout / état active illisible après tentative de désactivation",
+      "hardStop": true,
+      "notes": "Aucune activation implicite hors fenêtre autorisée ; pas de laisser actif « pour la suite »."
+    },
+    {
+      "id": "R005-A08-single-message-no-retry",
+      "group": "protocol",
+      "evidenceClass": "runtimeRequired",
+      "title": "Un seul message, aucun retry",
+      "measure": "messageSent count + transportFailure handling",
+      "pass": "exactement 1 sendMessage chatInput=reprendre ; aucun retry après timeout/erreur",
+      "fail": "second sendMessage / retry automatique / chatInput ≠ reprendre",
+      "uncertain": "doute sur le nombre d'appels (logs incomplets)"
+    },
+    {
+      "id": "R005-A09-live-untouched",
+      "group": "isolation",
+      "evidenceClass": "runtimeRequired",
+      "title": "LIVE / Mailpit inchangés",
+      "measure": "empreinte LIVE + mailpit counters",
+      "pass": "empreinte LIVE identique avant/après ; Mailpit messages/unread/dbSize inchangés",
+      "fail": "empreinte LIVE ou Mailpit divergents",
+      "uncertain": "empreinte LIVE non lue"
+    }
+  ],
+  "aggregateRules": {
+    "pass": "Tous les assertions runtimeRequired critiques PASS ; aucun hardStop FAIL ; préflight+postflight OK ; LIVE intact",
+    "fail": "Au moins un hardStop FAIL (A06/A07) OU échec clair A02/A03/A04/A05/A09 OU HTTP métier clairement faux",
+    "uncertain": "Timeout/transport ambigu OR deactivate/compteurs illisibles OR précondition session non expirée OR HTTP 200 sans preuves métier croisées",
+    "httpVsBusiness": "HTTP 200 ∧ (CLAIM>0 ∨ POST>0) → FAIL (pas UNCERTAIN). HTTP 200 ∧ type manquant → UNCERTAIN. HTTP timeout → UNCERTAIN (conserver session, pas de retry)."
+  },
+  "offlineAlreadyOkSummary": [
+    {
+      "id": "T03-resume_intent_create",
+      "verdict": "PASS",
+      "mapsTo": "R005-A04 (partiel VM)"
+    },
+    {
+      "id": "T03-refresh_ttl_true",
+      "verdict": "PASS",
+      "mapsTo": "R005-A03 (flag only)"
+    },
+    {
+      "id": "T03-session_expired_cleared",
+      "verdict": "PASS",
+      "mapsTo": "R005-A03/A04 (flag only)"
+    },
+    {
+      "id": "T03-preserve_draft",
+      "verdict": "PASS",
+      "mapsTo": "R005-A05 (flag only)"
+    },
+    {
+      "id": "T03-no_claim_post",
+      "verdict": "PASS",
+      "mapsTo": "R005-A06 (chemin VM only)"
+    }
+  ],
+  "runtimeRequiredSummary": [
+    "R005-A01-http-200",
+    "R005-A02-response-type",
+    "R005-A03-ttl-renew",
+    "R005-A04-intent-pending-step",
+    "R005-A05-draft-preserved",
+    "R005-A06-claim-zero-post-zero",
+    "R005-A07-deactivate",
+    "R005-A08-single-message-no-retry",
+    "R005-A09-live-untouched"
+  ],
+  "runtimeRequiredNotes": {
+    "R005-A03-ttl-renew": "PG réel expires_at/updated_at",
+    "R005-A04-intent-pending-step": "PG réel intent/pending/step",
+    "R005-A05-draft-preserved": "flags/slots PG",
+    "R005-A06-claim-zero-post-zero": "compteurs mock + attempts"
+  },
+  "stopConditions": [
+    "FAIL hardStop A06 ou A07",
+    "UNCERTAIN transport → STOP, pas de retry",
+    "Session non expirée au préflight → STOP readiness",
+    "LIVE divergente → STOP",
+    "Autorisation runtime absente → ne pas exécuter"
+  ],
+  "goNoGo": {
+    "readinessCatalogComplete": "GO (catalogue prêt)",
+    "runtimeP4G2Replay": "NO-GO jusqu'à autorisation humaine + préflight session expirée confirmée",
+    "live": "NO-GO",
+    "autoNextPhase": "NO-GO"
+  },
+  "textualRuntimeProposal": {
+    "allowed": true,
+    "executableRuntimeCode": false,
+    "stepsWhenAuthorized": [
+      "1. Préflight (workflow inactif, TEST≠LIVE, session expirée, compteurs 0)",
+      "2. Activation temporaire VC9 autorisée",
+      "3. Warmup GET health/webhook",
+      "4. Un POST sendMessage sessionId=rec008-8f2b1-slot-01 chatInput=reprendre",
+      "5. Aucun retry",
+      "6. Désactivation immédiate",
+      "7. Postflight : appliquer assertions R005-A01…A09",
+      "8. Verdict PASS/FAIL/UNCERTAIN ; ne pas enchaîner"
+    ],
+    "forbiddenNow": [
+      "Écrire/lancer run.js webhook",
+      "Activation n8n",
+      "POST CreateAppointment",
+      "Mutation PG expires_at sans ordre",
+      "Toucher LIVE"
+    ]
+  }
+}

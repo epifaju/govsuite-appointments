@@ -1,0 +1,104 @@
+{
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+  "versionCounter": 8,
+  "nodes": 134,
+  "edges": 137,
+  "activeIds": [],
+  "chatPublic": true,
+  "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+  "postgres": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "ollama": "dxzHqBq8Q60R8BOz",
+  "urlsOk": true,
+  "networkOk": true,
+  "connectivity": {
+    "tcp": {
+      "ok": true,
+      "elapsedMs": 2,
+      "localAddress": "127.0.0.1",
+      "remoteAddress": "127.0.0.1"
+    },
+    "healthz": {
+      "ok": true,
+      "status": 200,
+      "elapsedMs": 6,
+      "len": 15,
+      "preview": "{\"status\":\"ok\"}",
+      "targetUrl": "http://127.0.0.1:5682/healthz"
+    },
+    "readiness": {
+      "ok": true,
+      "status": 200,
+      "elapsedMs": 5,
+      "len": 15,
+      "preview": "{\"status\":\"ok\"}",
+      "targetUrl": "http://127.0.0.1:5682/healthz/readiness"
+    },
+    "ok": true,
+    "note": "127.0.0.1 only; no chat webhook during connectivity probes"
+  },
+  "webhooksBefore": 0,
+  "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "pg": "1|11|4|0",
+  "open": "0",
+  "statusCounts": [
+    "ABANDONED|1",
+    "CONFIRMED|2",
+    "EXPIRED|1"
+  ],
+  "targetExists": "1",
+  "sessionReady": true,
+  "target": {
+    "intent": "CREATE_APPOINTMENT",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_NOM",
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "date_debut": "2026-11-03",
+    "date_fin": "2026-11-03",
+    "slot_id": "33333333-3333-4333-8333-333333333333",
+    "selected_slot_index": "1",
+    "hasIdentity": false
+  },
+  "slotPreview": {
+    "id": "33333333-3333-4333-8333-333333333333",
+    "index": 1,
+    "debut": "2026-11-03T09:00:00+01:00",
+    "fin": "2026-11-03T09:30:00+01:00",
+    "placesDisponibles": 2
+  },
+  "priorSessionsPresent": "3",
+  "historical": {
+    "reference": "REC008-MOCK-0001",
+    "conversation_step": "",
+    "pending_action": ""
+  },
+  "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+  "confirmed2": "CONFIRMED|REC008-MOCK-0001|f|f||2026-11-01 14:02:06.617353+01",
+  "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+  "expired": "EXPIRED||f|f||2026-11-01 12:00:48.944651+01",
+  "sessionAttempts": "0",
+  "histFp": "ee05bcfc516fbf1b2dc0dc2e3c700056",
+  "attemptsFp": "9101e754e9142537c5d469b56b95dee5",
+  "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+  "mockBaseline": {
+    "scenario": "created",
+    "total": 4,
+    "posts": 1,
+    "getAvailability": 3,
+    "byPath": {
+      "GET /appointments/availability 200": 3,
+      "POST /appointments 201": 1
+    },
+    "distinctKeys": 1
+  },
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "ok": true,
+  "phase": "8F-2B26",
+  "putStatus": 200,
+  "putMessage": null,
+  "putCount": 1,
+  "candidateSha": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+  "beforeSha": "2df97627118c840d59d8b3b9b97226106df082382b02b6c3c973d761142f8fb8",
+  "payloadSha": "ace67cc33be8d292adaff7653b32a65dadff9ade028ad555355857822834369d",
+  "afterSha": "b08556caec837f9b095ab4707d530e21ea549aa5a4549e4224fe9919ff3f35ea",
+  "afterFinaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "finaliserMatch": true,
+  "newVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+  "newVersionCounter": 8,
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+    "versionCounter": 7,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "networkOk": true,
+    "liveFinaliserBeforeSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+    "beforeSha": "2df97627118c840d59d8b3b9b97226106df082382b02b6c3c973d761142f8fb8",
+    "candidateSha": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+    "pg": "1|8|2|0",
+    "statuses": "ABANDONED|1\nCONFIRMED|1",
+    "open": "0",
+    "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT",
+    "attempt": "CONFIRMED|REC008-MOCK-0001|f|f|",
+    "abandoned": "ABANDONED",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "postAppointments": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "after": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "urlsCount": 10,
+    "parameterDiffs": [
+      "Finaliser état création"
+    ],
+    "credentialDiffs": [],
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "webhooksRows": 0,
+    "queryHasSentinelUuidCast": true,
+    "queryReplacementHasSentinel": true
+  },
+  "nonRegressionStatic": {
+    "claimPostProtectedUnchanged": true,
+    "note": "No runtime exercise of CLAIM/POST/RECALL/UNCERTAIN in this phase; static parameter identity only."
+  },
+  "postflight": {
+    "pg": "1|8|2|0",
+    "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT",
+    "attempt": "CONFIRMED|REC008-MOCK-0001|f|f|",
+    "abandoned": "ABANDONED",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 4,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "postAppointments": 1,
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "pass": true,
+  "verdict": "PASS",
+  "goReconcile": "GO"
+}

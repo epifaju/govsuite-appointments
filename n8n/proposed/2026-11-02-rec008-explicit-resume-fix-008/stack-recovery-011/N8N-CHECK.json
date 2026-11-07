@@ -1,0 +1,37 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:14:52.996Z",
+  "ok": true,
+  "id": "OCD9It1uKFhOoWNF",
+  "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+  "versionCounter": 9,
+  "nodes": 134,
+  "edges": 137,
+  "activeIds": [],
+  "pgCredentialIds": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "urlCount": 10,
+  "urlsAllMock": true,
+  "expected": {
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounter": 9,
+    "nodes": 134,
+    "edges": 137,
+    "active": false
+  },
+  "checks": {
+    "idOk": true,
+    "inactive": true,
+    "versionIdOk": true,
+    "counterOk": true,
+    "graphOk": true,
+    "noActive": true,
+    "pgTestOnly": true,
+    "urlsMock": true
+  },
+  "allPass": true
+}

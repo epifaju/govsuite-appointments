@@ -1,0 +1,16 @@
+{
+  "phase": "8F-2B25",
+  "published": false,
+  "putOnMain": false,
+  "rationale": "Fix both 8F-2B24 defects: (1) non-empty sentinel __ABSENT__ so n8n never omits $3; (2) explicit ::uuid cast after double NULLIF so assignment matches ai_conversation_state.token uuid.",
+  "queryReplacementAfter": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '__ABSENT__') }}",
+  "queryTokenLineAfter": "token = NULLIF(NULLIF($3::text, ''), '__ABSENT__')::uuid,",
+  "queryReferenceLineUnchanged": "reference = NULLIF($2::text, ''),",
+  "finaliserAfterSha256": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "candidateSha256": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+  "runtimeValidated": {
+    "A1_absent": "PASS",
+    "A2_uuid_present": "PASS",
+    "A3_invalid_non_uuid": "PASS (controlled reject, no persist)"
+  }
+}

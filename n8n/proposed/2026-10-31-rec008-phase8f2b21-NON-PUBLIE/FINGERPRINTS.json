@@ -1,0 +1,18 @@
+{
+  "sourcePath": "C:/Open Source PME/govsuite-appointments/n8n/proposed/2026-10-30-rec008-phase8f2b9-VALIDATION-FIX-INSTALL/after-OCD9It1uKFhOoWNF.json",
+  "sourceSha256": "cbb56243bf997dbda3c97c1418593297d2a6858fb17c07132a456b564b526ba1",
+  "candidatePath": "C:\\Open Source PME\\govsuite-appointments\\n8n\\proposed\\2026-10-31-rec008-phase8f2b21-NON-PUBLIE\\candidate-OCD9It1uKFhOoWNF.json",
+  "candidateSha256": "2263c4bbe906129e89b8ac6b860299d523042c455897c5f7f8426dabcde43c72",
+  "finaliserBeforeSha256": "27b731befac7d1877cbf75b4ad9195089ea6d5bf353409665f07733716e78766",
+  "finaliserAfterSha256": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "nodes": 134,
+  "edges": 137,
+  "modifiedNodes": [
+    "Finaliser état création"
+  ],
+  "credentialsUnchanged": true,
+  "urlsUnchanged": true,
+  "chatTriggerUnchanged": true,
+  "published": false,
+  "putExecuted": false
+}

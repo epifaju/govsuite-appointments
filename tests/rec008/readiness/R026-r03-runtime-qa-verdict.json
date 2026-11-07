@@ -1,0 +1,112 @@
+{
+  "id": "R03-RUNTIME-026",
+  "shortId": "R026",
+  "title": "QA — R03 session expirée + reprendre → TTL+, ASK_PRENOM, prenom null, pas session_expired",
+  "mode": "offline-post-campaign-review",
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "campaignResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/campaign-result.json",
+    "r03Result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/R03-result.json",
+    "r03Http": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/R03-http.json",
+    "r03Before": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/R03-before.json",
+    "r03After": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/R03-after.json",
+    "postflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r03-026/safety-postflight-success.json",
+    "assertFn": "assertR03 in n8n/proposed/.../runtime-013/run-runtime-013.js"
+  },
+  "observed": {
+    "campaignGlobalVerdict": "PASS",
+    "r03Verdict": "PASS",
+    "chatInput": "reprendre",
+    "httpStatus": 200,
+    "httpType": "create_appointment_question",
+    "httpAsksPrenom": true,
+    "httpTextPreview": "Merci. Quel est votre **prénom** ?",
+    "beforeStep": "ASK_PRENOM",
+    "afterStep": "ASK_PRENOM",
+    "afterPrenom": null,
+    "prenomIsNull": true,
+    "nomPreserved": true,
+    "nom": "Dupont",
+    "ttlBefore": false,
+    "ttlAfter": true,
+    "sessionExpiredAfter": false,
+    "noSessionExpiredInReply": true,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "retried": false,
+    "liveTouched": false,
+    "fingerprintFinal": "1|14|4|0",
+    "postflightSafeDeclared": true
+  },
+  "assertions": {
+    "R03-H01": {
+      "assert": "sendMessage HTTP 200 + JSON parseable",
+      "verdict": "PASS",
+      "evidence": ["httpStatus=200", "httpType=create_appointment_question", "retried=false"]
+    },
+    "R03-M01": {
+      "assert": "TTL renouvelé (ttlActive after resume)",
+      "verdict": "PASS",
+      "evidence": ["ttlBefore=false", "ttlAfter=true", "expiresAt rafraîchi"]
+    },
+    "R03-M02": {
+      "assert": "conversation_step reste ASK_PRENOM",
+      "verdict": "PASS",
+      "evidence": ["beforeStep=ASK_PRENOM", "afterStep=ASK_PRENOM"]
+    },
+    "R03-M03": {
+      "assert": "prenom reste null (pas de capture « reprendre »)",
+      "verdict": "PASS",
+      "evidence": ["afterPrenom=null", "prenomIsNull=true"]
+    },
+    "R03-M04": {
+      "assert": "nom préservé",
+      "verdict": "PASS",
+      "evidence": ["nom=Dupont", "nomPreserved=true"]
+    },
+    "R03-M06": {
+      "assert": "invite prénom ; pas session_expired",
+      "verdict": "PASS",
+      "evidence": ["httpAsksPrenom=true", "noSessionExpiredInReply=true", "type≠session_expired"]
+    },
+    "R03-A02": {
+      "assert": "aucun POST CreateAppointment",
+      "verdict": "PASS",
+      "evidence": ["mockPostsDelta=0", "mockClaimsDelta=0"]
+    },
+    "zeroRetry": {
+      "assert": "aucun retry automatique",
+      "verdict": "PASS",
+      "evidence": ["retried=false", "un seul message reprendre"]
+    }
+  },
+  "httpVsBusiness": {
+    "httpTransport": "PASS (HTTP 200)",
+    "businessSuccess": "PASS (TTL+ ; prenom null ; step ASK_PRENOM ; ask prenom ; pas session_expired ; Δ POST=0)",
+    "note": "HTTP 200 seul ne suffit pas ; ici transport et métier concordent (reprise explicite sans capture du mot reprendre)"
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "R03-RUNTIME-026 offline QA review",
+    "reason": "Contrat assertR03 satisfait : reprendre → TTL+, prenom=null, step=ASK_PRENOM, invite prénom, pas session_expired, mockPostsDelta=0, retried=false. LIVE non touché."
+  },
+  "goNoGo": {
+    "declareBusinessPassR03": "GO — PASS métier R03 clos",
+    "r01": "NO-GO — hors périmètre de cette revue",
+    "r02": "NO-GO — hors périmètre de cette revue",
+    "autoNextPhase": "NO-GO",
+    "live": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas de retry",
+    "pas de capture prenom=reprendre",
+    "pas d'avancée vers ASK_EMAIL",
+    "pas de type session_expired après reprise",
+    "pas de POST CreateAppointment (Δ=0)",
+    "pas de CLAIM (Δ=0)",
+    "pas de toucher LIVE",
+    "R01/R02 non autorisés / non réouverts par ce verdict",
+    "cette revue n'autorise pas la phase suivante"
+  ]
+}

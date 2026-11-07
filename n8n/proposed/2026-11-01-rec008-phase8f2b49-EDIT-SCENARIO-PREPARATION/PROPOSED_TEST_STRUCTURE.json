@@ -1,0 +1,88 @@
+{
+  "phase": "8F-2B49",
+  "note": "Proposition uniquement — non exécutée. Ne pas appliquer evaluateVerdict (appointment_created) tel quel à CONV-07.",
+  "sessionIdProposed": "rec008-8f2b49-edit-01",
+  "sessionCreatedInThisPhase": false,
+  "verdictReuse": {
+    "source": "n8n/proposed/2026-11-01-rec008-phase8f2b47-VERDICT-FIX/verdict.js",
+    "importMode": "require lecture seule du module historique, ou copie dans un nouveau répertoire de phase — jamais réécrire 8F-2B47",
+    "reusableChecks": [
+      "httpOk (status === 200)",
+      "notHttp500",
+      "integrityOk (LIVE fingerprint, Mailpit, PG hors cible documentés)",
+      "deactivateOk (workflow inactif post-test)",
+      "structure finish() / reason / goNoGo si encapsulée"
+    ],
+    "notApplicableDirectly": [
+      "functionalOk exige type === appointment_created + confirmsAppointment",
+      "attemptOk exige status === CONFIRMED + reference mock",
+      "sessionOk exige brouillon entièrement effacé + reference",
+      "postOk exige postDelta === 1 et claimCount === 1",
+      "isBusinessOk / claimCount === 1 / postDelta === 1"
+    ],
+    "proposedConv07Checks": {
+      "functionalOk": "http 200 && responseType === create_appointment_question && conversationStep === ASK_NOM && !appointment_created && !create_abandoned (chemin MODIFY ≠ refus total)",
+      "attemptOk": "status === ABANDONED && !hasIdempotencyKey && !hasRequestPayload && !hasLease && !appointmentReference && !appointmentId && submittedAt vide && confirmedAt vide",
+      "sessionOk": "conversation_step === ASK_NOM && pending_action === CREATE_APPOINTMENT && nom absent && prenom/email/telephone/slot/service/site présents (présence seule, pas PII en clair dans fixtures) selon Mettre à jour champ modifié",
+      "postOk": "postDelta === 0 && claimCount === 0 && cancelSeen === false",
+      "openAttempts": "0 après le message (aucune nouvelle AWAITING créée par modifier le nom)",
+      "statusDelta": "ABANDONED +1 sur la ligne ciblée ; pas de CONFIRMED supplémentaire"
+    }
+  },
+  "futureScriptOutline": {
+    "files": [
+      "preflight-readonly.js",
+      "run.js (un message, activation temporaire, désactivation)",
+      "verdict-modify.js (nouveaux checks ; peut importer helpers non métier de verdict.js si factorisés sans toucher l'historique)",
+      "RESULT.json",
+      "POSTFLIGHT.json"
+    ],
+    "runSteps": [
+      "préflight bloquant",
+      "activation workflow TEST",
+      "POST chat unique message=modifier le nom",
+      "lecture HTTP + PG tentative/session + mock counters + LIVE + Mailpit",
+      "désactivation",
+      "evaluateModifyVerdict(snapshot)",
+      "postflight intégrité"
+    ]
+  },
+  "unitaryCollectionPhases": [
+    {
+      "id": "8F-2B49-P1",
+      "message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026.",
+      "expectStep": "slots persistés / GET_AVAILABILITY"
+    },
+    {
+      "id": "8F-2B49-P2",
+      "message": "Je prends le 1.",
+      "expectStep": "ASK_NOM"
+    },
+    {
+      "id": "8F-2B49-P3",
+      "message": "Dupont",
+      "expectStep": "ASK_PRENOM"
+    },
+    {
+      "id": "8F-2B49-P4",
+      "message": "Camille",
+      "expectStep": "ASK_EMAIL"
+    },
+    {
+      "id": "8F-2B49-P5",
+      "message": "camille.modification@example.test",
+      "expectStep": "ASK_TELEPHONE"
+    },
+    {
+      "id": "8F-2B49-P6",
+      "message": "+33000000000",
+      "expectStep": "AWAIT_CREATE_CONFIRMATION + AWAITING_CONFIRMATION"
+    },
+    {
+      "id": "8F-2B49-P7",
+      "message": "modifier le nom",
+      "expectStep": "ASK_NOM + tentative ABANDONED",
+      "requirement": "CONV-07"
+    }
+  ]
+}

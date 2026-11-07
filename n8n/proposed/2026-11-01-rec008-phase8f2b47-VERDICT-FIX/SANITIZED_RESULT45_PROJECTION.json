@@ -1,0 +1,111 @@
+{
+  "note": "Projection assainie hors ligne depuis RESULT 8F-2B45 + événements 8F-2B46. Aucune clé, corps figé, token ni PII.",
+  "sourcePhases": [
+    "8F-2B45",
+    "8F-2B46"
+  ],
+  "projected": {
+    "httpStatus": 200,
+    "responseType": "appointment_created",
+    "responseSuccess": true,
+    "confirmsAppointment": true,
+    "showsReference": true,
+    "falseSuccessWithoutFinalize": false,
+    "notWorkflowError": true,
+    "transportFailure": null,
+    "expectedMockRef": "REC008-MOCK-0001",
+    "expectedMockApptId": "55555555-5555-4555-8555-555555555555",
+    "fingerprintBefore": "1aa346780669",
+    "attempt": {
+      "status": "CONFIRMED",
+      "hasIdempotencyKey": false,
+      "hasRequestPayload": false,
+      "hasFingerprint": true,
+      "fingerprintFp12": "1aa346780669",
+      "hasLeaseOwner": false,
+      "hasLeaseUntil": false,
+      "appointmentReference": "REC008-MOCK-0001",
+      "appointmentId": "55555555-5555-4555-8555-555555555555",
+      "submittedAt": "2026-11-01 14:02:05.862032+01",
+      "confirmedAt": "2026-11-01 14:02:06.617353+01"
+    },
+    "session": {
+      "conversation_step": "",
+      "pending_action": "",
+      "intent": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "service": "",
+      "site": "",
+      "slot_id": "",
+      "reference": "REC008-MOCK-0001",
+      "token": ""
+    },
+    "postDelta": 1,
+    "claimCount": 1,
+    "getAvailabilityDelta": 0,
+    "cancelSeen": false,
+    "integrityOk": true,
+    "deactivateOk": true,
+    "finaliserExec": null,
+    "saveDataSuccessExecution": "none",
+    "events": {
+      "finaliserStarted": true,
+      "finaliserFinished": true,
+      "workflowSuccess": true,
+      "finaliserFailed": false,
+      "list": [
+        {
+          "ts": "2026-11-01T14:00:57.459+01:00",
+          "eventName": "n8n.workflow.started",
+          "mode": "webhook"
+        },
+        {
+          "ts": "2026-11-01T14:02:05.821+01:00",
+          "eventName": "n8n.node.started",
+          "nodeName": "Réclamer tentative"
+        },
+        {
+          "ts": "2026-11-01T14:02:05.869+01:00",
+          "eventName": "n8n.node.finished",
+          "nodeName": "Réclamer tentative"
+        },
+        {
+          "ts": "2026-11-01T14:02:06.607+01:00",
+          "eventName": "n8n.node.started",
+          "nodeName": "Clôturer confirmation"
+        },
+        {
+          "ts": "2026-11-01T14:02:06.620+01:00",
+          "eventName": "n8n.node.finished",
+          "nodeName": "Clôturer confirmation"
+        },
+        {
+          "ts": "2026-11-01T14:02:06.722+01:00",
+          "eventName": "n8n.node.started",
+          "nodeName": "Finaliser état création"
+        },
+        {
+          "ts": "2026-11-01T14:02:06.806+01:00",
+          "eventName": "n8n.node.finished",
+          "nodeName": "Finaliser état création"
+        },
+        {
+          "ts": "2026-11-01T14:02:06.872+01:00",
+          "eventName": "n8n.workflow.success",
+          "success": true,
+          "mode": "webhook"
+        }
+      ]
+    },
+    "meta": {
+      "phase": "8F-2B45",
+      "sessionId": "rec008-8f2b37-new-01",
+      "deactivateActive": true,
+      "preflightPg": "1|10|4|0",
+      "afterPg": "1|10|4|0"
+    }
+  }
+}

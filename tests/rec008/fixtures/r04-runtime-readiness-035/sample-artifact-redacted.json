@@ -1,0 +1,16 @@
+{
+  "mission": "R04-RUNTIME-READINESS-035",
+  "synthetic": true,
+  "executed": false,
+  "scenarioId": "R04-A",
+  "sessionIdHash": "a1b2c3d4e5f60718",
+  "conversationStep": "ASK_TELEPHONE",
+  "emailPresent": true,
+  "emailLen": 22,
+  "emailValide": true,
+  "sessionExpired": false,
+  "ttlActive": true,
+  "mockPostsDelta": 0,
+  "mockClaimsDelta": 0,
+  "note": "Example redacted artefact — no cleartext email/phone/token/message"
+}

@@ -1,0 +1,35 @@
+{
+  "mission": "R02-RUNTIME-025",
+  "runtimeOnly": [
+    "R02"
+  ],
+  "ts": "2026-11-06T18:57:13.877Z",
+  "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+  "versionCounter": 10,
+  "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "liveTouched": false,
+  "results": [
+    {
+      "id": "R02",
+      "verdict": "PASS",
+      "issues": [
+        "stability:execution_finished_business_conformant:business_conformant_idle"
+      ],
+      "httpStatus": 200,
+      "httpType": "session_expired",
+      "beforeStep": "ASK_PRENOM",
+      "afterStep": "ASK_PRENOM",
+      "afterPrenom": null,
+      "prenomIsNull": true,
+      "ttlAfter": false,
+      "mockPostsDelta": 0,
+      "mockClaimsDelta": 0
+    }
+  ],
+  "cleanup": {
+    "cleaned": false,
+    "reason": "RUNTIME_ALLOW_CLEANUP not set — fixtures preserved"
+  },
+  "fingerprintFinal": "1|14|4|0",
+  "globalVerdict": "PASS"
+}

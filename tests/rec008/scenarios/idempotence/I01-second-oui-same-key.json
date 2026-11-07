@@ -1,0 +1,14 @@
+{
+  "id": "I01-second-oui-same-key",
+  "family": "idempotence",
+  "mode": "offline",
+  "matrixRef": "C7",
+  "required": true,
+  "handler": "idempotence.secondOuiSameKey",
+  "description": "Second oui après confirmation : RECALL + replay sim même clé/référence (pas de preuve PG réelle).",
+  "expects": {
+    "attemptAction": "RECALL",
+    "simIssue": "REPLAYED",
+    "runtimeRequired": true
+  }
+}

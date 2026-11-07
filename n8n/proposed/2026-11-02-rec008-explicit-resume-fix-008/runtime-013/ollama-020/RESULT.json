@@ -1,0 +1,233 @@
+{
+  "mission": "OLLAMA-READINESS-020",
+  "ts": "2026-11-05T22:16:51.208Z",
+  "liveProbed": false,
+  "pgMutated": false,
+  "dockerMutated": false,
+  "n8nActivated": false,
+  "chatTriggerUsed": false,
+  "ollamaCalls": 2,
+  "maxOllamaCalls": 4,
+  "issues": [],
+  "docker": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 4 hours",
+    "govsuite-rec008-test-rec008-publish-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 2 hours (healthy)"
+  ],
+  "healthz": {
+    "status": 200,
+    "elapsedMs": 3206
+  },
+  "ollamaResources": {
+    "memLimitBytes": 1610612736,
+    "memLimitGiB": 1.5,
+    "nanoCpus": 1500000000,
+    "cpuLimitApprox": 1.5,
+    "statsSample": {
+      "memUsage": "63.64MiB / 1.5GiB",
+      "cpu": "0.00%",
+      "memPerc": "4.14%"
+    }
+  },
+  "ollamaVersion": "ollama version is 0.11.6",
+  "models": [
+    {
+      "name": "qwen2.5:1.5b",
+      "size": 986061892,
+      "digest": "65ec06548149b04c"
+    }
+  ],
+  "loadedBefore": [],
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "http": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "activeWorkflowIds": [],
+  "webhookRows": 0,
+  "runningExecutions": 0,
+  "n8nObservability": {
+    "settingsHttp": 200,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": true,
+    "executionTimeout": -1,
+    "maxExecutionTimeout": 3600,
+    "note": "readonly audit — not modified in 020",
+    "executionEntityCount": 0
+  },
+  "fingerprint": "1|14|4|0",
+  "fixtures": [
+    {
+      "session_id": "rec008-runtime013-r01-active",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": true,
+      "msg_len": 0
+    },
+    {
+      "session_id": "rec008-runtime013-r02-expired",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": false,
+      "msg_len": 0
+    },
+    {
+      "session_id": "rec008-runtime013-r03-resume",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "has_slot": true,
+      "prenom_null": true,
+      "ttl_future": false,
+      "msg_len": 0
+    }
+  ],
+  "openAttempts": 0,
+  "preflightOk": true,
+  "measures": {
+    "calls": [
+      {
+        "label": "cold_chat",
+        "ok": true,
+        "wallMs": 88214,
+        "keepAlive": "10m",
+        "stats": {
+          "model": "qwen2.5:1.5b",
+          "done": true,
+          "total_duration_ns": 87278731902,
+          "load_duration_ns": 63231880877,
+          "prompt_eval_count": 39,
+          "prompt_eval_duration_ns": 23492158163,
+          "eval_count": 2,
+          "eval_duration_ns": 216833170,
+          "total_duration_ms": 87279,
+          "load_duration_ms": 63232,
+          "prompt_eval_duration_ms": 23492,
+          "eval_duration_ms": 217,
+          "responseLen": 2,
+          "responsePreview": "OK"
+        },
+        "httpBodyLen": 305
+      },
+      {
+        "label": "warm_chat",
+        "ok": true,
+        "wallMs": 3594,
+        "keepAlive": "10m",
+        "stats": {
+          "model": "qwen2.5:1.5b",
+          "done": true,
+          "total_duration_ns": 2283556776,
+          "load_duration_ns": 1569921420,
+          "prompt_eval_count": 39,
+          "prompt_eval_duration_ns": 382518809,
+          "eval_count": 2,
+          "eval_duration_ns": 309697497,
+          "total_duration_ms": 2284,
+          "load_duration_ms": 1570,
+          "prompt_eval_duration_ms": 383,
+          "eval_duration_ms": 310,
+          "responseLen": 2,
+          "responsePreview": "OK"
+        },
+        "httpBodyLen": 301
+      }
+    ],
+    "unloadedForCold": false,
+    "cold": {
+      "label": "cold_chat",
+      "ok": true,
+      "wallMs": 88214,
+      "keepAlive": "10m",
+      "stats": {
+        "model": "qwen2.5:1.5b",
+        "done": true,
+        "total_duration_ns": 87278731902,
+        "load_duration_ns": 63231880877,
+        "prompt_eval_count": 39,
+        "prompt_eval_duration_ns": 23492158163,
+        "eval_count": 2,
+        "eval_duration_ns": 216833170,
+        "total_duration_ms": 87279,
+        "load_duration_ms": 63232,
+        "prompt_eval_duration_ms": 23492,
+        "eval_duration_ms": 217,
+        "responseLen": 2,
+        "responsePreview": "OK"
+      },
+      "httpBodyLen": 305
+    },
+    "warm": {
+      "label": "warm_chat",
+      "ok": true,
+      "wallMs": 3594,
+      "keepAlive": "10m",
+      "stats": {
+        "model": "qwen2.5:1.5b",
+        "done": true,
+        "total_duration_ns": 2283556776,
+        "load_duration_ns": 1569921420,
+        "prompt_eval_count": 39,
+        "prompt_eval_duration_ns": 382518809,
+        "eval_count": 2,
+        "eval_duration_ns": 309697497,
+        "total_duration_ms": 2284,
+        "load_duration_ms": 1570,
+        "prompt_eval_duration_ms": 383,
+        "eval_duration_ms": 310,
+        "responseLen": 2,
+        "responsePreview": "OK"
+      },
+      "httpBodyLen": 301
+    },
+    "loadedAfterWarm": [
+      {
+        "name": "qwen2.5:1.5b",
+        "size": 1446033920,
+        "expires_at": "2026-11-05T22:28:47.471923564Z"
+      }
+    ],
+    "statsAfterCold": {
+      "memUsage": "1.096GiB / 1.5GiB",
+      "cpu": "0.00%",
+      "memPerc": "73.06%"
+    }
+  },
+  "timeoutAnalysis": {
+    "clientCurrentMs": 45000,
+    "coldWallMs": 88214,
+    "warmWallMs": 3594,
+    "coldLoadDurationMs": 63232,
+    "recommendedClientTimeoutMs": 148214,
+    "formula": "max(120s, warm*3+30s, cold+60s)",
+    "noRetry": true,
+    "note": "Do not bump lightly (60-120s) if cold >> 45s; warm campaign after preload"
+  },
+  "warmupStrategy": {
+    "command": "POST /api/chat model=qwen2.5:1.5b keep_alive=10m num_predict=8 synth prompt",
+    "verify": "GET /api/ps must list qwen2.5:1.5b",
+    "keepAliveSuggested": "10m",
+    "ramLimitGiB": 1.5,
+    "stableHold": true,
+    "http200NotEnough": true
+  },
+  "verdict": "PASS",
+  "gate": {
+    "ollamaWarmPrep": "GO-CONDITIONAL",
+    "r01Campaign": "NO-GO"
+  }
+}

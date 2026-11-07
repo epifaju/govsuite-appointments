@@ -1,0 +1,69 @@
+# Correctifs minimaux proposés (HORS LIGNE — non installés)
+# Phase 8F-2B49-P4D
+
+## Cause démontrée
+Session `rec008-8f2b49-edit-01` expirée (~2h après P3) → `Charger état conversation`
+filtre `expires_at > NOW()` → mémoire vide → LLM `GET_SERVICES` pour « Camille »
+→ `Gérer collecte` pending null → `Sauvegarder` UPSERT écrase le brouillon encore en base.
+
+## Fix A (prioritaire) — Charger état conversation
+Ne plus masquer une session existante uniquement pour cause d’échéance.
+Charger par `session_id` ; exposer éventuellement `expired: true` au parseur.
+
+```diff
+-SELECT *
+-FROM ai_conversation_state
+-WHERE session_id = $1
+-  AND (
+-      expires_at IS NULL
+-      OR expires_at > NOW()
+-  )
+-LIMIT 1;
++SELECT *,
++       (expires_at IS NOT NULL AND expires_at <= NOW()) AS session_expired
++FROM ai_conversation_state
++WHERE session_id = $1
++LIMIT 1;
+```
+
+Effet : Fusionner retrouve `pending_action=CREATE_APPOINTMENT` / `ASK_PRENOM` et
+continue la collecte malgré un TTL dépassé ; pas de wipe UPSERT.
+
+## Fix B (défense en profondeur) — Parser intention
+Verrouiller CREATE pendant les étapes d’identité, sauf commandes explicites.
+
+Après le bloc ASK_TOKEN*, ajouter :
+
+```js
+else if (
+  previousPendingAction === 'CREATE_APPOINTMENT' &&
+  ['ASK_NOM','ASK_PRENOM','ASK_EMAIL','ASK_TELEPHONE','ASK_CREATE_SLOT'].includes(previousConversationStep)
+) {
+  const folded = decisionFolded; // déjà calculé plus haut dans le nœud
+  const explicitOverride =
+    affirmativeDecisions.has(decisionText) ||
+    affirmativeDecisions.has(decisionFolded) ||
+    negativeDecisions.has(decisionText) ||
+    negativeDecisions.has(decisionFolded) ||
+    !!modifyFieldOf(decisionFolded) ||
+    /\\b(prendre|reserver|creer)\\b/.test(decisionFolded) && /\\b(rendez-vous|rdv)\\b/.test(decisionFolded);
+  if (!explicitOverride) {
+    intent = 'CREATE_APPOINTMENT';
+  }
+}
+```
+
+Puis laisser le bloc `createDecision` existant gérer oui/non/modifier.
+
+## Fix C (optionnel, sauvegarde) — Sauvegarder état conversation
+Ne pas écrire `NULL` sur les champs métier CREATE lorsque `intent` bascule vers
+`GET_SERVICES`/`GENERAL` sans commande explicite — plus risqué ; préférer A+B.
+
+## Non-régression à préparer (phase séparée)
+- ASK_NOM / ASK_PRENOM / ASK_EMAIL / ASK_TELEPHONE : prénom/nom libres ≠ services
+- `non`, `oui`, `modifier le nom` toujours reconnus
+- Session >2h : reprise sans purge silencieuse
+- TTL toujours rafraîchi après un tour valide
+
+## Installation
+INTERDITE dans 8F-2B49-P4D. Exige autorisation distincte (ex. 8F-2B49-P4E).

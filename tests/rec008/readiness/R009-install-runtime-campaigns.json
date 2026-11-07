@@ -1,0 +1,473 @@
+{
+  "id": "TEST-INSTALL-READINESS-009",
+  "shortId": "R009",
+  "title": "Catalogue campagnes runtime futures R01/R02/R03 — ASK_PRENOM post FIX-008",
+  "status": "catalog-reconciled-runtime-proven",
+  "executedRuntime": false,
+  "runtimeProvenBy": {
+    "mission": "EXIT-CRITERIA-028 / AP-DOC-01",
+    "artifact": "tests/rec008/readiness/R028-exit-criteria-r009-reconciliation.json",
+    "report": "tests/rec008/reports/EXIT-CRITERIA-028-qa-verdict.md",
+    "R01": "R024",
+    "R02": "R025",
+    "R03": "R026",
+    "note": "Preuves runtime sous session_id rec008-runtime013-* (OPTION A / REALIGN-019) ; fixtures JSON R009 restent pré-OPTION A (dette FIXTURE-JSON-R009-SLOT-NULL)."
+  },
+  "executeForbiddenUntilAuthorized": true,
+  "mode": "offline-catalog-only",
+  "env": "TEST",
+  "live": false,
+  "disclaimer": "Aucune activation n8n, aucun POST CreateAppointment, aucune mutation PG, aucun sendMessage. PASS offline ≠ PASS runtime. Une campagne n'autorise pas la suivante. Réconciliation 028 ≠ autorisation de rejeu.",
+  "missionConstraints": {
+    "messagePerCampaign": 1,
+    "retry": 0,
+    "retryForbidden": true,
+    "claimExpected": 0,
+    "postCreateAppointmentExpected": 0,
+    "deactivateRequired": true,
+    "independentFixtures": true,
+    "noChainCampaigns": true,
+    "autoNextPhase": "NO-GO"
+  },
+  "workflowTarget": {
+    "workflowId": "OCD9It1uKFhOoWNF",
+    "requiredInstall": "EXPLICIT-RESUME-FIX-008 candidate",
+    "candidatePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+    "candidateSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+    "gererJsCodeSha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "vc9BaselineSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "note": "R01/R02 passent aussi sur VC9 ; R03 exige le candidat FIX-008 (early-return avant capture)."
+  },
+  "offlineAnchors": {
+    "fix008Suite": {
+      "script": "tests/rec008/scripts/run-fix-008.cjs",
+      "assertions": "tests/rec008/lib/assertions/fix-008-explicit-resume.cjs",
+      "reportExample": "tests/rec008/reports/fix-008-2026-11-05T19-45-28-231Z.json",
+      "S01": { "id": "FIX008-S01", "mapping": "R01", "contract": "active ASK_PRENOM + Camille → prenom=Camille, step=ASK_EMAIL" },
+      "S02": { "id": "FIX008-S02", "mapping": "R02", "contract": "expired ASK_PRENOM + Camille → session_expired, prenom null, no TTL" },
+      "S03": { "id": "FIX008-S03", "mapping": "R03", "contract": "expired ASK_PRENOM + reprendre → TTL+, ASK_PRENOM, prenom null" }
+    },
+    "readiness007": {
+      "catalog": "tests/rec008/readiness/R007-ask-prenom-assertions.json",
+      "ttlSql": "tests/rec008/readiness/R007-ask-prenom-ttl-sql-contract.json",
+      "unit": "tests/rec008/unit/readiness-007-ask-prenom.test.cjs",
+      "scenarios": {
+        "S01": "tests/rec008/scenarios/ask-prenom/S01-ask-prenom-active.json",
+        "S02": "tests/rec008/scenarios/ask-prenom/S02-ask-prenom-expired.json",
+        "S03": "tests/rec008/scenarios/ask-prenom/S03-ask-prenom-explicit-resume-vc9-actual.json"
+      },
+      "note": "R007 S03 = VC9-actual (divergence brief). R009 R03 remplace l'acceptation produit par le contrat FIX-008."
+    },
+    "runtimeDocsAskPrenom": {
+      "preflight": "tests/rec008/runtime/PREFLIGHT-ASK-PRENOM.md",
+      "postflight": "tests/rec008/runtime/POSTFLIGHT-ASK-PRENOM.md",
+      "stop": "tests/rec008/runtime/STOP-CONDITIONS-ASK-PRENOM.md",
+      "commands": "tests/rec008/runtime/COMMAND-MATRIX-ASK-PRENOM.md"
+    },
+    "persistenceS03": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/sql/S03_PERSISTENCE_INVARIANTS.md"
+  },
+  "sharedStopRules": {
+    "preflight": [
+      "auth-missing",
+      "test-live-confusion",
+      "preflight-failed",
+      "workflow-active-unexpected",
+      "session-id-collision",
+      "open-attempts",
+      "fixture-not-applied-or-mismatch",
+      "fix008-candidate-not-installed (R03)",
+      "createappointment-unguarded",
+      "offline-pass-confused"
+    ],
+    "duringAction": [
+      "timeout-or-transport → UNCERTAIN, no retry",
+      "second-message",
+      "cross-campaign-send",
+      "createappointment-post",
+      "sql-mutation"
+    ],
+    "postflight": [
+      "deactivate-failed",
+      "claim-or-post-delta",
+      "retry-performed",
+      "phase-auto-advance"
+    ]
+  },
+  "campaigns": {
+    "R01": {
+      "id": "R01",
+      "title": "Active ASK_PRENOM + Camille",
+      "status": "runtime-proven-R024",
+      "mapsFrom": {
+        "fix008": "FIX008-S01 / runS01ActiveCamille",
+        "readiness007": "S01-ask-prenom-active / R007-S01"
+      },
+      "runtimeProof": {
+        "mission": "R01-RUNTIME-024",
+        "qaVerdict": "tests/rec008/readiness/R024-r01-runtime-qa-verdict.json",
+        "sessionIdRuntime": "rec008-runtime013-r01-active",
+        "verdict": "PASS",
+        "optionA": true
+      },
+      "fixture": {
+        "path": "tests/rec008/fixtures/install-readiness-009/r01-active-camille-state.json",
+        "fixtureId": "R009-R01",
+        "sessionId": "rec008-syn-r009-r01-active-camille",
+        "applied": false,
+        "independent": true,
+        "debtVsOptionA": "slot_id null / available_slots [] — ne pas reseeder sans AP-DOC-02 ; runtime a utilisé SEED OPTION A"
+      },
+      "action": {
+        "chatInput": "Camille",
+        "llmIntentHint": "GET_SERVICES",
+        "messageCount": 1,
+        "retry": 0,
+        "webhookPostCreateAppointmentForbidden": true
+      },
+      "ttl": {
+        "precondition": "ACTIVE (expires_at > NOW())",
+        "expectedRefresh": "default SQL true if flag absent (collecte active) — expires_at remains > NOW after",
+        "failIf": "session devient expirée ou purge TTL inattendue"
+      },
+      "draft": {
+        "preserve": ["nom=Dupont", "pending_action=CREATE_APPOINTMENT", "service/site if present"],
+        "mutate": ["prenom→Camille", "conversation_step→ASK_EMAIL"],
+        "failIf": "purge contexte / bascule GET_SERVICES / nom lost"
+      },
+      "assertions": {
+        "http": [
+          {
+            "id": "R01-H01",
+            "measure": "sendMessage status",
+            "pass": "HTTP 200 + JSON parseable",
+            "fail": "4xx/5xx clair",
+            "uncertain": "timeout / reset / corps ambigu — STOP, no retry"
+          }
+        ],
+        "metier": [
+          {
+            "id": "R01-M01",
+            "measure": "prenom",
+            "pass": "prenom=Camille (persisté PG)",
+            "fail": "prenom null / autre valeur"
+          },
+          {
+            "id": "R01-M02",
+            "measure": "conversation_step",
+            "pass": "ASK_EMAIL",
+            "fail": "reste ASK_PRENOM ou saute hors collecte email"
+          },
+          {
+            "id": "R01-M03",
+            "measure": "nom",
+            "pass": "nom preserved (has_nom=true)",
+            "fail": "nom purged"
+          },
+          {
+            "id": "R01-M04",
+            "measure": "pending_action",
+            "pass": "CREATE_APPOINTMENT",
+            "fail": "pending perdu"
+          }
+        ],
+        "antiReservation": [
+          {
+            "id": "R01-A01",
+            "measure": "CLAIM",
+            "pass": "CLAIM=0 (delta 0)",
+            "fail": "CLAIM>0"
+          },
+          {
+            "id": "R01-A02",
+            "measure": "POST CreateAppointment",
+            "pass": "POST=0 (delta mock 0)",
+            "fail": "POST>0"
+          }
+        ],
+        "lifecycle": [
+          {
+            "id": "R01-L01",
+            "measure": "deactivate",
+            "pass": "workflow inactif + webhooks résiduels absents après postflight",
+            "fail": "encore actif"
+          }
+        ]
+      },
+      "verdictRules": {
+        "PASS": "HTTP 200 AND métier R01-M* AND CLAIM/POST=0 AND deactivate OK",
+        "FAIL": "écart métier clair ou CLAIM/POST>0 ou retry",
+        "UNCERTAIN": "timeout / transport ambigu — conserver clé, no retry"
+      },
+      "goNoGoRuntime": "NO-GO rejeu — PASS métier clos par R024 ; nouvelle exécution exige autorisation distincte + seed OPTION A (pas JSON R009 brut)"
+    },
+    "R02": {
+      "id": "R02",
+      "title": "Expired ASK_PRENOM + Camille",
+      "status": "runtime-proven-R025",
+      "mapsFrom": {
+        "fix008": "FIX008-S02 / runS02ExpiredCamille",
+        "readiness007": "S02-ask-prenom-expired / R007-S02"
+      },
+      "runtimeProof": {
+        "mission": "R02-RUNTIME-025",
+        "qaVerdict": "tests/rec008/readiness/R025-r02-runtime-qa-verdict.json",
+        "sessionIdRuntime": "rec008-runtime013-r02-expired",
+        "verdict": "PASS",
+        "optionA": true,
+        "assertIdRemapNote": "Catalogue R02-M01=reply.type ; R025 R02-H01 porte session_expired, R02-M01=prenom — sémantique équivalente"
+      },
+      "fixture": {
+        "path": "tests/rec008/fixtures/install-readiness-009/r02-expired-camille-state.json",
+        "fixtureId": "R009-R02",
+        "sessionId": "rec008-syn-r009-r02-expired-camille",
+        "applied": false,
+        "independent": true,
+        "doNotReuseForR03WithoutReset": true,
+        "debtVsOptionA": "available_slots [] / pas de slot_id OPTION A — runtime a used SEED …302"
+      },
+      "action": {
+        "chatInput": "Camille",
+        "llmIntentHint": "GET_SERVICES",
+        "messageCount": 1,
+        "retry": 0,
+        "webhookPostCreateAppointmentForbidden": true
+      },
+      "ttl": {
+        "precondition": "EXPIRED (expires_at <= NOW())",
+        "expectedRefresh": false,
+        "pass": "expires_at inchangé (toujours ≤ NOW) ; refreshSessionTtl=false",
+        "failIf": "TTL renouvelé sur free-text expired"
+      },
+      "draft": {
+        "preserve": true,
+        "preserveFields": ["conversation_step=ASK_PRENOM", "prenom=null", "nom", "pending_action"],
+        "failIf": "capture prenom=Camille OR purge brouillon OR step avancé"
+      },
+      "assertions": {
+        "http": [
+          {
+            "id": "R02-H01",
+            "measure": "sendMessage status",
+            "pass": "HTTP 200 + JSON parseable (transport OK ≠ capture)",
+            "fail": "4xx/5xx clair",
+            "uncertain": "timeout / reset — STOP, no retry"
+          }
+        ],
+        "metier": [
+          {
+            "id": "R02-M01",
+            "measure": "reply.type",
+            "pass": "session_expired",
+            "fail": "type collecte/confirm ou capture implicite"
+          },
+          {
+            "id": "R02-M02",
+            "measure": "refreshSessionTtl",
+            "pass": false,
+            "fail": true
+          },
+          {
+            "id": "R02-M03",
+            "measure": "preserveDraft",
+            "pass": true,
+            "fail": "draft purged"
+          },
+          {
+            "id": "R02-M04",
+            "measure": "prenom",
+            "pass": "prenom still null (has_prenom=false)",
+            "fail": "prenom=Camille capturé"
+          },
+          {
+            "id": "R02-M05",
+            "measure": "conversation_step",
+            "pass": "ASK_PRENOM",
+            "fail": "step≠ASK_PRENOM"
+          }
+        ],
+        "antiReservation": [
+          {
+            "id": "R02-A01",
+            "measure": "CLAIM",
+            "pass": "CLAIM=0",
+            "fail": "CLAIM>0"
+          },
+          {
+            "id": "R02-A02",
+            "measure": "POST CreateAppointment",
+            "pass": "POST=0",
+            "fail": "POST>0"
+          }
+        ],
+        "lifecycle": [
+          {
+            "id": "R02-L01",
+            "measure": "deactivate",
+            "pass": "workflow inactif postflight",
+            "fail": "encore actif"
+          }
+        ]
+      },
+      "verdictRules": {
+        "PASS": "HTTP 200 AND session_expired AND no prenom capture AND no TTL refresh AND CLAIM/POST=0 AND deactivate",
+        "FAIL": "capture prenom / TTL refresh / CLAIM-POST / retry",
+        "UNCERTAIN": "timeout / transport ambigu — STOP"
+      },
+      "goNoGoRuntime": "NO-GO rejeu — PASS métier clos par R025 ; nouvelle exécution exige autorisation distincte + seed OPTION A"
+    },
+    "R03": {
+      "id": "R03",
+      "title": "Expired ASK_PRENOM + reprendre (contrat FIX-008)",
+      "status": "runtime-proven-R026",
+      "mapsFrom": {
+        "fix008": "FIX008-S03 / runS03ExpiredResumeFixed",
+        "readiness007": "S03 offline + note divergence VC9 — remplacé ici par contrat FIX-008",
+        "persistence": "S03_PERSISTENCE_INVARIANTS.md I1–I5"
+      },
+      "runtimeProof": {
+        "mission": "R03-RUNTIME-026",
+        "qaVerdict": "tests/rec008/readiness/R026-r03-runtime-qa-verdict.json",
+        "sessionIdRuntime": "rec008-runtime013-r03-resume",
+        "verdict": "PASS",
+        "optionA": true
+      },
+      "fixture": {
+        "path": "tests/rec008/fixtures/install-readiness-009/r03-expired-resume-state.json",
+        "fixtureId": "R009-R03",
+        "sessionId": "rec008-syn-r009-r03-expired-resume",
+        "applied": false,
+        "independent": true,
+        "isolationNote": "Session distincte de R02 ; ne pas dériver / chaîner",
+        "debtVsOptionA": "available_slots [] / pas de slot_id OPTION A — runtime a used SEED …303"
+      },
+      "action": {
+        "chatInput": "reprendre",
+        "allowlistNote": "Variantes FIX-008 offline OK (reprendre ma demande, …) — campagne runtime canonique = reprendre uniquement",
+        "llmIntentHint": "GENERAL",
+        "messageCount": 1,
+        "retry": 0,
+        "webhookPostCreateAppointmentForbidden": true
+      },
+      "ttl": {
+        "precondition": "EXPIRED (expires_at <= NOW())",
+        "expectedRefresh": true,
+        "pass": "après: expires_at > NOW AND ≈ updated_at + 2h (± tolérance horloge)",
+        "failIf": "session reste expirée ou politique ≠ +2h"
+      },
+      "draft": {
+        "preserveDraft": true,
+        "preserve": ["nom=Dupont", "prenom=null", "conversation_step=ASK_PRENOM", "pending_action"],
+        "noAuthorizedNulls": true,
+        "failIf": "prenom=reprendre OR step→ASK_EMAIL OR purge identité"
+      },
+      "assertions": {
+        "http": [
+          {
+            "id": "R03-H01",
+            "measure": "sendMessage status",
+            "pass": "HTTP 200 + JSON parseable",
+            "fail": "4xx/5xx clair",
+            "uncertain": "timeout / reset — STOP, no retry"
+          }
+        ],
+        "metier": [
+          {
+            "id": "R03-M01",
+            "measure": "refreshSessionTtl / expires_at PG",
+            "pass": "TTL+ (+2h)",
+            "fail": "TTL non renouvelé"
+          },
+          {
+            "id": "R03-M02",
+            "measure": "conversation_step",
+            "pass": "ASK_PRENOM",
+            "fail": "ASK_EMAIL (régression VC9-actual) ou step perdu"
+          },
+          {
+            "id": "R03-M03",
+            "measure": "prenom",
+            "pass": "prenom null (has_prenom=false) — message non capturé",
+            "fail": "prenom=reprendre"
+          },
+          {
+            "id": "R03-M04",
+            "measure": "nom",
+            "pass": "nom preserved",
+            "fail": "nom purged or overwritten"
+          },
+          {
+            "id": "R03-M05",
+            "measure": "intent / pending_action",
+            "pass": "CREATE_APPOINTMENT / CREATE_APPOINTMENT",
+            "fail": "reste GENERAL sans reprise OR pending purged"
+          },
+          {
+            "id": "R03-M06",
+            "measure": "invite prénom",
+            "pass": "réponse Demander paramètres mentionne prénom (pas capture field)",
+            "fail": "session_expired sans reprise OR confirmation/ready"
+          }
+        ],
+        "antiReservation": [
+          {
+            "id": "R03-A01",
+            "measure": "CLAIM",
+            "pass": "CLAIM=0",
+            "fail": "CLAIM>0"
+          },
+          {
+            "id": "R03-A02",
+            "measure": "POST CreateAppointment",
+            "pass": "POST=0",
+            "fail": "POST>0"
+          }
+        ],
+        "lifecycle": [
+          {
+            "id": "R03-L01",
+            "measure": "deactivate",
+            "pass": "workflow inactif postflight",
+            "fail": "encore actif"
+          }
+        ]
+      },
+      "contrastVc9Actual": {
+        "rejectedAsProductPass": true,
+        "vc9WouldObserve": { "prenom": "reprendre", "conversation_step": "ASK_EMAIL" },
+        "fix008Requires": { "prenom": null, "conversation_step": "ASK_PRENOM" },
+        "r007BriefRuntime": "was NO-GO on VC9; R009 R03 GO only after FIX-008 install + offline FIX008-S03 PASS"
+      },
+      "verdictRules": {
+        "PASS": "HTTP 200 AND TTL+ AND ASK_PRENOM AND prenom null AND CLAIM/POST=0 AND deactivate",
+        "FAIL": "capture reprendre / step ASK_EMAIL / no TTL / CLAIM-POST / retry",
+        "UNCERTAIN": "timeout / transport ambigu — STOP"
+      },
+      "goNoGoRuntime": "NO-GO rejeu — PASS métier clos par R026 (contrat FIX-008) ; VC9-actual toujours rejeté ; seed OPTION A requis si rejeu autorisé"
+    }
+  },
+  "executionOrderFuture": {
+    "note": "R01/R02/R03 runtime-proven (024–026). Rejeu uniquement sous autorisation distincte + seed OPTION A. Jamais enchaîner sans postflight + deactivate.",
+    "parallelForbidden": true,
+    "rejeuDefault": "NO-GO"
+  },
+  "goNoGo": {
+    "offlineCatalogPrep": "GO",
+    "offlineFix008S01S02S03": "GO (référence ; ne pas relancer ici sauf mission offline)",
+    "install010Gate": "historique — FIX-008 installé via 012 (VC10) ; gate 010 obsolète pour clôture ASK-PRENOM",
+    "runtimeR01": "PASS clos (R024) — NO-GO rejeu sans autorisation",
+    "runtimeR02": "PASS clos (R025) — NO-GO rejeu sans autorisation",
+    "runtimeR03": "PASS clos (R026) — NO-GO rejeu sans autorisation",
+    "catalogReconciliation028": "PASS — E1–E7 ASK-PRENOM ; voir R028",
+    "fixtureJsonOptionA": "NO-GO alignement JSON tant que AP-DOC-02 non autorisé (dette ouverte)",
+    "fixtureApply": "NO-GO until authorized SQL/seed mission (autorité = SEED OPTION A, pas JSON R009 brut)",
+    "activation": "NO-GO until authorized",
+    "live": "NO-GO",
+    "autoNext": "NO-GO",
+    "thisMissionRuntime": "NO-GO — catalog only / docs reconciliation"
+  },
+  "verdictThisMission": {
+    "value": "PASS",
+    "scope": "offline-catalog + EXIT-CRITERIA-028 reconciliation",
+    "reason": "Catalogue R01/R02/R03 réconcilié avec preuves R024–R026 ; E1–E7 SATISFIED ; dette fixtures JSON slot_id null documentée ; runtime non rejoué."
+  }
+}

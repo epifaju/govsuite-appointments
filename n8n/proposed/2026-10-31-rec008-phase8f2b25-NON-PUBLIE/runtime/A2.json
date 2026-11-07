@@ -1,0 +1,57 @@
+{
+  "a2": {
+    "tag": "A2",
+    "runStatus": 200,
+    "executionId": "30",
+    "status": "success",
+    "dollar3": false,
+    "uuidType": false,
+    "invalidUuid": false,
+    "errMsg": null,
+    "success": true,
+    "sessionAfter": {
+      "conversation_step": "",
+      "pending_action": "",
+      "intent": "",
+      "reference": "REC008-RUNTIME-TOKEN-004",
+      "token": "22222222-2222-4222-8222-222222222222",
+      "hasToken": true,
+      "nom": "",
+      "telephone": "",
+      "service": "",
+      "site": "",
+      "last_user_message": "reset-before-a2"
+    },
+    "usedCandidateSql": true,
+    "usedTestCredential": true,
+    "expectedBound": {
+      "p1": "rec008-8f2b25-runtime-01",
+      "p2": "REC008-RUNTIME-TOKEN-004",
+      "p3": "22222222-2222-4222-8222-222222222222"
+    },
+    "ok": true
+  },
+  "integrity": {
+    "label": "A2",
+    "pg": "1|9|2|0",
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "realSession": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "intent": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "hasToken": false,
+      "nom": "Dupont",
+      "telephone": "+33000000000",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "last_user_message": "oui"
+    },
+    "histFp": "bc130f1e5d86669f9650ffa8b8f83cbb",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "ok": true
+  }
+}

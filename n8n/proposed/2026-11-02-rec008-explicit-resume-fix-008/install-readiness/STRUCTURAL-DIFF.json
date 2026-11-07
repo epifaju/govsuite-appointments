@@ -1,0 +1,49 @@
+{
+  "mission": "TEST-INSTALL-READINESS-009",
+  "executed": false,
+  "candidatePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+  "baselinePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/before-OCD9It1uKFhOoWNF.json",
+  "vc9P4fPath": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/after-OCD9It1uKFhOoWNF.json",
+  "sha256": {
+    "candidate": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+    "baselineVc9": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "gererJsBefore": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+    "gererJsAfter": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "workflowIdentity": {
+    "id": "OCD9It1uKFhOoWNF",
+    "versionIdUnchanged": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounterUnchanged": 9,
+    "active": false,
+    "activeVersionId": null,
+    "nodes": 134,
+    "note": "Après PUT n8n attribuera probablement un nouveau versionId/counter — à vérifier en mission install distincte"
+  },
+  "diff": {
+    "nodesAdded": [],
+    "nodesRemoved": [],
+    "nodesModified": [
+      {
+        "name": "Gérer collecte progressive",
+        "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+        "changedKeys": ["parameters"],
+        "parametersChangedKeys": ["jsCode"],
+        "patchMarker": "EXPLICIT-RESUME-FIX-008"
+      }
+    ],
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "credentialsUnchanged": true,
+    "webhookNodesUnchanged": true,
+    "sqlChargerSauvegarderUnchanged": true,
+    "liveHints": [],
+    "allowlistUnchanged": [
+      "reprendre",
+      "reprendre ma demande",
+      "continuer",
+      "continuer ma demande"
+    ]
+  },
+  "verdict": "PASS_STRUCTURAL",
+  "installNow": false
+}

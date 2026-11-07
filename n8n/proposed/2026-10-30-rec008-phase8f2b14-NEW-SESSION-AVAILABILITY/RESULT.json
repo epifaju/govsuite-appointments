@@ -1,0 +1,340 @@
+{
+  "phase": "8F-2B14",
+  "newSessionId": "rec008-8f2b14-new-01",
+  "oldSessionId": "rec008-8f2b4-slot-01",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "chatInput": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026.",
+  "pass": true,
+  "stopped": false,
+  "contract": {
+    "safeToActivate": true,
+    "getAvailabilityIsGet": true,
+    "reachCreateFromGetNode": false,
+    "abandonedExcludedFromOpenSelect": true
+  },
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "postgresCount": 30,
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "pg": {
+      "rdv": 1,
+      "sessions": 7,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|7|1|0"
+    },
+    "newSessionExists": false,
+    "oldSession": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "GET_SERVICES",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "available_slots": "[]",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui"
+    },
+    "oldAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false,
+        "hasLeaseOwner": false,
+        "hasAppointmentReference": false
+      }
+    ],
+    "newAttempts": [],
+    "openAttemptsGlobal": 0,
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 1,
+      "byPath": {
+        "GET /services 200": 1
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true,
+    "mockBaselineNote": "Mock baseline from 8F-2B13: total 1, GET services 1, GET availability 0, POST 0."
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 77886,
+    "responsePreview": "{\"type\":\"availability\",\"title\":\"Créneaux disponibles\",\"slots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"availableSlots\":[{\"index\":1,\"id\":\"33333333-3333-4333-8333-333333333333\",\"service\":\"PASSEPORT\",\"site\":\"PARIS\",\"debut\":\"2026-11-03T09:00:00+01:00\",\"fin\":\"2026-11-03T09:30:00+01:00\",\"placesDisponibles\":2}],\"text\":\"📅 J'ai trouvé 1 créneau(x) disponible(s) :\\n\\n1. **PASSEPORT - PARIS**\\n   📆 mardi 03/11/2026\\n   🕒 09:00 - 09:30\\n   👥 Places disponibles : 2\\n\\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 ».\"}",
+    "responseJson": {
+      "type": "availability",
+      "title": "Créneaux disponibles",
+      "slots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "availableSlots": [
+        {
+          "index": 1,
+          "id": "33333333-3333-4333-8333-333333333333",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "placesDisponibles": 2
+        }
+      ],
+      "text": "📅 J'ai trouvé 1 créneau(x) disponible(s) :\n\n1. **PASSEPORT - PARIS**\n   📆 mardi 03/11/2026\n   🕒 09:00 - 09:30\n   👥 Places disponibles : 2\n\n💬 Pour réserver, répondez simplement par exemple : « Je prends le 2 »."
+    },
+    "memoryBefore": "57.12MiB / 1.5GiB",
+    "memoryAfter": "1.081GiB / 1.5GiB",
+    "oom": "false running",
+    "mockBefore": {
+      "scenario": "created",
+      "total": 1,
+      "byPath": {
+        "GET /services 200": 1
+      },
+      "distinctKeys": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 2,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1
+      },
+      "distinctKeys": 0
+    },
+    "availabilityCallsDelta": 1,
+    "servicesCallsDelta": 0,
+    "hasPost": false,
+    "hasCancelCall": false,
+    "newSessionBefore": null,
+    "newSessionAfter": {
+      "session_id": "rec008-8f2b14-new-01",
+      "intent": "GET_AVAILABILITY",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "GET_AVAILABILITY",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026."
+    },
+    "oldSessionAfter": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "GET_SERVICES",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "available_slots": "[]",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui"
+    },
+    "counts": {
+      "rdv": 1,
+      "sessions": 8,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|8|1|0"
+    },
+    "oldAttemptsAfter": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false
+      }
+    ],
+    "newAttemptsAfter": [],
+    "slotsCount": 1,
+    "slotsSample": [
+      {
+        "index": 1,
+        "id": "33333333-3333-4333-8333-333333333333",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "debut": "2026-11-03T09:00:00+01:00",
+        "fin": "2026-11-03T09:30:00+01:00",
+        "placesDisponibles": 2
+      }
+    ],
+    "hasSelectableIndex": true,
+    "hasExpectedSlot": true,
+    "identityClean": true,
+    "businessOk": true,
+    "oldStillAbandoned": true,
+    "noNewAttempt": true,
+    "claimsCreated": false,
+    "rdvFingerprintBefore": "986b715d53127eb16058910a3280834c",
+    "rdvFingerprintAfter": "986b715d53127eb16058910a3280834c",
+    "rdvUnchanged": true,
+    "openAttemptsGlobalAfter": 0,
+    "ok": true,
+    "isolationOk": true,
+    "mockDeltaOk": true
+  },
+  "deactivate": {
+    "tag": "success",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+    "versionCounter": 6,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "postflight": {
+    "pg": {
+      "rdv": 1,
+      "sessions": 8,
+      "attempts": 1,
+      "notifs": 0,
+      "raw": "1|8|1|0"
+    },
+    "newSession": {
+      "session_id": "rec008-8f2b14-new-01",
+      "intent": "GET_AVAILABILITY",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "GET_AVAILABILITY",
+      "available_slots": "[{\"id\": \"33333333-3333-4333-8333-333333333333\", \"fin\": \"2026-11-03T09:30:00+01:00\", \"site\": \"PARIS\", \"debut\": \"2026-11-03T09:00:00+01:00\", \"index\": 1, \"service\": \"PASSEPORT\", \"placesDisponibles\": 2}]",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Je souhaite connaître les disponibilités pour un passeport à Paris du 03/11/2026 au 03/11/2026."
+    },
+    "oldSession": {
+      "session_id": "rec008-8f2b4-slot-01",
+      "intent": "GET_SERVICES",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "slot_id": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "available_slots": "[]",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui"
+    },
+    "openAttemptsGlobal": 0,
+    "oldAttempts": [
+      {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED",
+        "hasIdempotencyKey": false,
+        "hasRequestPayload": false
+      }
+    ],
+    "newAttempts": [],
+    "rdvFingerprint": "986b715d53127eb16058910a3280834c",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mock": {
+      "scenario": "created",
+      "total": 2,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 1
+      },
+      "distinctKeys": 0
+    },
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "criteria": {
+    "newSessionCreated": true,
+    "getAvailability": true,
+    "identityClean": true,
+    "noAttempt": true,
+    "oldAbandoned": true,
+    "isolation": true,
+    "noPost": true,
+    "noCancel": true,
+    "rdvUnchanged": true,
+    "selectableSlots": true,
+    "deactivated": true,
+    "postOk": true
+  }
+}

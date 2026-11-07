@@ -1,0 +1,124 @@
+{
+  "rules": [
+    {
+      "i": 0,
+      "outputKey": "INSERT",
+      "rightValue": "INSERT"
+    },
+    {
+      "i": 1,
+      "outputKey": "CLAIM",
+      "rightValue": "CLAIM"
+    },
+    {
+      "i": 2,
+      "outputKey": "RESUME",
+      "rightValue": "RESUME"
+    },
+    {
+      "i": 3,
+      "outputKey": "ABANDON",
+      "rightValue": "ABANDON"
+    },
+    {
+      "i": 4,
+      "outputKey": "MODIFY",
+      "rightValue": "MODIFY"
+    },
+    {
+      "i": 5,
+      "outputKey": "RESTART",
+      "rightValue": "RESTART"
+    },
+    {
+      "i": 6,
+      "outputKey": "ASK",
+      "rightValue": "ASK"
+    },
+    {
+      "i": 7,
+      "outputKey": "WAIT",
+      "rightValue": "WAIT"
+    },
+    {
+      "i": 8,
+      "outputKey": "RECALL",
+      "rightValue": "RECALL"
+    },
+    {
+      "i": 9,
+      "outputKey": "EXPIRE",
+      "rightValue": "EXPIRE"
+    },
+    {
+      "i": 10,
+      "outputKey": "RESET_STALE",
+      "rightValue": "RESET_STALE"
+    }
+  ],
+  "outs": [
+    {
+      "outType": "main",
+      "branch": 0,
+      "to": "Tirer aléa de tentative"
+    },
+    {
+      "outType": "main",
+      "branch": 1,
+      "to": "Préparer réclamation ou reprise"
+    },
+    {
+      "outType": "main",
+      "branch": 2,
+      "to": "Préparer reprise"
+    },
+    {
+      "outType": "main",
+      "branch": 3,
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "outType": "main",
+      "branch": 4,
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "outType": "main",
+      "branch": 5,
+      "to": "Préparer abandon ou modification"
+    },
+    {
+      "outType": "main",
+      "branch": 6,
+      "to": "Demander paramètres création"
+    },
+    {
+      "outType": "main",
+      "branch": 7,
+      "to": "Réponse attente de bail"
+    },
+    {
+      "outType": "main",
+      "branch": 8,
+      "to": "Réponse référence déjà connue"
+    },
+    {
+      "outType": "main",
+      "branch": 9,
+      "to": "Expirer tentatives en attente"
+    },
+    {
+      "outType": "main",
+      "branch": 10,
+      "to": "Effacer collecte orpheline"
+    },
+    {
+      "outType": "main",
+      "branch": 11,
+      "to": "Valider paramètres création"
+    }
+  ],
+  "options": {
+    "fallbackOutput": "extra"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mission": "R04A-RUNTIME-036",
+  "applied": true,
+  "seedFile": "diag-035/sql/seed-r04-a.sql",
+  "sessionId": "rec008-r04a-035-active-ask-email",
+  "verify": {
+    "conversation_step": "ASK_EMAIL",
+    "nomPresent": true,
+    "prenomPresent": true,
+    "emailPresent": false,
+    "telephonePresent": false,
+    "slotIdPresent": true,
+    "ttlActive": true,
+    "openAttempts": 0
+  },
+  "fingerprintAfterSeed": "1|15|4|0",
+  "r04bSeedApplied": false,
+  "r04cSeedApplied": false
+}

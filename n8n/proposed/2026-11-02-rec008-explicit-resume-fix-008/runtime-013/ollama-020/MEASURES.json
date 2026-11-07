@@ -1,0 +1,109 @@
+{
+  "calls": [
+    {
+      "label": "cold_chat",
+      "ok": true,
+      "wallMs": 88214,
+      "keepAlive": "10m",
+      "stats": {
+        "model": "qwen2.5:1.5b",
+        "done": true,
+        "total_duration_ns": 87278731902,
+        "load_duration_ns": 63231880877,
+        "prompt_eval_count": 39,
+        "prompt_eval_duration_ns": 23492158163,
+        "eval_count": 2,
+        "eval_duration_ns": 216833170,
+        "total_duration_ms": 87279,
+        "load_duration_ms": 63232,
+        "prompt_eval_duration_ms": 23492,
+        "eval_duration_ms": 217,
+        "responseLen": 2,
+        "responsePreview": "OK"
+      },
+      "httpBodyLen": 305
+    },
+    {
+      "label": "warm_chat",
+      "ok": true,
+      "wallMs": 3594,
+      "keepAlive": "10m",
+      "stats": {
+        "model": "qwen2.5:1.5b",
+        "done": true,
+        "total_duration_ns": 2283556776,
+        "load_duration_ns": 1569921420,
+        "prompt_eval_count": 39,
+        "prompt_eval_duration_ns": 382518809,
+        "eval_count": 2,
+        "eval_duration_ns": 309697497,
+        "total_duration_ms": 2284,
+        "load_duration_ms": 1570,
+        "prompt_eval_duration_ms": 383,
+        "eval_duration_ms": 310,
+        "responseLen": 2,
+        "responsePreview": "OK"
+      },
+      "httpBodyLen": 301
+    }
+  ],
+  "unloadedForCold": false,
+  "cold": {
+    "label": "cold_chat",
+    "ok": true,
+    "wallMs": 88214,
+    "keepAlive": "10m",
+    "stats": {
+      "model": "qwen2.5:1.5b",
+      "done": true,
+      "total_duration_ns": 87278731902,
+      "load_duration_ns": 63231880877,
+      "prompt_eval_count": 39,
+      "prompt_eval_duration_ns": 23492158163,
+      "eval_count": 2,
+      "eval_duration_ns": 216833170,
+      "total_duration_ms": 87279,
+      "load_duration_ms": 63232,
+      "prompt_eval_duration_ms": 23492,
+      "eval_duration_ms": 217,
+      "responseLen": 2,
+      "responsePreview": "OK"
+    },
+    "httpBodyLen": 305
+  },
+  "warm": {
+    "label": "warm_chat",
+    "ok": true,
+    "wallMs": 3594,
+    "keepAlive": "10m",
+    "stats": {
+      "model": "qwen2.5:1.5b",
+      "done": true,
+      "total_duration_ns": 2283556776,
+      "load_duration_ns": 1569921420,
+      "prompt_eval_count": 39,
+      "prompt_eval_duration_ns": 382518809,
+      "eval_count": 2,
+      "eval_duration_ns": 309697497,
+      "total_duration_ms": 2284,
+      "load_duration_ms": 1570,
+      "prompt_eval_duration_ms": 383,
+      "eval_duration_ms": 310,
+      "responseLen": 2,
+      "responsePreview": "OK"
+    },
+    "httpBodyLen": 301
+  },
+  "loadedAfterWarm": [
+    {
+      "name": "qwen2.5:1.5b",
+      "size": 1446033920,
+      "expires_at": "2026-11-05T22:28:47.471923564Z"
+    }
+  ],
+  "statsAfterCold": {
+    "memUsage": "1.096GiB / 1.5GiB",
+    "cpu": "0.00%",
+    "memPerc": "73.06%"
+  }
+}

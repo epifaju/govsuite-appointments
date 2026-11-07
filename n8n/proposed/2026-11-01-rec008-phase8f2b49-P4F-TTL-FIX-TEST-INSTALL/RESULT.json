@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "phase": "8F-2B49-P4F",
+  "putStatus": 200,
+  "putCount": 1,
+  "putMessage": null,
+  "candidateSha": "9a9786cac897e5c8d48c50f6929d4142f5d482b2ed9ed6230e99b45725148ac1",
+  "payloadSha": "b5b60d7b96ff1f1d24af14cda823b0baa0f4628ddaf40fbf78bfdf06652974cf",
+  "afterSha": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "previousVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+  "previousVersionCounter": 8,
+  "newVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+  "newVersionCounter": 9,
+  "after": {
+    "active": false,
+    "activeVersionId": null,
+    "activeIds": [],
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "hasFixA": true,
+    "hasFixB": true,
+    "hasFixC": true,
+    "afterNodeShas": {
+      "Charger état conversation": "fca043913c5a27f7cc1e82261f8a1908a43ee8ad9d356eabec9de68a5f97ff8b",
+      "Joindre tentative de session": "c295cd4851cf045230a33346987536670f80b58db75b1334daafcc7da2a4b3d4",
+      "Parser intention": "bd0bf9db4db88cb563d5b0766d528ec00894e3fb3843e260aa95031c52e35357",
+      "Gérer collecte progressive": "5bc5b967c71e219c88f1bfc6f8c2a70b7ef2e79d2a56475733650c0d20855e6e",
+      "Réponse générale": "d58106f6f7fdc27efba1c2211e0aefa7c3945f3944745ba9dae4f50ae8e03373",
+      "Sauvegarder état conversation": "7c8597781429d7c282e69b908ae28bebcb97f6a84650423cfbd48b67fef00387"
+    },
+    "candNodeShas": {
+      "Charger état conversation": "fca043913c5a27f7cc1e82261f8a1908a43ee8ad9d356eabec9de68a5f97ff8b",
+      "Joindre tentative de session": "c295cd4851cf045230a33346987536670f80b58db75b1334daafcc7da2a4b3d4",
+      "Parser intention": "bd0bf9db4db88cb563d5b0766d528ec00894e3fb3843e260aa95031c52e35357",
+      "Gérer collecte progressive": "5bc5b967c71e219c88f1bfc6f8c2a70b7ef2e79d2a56475733650c0d20855e6e",
+      "Réponse générale": "d58106f6f7fdc27efba1c2211e0aefa7c3945f3944745ba9dae4f50ae8e03373",
+      "Sauvegarder état conversation": "7c8597781429d7c282e69b908ae28bebcb97f6a84650423cfbd48b67fef00387"
+    },
+    "shasMatch": true,
+    "urlsOk": true,
+    "urlsCount": 10,
+    "postgresIds": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "settingsUnchanged": true,
+    "connectionsUnchanged": true,
+    "pg": "1|11|4|0",
+    "open": "0",
+    "mockPosts": 0,
+    "getAvailability": 0,
+    "getServices": 0,
+    "mockScenario": "created",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  }
+}

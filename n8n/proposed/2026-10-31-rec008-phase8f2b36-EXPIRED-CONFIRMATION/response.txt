@@ -1,0 +1,1 @@
+{"type":"create_expired","text":"La demande en attente a expiré. Aucun rendez-vous n'a été créé. Vous pouvez recommencer la collecte."}

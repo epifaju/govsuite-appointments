@@ -1,0 +1,26 @@
+{
+  "phase": "8F-2B49-P4E",
+  "preflightFile": "PREFLIGHT.json",
+  "structuralOk": true,
+  "mockAbsoluteCounters": {
+    "expected": { "mockPosts": 1, "getAvailability": 3, "getServices": 1 },
+    "observed": { "mockPosts": 0, "getAvailability": 0, "getServices": 0 },
+    "scenario": "created",
+    "explained": true,
+    "explanation": "Conteneurs TEST Exit 255 puis redémarrage Docker Desktop avant P4E. Compteurs mock en mémoire remis à zéro. Scénario mock inchangé (created). Aucun POST/GET métier déclenché par cette phase."
+  },
+  "unchangedAnchors": {
+    "workflowInactive": true,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "graph": "134/137",
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "pg": "1|11|4|0",
+    "open": "0",
+    "live": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": "5/2/98304"
+  },
+  "stopUnexplainedDrift": false,
+  "proceedOfflineOnly": true,
+  "note": "STOP non déclenché : écart mock compteurs expliqué. Travail hors ligne uniquement ; aucune installation."
+}

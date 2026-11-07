@@ -1,0 +1,18 @@
+{
+  "sessionId": "rec008-8f2b24-runtime-01",
+  "initial": {
+    "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+    "pending_action": "CREATE_APPOINTMENT",
+    "intent": "CREATE_APPOINTMENT",
+    "reference": "",
+    "token": "",
+    "hasToken": false,
+    "nom": "Runtime",
+    "telephone": "+33000000001",
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "slot_id": "",
+    "last_user_message": "synthetic-init"
+  },
+  "pg": "1|9|2|0"
+}

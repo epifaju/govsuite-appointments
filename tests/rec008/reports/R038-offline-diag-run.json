@@ -1,0 +1,73 @@
+{
+  "mission": "R04B-HTTP500-DIAG-038",
+  "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+  "passed": 16,
+  "failed": 0,
+  "results": [
+    {
+      "name": "pin Gerer 44a7064d",
+      "ok": true
+    },
+    {
+      "name": "invalid pas-un-email stays ASK_EMAIL no capture",
+      "ok": true
+    },
+    {
+      "name": "ASK_EMAIL path uses Demander not Préparer réponse création",
+      "ok": true
+    },
+    {
+      "name": "Demander paramètres création does not throw",
+      "ok": true
+    },
+    {
+      "name": "HTTP contract Demander is terminal sink",
+      "ok": true
+    },
+    {
+      "name": "Réponse générale does not throw",
+      "ok": true
+    },
+    {
+      "name": "empty message no capture",
+      "ok": true
+    },
+    {
+      "name": "spaced non-email no capture",
+      "ok": true
+    },
+    {
+      "name": "incomplete parser object",
+      "ok": true
+    },
+    {
+      "name": "valid email → ASK_TELEPHONE (R04-A path)",
+      "ok": true
+    },
+    {
+      "name": "R04-A harness PASS",
+      "ok": true
+    },
+    {
+      "name": "R04-B harness PASS",
+      "ok": true
+    },
+    {
+      "name": "R04-C harness PASS",
+      "ok": true
+    },
+    {
+      "name": "R01 PASS",
+      "ok": true
+    },
+    {
+      "name": "R02 PASS",
+      "ok": true
+    },
+    {
+      "name": "R03 PASS",
+      "ok": true
+    }
+  ],
+  "implication": "Code-path Gerer+Décider+Demander OK offline; Sauvegarder not reached in 037 → HTTP 500 unlikely from email-validation jsCode alone; LLM/early pipeline PROBABLE"
+}

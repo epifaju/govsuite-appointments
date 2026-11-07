@@ -1,0 +1,9 @@
+{
+  "id": "C02-ask-nom",
+  "family": "conversational",
+  "mode": "offline",
+  "required": true,
+  "handler": "identity.askNom",
+  "description": "ASK_NOM actif + nom libre malgré LLM GET_SERVICES → CREATE + capture nom.",
+  "expects": { "field": "nom", "nextStep": "ASK_PRENOM" }
+}

@@ -1,0 +1,46 @@
+{
+  "mission": "R013-FIXTURES-REALIGN-019",
+  "ts": "2026-11-05T22:05:33.058Z",
+  "option": "A",
+  "mutated": false,
+  "liveTouched": false,
+  "issues": [],
+  "docker": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 4 hours",
+    "govsuite-rec008-test-rec008-publish-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 2 hours",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 2 hours (healthy)"
+  ],
+  "healthz": {
+    "status": 200
+  },
+  "liveProbe": {
+    "status": 200,
+    "error": null,
+    "note": "LIVE may be up; isolation = TEST-only mutate (5682 / govsuite_rec008_test)"
+  },
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "http": 200,
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "activeWorkflowIds": [],
+  "webhookRows": 0,
+  "runningExecutionsApi": {
+    "http": 200,
+    "count": 0
+  },
+  "fingerprintBefore": "1|14|4|0",
+  "openAttemptsTarget": 0,
+  "conversationStateFkCount": 0,
+  "preflightOk": true
+}

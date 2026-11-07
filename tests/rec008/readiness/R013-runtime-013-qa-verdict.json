@@ -1,0 +1,194 @@
+{
+  "id": "ASK-PRENOM-RUNTIME-013",
+  "shortId": "R013",
+  "title": "QA verdict — runtime campaign stop (pre-activate transport) ; R01/R02/R03 non exécutés",
+  "mode": "offline-post-stop-review",
+  "env": "TEST",
+  "live": false,
+  "executedRuntimeScenarios": false,
+  "activationPerformed": false,
+  "messageSent": false,
+  "postCreateAppointment": false,
+  "retried": false,
+  "liveTouched": false,
+  "pathNote": "Artefacts sous runtime-013/artifacts/ (pas evidence/). PATH-NOTE-013.md confirme stop hors ligne.",
+  "sources": {
+    "preflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts/preflight.json",
+    "campaignFatal": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts/campaign-fatal.json",
+    "campaignResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts/campaign-result.json",
+    "r01Before": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts/R01-before.json",
+    "seedResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/SEED-RESULT.json",
+    "pathNote": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/PATH-NOTE-013.md",
+    "campaignCatalog": "tests/rec008/readiness/R009-install-runtime-campaigns.json",
+    "fixturesR009": [
+      "tests/rec008/fixtures/install-readiness-009/r01-active-camille-state.json",
+      "tests/rec008/fixtures/install-readiness-009/r02-expired-camille-state.json",
+      "tests/rec008/fixtures/install-readiness-009/r03-expired-resume-state.json"
+    ],
+    "priorInstallGate": "tests/rec008/readiness/R012-install-retry-qa-verdict.json"
+  },
+  "stopSummary": {
+    "preflightOk": true,
+    "phase": "R01-pre-activate",
+    "stoppedReason": "UND_ERR_SOCKET / fetch failed on GET /rest/workflows after PASS preflight — before activate, before any chat message",
+    "fatalError": "fetch failed",
+    "fatalStackAnchor": "getWorkflow → runScenario (R01) — before activate",
+    "workflowAfterStop": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+      "versionCounter": 10
+    },
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "fingerprintAfterStop": "1|14|4|0",
+    "fixturesPreserved": true,
+    "cleanupExecuted": false
+  },
+  "chatHttpBodies": {
+    "present": false,
+    "artifactFiles": [
+      "preflight.json",
+      "campaign-fatal.json",
+      "campaign-result.json",
+      "R01-before.json"
+    ],
+    "absentPatterns": [
+      "R01-chat*.json",
+      "R02-chat*.json",
+      "R03-chat*.json",
+      "sendMessage body",
+      "responseBody",
+      "httpBody",
+      "chatBody"
+    ],
+    "campaignResultFlags": {
+      "messageSent": false,
+      "activationPerformed": false,
+      "retried": false
+    },
+    "verdict": "PASS — aucun corps HTTP chat n'existe dans les artefacts 013"
+  },
+  "fixtureContracts": {
+    "catalog": "R009",
+    "runtimeSeedSessionIds": {
+      "R01": "rec008-runtime013-r01-active",
+      "R02": "rec008-runtime013-r02-expired",
+      "R03": "rec008-runtime013-r03-resume"
+    },
+    "r009CatalogSessionIds": {
+      "R01": "rec008-syn-r009-r01-active-camille",
+      "R02": "rec008-syn-r009-r02-expired-camille",
+      "R03": "rec008-syn-r009-r03-expired-resume"
+    },
+    "note": "Runtime-013 utilise des session_id dédiés (forme R009) ; contrats d'assertions = catalogue R009.",
+    "preflightShapeCheck": {
+      "R01": "ACTIVE ASK_PRENOM ; prenom null ; nom présent ; pending CREATE_APPOINTMENT — précondition OK",
+      "R02": "EXPIRED ASK_PRENOM ; prenom null ; intent GENERAL — précondition OK",
+      "R03": "EXPIRED ASK_PRENOM ; prenom null ; intent GENERAL — précondition OK"
+    }
+  },
+  "assertionsNotEvaluated": {
+    "reason": "Scénarios non exécutés (stop transport avant activate / avant sendMessage) ; 0 retry",
+    "R01": {
+      "scenarioExecuted": false,
+      "http": ["R01-H01"],
+      "metier": ["R01-M01", "R01-M02", "R01-M03", "R01-M04"],
+      "antiReservation": ["R01-A01", "R01-A02"],
+      "lifecycle": ["R01-L01"],
+      "detail": {
+        "R01-H01": "sendMessage HTTP 200 + JSON — NOT_EVALUATED (no chat)",
+        "R01-M01": "prenom=Camille — NOT_EVALUATED",
+        "R01-M02": "conversation_step=ASK_EMAIL — NOT_EVALUATED",
+        "R01-M03": "nom preserved — NOT_EVALUATED (post-message)",
+        "R01-M04": "pending_action=CREATE_APPOINTMENT — NOT_EVALUATED (post-message)",
+        "R01-A01": "CLAIM delta 0 — NOT_EVALUATED (no scenario window)",
+        "R01-A02": "POST CreateAppointment delta 0 — NOT_EVALUATED (no scenario window)",
+        "R01-L01": "deactivate postflight after scenario — NOT_EVALUATED (never activated)"
+      }
+    },
+    "R02": {
+      "scenarioExecuted": false,
+      "http": ["R02-H01"],
+      "metier": ["R02-M01", "R02-M02", "R02-M03", "R02-M04", "R02-M05"],
+      "antiReservation": ["R02-A01", "R02-A02"],
+      "lifecycle": ["R02-L01"],
+      "detail": {
+        "R02-H01": "sendMessage HTTP 200 — NOT_EVALUATED",
+        "R02-M01": "reply.type=session_expired — NOT_EVALUATED",
+        "R02-M02": "refreshSessionTtl=false — NOT_EVALUATED",
+        "R02-M03": "preserveDraft — NOT_EVALUATED",
+        "R02-M04": "prenom still null — NOT_EVALUATED",
+        "R02-M05": "conversation_step=ASK_PRENOM — NOT_EVALUATED",
+        "R02-A01": "CLAIM=0 — NOT_EVALUATED",
+        "R02-A02": "POST=0 — NOT_EVALUATED",
+        "R02-L01": "deactivate — NOT_EVALUATED"
+      }
+    },
+    "R03": {
+      "scenarioExecuted": false,
+      "http": ["R03-H01"],
+      "metier": ["R03-M01", "R03-M02", "R03-M03", "R03-M04", "R03-M05", "R03-M06"],
+      "antiReservation": ["R03-A01", "R03-A02"],
+      "lifecycle": ["R03-L01"],
+      "detail": {
+        "R03-H01": "sendMessage HTTP 200 — NOT_EVALUATED",
+        "R03-M01": "TTL+ (+2h) — NOT_EVALUATED",
+        "R03-M02": "conversation_step=ASK_PRENOM — NOT_EVALUATED",
+        "R03-M03": "prenom null (not 'reprendre') — NOT_EVALUATED",
+        "R03-M04": "nom preserved — NOT_EVALUATED",
+        "R03-M05": "intent/pending CREATE_APPOINTMENT — NOT_EVALUATED",
+        "R03-M06": "invite prénom — NOT_EVALUATED",
+        "R03-A01": "CLAIM=0 — NOT_EVALUATED",
+        "R03-A02": "POST=0 — NOT_EVALUATED",
+        "R03-L01": "deactivate — NOT_EVALUATED"
+      }
+    },
+    "counts": {
+      "R01": 8,
+      "R02": 9,
+      "R03": 10,
+      "totalNotEvaluated": 27
+    }
+  },
+  "httpVsBusiness": {
+    "preflightHttp": "PASS (n8n health 200 + workflow GET 200 during preflight)",
+    "campaignTransport": "UNCERTAIN (socket close / fetch failed before R01 activate)",
+    "businessSuccess": "NOT_EVALUATED",
+    "note": "HTTP technique préflight ≠ succès métier R01/R02/R03 ; aucun message chat → aucun PASS métier possible"
+  },
+  "scenarioVerdicts": {
+    "R01": {
+      "verdict": "UNCERTAIN",
+      "reason": "Transport failure before activate ; scenario not executed ; no retry ; no chat HTTP body"
+    },
+    "R02": {
+      "verdict": "UNCERTAIN",
+      "reason": "Not executed — campaign stopped after R01 pre-activate transport failure"
+    },
+    "R03": {
+      "verdict": "UNCERTAIN",
+      "reason": "Not executed — campaign stopped after R01 pre-activate transport failure"
+    }
+  },
+  "globalVerdict": {
+    "value": "UNCERTAIN",
+    "scope": "ASK-PRENOM-RUNTIME-013 post-stop offline review",
+    "reason": "Préflight PASS puis stop UND_ERR_SOCKET avant activate/chat. R01/R02/R03 non exécutés ; 27 assertions catalogue R009 non évaluées ; 0 retry ; workflow inactive ; fixtures préservées."
+  },
+  "goNoGo": {
+    "declareBusinessPass": "NO-GO",
+    "autoNextCampaign": "NO-GO",
+    "autoRetrySameStop": "NO-GO",
+    "rerunRuntime": "GO-CONDITIONAL — autorisation distincte + préflight frais + stack REST stable ; fixtures déjà en place (ou re-seed autorisé)",
+    "live": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas d'activation n8n",
+    "pas de sendMessage / chat HTTP body",
+    "pas de POST CreateAppointment",
+    "pas de retry après échec transport",
+    "pas de mutation workflow",
+    "pas de toucher LIVE",
+    "cette revue n'autorise pas la phase suivante"
+  ]
+}

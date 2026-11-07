@@ -1,0 +1,26 @@
+{
+  "ts": "2026-11-05T21:00:14.088Z",
+  "pass": true,
+  "tests": [
+    {
+      "name": "S1_preactivate_socket_uncertain",
+      "ok": true
+    },
+    {
+      "name": "S2_deactivate_once_after_activate_exception",
+      "ok": true
+    },
+    {
+      "name": "S3_deactivate_fail_not_safe",
+      "ok": true
+    },
+    {
+      "name": "S4_postflight_transport_not_safe",
+      "ok": true
+    },
+    {
+      "name": "S5_no_safe_without_verify",
+      "ok": true
+    }
+  ]
+}

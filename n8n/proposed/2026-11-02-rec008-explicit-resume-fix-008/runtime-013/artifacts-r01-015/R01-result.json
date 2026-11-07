@@ -1,0 +1,114 @@
+{
+  "id": "R01",
+  "sessionId": "rec008-runtime013-r01-active",
+  "message": "Camille",
+  "verdict": "UNCERTAIN",
+  "issues": [
+    "HTTP transport UNCERTAIN (timeout/abort) — no retry performed"
+  ],
+  "before": {
+    "sessionId": "rec008-runtime013-r01-active",
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_PRENOM",
+    "expiresAt": "2026-11-05 23:35:23.065946+01",
+    "updatedAt": "2026-11-05 21:35:23.065946+01",
+    "ttlActive": true,
+    "sessionExpiredNow": false,
+    "nomPresent": true,
+    "nomLen": 6,
+    "nom": "Dupont",
+    "prenomIsNull": true,
+    "prenomLen": 0,
+    "prenom": null,
+    "hasService": true,
+    "hasSite": true,
+    "hasAvailableSlots": true,
+    "lastUserMessagePreview": ""
+  },
+  "fingerprintBefore": "1|14|4|0",
+  "mockBefore": {
+    "scenario": "created",
+    "total": 0,
+    "byPath": {},
+    "distinctKeys": 0
+  },
+  "mockPostsBefore": 0,
+  "mockClaimsBefore": 0,
+  "openBefore": 0,
+  "activate": {
+    "status": 200,
+    "ok": true,
+    "aborted": false,
+    "error": null,
+    "active": true,
+    "activeVersionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10
+  },
+  "webhooksAfterActivate": [
+    {
+      "workflowId": "OCD9It1uKFhOoWNF",
+      "path": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat",
+      "method": "GET"
+    },
+    {
+      "workflowId": "OCD9It1uKFhOoWNF",
+      "path": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat",
+      "method": "POST"
+    }
+  ],
+  "http": {
+    "ok": false,
+    "status": 0,
+    "elapsedMs": 45018,
+    "json": null,
+    "textPreview": "",
+    "aborted": true,
+    "error": "This operation was aborted",
+    "retried": false
+  },
+  "deactivate": {
+    "tag": "R01-post",
+    "status": 200,
+    "aborted": false,
+    "transportError": null,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "activeIds": [],
+    "webhookRows": 0,
+    "verified": true
+  },
+  "after": {
+    "sessionId": "rec008-runtime013-r01-active",
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_PRENOM",
+    "expiresAt": "2026-11-05 23:35:23.065946+01",
+    "updatedAt": "2026-11-05 21:35:23.065946+01",
+    "ttlActive": true,
+    "sessionExpiredNow": false,
+    "nomPresent": true,
+    "nomLen": 6,
+    "nom": "Dupont",
+    "prenomIsNull": true,
+    "prenomLen": 0,
+    "prenom": null,
+    "hasService": true,
+    "hasSite": true,
+    "hasAvailableSlots": true,
+    "lastUserMessagePreview": ""
+  },
+  "fingerprintAfter": "1|14|4|0",
+  "mockAfter": {
+    "scenario": "created",
+    "total": 0,
+    "byPath": {},
+    "distinctKeys": 0
+  },
+  "mockPostsAfter": 0,
+  "mockClaimsAfter": 0,
+  "openAfter": 0
+}

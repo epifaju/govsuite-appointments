@@ -1,0 +1,309 @@
+{
+  "id": "EVIDENCE-OBSERVABILITY-030-QA-HYGIENE",
+  "shortId": "R030",
+  "title": "Tests hygiene artefacts — FAIL si email/tél/token en clair (patterns) + critères R04-PREP",
+  "mode": "docs-only-offline-test-spec",
+  "env": "TEST",
+  "live": false,
+  "executedRuntime": false,
+  "executedOfflineScanner": true,
+  "implementedInMission": "R04-OFFLINE-READINESS-031",
+  "status": "IMPLEMENTED_031",
+  "sources": {
+    "specDoc": "docs/recovery/REC008_R04_PREP_ARTIFACT_HYGIENE_TESTS.md",
+    "securityCriteria029": "docs/recovery/REC008_R04_R07_SECURITY_TEST_CRITERIA.md",
+    "readiness029": "tests/rec008/readiness/R029-r04-r07-security-test-criteria.json",
+    "stopDoc": "tests/rec008/runtime/STOP-CONDITIONS-R04-R07.md",
+    "safety": ".cursor/rules/govsuite-safety.mdc",
+    "securityGuard": "tests/rec008/lib/security-guard.cjs",
+    "redactReference": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/realign-019/run-realign-019.js#redactSession"
+  },
+  "scope": {
+    "scanIncludeGlobs": [
+      "tests/rec008/reports/R04-*",
+      "tests/rec008/reports/*r04*",
+      "tests/rec008/reports/R04-PREP-*",
+      "n8n/proposed/**/artifacts*/**",
+      "n8n/proposed/**/runtime-*/**/artifacts*/**"
+    ],
+    "fixtureAllowlistGlobs": [
+      "tests/rec008/fixtures/**",
+      "tests/rec008/scenarios/**"
+    ],
+    "excludeHistoricalDebtB9": [
+      "tests/rec008/reports/report-2026-11-*",
+      "tests/rec008/reports/FIX-008-*",
+      "tests/rec008/readiness/R024-*",
+      "tests/rec008/readiness/R025-*",
+      "tests/rec008/readiness/R026-*"
+    ],
+    "neverRead": [
+      "n8n/live-exports/**",
+      ".env*",
+      "**/*credentials*"
+    ]
+  },
+  "patterns": [
+    {
+      "id": "HYG-E01",
+      "class": "email_cleartext",
+      "regex": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b",
+      "onMatch": "FAIL",
+      "stopCode": "pii-cleartext-email",
+      "mapsTo": ["R04-P01", "SEC-C07", "pii-in-report"],
+      "allowedReplacements": ["emailPresent", "emailLen", "emailIsNull", "emailHash"]
+    },
+    {
+      "id": "HYG-T01",
+      "class": "phone_cleartext_e164_fr",
+      "regex": "\\+33\\s?[1-9](?:[\\s.-]?\\d{2}){4}",
+      "onMatch": "FAIL",
+      "stopCode": "pii-cleartext-phone",
+      "mapsTo": ["R05-P01", "SEC-C07", "pii-in-report"],
+      "allowedReplacements": ["telephonePresent", "telephoneLen", "telephoneIsNull", "telephoneHash"]
+    },
+    {
+      "id": "HYG-T02",
+      "class": "phone_cleartext_national_fr",
+      "regex": "\\b0[1-9](?:[\\s.-]?\\d{2}){4}\\b",
+      "onMatch": "FAIL",
+      "stopCode": "pii-cleartext-phone",
+      "mapsTo": ["R05-P01", "SEC-C07", "pii-in-report"],
+      "allowedReplacements": ["telephonePresent", "telephoneLen", "telephoneIsNull", "telephoneHash"]
+    },
+    {
+      "id": "HYG-S01",
+      "class": "bearer_token",
+      "regex": "(?i)\\bBearer\\s+[A-Za-z0-9\\-._~+/]+=*",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"]
+    },
+    {
+      "id": "HYG-S02",
+      "class": "jwt",
+      "regex": "\\beyJ[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\b",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"]
+    },
+    {
+      "id": "HYG-S03",
+      "class": "named_api_secret",
+      "regex": "(?i)(api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret)\\s*[:=]\\s*\\S+",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"]
+    },
+    {
+      "id": "HYG-S04",
+      "class": "password_assignment",
+      "regex": "(?i)(password|passwd|pwd)\\s*[:=]\\s*\\S+",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"]
+    },
+    {
+      "id": "HYG-S05",
+      "class": "n8n_cookie_or_api",
+      "regex": "(?i)(n8n[_-]?api[_-]?key|cookie)\\s*[:=]\\s*\\S+",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"]
+    },
+    {
+      "id": "HYG-S06",
+      "class": "reservation_token_uuid_json",
+      "regex": "(?i)\"(?:token|reservation[_-]?token|manage[_-]?token)\"\\s*:\\s*\"[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\"",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"],
+      "addedIn": "032"
+    },
+    {
+      "id": "HYG-S07",
+      "class": "n8n_encryption_key",
+      "regex": "(?i)N8N_ENCRYPTION_KEY\\s*[:=]\\s*\\S+",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"],
+      "addedIn": "032"
+    },
+    {
+      "id": "HYG-S08",
+      "class": "json_secret_fields",
+      "regex": "(?i)\"(?:password|secret|private[_-]?key|encryption[_-]?key)\"\\s*:\\s*\"[^\"]+\"",
+      "onMatch": "FAIL",
+      "stopCode": "secret-or-token-cleartext",
+      "mapsTo": ["SEC-C07"],
+      "addedIn": "032"
+    },
+    {
+      "id": "HYG-T03",
+      "class": "phone_cleartext_e164_intl",
+      "regex": "\\+[1-9]\\d{6,14}\\b",
+      "onMatch": "FAIL",
+      "stopCode": "pii-cleartext-phone",
+      "mapsTo": ["R05-P01", "SEC-C07"],
+      "allowedReplacements": ["telephonePresent", "telephoneLen", "telephoneHash"],
+      "addedIn": "032",
+      "note": "E.164 generic; may overlap FR +33 — still FAIL cleartext"
+    }
+  ],
+  "allowedForms": [
+    "emailPresent",
+    "emailLen",
+    "emailIsNull",
+    "emailHash",
+    "telephonePresent",
+    "telephoneLen",
+    "telephoneIsNull",
+    "telephoneHash",
+    "nomPresent",
+    "nomLen",
+    "prenomIsNull",
+    "slotIdPresent",
+    "sessionIdHash",
+    "runToken",
+    "scenarioId",
+    "tokenPresent=false",
+    "authConfigured"
+  ],
+  "offlineScenarios": [
+    {
+      "id": "H-01",
+      "expect": "FAIL",
+      "reason": "email clair dans rapport"
+    },
+    {
+      "id": "H-02",
+      "expect": "PASS",
+      "reason": "emailPresent + emailLen"
+    },
+    {
+      "id": "H-03",
+      "expect": "FAIL",
+      "reason": "tél clair"
+    },
+    {
+      "id": "H-04",
+      "expect": "PASS",
+      "reason": "telephoneLen sans clair"
+    },
+    {
+      "id": "H-05",
+      "expect": "FAIL",
+      "reason": "Bearer/JWT"
+    },
+    {
+      "id": "H-06",
+      "expect": "PASS",
+      "reason": "corrélation sans PII"
+    },
+    {
+      "id": "H-07",
+      "expect": "PASS",
+      "reason": "email synthétique en fixture only"
+    },
+    {
+      "id": "H-08",
+      "expect": "FAIL",
+      "reason": "même email dans reports/R04-*"
+    },
+    {
+      "id": "H-09",
+      "expect": "SKIP",
+      "reason": "dette B9 historique hors scope"
+    }
+  ],
+  "futureCommand": "node tests/rec008/unit/artifact-hygiene-r030.test.cjs",
+  "futurePaths": {
+    "unitTest": "tests/rec008/unit/artifact-hygiene-r030.test.cjs",
+    "helper": "tests/rec008/lib/assertions/artifact-hygiene.cjs"
+  },
+  "r04PrepCriteria": [
+    {
+      "id": "R04P-01",
+      "status": "PASS",
+      "assert": "contrat ASK_EMAIL → ASK_TELEPHONE figé"
+    },
+    {
+      "id": "R04P-02",
+      "status": "PASS",
+      "assert": "assertions R04 + SEC-C* catalogue 029"
+    },
+    {
+      "id": "R04P-03",
+      "status": "PASS",
+      "assert": "STOP R04 documentés"
+    },
+    {
+      "id": "R04P-04",
+      "status": "PASS",
+      "assert": "politique masquage présent/len/hash"
+    },
+    {
+      "id": "R04P-05",
+      "status": "PASS",
+      "assert": "catalogue patterns FAIL versionné"
+    },
+    {
+      "id": "R04P-06",
+      "status": "PASS",
+      "assert": "scénarios H-01…H-09 spécifiés"
+    },
+    {
+      "id": "R04P-07",
+      "status": "PASS",
+      "assert": "fixture R04 synthétique planifiée (création = mission fixtures)"
+    },
+    {
+      "id": "R04P-08",
+      "status": "PASS",
+      "assert": "mock Δ POST/CLAIM = 0"
+    },
+    {
+      "id": "R04P-09",
+      "status": "PASS",
+      "assert": "seed post-R01 OPTION A documenté"
+    },
+    {
+      "id": "R04P-10",
+      "status": "PASS",
+      "assert": "scanner offline implémenté + vert (mission 031)",
+      "evidence": [
+        "tests/rec008/unit/artifact-hygiene-r030.test.cjs",
+        "tests/rec008/reports/R031-offline-hygiene-run.txt"
+      ]
+    },
+    {
+      "id": "R04P-11",
+      "status": "NO-GO",
+      "assert": "auth humaine + préflight — gate R04-RUNTIME uniquement"
+    }
+  ],
+  "gates": {
+    "R04_PREP": "GO-CONDITIONAL",
+    "R04_PREP_note": "R04P-01…10 PASS offline 031 ; W-031-01 OPEN ; runtime toujours NO-GO",
+    "R04_RUNTIME": "NO-GO",
+    "R05_RUNTIME": "NO-GO",
+    "R06_RUNTIME": "NO-GO",
+    "R07_RUNTIME": "NO-GO",
+    "LIVE": "NO-GO",
+    "autoNext": "NO-GO"
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "hygiene FAIL tests + R04-PREP criteria ; scanner exécuté mission 031",
+    "reason": "Patterns FAIL formalisés (030) ; scanner unit H-01…H-09 PASS (031). Runtime R04+ et LIVE restent NO-GO. W-031-01 OPEN."
+  },
+  "nonActionsConfirmed": [
+    "pas d'exécution runtime",
+    "scanner offline exécuté en unit local uniquement (031)",
+    "pas d'activation n8n",
+    "pas de POST CreateAppointment",
+    "pas de toucher LIVE",
+    "pas de mutation PG/Docker",
+    "pas d'auto-next"
+  ]
+}

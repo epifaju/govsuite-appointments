@@ -1,0 +1,103 @@
+{
+  "name": "REC008-8F2B24-DEBUG-EPHEMERAL",
+  "nodes": [
+    {
+      "id": "0d298f43-5978-4040-a99e-08e444366632",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "13101c2e-50da-4451-a1ba-a5dd5807b9d5",
+      "name": "Lorsqu'un message de chat est reçu",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [{ json: { sessionId: 'rec008-8f2b24-dry-nonexistent' } }];"
+      }
+    },
+    {
+      "id": "985e0587-35ec-4be2-b48a-b9c839bbbfc4",
+      "name": "Paramètres clôture confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [{ json: { appointmentReference: 'REC008-RUNTIME-DRY-000', appointment: { reference: 'REC008-RUNTIME-DRY-000' } } }];"
+      }
+    },
+    {
+      "id": "e0fb74cd-957c-4cef-bd04-8c309d304f92",
+      "name": "Finaliser état création",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.7,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "query": "UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = NULLIF($2::text, ''),\n    token = NULLIF($3::text, ''),\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+        "options": {
+          "queryReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}"
+        },
+        "operation": "executeQuery"
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Fs0l0058q5CEadRw",
+          "name": "REC008 PostgreSQL TEST"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Lorsqu'un message de chat est reçu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lorsqu'un message de chat est reçu": {
+      "main": [
+        [
+          {
+            "node": "Paramètres clôture confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Paramètres clôture confirmation": {
+      "main": [
+        [
+          {
+            "node": "Finaliser état création",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "mission": "R04B-RUNTIME-037",
+  "intact": true,
+  "modified": false,
+  "scans": [
+    {
+      "dir": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-036/artifacts-r04a-036",
+      "files": 11,
+      "emailHits": []
+    },
+    {
+      "dir": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-036/artifacts-r03-026",
+      "files": 10,
+      "emailHits": []
+    }
+  ]
+}

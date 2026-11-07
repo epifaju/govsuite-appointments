@@ -1,0 +1,9 @@
+{
+  "id": "R02-sql-contracts",
+  "family": "regression",
+  "mode": "offline",
+  "required": true,
+  "handler": "sql.contracts",
+  "description": "Contrats SQL statiques Charger (session_expired) et Sauvegarder (_authorizedNulls / refresh TTL).",
+  "expects": { "staticSqlOnly": true }
+}

@@ -1,0 +1,179 @@
+{
+  "phase": "8F-2B35",
+  "readOnly": true,
+  "executedMutations": false,
+  "messageSent": false,
+  "activationPerformed": false,
+  "expirationFunctionCalled": false,
+  "pass": true,
+  "verdict": "PASS",
+  "goCorrectivePhase": "GO",
+  "recommendedOption": "A",
+  "preflight": {
+    "workflow": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+      "versionCounter": 8,
+      "nodes": 134,
+      "edges": 137,
+      "activeIds": [],
+      "chatPublic": true,
+      "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+      "postgres": [
+        "Fs0l0058q5CEadRw"
+      ],
+      "ollama": "dxzHqBq8Q60R8BOz",
+      "urlsOk": true,
+      "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "networkOk": true,
+      "expireNodePresent": true,
+      "expireQuery": "SELECT public.expirer_tentatives_en_attente() AS expired_count;",
+      "expireInbound": [
+        "Aiguiller tentative"
+      ],
+      "decidePresent": true,
+      "cronLikeNodes": [
+        {
+          "name": "Appeler RescheduleAppointment",
+          "type": "n8n-nodes-base.httpRequest"
+        }
+      ]
+    },
+    "beforeFp": {
+      "pg": "1|9|3|0",
+      "open": "1",
+      "statusCounts": [
+        "ABANDONED|1",
+        "AWAITING_CONFIRMATION|1",
+        "CONFIRMED|1"
+      ],
+      "otherSessions": "f997dc2ace8e8a06197a12243ead6ac1",
+      "allAttempts": "508ba399b0ea74572d76928183f863f3",
+      "targetSession": "ed028ecce40957ac7b74e52a42befed5",
+      "targetAttempt": "03e907b19167eb1fb5951b7432a7896a",
+      "rdv": "8b43832366c8d9dc10b4bcb2ca8fd485",
+      "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+      "mailpit": {
+        "Version": "v1.30.6",
+        "LatestVersion": "v1.33.0",
+        "Database": "/data/mailpit.db",
+        "DatabaseSize": 98304,
+        "Messages": 5,
+        "Unread": 2,
+        "Tags": {},
+        "RuntimeStats": {
+          "Uptime": 991,
+          "Memory": 10860808,
+          "MessagesDeleted": 0,
+          "SMTPAccepted": 0,
+          "SMTPAcceptedSize": 0,
+          "SMTPRejected": 0,
+          "SMTPIgnored": 0
+        }
+      },
+      "mock": {
+        "scenario": "created",
+        "total": 0,
+        "posts": 0,
+        "getAvailability": 0,
+        "byPath": {},
+        "distinctKeys": 0
+      }
+    },
+    "attempt": {
+      "id": "57bf7de8-9a5e-469d-858a-a6bd389223e6",
+      "session_id": "rec008-8f2b28-new-01",
+      "status": "AWAITING_CONFIRMATION",
+      "expiresAt": "2026-11-01 00:30:40.55687+01",
+      "dbNow": "2026-11-01 11:52:59.874369+01",
+      "secondsSinceExpiry": 40939,
+      "ttlSecondsAtCreate": 7200,
+      "stillValid": false,
+      "hasIdempotencyKey": true,
+      "idempotencyKeyLength": 71,
+      "idempotencyKeyFp12": "3864497c21f6",
+      "hasRequestPayload": true,
+      "hasFingerprint": true,
+      "fingerprintFp12": "81bd3c88c8e5",
+      "hasLeaseOwner": false,
+      "hasLeaseUntil": false,
+      "appointmentReference": "",
+      "appointmentId": "",
+      "submittedAt": "",
+      "confirmedAt": "",
+      "payloadSlotId": "33333333-3333-4333-8333-333333333333",
+      "keyMatchesPayload": true,
+      "createdAt": "2026-10-31 22:30:40.559864+01",
+      "updatedAt": "2026-10-31 22:30:40.559864+01"
+    },
+    "session": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "nomPresent": true,
+      "prenomPresent": true,
+      "emailPresent": true,
+      "telephonePresent": true,
+      "reference": "",
+      "intent": "CREATE_APPOINTMENT"
+    },
+    "historical": {
+      "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f|2026-10-31 16:14:06.425766+01",
+      "abandoned": "ABANDONED||f|f|2026-10-31 00:40:51.295745+01",
+      "histSession": "||REC008-MOCK-0001",
+      "openSameSession": "1"
+    },
+    "sql": {
+      "functionDigests": [
+        "expirer_tentatives_en_attente|d4d3f80a31366ba9c53e9a81a9c9a877",
+        "reclamer_tentative_rendez_vous|aff4da58b8a38861acd1b49f7ffcd4c4",
+        "reprendre_tentative_rendez_vous|b3234c3f856f2e0a33a912217ffabdae"
+      ],
+      "expireFunctionPresent": true,
+      "expirePurgesSecrets": true,
+      "expireTouchesConversation": false,
+      "uniqueIndexes": [
+        "uq_ai_appointment_attempt_idempotency_key|CREATE UNIQUE INDEX uq_ai_appointment_attempt_idempotency_key ON public.ai_appointment_attempt USING btree (idempotency_key) WHERE (idempotency_key IS NOT NULL)",
+        "uq_ai_appointment_attempt_session_ouverte|CREATE UNIQUE INDEX uq_ai_appointment_attempt_session_ouverte ON public.ai_appointment_attempt USING btree (session_id) WHERE ((status)::text = ANY ((ARRAY['AWAITING_CONFIRMATION'::character varying, 'SUBMITTING'::character varying, 'UNCERTAIN'::character varying])::text[]))"
+      ]
+    },
+    "lateOuiSimulation": {
+      "waitExpired": true,
+      "simulatedAttemptAction": "EXPIRE",
+      "claimBlockedBySql": true,
+      "note": "Décider action tentative prioritise waitExpired → EXPIRE avant AFFIRM → CLAIM"
+    }
+  },
+  "afterFp": {
+    "pg": "1|9|3|0",
+    "open": "1",
+    "otherSessions": "f997dc2ace8e8a06197a12243ead6ac1",
+    "allAttempts": "508ba399b0ea74572d76928183f863f3",
+    "targetSession": "ed028ecce40957ac7b74e52a42befed5",
+    "targetAttempt": "03e907b19167eb1fb5951b7432a7896a",
+    "rdv": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "mock": {
+      "scenario": "created",
+      "total": 0,
+      "posts": 0,
+      "getAvailability": 0
+    }
+  },
+  "integrityOk": true,
+  "checks": {
+    "workflowOk": true,
+    "pgOk": true,
+    "liveOk": true,
+    "integrityOk": true
+  }
+}

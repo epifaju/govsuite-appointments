@@ -1,0 +1,78 @@
+{
+  "ts": "2026-11-06T23:17:15.646Z",
+  "ok": true,
+  "issues": [],
+  "isolation": {
+    "n8nTestPort": 5682,
+    "livePortForbidden": 5680,
+    "liveTouched": false
+  },
+  "dockerProject": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 5 hours",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 6 hours",
+    "govsuite-rec008-test-rec008-publish-1\tUp 5 hours",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 5 hours",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 5 hours (healthy)"
+  ],
+  "n8nHealth": {
+    "status": 200,
+    "body": "{\"status\":\"ok\"}"
+  },
+  "workflow": {
+    "http": 200,
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "versionCounter": 11,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "activeIds": [],
+    "webhookRows": 0,
+    "transportError": null
+  },
+  "gerer": {
+    "found": true,
+    "sha256": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "codeLen": 30504
+  },
+  "fingerprint": "1|15|4|0",
+  "openAttempts": 0,
+  "mock": {
+    "scenario": "created",
+    "total": 0,
+    "byPath": {},
+    "distinctKeys": 0
+  },
+  "mockPosts": 0,
+  "mockClaims": 0,
+  "fingerprintNote": "documented only (seed may change sessions count)",
+  "sessions": {
+    "R04-A": {
+      "sessionIdHash": "8c11deb4b6550c18",
+      "intent": "CREATE_APPOINTMENT",
+      "pendingAction": "CREATE_APPOINTMENT",
+      "conversationStep": "ASK_EMAIL",
+      "expiresAt": "2026-11-07 02:16:58.263915+01",
+      "updatedAt": "2026-11-07 00:16:58.263915+01",
+      "ttlActive": true,
+      "sessionExpired": false,
+      "sessionExpiredNow": false,
+      "nomPresent": true,
+      "nomLen": 6,
+      "prenomPresent": true,
+      "prenomLen": 7,
+      "prenomIsNull": false,
+      "emailPresent": false,
+      "emailLen": 0,
+      "emailValide": false,
+      "telephonePresent": false,
+      "telephoneLen": 0,
+      "hasService": true,
+      "hasSite": true,
+      "hasAvailableSlots": true,
+      "slotIdPresent": true,
+      "lastUserMessageLen": 0
+    }
+  }
+}

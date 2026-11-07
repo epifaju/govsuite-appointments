@@ -1,0 +1,159 @@
+{
+  "phase": "8F-2B49-P4G1",
+  "sessionId": "rec008-8f2b1-slot-01",
+  "chatInput": "Camille",
+  "messageSent": true,
+  "executed": true,
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounter": 9,
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat",
+        "method": "GET"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat",
+        "method": "POST"
+      }
+    ]
+  },
+  "warmup": {
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 41,
+    "bodyLen": 2065
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 67070,
+    "targetUrl": "http://127.0.0.1:5682/webhook/a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat",
+    "transportFailure": null,
+    "responsePreview": "{\"type\":\"session_expired\",\"text\":\"Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.\"}",
+    "responseJson": {
+      "type": "session_expired",
+      "textPreview": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.",
+      "keys": [
+        "type",
+        "text"
+      ],
+      "hasAppointmentCreated": false,
+      "conversationStep": null,
+      "claimAcquired": false,
+      "ready": false
+    },
+    "mockBefore": {
+      "scenario": "created",
+      "posts": 0,
+      "getAvailability": 0,
+      "getServices": 0
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "posts": 0,
+      "getAvailability": 0,
+      "getServices": 0,
+      "byPath": {}
+    },
+    "getServicesDelta": 0,
+    "getAvailabilityDelta": 0,
+    "postDelta": 0,
+    "cancelSeen": false
+  },
+  "deactivate": {
+    "tag": "after-message",
+    "status": 200,
+    "bodyPreview": "{\"data\":{\"updatedAt\":\"2026-11-02T07:57:16.939Z\",\"createdAt\":\"2026-10-30T17:17:22.859Z\",\"id\":\"OCD9It1uKFhOoWNF\",\"name\":\"REC008_TEST_ISOLE_134_NON_IMPORTE\",\"description\":null,\"active\":false,\"isArchived\"",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounter": 9,
+    "activeIds": [],
+    "webhookRows": 0
+  },
+  "after": {
+    "snap": {
+      "sessionId": "rec008-8f2b1-slot-01",
+      "intent": "GENERAL",
+      "pendingAction": "CREATE_APPOINTMENT",
+      "conversationStep": "ASK_CREATE_SERVICE",
+      "expiresAt": "2026-10-31 00:59:54.370387+01",
+      "updatedAt": "2026-11-02 09:08:48.413196+01",
+      "flags": {
+        "service": false,
+        "site": false,
+        "dateDebut": false,
+        "dateFin": false,
+        "slotId": false,
+        "selectedSlotIndex": true,
+        "availableSlots": true,
+        "slotsLen": 0,
+        "nom": false,
+        "prenom": false,
+        "email": false,
+        "telephone": false,
+        "reference": false,
+        "token": false
+      },
+      "lastUserMessagePreviewLen": 7,
+      "lastUserMessageStartsWithCamille": true,
+      "draftFingerprint": "403712507f9ca224e28e70d83c042a5f",
+      "slotsFingerprint": "fd838dea4b2d12b826297cc085b00469"
+    },
+    "attempts": {
+      "total": 0,
+      "byStatus": [],
+      "open": 0,
+      "hasIdempotencyKey": 0
+    },
+    "pg": "1|11|4|0",
+    "open": "0",
+    "mockPosts": 0,
+    "getAvailability": 0,
+    "getServices": 0,
+    "mockScenario": "created",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "comparisons": {
+    "ttlUnchanged": true,
+    "expiresAtBefore": "2026-10-31 00:59:54.370387+01",
+    "expiresAtAfter": "2026-10-31 00:59:54.370387+01",
+    "draftPreserved": true,
+    "draftFingerprintBefore": "37df03c884bc12ee2e5849ac36c9f4e1",
+    "draftFingerprintAfter": "403712507f9ca224e28e70d83c042a5f",
+    "pendingPreserved": true,
+    "flagsPreserved": true,
+    "updatedAtChanged": true,
+    "lastUserMessageUpdatedToCamille": true,
+    "nonBusinessMetadataNote": "updated_at et/ou last_user_message peuvent être rafraîchis par Sauvegarder sans prolonger expires_at ni reprendre la collecte",
+    "draftFingerprintChangedBecauseIntent": true,
+    "intentBefore": "CREATE_APPOINTMENT",
+    "intentAfter": "GENERAL",
+    "draftMetierPreserved": true
+  },
+  "checks": {
+    "responseOk": true,
+    "antiReservationOk": true,
+    "stateOk": true,
+    "deactivateOk": true,
+    "liveOk": true,
+    "singleMessage": true,
+    "sessionWasExpired": true
+  },
+  "verdict": "PASS",
+  "goNoGoNext": "GO (sous autorisation distincte) pour P4G2 / validations TTL suivantes",
+  "evaluationNote": "Le fingerprint initial incluait intent; intent GENERAL est le routage session_expired attendu. Brouillon métier = pending/step/flags/slots."
+}

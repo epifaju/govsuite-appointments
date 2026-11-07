@@ -1,0 +1,62 @@
+{
+  "phase": "8F-2B47",
+  "mode": "offline-re-evaluate-8f2b45",
+  "source": {
+    "resultPass": false,
+    "resultVerdict": "FAIL",
+    "resultGoNoGo": "NO-GO",
+    "finaliserExec": null,
+    "checks": {
+      "functionalOk": true,
+      "attemptOk": true,
+      "sessionOk": true,
+      "finaliserOk": null,
+      "postOk": true,
+      "integrityOk": true,
+      "deactivateOk": true,
+      "httpOk": true,
+      "notWorkflowError": true,
+      "confirmsAppointment": true,
+      "showsReference": true,
+      "falseSuccessWithoutFinalize": false,
+      "claimCount": 1,
+      "postDelta": 1
+    }
+  },
+  "policy": "none",
+  "restEmpty": true,
+  "legacy": {
+    "pass": false,
+    "verdict": "FAIL",
+    "goNoGo": "NO-GO",
+    "finalizationEvidenceLevel": "none",
+    "observabilityOk": false
+  },
+  "corrected": {
+    "pass": true,
+    "verdict": "PASS",
+    "goNoGo": "GO",
+    "finalizationEvidenceLevel": "event_corroborated",
+    "observabilityOk": true,
+    "reason": "ok",
+    "declaresRestDirectProof": false,
+    "checks": {
+      "functionalOk": true,
+      "attemptOk": true,
+      "sessionOk": true,
+      "postOk": true,
+      "integrityOk": true,
+      "deactivateOk": true,
+      "observabilityOk": true,
+      "httpOk": true,
+      "notHttp500": true,
+      "claimCount": 1,
+      "postDelta": 1
+    }
+  },
+  "delta": {
+    "falseNegativeFixed": true,
+    "legacyStillFails": true,
+    "evidenceNotClaimedDirect": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:14:00Z",
+  "via": "docker exec n8n → http://rec008-mock:8080/_meta/calls",
+  "meta": {
+    "scenario": "created",
+    "total": 0,
+    "byPath": {},
+    "distinctKeys": 0
+  },
+  "createAppointmentPosts": 0,
+  "verdict": "PASS"
+}

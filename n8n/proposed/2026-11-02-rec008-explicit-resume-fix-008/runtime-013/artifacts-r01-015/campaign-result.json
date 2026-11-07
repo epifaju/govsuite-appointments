@@ -1,0 +1,13 @@
+{
+  "verdict": "UNCERTAIN",
+  "stoppedAfter": "R01",
+  "results": [
+    {
+      "id": "R01",
+      "verdict": "UNCERTAIN",
+      "issues": [
+        "HTTP transport UNCERTAIN (timeout/abort) — no retry performed"
+      ]
+    }
+  ]
+}

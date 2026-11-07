@@ -1,0 +1,11 @@
+--- queryReplacement BEFORE
+={{ $('Lorsqu\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference }},{{ $('Paramètres clôture confirmation').item.json.appointment.token_gestion || $('Paramètres clôture confirmation').item.json.appointment.token }}
+--- queryReplacement AFTER
+={{ $('Lorsqu\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}
+
+--- query token/reference lines BEFORE
+    reference = $2,
+    token = $3,
+--- query token/reference lines AFTER
+    reference = NULLIF($2::text, ''),
+    token = NULLIF($3::text, ''),

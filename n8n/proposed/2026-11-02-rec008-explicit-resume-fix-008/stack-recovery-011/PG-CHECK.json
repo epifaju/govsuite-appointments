@@ -1,0 +1,24 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:14:00Z",
+  "mode": "SELECT-only",
+  "container": "govsuite-rec008-test-rec008-postgres-1",
+  "database": "govsuite_rec008_test",
+  "mutation": false,
+  "liveTouched": false,
+  "counts": {
+    "rendez_vous": 1,
+    "ai_conversation_state": 11,
+    "ai_appointment_attempt": 4,
+    "notifications": 0,
+    "fingerprint": "1|11|4|0"
+  },
+  "openAttempts": 0,
+  "historicalAnchorP4F": {
+    "fingerprint": "1|11|4|0",
+    "openAttempts": 0,
+    "source": "docs/recovery/REC_008_PHASE8F2B49_P4F_TEST_INSTALLATION_REPORT.md"
+  },
+  "drift": false,
+  "verdict": "PASS"
+}

@@ -1,0 +1,15 @@
+{
+  "mission": "R04B-HTTP500-DIAG-038",
+  "probedAt": "2026-11-07T00:00:00Z",
+  "note": "Read-only docker exec sqlite probes during 038; no retention change; no payload dump",
+  "probeExecutions": {
+    "executionCount": 0,
+    "recent": []
+  },
+  "probeExec57": {
+    "executionDataRows": 0,
+    "rowPresent": false,
+    "note": "no data payload dumped; execution row not returned / absent"
+  },
+  "implication": "Cannot name failing node from retained executions; consistent with saveData*=none"
+}

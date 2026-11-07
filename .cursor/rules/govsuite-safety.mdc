@@ -1,0 +1,40 @@
+---
+description: Règles de sécurité impératives GovSuite REC-008 (TEST/LIVE, n8n, SQL, preuves)
+alwaysApply: true
+---
+
+# GovSuite safety
+
+## Interdits par défaut
+
+- Toute action sur **LIVE** (workflows, DB, Mailpit, empreintes métier).
+- Confusion **TEST / LIVE** (ports, credentials Postgres, `WEBHOOK_URL`, volumes, mocks).
+- Activation n8n **implicite** (PUT active, publish, webhook enable sans ordre explicite).
+- **POST CreateAppointment** implicite ou non gardé.
+- Modification SQL métier / migration / seed sans autorisation explicite.
+- **Retry automatique** après timeout ou erreur réseau (un échec ambigu → STOP / UNCERTAIN).
+- Secrets, clés, tokens, PII dans rapports, diffs, logs commités ou fixtures « réelles ».
+- Déploiement cloud de l'environnement TEST sans autorisation.
+- Auto-attribution de permissions par un agent (y compris « pour finir la phase »).
+- Autorisation automatique de la phase suivante.
+
+## Obligations
+
+- Préflight **et** postflight pour toute phase runtime autorisée.
+- Verdict explicite : **PASS** | **FAIL** | **UNCERTAIN**.
+- Distinguer HTTP / transport vs succès métier.
+- Correctifs d'abord hors ligne sous `n8n/proposed/`.
+- Fixtures synthétiques uniquement sous `tests/rec008/`.
+
+## Exemples
+
+```text
+❌ Activer le workflow « juste pour tester un message »
+✅ Préparer le diff + offline-tests sous n8n/proposed/, attendre autorisation
+
+❌ Relancer le POST après un timeout
+✅ Marquer UNCERTAIN, conserver la clé d'idempotence, STOP
+
+❌ Copier un email citoyen dans le rapport
+✅ Indiquer « email présent / masqué » + longueur ou hash non réversible si besoin
+```

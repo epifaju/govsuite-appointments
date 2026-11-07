@@ -1,0 +1,18 @@
+{
+  "exportedAt": "2026-10-31T18:24:55.819Z",
+  "path": "C:\\Open Source PME\\govsuite-appointments\\n8n\\proposed\\2026-10-31-rec008-phase8f2b26-FINALIZATION-FIX-INSTALL\\before-OCD9It1uKFhOoWNF.json",
+  "sha256": "2df97627118c840d59d8b3b9b97226106df082382b02b6c3c973d761142f8fb8",
+  "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+  "versionCounter": 7,
+  "active": false,
+  "activeVersionId": null,
+  "nodes": 134,
+  "edges": 137,
+  "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "rollbackProcedure": [
+    "1. Keep before-OCD9It1uKFhOoWNF.json as restore source.",
+    "2. Under distinct authorization: PUT workflow TEST with nodes/connections/settings from the backup export (name preserved, active false).",
+    "3. Verify versionCounter advances, Finaliser SHA returns to dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d.",
+    "4. Do not activate. Do not touch LIVE. Do not reconcile session."
+  ]
+}

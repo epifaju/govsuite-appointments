@@ -1,0 +1,44 @@
+{
+  "mission": "ASK-PRENOM-RUNTIME-013",
+  "ts": "2026-11-05T20:41:30.000Z",
+  "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+  "versionCounter": 10,
+  "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "liveTouched": false,
+  "phase": "R01-pre-activate",
+  "stoppedReason": "UND_ERR_SOCKET other side closed on GET /rest/workflows after PASS preflight — before activate, before any chat message",
+  "retried": false,
+  "activationPerformed": false,
+  "messageSent": false,
+  "workflowAfterStop": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "activeList": []
+  },
+  "fingerprintAfterStop": "1|14|4|0",
+  "fixturesPreserved": true,
+  "cleanup": {
+    "cleaned": false,
+    "reason": "campaign UNCERTAIN — keep fixtures for forensics / future authorized rerun"
+  },
+  "results": [
+    {
+      "id": "R01",
+      "verdict": "UNCERTAIN",
+      "issues": ["transport failure before activate; scenario not executed; no retry"]
+    },
+    {
+      "id": "R02",
+      "verdict": "UNCERTAIN",
+      "issues": ["not executed — campaign stopped after R01 pre-activate transport failure"]
+    },
+    {
+      "id": "R03",
+      "verdict": "UNCERTAIN",
+      "issues": ["not executed — campaign stopped after R01 pre-activate transport failure"]
+    }
+  ],
+  "globalVerdict": "UNCERTAIN"
+}

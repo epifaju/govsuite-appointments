@@ -1,0 +1,57 @@
+{
+  "fixtureId": "R009-R03",
+  "campaignId": "R03",
+  "applied": false,
+  "applyForbiddenUntilAuthorized": true,
+  "sessionId": "rec008-syn-r009-r03-expired-resume",
+  "env": "TEST",
+  "live": false,
+  "purpose": "Précondition R03 — session EXPIRÉE ASK_PRENOM + reprise explicite (contrat FIX-008, pas VC9-actual)",
+  "offlineRefs": {
+    "fix008": "FIX008-S03",
+    "readiness007": "S03-ask-prenom-explicit-resume-vc9-actual",
+    "fixtureR007": "tests/rec008/fixtures/ask-prenom-readiness-007/s03-expired-resume-state.json",
+    "contractNote": "R007 documentait divergence VC9; R009 cible le contrat FIX-008 (ASK_PRENOM + prenom null)"
+  },
+  "row": {
+    "session_id": "rec008-syn-r009-r03-expired-resume",
+    "intent": "GENERAL",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_PRENOM",
+    "nom": "Dupont",
+    "prenom": null,
+    "email": null,
+    "telephone": null,
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "available_slots": [],
+    "expires_at_policy": "NOW() - interval '1 hour'",
+    "notes": "Synthetic twin shape of R02 — separate session_id required; never chain from R02"
+  },
+  "selectPreflight": [
+    "expires_at <= NOW()",
+    "pending_action = CREATE_APPOINTMENT",
+    "conversation_step = ASK_PRENOM",
+    "nom IS NOT NULL",
+    "prenom IS NULL",
+    "open attempts = 0",
+    "session_id != R02 session"
+  ],
+  "message": "reprendre",
+  "messageCount": 1,
+  "retryForbidden": true,
+  "expectedAfterFix008": {
+    "conversation_step": "ASK_PRENOM",
+    "prenom": null,
+    "refreshSessionTtl": true,
+    "preserveDraft": true,
+    "intent": "CREATE_APPOINTMENT",
+    "pending_action": "CREATE_APPOINTMENT",
+    "invite": "Demander paramètres mentions prénom"
+  },
+  "vc9ActualRejectedAsProductAcceptance": {
+    "conversation_step": "ASK_EMAIL",
+    "prenom": "reprendre",
+    "note": "FAIL métier si observé après install FIX-008 ; diagnostic seulement si candidat non installé"
+  }
+}

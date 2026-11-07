@@ -1,0 +1,19 @@
+{
+  "mission": "TEST-INSTALL-RETRY-012",
+  "at": "2026-11-05T20:20:12.273Z",
+  "workflowId": "OCD9It1uKFhOoWNF",
+  "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+  "versionCounter": 9,
+  "active": false,
+  "activeVersionId": null,
+  "nodes": 134,
+  "edges": 137,
+  "backupFile": "backup-pre-fix008-2026-11-05T20-20-12-227Z.json",
+  "backupSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "gererJsSha": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+  "candidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "candidatePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+  "pgFingerprint": "1|11|4|0",
+  "openAttempts": "0",
+  "mockPostCreate": 0
+}

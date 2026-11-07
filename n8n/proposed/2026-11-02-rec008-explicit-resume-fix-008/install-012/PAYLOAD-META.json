@@ -1,0 +1,8 @@
+{
+  "payloadSha256": "baafc1d99341cb4cbc1dcc38f024d1f0592ada75ae56f1083eb88c1ce2f26154",
+  "changedNodes": [
+    "Gérer collecte progressive"
+  ],
+  "gererJsAfter": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "omitActive": true
+}

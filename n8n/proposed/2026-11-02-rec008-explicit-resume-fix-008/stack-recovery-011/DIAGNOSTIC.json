@@ -1,0 +1,111 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:10:00Z",
+  "verdict": "PASS",
+  "decision": "GO",
+  "execution": "COMPLETED",
+  "postVerdict": "PASS",
+  "scope": "docker start only — no compose down/up, no force-recreate, no prune, no volume mutate, no LIVE, no PUT n8n",
+  "docker": {
+    "serverVersion": "29.8.0",
+    "clientVersion": "29.8.0",
+    "serverOk": true
+  },
+  "compose": {
+    "project": "govsuite-rec008-test",
+    "configFile": "n8n/proposed/2026-10-30-rec008-phase8e2b4-OLLAMA-TEST/docker-compose.rec008-test.yml",
+    "nameField": "govsuite-rec008-test"
+  },
+  "hypothesis": {
+    "summary": "Exit 255 simultané sur postgres/mock/n8n/publish ~2h ago ; typique kill daemon / Docker Desktop restart",
+    "evidence": [
+      "FinishedAt ≈ 2026-11-05T18:02:47Z pour les 4 conteneurs (écart < 20 ms)",
+      "ExitCode=255, OOMKilled=false, Error vide",
+      "RestartPolicy=no (pas de redémarrage auto)",
+      "ollama resté Up (restart: unless-stopped dans compose)"
+    ]
+  },
+  "containersBefore": [
+    {
+      "name": "govsuite-rec008-test-rec008-postgres-1",
+      "status": "exited",
+      "exitCode": 255,
+      "oomKilled": false,
+      "finishedAt": "2026-11-05T18:02:47.157613417Z",
+      "networks": ["govsuite-rec008-test_rec008_test"]
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-mock-1",
+      "status": "exited",
+      "exitCode": 255,
+      "oomKilled": false,
+      "finishedAt": "2026-11-05T18:02:47.159070377Z",
+      "networks": ["govsuite-rec008-test_rec008_test"]
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-n8n-1",
+      "status": "exited",
+      "exitCode": 255,
+      "oomKilled": false,
+      "finishedAt": "2026-11-05T18:02:47.158834257Z",
+      "networks": ["govsuite-rec008-test_rec008_test"]
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-publish-1",
+      "status": "exited",
+      "exitCode": 255,
+      "oomKilled": false,
+      "finishedAt": "2026-11-05T18:02:47.147838201Z",
+      "hostPort": "127.0.0.1:5682->5682/tcp",
+      "networks": [
+        "govsuite-rec008-test_rec008_test",
+        "govsuite-rec008-test_rec008_publish"
+      ]
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-ollama-1",
+      "status": "Up",
+      "action": "leave untouched"
+    }
+  ],
+  "networksPresent": [
+    "govsuite-rec008-test_rec008_test",
+    "govsuite-rec008-test_rec008_publish"
+  ],
+  "volumesPresent": [
+    "govsuite-rec008-test_rec008_postgres_data",
+    "govsuite-rec008-test_rec008_n8n_data",
+    "govsuite-rec008-test_rec008_ollama_data"
+  ],
+  "bindMountsOk": {
+    "mockServerMjs": true,
+    "publishProxyMjs": true
+  },
+  "port5682": {
+    "hostListener": false,
+    "netstat": "empty",
+    "safeToBind": true
+  },
+  "liveIsolation": {
+    "govsuite-n8n": { "status": "running", "ports": "0.0.0.0:5680->5678/tcp", "touched": false },
+    "govsuite-postgres": { "status": "running", "health": "healthy", "ports": "0.0.0.0:5433->5432/tcp", "touched": false },
+    "confusionRisk": "LOW — ports/project distincts de TEST 5682"
+  },
+  "authorizedStartOrder": [
+    "govsuite-rec008-test-rec008-postgres-1",
+    "govsuite-rec008-test-rec008-mock-1",
+    "WAIT pg_isready inside postgres",
+    "govsuite-rec008-test-rec008-n8n-1",
+    "govsuite-rec008-test-rec008-publish-1"
+  ],
+  "forbidden": [
+    "docker compose down",
+    "force-recreate",
+    "prune",
+    "volume mutate/rm",
+    "touch govsuite-n8n / govsuite-postgres",
+    "LIVE",
+    "PUT n8n / activate workflow",
+    "POST CreateAppointment"
+  ]
+}

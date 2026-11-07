@@ -1,0 +1,100 @@
+{
+  "rootCause": "queryReplacement expression for $3 evaluates to undefined/null when appointment has neither token_gestion nor token; n8n omits the third bound parameter; PostgreSQL raises \"there is no parameter $3\". $1 and $2 were bound (session + reference present).",
+  "mockContract": {
+    "scenarioCreated": true,
+    "appointmentObject": "const appointment = {\n  id: '55555555-5555-4555-8555-555555555555',\n  reference: 'REC008-MOCK-0001',\n  statut: 'CONFIRME',\n  email: 'camille.essai@example.test',\n  telephone: '+33000000000',\n  debut: '2026-11-03T09:00:00+01:00',\n  fin: '2026-11-03T09:30:00+01:00',\n  service: 'PASSEPORT',\n  site: 'PARIS'\n};",
+    "providesReference": true,
+    "providesToken": false,
+    "tokenOptionalConclusion": "Mock CreateAppointment returns reference without token/token_gestion. Workflow Préparer réponse création already treats token as optional (valueOrNull → \"Non disponible\"). Clôturer confirmation requires reference+appointmentId but not token. Therefore token is optional for finalization; must bind SQL NULL, never invent a token, never change mock silently."
+  },
+  "nodes": {
+    "Appeler CreateAppointment": {
+      "in": [
+        "frozenBody"
+      ],
+      "out": [
+        "statusCode",
+        "body"
+      ],
+      "url": "http://rec008-mock:8080/appointments",
+      "tokenBehavior": "n/a (request body has cleIdempotence, not token)"
+    },
+    "Classer réponse HTTP": {
+      "in": [
+        "statusCode",
+        "body",
+        "Appliquer corps gagnant"
+      ],
+      "out": [
+        "httpOutcome",
+        "appointmentId",
+        "appointmentReference",
+        "appointment",
+        "success",
+        "created",
+        "replayed"
+      ],
+      "tokenBehavior": "forwards appointment as-is; does not require token for CONFIRMED (201 or replayed 200)"
+    },
+    "Clôturer confirmation": {
+      "in": [
+        "attemptId",
+        "sessionId",
+        "leaseOwner",
+        "appointmentId",
+        "appointmentReference"
+      ],
+      "sql": "cloturer_tentative_rendez_vous(..., CONFIRMED, appointmentId, reference)",
+      "tokenBehavior": "token not used; reference required for CONFIRMED"
+    },
+    "Finaliser état création": {
+      "before": {
+        "query": "UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = $2,\n    token = $3,\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+        "queryReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference }},{{ $('Paramètres clôture confirmation').item.json.appointment.token_gestion || $('Paramètres clôture confirmation').item.json.appointment.token }}",
+        "codeSha": "27b731befac7d1877cbf75b4ad9195089ea6d5bf353409665f07733716e78766"
+      },
+      "after": {
+        "query": "UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = NULLIF($2::text, ''),\n    token = NULLIF($3::text, ''),\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+        "queryReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+        "codeSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d"
+      },
+      "tokenAbsent": "BEFORE: $3 omitted → PG error. AFTER: $3 bound as empty string → NULLIF → SQL NULL",
+      "tokenGestionAbsent": "same as token absent",
+      "referenceWithoutToken": "BEFORE fail; AFTER reference kept, token NULL, session cleared",
+      "incompleteResponse": "malformed body → UNCERTAIN upstream; Finaliser not reached on success path"
+    },
+    "Préparer réponse création": {
+      "tokenBehavior": "token = valueOrNull(token_gestion ?? token); displays \"Non disponible\" when absent; does not invent"
+    }
+  },
+  "fix": {
+    "nodesModified": [
+      "Finaliser état création"
+    ],
+    "strategy": "Always emit three queryReplacement string segments; coerce missing optional token to \"\"; SQL NULLIF($3::text, \"\") stores NULL. Same for reference safety with NULLIF($2::text, \"\"). No fake token. No CLAIM/POST/key changes."
+  },
+  "recoveryPlan": {
+    "executeInThisPhase": false,
+    "session": "rec008-8f2b14-new-01",
+    "observedInconsistency": "attempt CONFIRMED with REC008-MOCK-0001; session still AWAIT_CREATE_CONFIRMATION",
+    "strategy": [
+      "1. Read-only: load session + latest attempt for session_id where status=CONFIRMED ordered by confirmed_at DESC.",
+      "2. If conversation_step is AWAIT_CREATE_CONFIRMATION (or ASK_*) and attempt CONFIRMED with non-empty appointment_reference: enter RECONCILE_CONFIRMED_SESSION.",
+      "3. Never CLAIM. Never POST CreateAppointment. Never regenerate idempotency key.",
+      "4. UPDATE ai_conversation_state: clear collection/pending/step; set reference = attempt.appointment_reference; set token = NULL (attempt has no token column; do not invent).",
+      "5. User-facing text: state that the appointment is already confirmed; include the real reference; token line \"Non disponible\" if none stored; do not claim a new creation.",
+      "6. Idempotent: second reconcile finds conversation_step already null + reference set → short already-confirmed ack, still no POST.",
+      "7. If attempt UNCERTAIN/SUBMITTING: do not use this finalize path.",
+      "8. ABANDONED attempts ignored."
+    ],
+    "offlineTestsNeeded": [
+      "T9",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T17",
+      "T18"
+    ]
+  }
+}

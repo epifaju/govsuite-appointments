@@ -1,0 +1,115 @@
+{
+  "phase": "8F-2B49-P4F",
+  "at": "2026-11-02T07:56:55.408Z",
+  "source": "extracted-candidate-nodes",
+  "passCount": 21,
+  "total": 21,
+  "allPass": true,
+  "results": [
+    {
+      "id": "TC01",
+      "name": "Active ASK_NOM + nom libre",
+      "pass": true
+    },
+    {
+      "id": "TC02",
+      "name": "Active ASK_PRENOM + Camille",
+      "pass": true
+    },
+    {
+      "id": "TC03",
+      "name": "Active ASK_EMAIL",
+      "pass": true
+    },
+    {
+      "id": "TC04",
+      "name": "Active ASK_TELEPHONE",
+      "pass": true
+    },
+    {
+      "id": "TC05",
+      "name": "Active ASK_PRENOM + LLM GET_SERVICES",
+      "pass": true
+    },
+    {
+      "id": "TC06",
+      "name": "Expirée + Camille pas de continuation",
+      "pass": true
+    },
+    {
+      "id": "TC07",
+      "name": "Expirée + oui aucun CLAIM",
+      "pass": true
+    },
+    {
+      "id": "TC08",
+      "name": "Active attente + oui",
+      "pass": true
+    },
+    {
+      "id": "TC09",
+      "name": "Active attente + non",
+      "pass": true
+    },
+    {
+      "id": "TC09b",
+      "name": "non est négatif",
+      "pass": true
+    },
+    {
+      "id": "TC10",
+      "name": "modifier le nom",
+      "pass": true
+    },
+    {
+      "id": "TC11",
+      "name": "abandon explicite",
+      "pass": true
+    },
+    {
+      "id": "TC12",
+      "name": "champ absent",
+      "pass": true
+    },
+    {
+      "id": "TC13",
+      "name": "NULL autorisé",
+      "pass": true
+    },
+    {
+      "id": "TC14",
+      "name": "NULL non autorisé préserve brouillon",
+      "pass": true
+    },
+    {
+      "id": "TC15",
+      "name": "UNCERTAIN pas GENERAL forcé",
+      "pass": true
+    },
+    {
+      "id": "TC16",
+      "name": "EXPIRED no key reuse marker in save/parser",
+      "pass": true
+    },
+    {
+      "id": "TC17",
+      "name": "TTL exact traité expiré",
+      "pass": true
+    },
+    {
+      "id": "TC18",
+      "name": "TTL juste après",
+      "pass": true
+    },
+    {
+      "id": "TC19",
+      "name": "Expirée + reprendre : pas de réservation auto",
+      "pass": true
+    },
+    {
+      "id": "TC20",
+      "name": "Session absente sessionExpired false",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "_comment": "COVERAGE-004 OFFLINE — assertions attendues. simulation:true. Pas de PII.",
+  "matrix": {
+    "C7": {
+      "id": "I01-second-oui-same-key",
+      "family": "idempotence",
+      "description": "Deuxième oui après 201 → RECALL, même référence, aucun second RDV",
+      "expects": {
+        "firstIssue": "CREATED",
+        "firstHttpOutcome": "CONFIRMED",
+        "attemptStatusAfter": "CONFIRMED",
+        "secondAttemptAction": "RECALL",
+        "secondNoCreateAppointmentPost": true,
+        "appointmentCount": 1,
+        "postCount": 1,
+        "referenceStable": true,
+        "openSecretsPurged": true
+      }
+    },
+    "C8": {
+      "id": "X01-double-oui-lease",
+      "family": "concurrency",
+      "description": "Deux claims simultanés → une seule victoire SUBMITTING, un seul POST",
+      "expects": {
+        "winners": 1,
+        "losers": 1,
+        "winnerAcquired": true,
+        "loserAcquired": false,
+        "loserPayloadNull": true,
+        "attemptStatus": "SUBMITTING",
+        "appointmentCount": 1,
+        "postCount": 1,
+        "resumeCount": 0
+      }
+    },
+    "C9": {
+      "id": "U01-resume-same-key",
+      "family": "uncertain-resume",
+      "description": "Timeout → UNCERTAIN → resume même clé/même corps",
+      "expects": {
+        "afterTimeoutStatus": "UNCERTAIN",
+        "afterTimeoutHttpOutcome": "UNCERTAIN",
+        "payloadPreserved": true,
+        "keyPreserved": true,
+        "fingerprintPreserved": true,
+        "resumeAcquired": true,
+        "resumeSameKey": true,
+        "resumeSameFingerprint": true,
+        "resumeCount": 1,
+        "createDecisionPath": "RESUME",
+        "noNewIdempotencyKey": true
+      }
+    },
+    "C11": {
+      "id": "I02-key-body-conflict",
+      "family": "idempotence",
+      "description": "Même clé, corps différent → KEY_CONFLICT / REJECTED, pas de nouvelle clé",
+      "expects": {
+        "issue": "KEY_CONFLICT",
+        "httpStatus": 409,
+        "errorCode": "IDEMPOTENCY_KEY_CONFLICT",
+        "httpOutcome": "REJECTED",
+        "attemptStatusAfter": "REJECTED",
+        "appointmentCount": 1,
+        "postCount": 2,
+        "idempotencyKeyUnchangedOnConflictBody": true,
+        "noAutoNewKey": true
+      }
+    },
+    "C12": {
+      "id": "E02-409-slot-unavailable",
+      "family": "http-errors",
+      "description": "Créneau complet/passé → SLOT_UNAVAILABLE, aucun RDV de cette clé",
+      "expects": {
+        "issue": "SLOT_UNAVAILABLE",
+        "httpStatus": 409,
+        "httpOutcome": "SLOT_UNAVAILABLE",
+        "attemptStatusAfter": "SLOT_UNAVAILABLE",
+        "appointmentCount": 0,
+        "postCount": 1,
+        "appointmentForKeyAbsent": true,
+        "openSecretsPurged": true
+      }
+    }
+  },
+  "api": {
+    "pureFunctions": [
+      "emptyState",
+      "advanceTime",
+      "fingerprintBody",
+      "seedSlot",
+      "createAwaitingAttempt",
+      "claimLease",
+      "claimLeaseConcurrent",
+      "resumeLease",
+      "markUncertain",
+      "closeAttempt",
+      "createAppointmentIdempotent",
+      "mapHttpOutcome",
+      "decideAttemptAction",
+      "runWinningSubmit",
+      "runTransportTimeout",
+      "evidence"
+    ]
+  }
+}

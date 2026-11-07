@@ -1,0 +1,73 @@
+{
+  "ts": "2026-11-06T21:36:14.705Z",
+  "ok": true,
+  "issues": [],
+  "isolation": {
+    "n8nTestPort": 5682,
+    "livePortForbidden": 5680,
+    "liveTouched": false
+  },
+  "dockerProject": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 3 hours",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 4 hours",
+    "govsuite-rec008-test-rec008-publish-1\tUp 3 hours",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 3 hours",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 3 hours (healthy)"
+  ],
+  "n8nHealth": {
+    "status": 200,
+    "body": "{\"status\":\"ok\"}"
+  },
+  "workflow": {
+    "http": 200,
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "activeIds": [],
+    "webhookRows": 0,
+    "transportError": null
+  },
+  "gerer": {
+    "found": true,
+    "sha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "codeLen": 30551
+  },
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "mock": {
+    "scenario": "created",
+    "total": 0,
+    "byPath": {},
+    "distinctKeys": 0
+  },
+  "mockPosts": 0,
+  "mockClaims": 0,
+  "sessions": {
+    "R03": {
+      "sessionId": "rec008-runtime013-r03-resume",
+      "intent": "GENERAL",
+      "pendingAction": "CREATE_APPOINTMENT",
+      "conversationStep": "ASK_PRENOM",
+      "expiresAt": "2026-11-05 22:05:47.184139+01",
+      "updatedAt": "2026-11-05 23:05:47.184139+01",
+      "ttlActive": false,
+      "sessionExpiredNow": true,
+      "nomPresent": true,
+      "nomLen": 6,
+      "nom": "Dupont",
+      "prenomIsNull": true,
+      "prenomLen": 0,
+      "prenom": null,
+      "hasService": true,
+      "hasSite": true,
+      "hasAvailableSlots": true,
+      "lastUserMessagePreview": "",
+      "slotIdPresent": true,
+      "lastUserMessageLen": 0
+    }
+  }
+}

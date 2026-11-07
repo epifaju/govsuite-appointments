@@ -1,0 +1,43 @@
+{
+  "mission": "R04A-RUNTIME-036",
+  "runtimeOnly": [
+    "R04-A"
+  ],
+  "ts": "2026-11-06T23:18:58.479Z",
+  "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+  "versionCounter": 11,
+  "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+  "liveTouched": false,
+  "retentionUnchanged": true,
+  "results": [
+    {
+      "id": "R04-A",
+      "verdict": "PASS",
+      "issues": [
+        "stability:execution_finished_business_conformant:business_conformant_idle"
+      ],
+      "retried": false,
+      "httpStatus": 200,
+      "httpType": "create_appointment_question",
+      "beforeStep": "ASK_EMAIL",
+      "afterStep": "ASK_TELEPHONE",
+      "emailPresent": true,
+      "emailLen": 29,
+      "nomPresent": true,
+      "prenomPresent": true,
+      "slotIdPresent": true,
+      "ttlAfter": true,
+      "mockPostsDelta": 0,
+      "mockClaimsDelta": 0
+    }
+  ],
+  "cleanup": {
+    "cleaned": false,
+    "reason": "RUNTIME_ALLOW_CLEANUP not set — fixtures preserved"
+  },
+  "fingerprintFinal": "1|15|4|0",
+  "globalVerdict": "PASS",
+  "r04b": "NOT_AUTHORIZED",
+  "r04c": "NOT_AUTHORIZED",
+  "live": "NO-GO"
+}

@@ -1,0 +1,7 @@
+{
+  "targetedId": "rec008-8f2b24-runtime-01",
+  "beforeDelete": "rec008-8f2b24-runtime-01",
+  "deleted": "rec008-8f2b24-runtime-01\nDELETE 1",
+  "remaining": "0",
+  "ok": false
+}

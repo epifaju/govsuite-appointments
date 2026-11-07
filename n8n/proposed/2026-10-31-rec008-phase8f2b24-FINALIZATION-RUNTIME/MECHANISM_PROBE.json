@@ -1,0 +1,30 @@
+{
+  "mainInactive": true,
+  "mainVersionId": "32f405ee-424e-49af-8d4a-60598393849e",
+  "mainCounter": 7,
+  "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "expectedSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "finaliserShaOk": true,
+  "queryReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+  "credentialId": "Fs0l0058q5CEadRw",
+  "probes": {
+    "rest_run_options": {
+      "status": 200,
+      "allow": "DELETE, GET, HEAD, PATCH"
+    },
+    "api_execute": {
+      "status": 405,
+      "allow": null
+    }
+  },
+  "apiKeyCreated": true,
+  "mechanismPlan": {
+    "type": "ephemeral-manual-workflow",
+    "description": "Create disposable inactive workflow with Manual Trigger + Code nodes named exactly like Finaliser queryReplacement dependencies + Postgres node copying installed Finaliser query/queryReplacement/credential. Execute via POST /rest/workflows/run (editor session). Delete ephemeral workflow after. Never PUT main OCD9It1uKFhOoWNF.",
+    "evaluatesRealExpressions": true,
+    "usesInstalledSql": true,
+    "usesTestCredential": true,
+    "traversesClaimOrCreate": false,
+    "activatesMain": false
+  }
+}

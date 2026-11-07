@@ -1,0 +1,56 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:12:00Z",
+  "verdict": "PASS",
+  "containersAfter": [
+    {
+      "name": "govsuite-rec008-test-rec008-postgres-1",
+      "status": "Up (healthy)",
+      "ports": "5432/tcp"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-mock-1",
+      "status": "Up",
+      "ports": null
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-n8n-1",
+      "status": "Up",
+      "ports": "5678/tcp"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-publish-1",
+      "status": "Up",
+      "ports": "127.0.0.1:5682->5682/tcp"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-ollama-1",
+      "status": "Up (unchanged)",
+      "ports": "11434/tcp"
+    }
+  ],
+  "liveUntouched": [
+    {
+      "name": "govsuite-n8n",
+      "status": "Up 2 hours",
+      "ports": "0.0.0.0:5680->5678/tcp"
+    },
+    {
+      "name": "govsuite-postgres",
+      "status": "Up 2 hours (healthy)",
+      "ports": "0.0.0.0:5433->5432/tcp"
+    }
+  ],
+  "healthz": {
+    "url": "http://127.0.0.1:5682/healthz",
+    "httpStatus": 200,
+    "body": { "status": "ok" },
+    "tool": "curl.exe",
+    "note": "HTTP 200 transport OK; body status=ok. Pas d'assertion métier workflow / CreateAppointment."
+  },
+  "distinctions": {
+    "httpTransport": "PASS",
+    "businessSuccess": "NOT_EVALUATED",
+    "liveIsolation": "PASS"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "R01-p4d-p4g1-coverage",
+  "family": "regression",
+  "mode": "offline",
+  "required": true,
+  "handler": "regression.markers",
+  "description": "Vérifie markers P4E/P4F et SHA nœuds critiques sur JSON VC9 after-.",
+  "expects": { "covers": ["P4D", "P4E", "P4G1", "VC9"] }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "K01-positive-oui",
+  "family": "confirmation",
+  "mode": "offline",
+  "matrixRef": "C2",
+  "required": true,
+  "handler": "confirm.affirmClaimGate",
+  "description": "Confirmation positive : slice offline AFFIRM→CLAIM gate sans exécuter POST CreateAppointment.",
+  "expects": {
+    "createDecision": "AFFIRM",
+    "attemptAction": "CLAIM",
+    "postExecuted": false,
+    "runtimeRequired": true,
+    "runtimeRequiredReason": "POST CreateAppointment + HTTP 201 + CONFIRMED DB"
+  }
+}

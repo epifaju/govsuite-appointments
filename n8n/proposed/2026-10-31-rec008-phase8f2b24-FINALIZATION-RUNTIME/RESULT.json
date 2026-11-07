@@ -1,0 +1,106 @@
+{
+  "phase": "8F-2B24",
+  "pass": false,
+  "verdict": "FAIL",
+  "goReconcile": "NO-GO",
+  "reason": "A1 token-absent still raises there is no parameter $3 in real n8n runtime despite installed || empty coerce; A2 with non-empty synthetic UUID token succeeds — empty segment stripping confirmed.",
+  "mechanism": {
+    "ok": true,
+    "isolatedExecutionWorks": true,
+    "observedDollar3OnAbsentToken": true,
+    "endpoint": "POST /rest/workflows/{ephemeralId}/run",
+    "payload": {
+      "triggerToStartFrom": {
+        "name": "Manual Trigger"
+      },
+      "destinationNode": {
+        "nodeName": "Finaliser état création",
+        "mode": "inclusive"
+      }
+    },
+    "proof": "Ephemeral inactive workflow created; ManualRunDto executed Finaliser with installed query+queryReplacement and TEST credential; n8n resolved named Code stubs; PostgreSQL node returned there is no parameter $3 when token absent despite || empty-string coerce — proving expressions were evaluated and empty $3 segment is still omitted by n8n Postgres queryReplacement binding.",
+    "dry": {
+      "tag": "MECHANISM_DRY",
+      "runStatus": 200,
+      "executionId": "26",
+      "execStatus": "error",
+      "dollar3Error": true,
+      "errorMessage": "there is no parameter $3",
+      "sessionAfter": null,
+      "queryReplacementInstalled": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+      "expressionsEvaluated": true,
+      "usedInstalledSql": true,
+      "usedTestCredential": true
+    }
+  },
+  "a1": {
+    "dollar3Error": true,
+    "sessionUnchanged": true,
+    "missionSuccess": false,
+    "diagnosticOk": true
+  },
+  "a2": {
+    "dollar3Error": false,
+    "missionSuccess": false,
+    "reference": "",
+    "token": "",
+    "cleaned": false,
+    "tokenNote": "Mission label TEST-TOKEN-NON-SECRET-002 mapped to synthetic UUID 22222222-2222-4222-8222-222222222222 because ai_conversation_state.token is uuid"
+  },
+  "noClaim": true,
+  "noPost": true,
+  "noMainPut": true,
+  "cleanup": {
+    "targetedId": "rec008-8f2b24-runtime-01",
+    "beforeDelete": "rec008-8f2b24-runtime-01",
+    "deleted": "rec008-8f2b24-runtime-01\nDELETE 1",
+    "remaining": "0",
+    "ok": false
+  },
+  "postflight": {
+    "main": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+      "versionCounter": 7,
+      "nodes": 134,
+      "edges": 137,
+      "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d"
+    },
+    "pg": "1|8|2|0",
+    "syntheticRemaining": "0",
+    "realSession": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "intent": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "hasToken": false,
+      "nom": "Dupont",
+      "telephone": "+33000000000",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "last_user_message": "oui"
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "histFp": "bc130f1e5d86669f9650ffa8b8f83cbb",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "proposedFix": {
+    "published": false,
+    "putExecuted": false,
+    "rationale": "n8n Postgres queryReplacement drops empty-string segments, so || '' still omits $3. Use a non-empty sentinel then NULLIF.",
+    "queryReplacementAfter": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '__ABSENT__') }}",
+    "queryTokenLineAfter": "token = NULLIF(NULLIF($3::text, ''), '__ABSENT__'),",
+    "note": "NON-PUBLISHED proposal only; requires distinct authorization to install."
+  },
+  "postflightOk": false
+}

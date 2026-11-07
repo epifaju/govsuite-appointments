@@ -1,0 +1,9 @@
+{
+  "id": "K03-await-no-reserve",
+  "family": "confirmation",
+  "mode": "offline",
+  "required": true,
+  "handler": "confirm.awaitNoReserve",
+  "description": "AWAIT_CREATE_CONFIRMATION + message ambigu → pas AFFIRM, aucun POST simulé.",
+  "expects": { "noCreateAppointmentPost": true }
+}

@@ -1,0 +1,114 @@
+{
+  "mission": "ASK-PRENOM-RUNTIME-013",
+  "phase": "seed-fixtures",
+  "at": "2026-11-05T20:35:00Z",
+  "env": "TEST",
+  "liveTouched": false,
+  "container": "govsuite-rec008-test-rec008-postgres-1",
+  "database": "govsuite_rec008_test",
+  "mutation": true,
+  "mutationScope": "UPSERT ai_conversation_state ON CONFLICT (session_id) — 3 ids only",
+  "tablesTouched": ["ai_conversation_state"],
+  "tablesUntouched": ["rendez_vous", "ai_appointment_attempt", "notifications", "creneaux", "services", "sites"],
+  "forbiddenActions": ["LIVE", "truncate", "mass DELETE", "attempt insert", "rdv/notification mutation"],
+  "schema": {
+    "table": "public.ai_conversation_state",
+    "uniqueKey": "session_id (ai_conversation_state_session_id_key)",
+    "verifiedVia": "\\d ai_conversation_state",
+    "clear": true
+  },
+  "preflight": {
+    "fingerprint": "1|11|4|0",
+    "fingerprintExpected": "1|11|4|0",
+    "fingerprintMatch": true,
+    "collisionCount": 0,
+    "collisionIdsChecked": [
+      "rec008-runtime013-r01-active",
+      "rec008-runtime013-r02-expired",
+      "rec008-runtime013-r03-resume"
+    ],
+    "collisionClear": true
+  },
+  "seedApplied": true,
+  "seedMode": "INSERT … ON CONFLICT (session_id) DO UPDATE",
+  "rowsAffected": 3,
+  "insertResult": "INSERT 0 3",
+  "sessions": [
+    {
+      "session_id": "rec008-runtime013-r01-active",
+      "intent": "CREATE_APPOINTMENT",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_PRENOM",
+      "nom_present": true,
+      "nom_len": 6,
+      "prenom_is_null": true,
+      "ttl_in_future": true,
+      "session_expired_now": false,
+      "expires_at_policy": "NOW() + INTERVAL '2 hours'",
+      "seed_ok": true
+    },
+    {
+      "session_id": "rec008-runtime013-r02-expired",
+      "intent": "GENERAL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_PRENOM",
+      "nom_present": true,
+      "nom_len": 6,
+      "prenom_is_null": true,
+      "ttl_in_future": false,
+      "session_expired_now": true,
+      "expires_at_policy": "NOW() - INTERVAL '1 hour'",
+      "note": "intent GENERAL (mission: GENERAL or CREATE) — free-text non-reprise path",
+      "seed_ok": true
+    },
+    {
+      "session_id": "rec008-runtime013-r03-resume",
+      "intent": "GENERAL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "conversation_step": "ASK_PRENOM",
+      "nom_present": true,
+      "nom_len": 6,
+      "prenom_is_null": true,
+      "ttl_in_future": false,
+      "session_expired_now": true,
+      "expires_at_policy": "NOW() - INTERVAL '1 hour'",
+      "note": "indépendant de r01/r02 ; même forme expired ASK_PRENOM pour reprise explicite",
+      "seed_ok": true
+    }
+  ],
+  "postflight": {
+    "fingerprint": "1|14|4|0",
+    "fingerprintExpectedAfterNetInsert": "1|14|4|0",
+    "fingerprintMatch": true,
+    "sessionDelta": "+3",
+    "rdvUnchanged": true,
+    "attemptsUnchanged": true,
+    "notificationsUnchanged": true,
+    "r01_seed_ok": true,
+    "r02_seed_ok": true,
+    "r03_seed_ok": true
+  },
+  "artifacts": {
+    "SEED.sql": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/SEED.sql",
+    "SELECT-HELPERS.sql": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/SELECT-HELPERS.sql",
+    "SEED-RESULT.json": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/SEED-RESULT.json"
+  },
+  "rollback": {
+    "type": "targeted DELETE 3 session_id only",
+    "sql": "DELETE FROM public.ai_conversation_state WHERE session_id IN ('rec008-runtime013-r01-active','rec008-runtime013-r02-expired','rec008-runtime013-r03-resume');",
+    "executed": false,
+    "note": "Commented in SEED.sql; run only on explicit authorization"
+  },
+  "pii": {
+    "realCitizenData": false,
+    "syntheticNom": "Dupont (fixture synthetic)",
+    "reportsContainPlainPii": false,
+    "proofUsesBooleansAndLengths": true
+  },
+  "risks": [
+    "Sessions count permanently +3 until targeted rollback",
+    "Re-running SEED.sql is idempotent via ON CONFLICT DO UPDATE (resets expires_at clocks)",
+    "No locks beyond row-level UPSERT on 3 new keys; no impact on existing 11 sessions"
+  ],
+  "verdict": "PASS"
+}

@@ -1,0 +1,41 @@
+{
+  "mission": "TEST-INSTALL-010",
+  "at": "2026-11-05T20:03:00Z",
+  "dockerMutate": false,
+  "composeProject": "govsuite-rec008-test",
+  "composeStatus": "running(1)",
+  "note": "Seule ollama Up ; n8n/postgres/mock/publish Exited — port hôte 5682 non servi",
+  "containers": [
+    {
+      "name": "govsuite-rec008-test-rec008-ollama-1",
+      "status": "Up",
+      "ports": "11434/tcp"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-n8n-1",
+      "status": "Exited (255)",
+      "ports": "5678/tcp (interne, non exposé hôte tant que exited)"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-postgres-1",
+      "status": "Exited (255)",
+      "ports": "5432/tcp"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-mock-1",
+      "status": "Exited (255)",
+      "ports": null
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-publish-1",
+      "status": "Exited (255)",
+      "ports": "127.0.0.1:5682->5682/tcp (mapping présent mais conteneur down)"
+    }
+  ],
+  "otherN8nOnHost": [
+    { "name": "govsuite-n8n", "ports": "0.0.0.0:5680->5678/tcp", "note": "hors cible 010 — ne pas confondre avec TEST 5682" },
+    { "name": "adgendoc-n8n-1", "ports": "127.0.0.1:5681->5678/tcp" },
+    { "name": "econsulat_n8n", "ports": "0.0.0.0:5678->5678/tcp" }
+  ],
+  "liveTouch": false
+}

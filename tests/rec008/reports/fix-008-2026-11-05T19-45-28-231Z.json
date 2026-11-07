@@ -1,0 +1,277 @@
+{
+  "suite": "explicit-resume-fix-008",
+  "at": "2026-11-05T19:45:28.231Z",
+  "durationMs": 310,
+  "verdict": "PASS",
+  "candidateSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "expectedCandidateSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "originalSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "failedIds": [],
+  "counts": {
+    "PASS": 16
+  },
+  "results": [
+    {
+      "id": "FIX008-fingerprint",
+      "verdict": "PASS",
+      "reason": "Fingerprint candidat FIX-008 OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "fingerprint",
+        "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+        "fileSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c"
+      }
+    },
+    {
+      "id": "FIX008-S01",
+      "verdict": "PASS",
+      "reason": "S01 active Camille → ASK_EMAIL OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S01"
+      }
+    },
+    {
+      "id": "FIX008-S02",
+      "verdict": "PASS",
+      "reason": "S02 expired Camille → session_expired OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S02"
+      }
+    },
+    {
+      "id": "FIX008-S03",
+      "verdict": "PASS",
+      "reason": "S03 expired resume → ASK_PRENOM + prenom null OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S03",
+        "resumeMessage": "reprendre",
+        "managed": {
+          "conversationStep": "ASK_PRENOM",
+          "prenom": null,
+          "refreshSessionTtl": true
+        },
+        "inviteTextPreview": "Merci. Quel est votre **prénom** ?"
+      }
+    },
+    {
+      "id": "FIX008-S03-variants",
+      "verdict": "PASS",
+      "reason": "S03 allowlist variants OK (sans élargissement)",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S03-allowlist",
+        "variants": [
+          {
+            "message": "reprendre",
+            "verdict": "PASS",
+            "step": "ASK_PRENOM",
+            "prenom": null
+          },
+          {
+            "message": "reprendre ma demande",
+            "verdict": "PASS",
+            "step": "ASK_PRENOM",
+            "prenom": null
+          },
+          {
+            "message": "continuer",
+            "verdict": "PASS",
+            "step": "ASK_PRENOM",
+            "prenom": null
+          },
+          {
+            "message": "continuer ma demande",
+            "verdict": "PASS",
+            "step": "ASK_PRENOM",
+            "prenom": null
+          }
+        ],
+        "nonAllowlist": "je veux reprendre"
+      }
+    },
+    {
+      "id": "FIX008-S04",
+      "verdict": "PASS",
+      "reason": "S04 ASK_NOM resume — nom non capturé",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S04"
+      }
+    },
+    {
+      "id": "FIX008-S05",
+      "verdict": "PASS",
+      "reason": "S05 ASK_EMAIL resume — email non capturé",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S05"
+      }
+    },
+    {
+      "id": "FIX008-S06",
+      "verdict": "PASS",
+      "reason": "S06 ASK_TELEPHONE resume — tel non capturé",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S06"
+      }
+    },
+    {
+      "id": "FIX008-S07",
+      "verdict": "PASS",
+      "reason": "S07 ASK_CREATE_SERVICE resume — step conservé / service null",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S07"
+      }
+    },
+    {
+      "id": "FIX008-S08",
+      "verdict": "PASS",
+      "reason": "S08 confirmation/abandon non-régression OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S08"
+      }
+    },
+    {
+      "id": "FIX008-S09",
+      "verdict": "PASS",
+      "reason": "S09 modify field OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S09"
+      }
+    },
+    {
+      "id": "FIX008-S10",
+      "verdict": "PASS",
+      "reason": "S10 CLAIM/POST/UNCERTAIN no regress OK",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "runtimeRequired": true,
+        "suite": "FIX-008",
+        "evidenceLimits": "VM jsCode only — HTTP réel, TTL PG, CLAIM/POST mock counters hors périmètre offline.",
+        "scenario": "S10"
+      }
+    },
+    {
+      "id": "FIX008-N-original-S03",
+      "verdict": "PASS",
+      "reason": "Negative OK — original VC9 fails fixed S03 (capture reprendre)",
+      "assertionFails": [
+        "neg_orig_s03_step_ask_prenom",
+        "neg_orig_s03_prenom_null",
+        "neg_orig_s03_prenom_not_message",
+        "neg_orig_s03_save_step_kept",
+        "neg_orig_s03_invite_mentions_prenom",
+        "neg_orig_s03_invite_step"
+      ],
+      "observed": {
+        "simulation": true,
+        "suite": "FIX-008",
+        "scenario": "N-original-S03-fail",
+        "innerVerdict": "FAIL",
+        "managed": {
+          "conversationStep": "ASK_EMAIL",
+          "prenom": "reprendre",
+          "refreshSessionTtl": true
+        }
+      }
+    },
+    {
+      "id": "FIX008-N-candidate-S03",
+      "verdict": "PASS",
+      "reason": "Negative OK — candidate passes fixed S03",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "suite": "FIX-008",
+        "scenario": "N-candidate-S03-pass",
+        "innerVerdict": "PASS"
+      }
+    },
+    {
+      "id": "FIX008-N-strip-guard",
+      "verdict": "PASS",
+      "reason": "Negative OK — stripped early-return fails fixed S03",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "suite": "FIX-008",
+        "scenario": "N-stripped-early-return-fail",
+        "innerVerdict": "FAIL",
+        "managed": {
+          "conversationStep": "ASK_EMAIL",
+          "prenom": "reprendre",
+          "refreshSessionTtl": true
+        }
+      }
+    },
+    {
+      "id": "N-no-regress-S01-S02-S07",
+      "verdict": "PASS",
+      "reason": "Negative OK — S01/S02/S07 no regress on candidate",
+      "assertionFails": [],
+      "observed": {
+        "simulation": true,
+        "suite": "FIX-008",
+        "scenario": "N-no-regress-S01-S02-S07"
+      }
+    }
+  ],
+  "securityViolations": [],
+  "notes": [
+    "simulation:true — PASS technique offline ≠ PASS runtime",
+    "Candidat non installé TEST",
+    "Workflow VC9 original inchangé"
+  ]
+}

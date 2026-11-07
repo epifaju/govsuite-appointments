@@ -1,0 +1,91 @@
+{
+  "phase": "8F-2B49-P4D",
+  "at": "2026-11-01T20:46:38.694Z",
+  "liveVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+  "liveVersionCounter": 8,
+  "liveNodes": 134,
+  "exportNodes": 134,
+  "rows": [
+    {
+      "name": "Parser intention",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "c423a6322fdb2e403f117d116cd712475731b20c969ea4964e561321b7f3d160",
+      "exportSha": "c423a6322fdb2e403f117d116cd712475731b20c969ea4964e561321b7f3d160",
+      "identical": true,
+      "liveLen": 18842,
+      "exportLen": 18842
+    },
+    {
+      "name": "Fusionner état conversation",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1",
+      "exportSha": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1",
+      "identical": true,
+      "liveLen": 24518,
+      "exportLen": 24518
+    },
+    {
+      "name": "Gérer collecte progressive",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "55c0542357683d610fd80950367051b25caa43473e1c2b7f744d475cb4e0886d",
+      "exportSha": "55c0542357683d610fd80950367051b25caa43473e1c2b7f744d475cb4e0886d",
+      "identical": true,
+      "liveLen": 26724,
+      "exportLen": 26724
+    },
+    {
+      "name": "Sauvegarder état conversation",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "424f563c0404486e544d9dec1b162bf757f1f71461d7d3cfb83ef47bede96d50",
+      "exportSha": "424f563c0404486e544d9dec1b162bf757f1f71461d7d3cfb83ef47bede96d50",
+      "identical": true,
+      "liveLen": 6404,
+      "exportLen": 6404
+    },
+    {
+      "name": "Joindre tentative de session",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "e084cbd790b7ee8bba6845bfc973a11b869c3beedaf42f9f41ce47396664b70d",
+      "exportSha": "e084cbd790b7ee8bba6845bfc973a11b869c3beedaf42f9f41ce47396664b70d",
+      "identical": true,
+      "liveLen": 618,
+      "exportLen": 618
+    },
+    {
+      "name": "Router intention",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "52e20dc8f0692e184bb6e59dab7ed10126442347bfa11f860daf6d3d2f70e17f",
+      "exportSha": "52e20dc8f0692e184bb6e59dab7ed10126442347bfa11f860daf6d3d2f70e17f",
+      "identical": true,
+      "liveLen": 2501,
+      "exportLen": 2501
+    },
+    {
+      "name": "Comprendre la demande",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "830d7ec674fc79adf5edbd92793e27a227290b11f73f751cd355af7197d33dba",
+      "exportSha": "830d7ec674fc79adf5edbd92793e27a227290b11f73f751cd355af7197d33dba",
+      "identical": true,
+      "liveLen": 1988,
+      "exportLen": 1988
+    },
+    {
+      "name": "Finaliser état création",
+      "livePresent": true,
+      "exportPresent": true,
+      "liveSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "exportSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "identical": true,
+      "liveLen": 906,
+      "exportLen": 906
+    }
+  ],
+  "allCriticalIdentical": true
+}

@@ -1,0 +1,39 @@
+{
+  "ok": false,
+  "stopped": true,
+  "mission": "TEST-INSTALL-010",
+  "phase": "FIX008-TEST-INSTALL",
+  "workflowId": "OCD9It1uKFhOoWNF",
+  "at": "2026-11-05T20:03:00Z",
+  "reason": "connectivity",
+  "reasonCodes": [
+    "connectivity",
+    "test-stack-down"
+  ],
+  "detail": {
+    "baseUrl": "http://127.0.0.1:5682",
+    "tcpTestSucceeded": false,
+    "healthz": "fail",
+    "n8nTestContainer": "absent",
+    "dockerPsNote": "conteneur n8n TEST rec008 (port 5682) ABSENT de docker ps",
+    "dockerMutate": false,
+    "putAuthorized": false,
+    "liveTouched": false,
+    "retries": 0
+  },
+  "halt": true,
+  "nextActionsForbidden": [
+    "PUT workflow",
+    "activate / publish / enable webhook",
+    "docker compose up/down/recreate",
+    "POST CreateAppointment / chat métier",
+    "SQL métier",
+    "LIVE"
+  ],
+  "resumeRequires": [
+    "stack TEST n8n joignable sur 127.0.0.1:5682 (autorisation Docker distincte si besoin)",
+    "préflight re-mesuré avec preflightOk=true",
+    "autorisation humaine PUT distincte"
+  ],
+  "verdict": "FAIL"
+}

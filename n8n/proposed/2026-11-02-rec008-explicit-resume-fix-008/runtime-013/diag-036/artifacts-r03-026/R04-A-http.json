@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "status": 200,
+  "elapsedMs": 44939,
+  "type": "create_appointment_question",
+  "textPreview": "{\"sessionId\":\"rec008-r04a-035-active-ask-email\",\"conversationStep\":\"ASK_TELEPHONE\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":\"CREATE_APPOINTMENT\",\"telephone\":null,\"missing\":[\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":true,\"emailValide\":true,\"telephoneValide\":false},\"type\":\"create_appointment_ques",
+  "aborted": false,
+  "error": null,
+  "transportError": null,
+  "causeCode": null,
+  "timeoutMs": 180000,
+  "retried": false,
+  "messageClass": "email_like_valid_synthetic"
+}

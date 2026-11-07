@@ -1,0 +1,41 @@
+{
+  "ts": "2026-11-06T19:02:00.000Z",
+  "readonly": true,
+  "liveProbed": false,
+  "fingerprint": "1|14|4|0",
+  "note": "SELECT-only postcheck after R02 campaign; no TTL refresh; no fixture cleanup",
+  "r01": {
+    "session_id": "rec008-runtime013-r01-active",
+    "conversation_step": "ASK_EMAIL",
+    "pending_action": "CREATE_APPOINTMENT",
+    "prenom_null": false,
+    "prenom_len": 7,
+    "ttl_future": true,
+    "last_user_message_len": 7,
+    "has_camille": true,
+    "matches_baseline_post024": true
+  },
+  "r02": {
+    "session_id": "rec008-runtime013-r02-expired",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "prenom_null": true,
+    "prenom_len": 0,
+    "ttl_future": false,
+    "last_user_message_len": 7,
+    "has_camille_msg": true,
+    "expires_at": "2026-11-05 22:05:47.184139+01",
+    "expires_unchanged_vs_before": true
+  },
+  "r03": {
+    "session_id": "rec008-runtime013-r03-resume",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "prenom_null": true,
+    "prenom_len": 0,
+    "ttl_future": false,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "matches_baseline": true
+  }
+}

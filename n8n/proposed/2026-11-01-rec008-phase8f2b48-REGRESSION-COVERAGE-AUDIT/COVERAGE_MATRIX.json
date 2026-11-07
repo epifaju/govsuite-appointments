@@ -1,0 +1,454 @@
+{
+  "phase": "8F-2B48",
+  "mode": "offline-coverage-audit",
+  "note": "Statuts dérivés uniquement des rapports et artefacts existants. Un test SQL réussi ne valide pas un scénario conversationnel non exécuté.",
+  "legend": {
+    "PASS": "Preuve de type correspondant au scénario, verdict rapport PASS",
+    "FAIL": "Exécuté avec échec non corrigé depuis",
+    "PARTIAL": "Preuve d'un autre type ou couverture incomplète",
+    "NOT_TESTED": "Aucune exécution conversationnelle / mock dédiée documentée",
+    "BLOCKED": "Bloqué par précondition absente ou dépendance non levée"
+  },
+  "requirements": [
+    {
+      "id": "CONV-01",
+      "family": "Conversation",
+      "description": "Collecte service/site/date",
+      "risk": "MEDIUM",
+      "phases": ["8F-2B28", "8F-2B37"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Réutiliser en précondition des phases suivantes"
+    },
+    {
+      "id": "CONV-02",
+      "family": "Conversation",
+      "description": "Sélection de créneau",
+      "risk": "MEDIUM",
+      "phases": ["8F-2B29", "8F-2B38"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Non-régression légère si graphe Finaliser change"
+    },
+    {
+      "id": "CONV-03",
+      "family": "Conversation",
+      "description": "Collecte nom/prénom/e-mail/téléphone",
+      "risk": "MEDIUM",
+      "phases": ["8F-2B30", "8F-2B31", "8F-2B32", "8F-2B33", "8F-2B39", "8F-2B40", "8F-2B41", "8F-2B42"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Couvert ; dernière vague 8F-2B39–42"
+    },
+    {
+      "id": "CONV-04",
+      "family": "Conversation",
+      "description": "Récapitulatif obligatoire + INSERT tentative",
+      "risk": "HIGH",
+      "phases": ["8F-2B11", "8F-2B19", "8F-2B33", "8F-2B42"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Précondition des scénarios confirmation"
+    },
+    {
+      "id": "CONV-05",
+      "family": "Conversation",
+      "description": "Confirmation oui exacte → CLAIM→POST→CONFIRMED→Finaliser HTTP 200",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B20", "8F-2B34", "8F-2B43", "8F-2B45", "8F-2B46", "8F-2B47"],
+      "evidenceTypes": ["conversational-e2e", "static-audit", "offline-unit"],
+      "status": "PASS",
+      "nextAction": "Réutiliser verdict.js 8F-2B47 pour scripts futurs ; ne pas ré-exécuter sans autorisation"
+    },
+    {
+      "id": "CONV-06",
+      "family": "Conversation",
+      "description": "Refus non → ABANDONED, 0 POST",
+      "risk": "HIGH",
+      "phases": ["8F-2B12"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Non-régression prioritaire après changements Parser/Décider"
+    },
+    {
+      "id": "CONV-07",
+      "family": "Conversation",
+      "description": "Modification des données après récapitulatif",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B49 proposée (modifier le nom)"
+    },
+    {
+      "id": "CONV-08",
+      "family": "Conversation",
+      "description": "Message ambigu (peut-être) après récapitulatif",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B50 proposée"
+    },
+    {
+      "id": "CONV-09",
+      "family": "Conversation",
+      "description": "Confirmation hors contexte (oui hors AWAIT)",
+      "risk": "HIGH",
+      "phases": ["8F-2B13"],
+      "evidenceTypes": ["conversational-e2e"],
+      "status": "PARTIAL",
+      "nextAction": "8F-2B13 couvre oui après ABANDONED ; manque oui pendant ASK_NOM (C9 plan 8F-2A)"
+    },
+    {
+      "id": "IDEM-01",
+      "family": "Idempotence",
+      "description": "Création clé CSPRNG par tentative",
+      "risk": "HIGH",
+      "phases": ["8F-2B11", "8F-2B42", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional", "static-audit"],
+      "status": "PASS",
+      "nextAction": "Contrôle présence/longueur/empreinte déjà dans scripts"
+    },
+    {
+      "id": "IDEM-02",
+      "family": "Idempotence",
+      "description": "Conservation du corps figé",
+      "risk": "HIGH",
+      "phases": ["8F-2B20", "8F-2B45", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "Vérifier empreinte avant/après claim"
+    },
+    {
+      "id": "IDEM-03",
+      "family": "Idempotence",
+      "description": "Un seul CLAIM",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B45", "8D", "8D2"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional", "sql-concurrency"],
+      "status": "PASS",
+      "nextAction": "Double oui conversationnel toujours NOT_TESTED (IDEM-05/06)"
+    },
+    {
+      "id": "IDEM-04",
+      "family": "Idempotence",
+      "description": "Un seul POST CreateAppointment",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B45"],
+      "evidenceTypes": ["conversational-e2e", "mock-http"],
+      "status": "PASS",
+      "nextAction": "Baseline mock POST=1 ; tout nouveau POST doit être Δ documenté"
+    },
+    {
+      "id": "IDEM-05",
+      "family": "Idempotence",
+      "description": "Double oui séquentiel après CONFIRMED",
+      "risk": "CRITICAL",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B51 — prioritaire"
+    },
+    {
+      "id": "IDEM-06",
+      "family": "Idempotence",
+      "description": "Double oui concurrent",
+      "risk": "CRITICAL",
+      "phases": ["8D2"],
+      "evidenceTypes": ["sql-concurrency"],
+      "status": "PARTIAL",
+      "nextAction": "Course SQL prouvée ; E2E chat concurrent phase 8F-2B52"
+    },
+    {
+      "id": "IDEM-07",
+      "family": "Idempotence",
+      "description": "REPLAYED HTTP 200",
+      "risk": "HIGH",
+      "phases": ["8F-2B21"],
+      "evidenceTypes": ["offline-unit"],
+      "status": "PARTIAL",
+      "nextAction": "T3 hors ligne PASS ; E2E mock replayed NOT_TESTED — 8F-2B53"
+    },
+    {
+      "id": "IDEM-08",
+      "family": "Idempotence",
+      "description": "KEY_CONFLICT HTTP 409",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B56 mock conflict"
+    },
+    {
+      "id": "IDEM-09",
+      "family": "Idempotence",
+      "description": "SLOT_UNAVAILABLE HTTP 409",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B55 mock slot"
+    },
+    {
+      "id": "ERR-01",
+      "family": "Erreurs",
+      "description": "HTTP 400 → REJECTED",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase 8F-2B57 (si scénario mock disponible)"
+    },
+    {
+      "id": "ERR-02",
+      "family": "Erreurs",
+      "description": "HTTP 500 → UNCERTAIN",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B21"],
+      "evidenceTypes": ["offline-unit", "static-audit"],
+      "status": "PARTIAL",
+      "nextAction": "Classement statique + T offline ; E2E mock error — 8F-2B54"
+    },
+    {
+      "id": "ERR-03",
+      "family": "Erreurs",
+      "description": "Timeout → UNCERTAIN",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B20"],
+      "evidenceTypes": ["static-audit"],
+      "status": "PARTIAL",
+      "nextAction": "Branche documentée ; E2E mock timeout — 8F-2B54"
+    },
+    {
+      "id": "ERR-04",
+      "family": "Erreurs",
+      "description": "Échec réseau avant réception",
+      "risk": "HIGH",
+      "phases": ["8F-2B43", "8F-2B44"],
+      "evidenceTypes": ["conversational-e2e", "static-audit"],
+      "status": "PARTIAL",
+      "nextAction": "Transport client échoué observé ; état AWAITING conservé ; pas de simulation mock métier"
+    },
+    {
+      "id": "ERR-05",
+      "family": "Erreurs",
+      "description": "Échec réseau après réception possible",
+      "risk": "CRITICAL",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Phase dédiée après instrumentation ; risque double POST"
+    },
+    {
+      "id": "ERR-06",
+      "family": "Erreurs",
+      "description": "Réponse non reconnue → UNCERTAIN",
+      "risk": "HIGH",
+      "phases": ["8F-2B20"],
+      "evidenceTypes": ["static-audit"],
+      "status": "PARTIAL",
+      "nextAction": "Contrat classement documenté ; E2E absent"
+    },
+    {
+      "id": "ERR-07",
+      "family": "Erreurs",
+      "description": "État UNCERTAIN persistant",
+      "risk": "CRITICAL",
+      "phases": ["8D", "8D2"],
+      "evidenceTypes": ["sql-transactional", "sql-concurrency"],
+      "status": "PARTIAL",
+      "nextAction": "SQL PASS ; E2E conversationnel NOT_TESTED"
+    },
+    {
+      "id": "ERR-08",
+      "family": "Erreurs",
+      "description": "Récupération après lease expiré",
+      "risk": "CRITICAL",
+      "phases": ["8D", "8D2"],
+      "evidenceTypes": ["sql-transactional", "sql-concurrency"],
+      "status": "PARTIAL",
+      "nextAction": "Course C bail expiré SQL PASS ; E2E chat 8F-2B58"
+    },
+    {
+      "id": "LIFE-01",
+      "family": "Cycle de vie",
+      "description": "AWAITING_CONFIRMATION",
+      "risk": "HIGH",
+      "phases": ["8F-2B11", "8F-2B42", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "OK"
+    },
+    {
+      "id": "LIFE-02",
+      "family": "Cycle de vie",
+      "description": "SUBMITTING",
+      "risk": "HIGH",
+      "phases": ["8D", "8D2", "8F-2B45"],
+      "evidenceTypes": ["sql-transactional", "sql-concurrency", "conversational-e2e"],
+      "status": "PARTIAL",
+      "nextAction": "Transition implicite observée via claim ; état intermédiaire rarement snapshoté en E2E"
+    },
+    {
+      "id": "LIFE-03",
+      "family": "Cycle de vie",
+      "description": "CONFIRMED",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B45", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "2 lignes CONFIRMED en baseline TEST"
+    },
+    {
+      "id": "LIFE-04",
+      "family": "Cycle de vie",
+      "description": "ABANDONED",
+      "risk": "HIGH",
+      "phases": ["8F-2B12", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "OK"
+    },
+    {
+      "id": "LIFE-05",
+      "family": "Cycle de vie",
+      "description": "REJECTED",
+      "risk": "HIGH",
+      "phases": ["8D"],
+      "evidenceTypes": ["sql-transactional"],
+      "status": "NOT_TESTED",
+      "nextAction": "Fonction SQL de clôture REJECTED existe ; E2E HTTP 400/409 KEY absent"
+    },
+    {
+      "id": "LIFE-06",
+      "family": "Cycle de vie",
+      "description": "SLOT_UNAVAILABLE",
+      "risk": "HIGH",
+      "phases": [],
+      "evidenceTypes": [],
+      "status": "NOT_TESTED",
+      "nextAction": "Lié IDEM-09 / 8F-2B55"
+    },
+    {
+      "id": "LIFE-07",
+      "family": "Cycle de vie",
+      "description": "EXPIRED",
+      "risk": "HIGH",
+      "phases": ["8F-2B35", "8F-2B36", "8D"],
+      "evidenceTypes": ["conversational-e2e", "static-audit", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "OK"
+    },
+    {
+      "id": "LIFE-08",
+      "family": "Cycle de vie",
+      "description": "Purge clé et corps figé",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B12", "8F-2B36", "8F-2B45", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "Vérifié ABD/EXP/CONF"
+    },
+    {
+      "id": "LIFE-09",
+      "family": "Cycle de vie",
+      "description": "Absence de double réservation",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B45"],
+      "evidenceTypes": ["conversational-e2e", "mock-http", "integrity"],
+      "status": "PARTIAL",
+      "nextAction": "1 POST / 1 rdv mock prouvé une fois ; double confirmation E2E manquante"
+    },
+    {
+      "id": "LIFE-10",
+      "family": "Cycle de vie",
+      "description": "Nettoyage de session après CONFIRMED",
+      "risk": "HIGH",
+      "phases": ["8F-2B27", "8F-2B45"],
+      "evidenceTypes": ["conversational-e2e", "integrity"],
+      "status": "PASS",
+      "nextAction": "OK (réconciliation 8F-2B27 + succès 8F-2B45)"
+    },
+    {
+      "id": "LIFE-11",
+      "family": "Cycle de vie",
+      "description": "Préservation des tentatives historiques",
+      "risk": "HIGH",
+      "phases": ["8F-2B45", "8F-2B47"],
+      "evidenceTypes": ["integrity"],
+      "status": "PASS",
+      "nextAction": "Baseline 4 tentatives / 0 ouverte"
+    },
+    {
+      "id": "SEC-01",
+      "family": "Sécurité",
+      "description": "Isolation TEST/LIVE",
+      "risk": "CRITICAL",
+      "phases": ["8E-2B1", "8E-2B2", "8F-2B45"],
+      "evidenceTypes": ["static-audit", "integrity"],
+      "status": "PASS",
+      "nextAction": "Pré/postflight fingerprint LIVE obligatoire"
+    },
+    {
+      "id": "SEC-02",
+      "family": "Sécurité",
+      "description": "Permissions PostgreSQL minimales",
+      "risk": "HIGH",
+      "phases": ["8B", "8C", "8E-2B2"],
+      "evidenceTypes": ["static-audit"],
+      "status": "PASS",
+      "nextAction": "REVOKE/GRANT documentés ; pas de GRANT LIVE dans TEST"
+    },
+    {
+      "id": "SEC-03",
+      "family": "Sécurité",
+      "description": "Absence de fuite de token",
+      "risk": "HIGH",
+      "phases": ["8F-2B21", "8F-2B45", "8F-2B47"],
+      "evidenceTypes": ["offline-unit", "conversational-e2e"],
+      "status": "PASS",
+      "nextAction": "Contrôles token absents dans réponses/logs"
+    },
+    {
+      "id": "SEC-04",
+      "family": "Sécurité",
+      "description": "Absence de fuite de clé d'idempotence",
+      "risk": "HIGH",
+      "phases": ["8F-2B11", "8F-2B45", "8D"],
+      "evidenceTypes": ["conversational-e2e", "sql-transactional"],
+      "status": "PASS",
+      "nextAction": "Logs utilisent empreintes tronquées"
+    },
+    {
+      "id": "SEC-05",
+      "family": "Sécurité",
+      "description": "Absence de données personnelles dans les logs",
+      "risk": "MEDIUM",
+      "phases": ["8F-2B47"],
+      "evidenceTypes": ["offline-unit", "static-audit"],
+      "status": "PARTIAL",
+      "nextAction": "Fixtures 8F-2B47 assainies ; auditer scripts run.js historiques si réutilisés"
+    },
+    {
+      "id": "SEC-06",
+      "family": "Sécurité",
+      "description": "Absence d'exécution LIVE",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B10-47"],
+      "evidenceTypes": ["integrity"],
+      "status": "PASS",
+      "nextAction": "Fingerprint a2dea067… stable"
+    },
+    {
+      "id": "SEC-07",
+      "family": "Sécurité",
+      "description": "Désactivation après chaque test",
+      "risk": "CRITICAL",
+      "phases": ["8F-2B12", "8F-2B45"],
+      "evidenceTypes": ["conversational-e2e", "integrity"],
+      "status": "PASS",
+      "nextAction": "Préflight 8F-2B48 : active=false"
+    }
+  ]
+}

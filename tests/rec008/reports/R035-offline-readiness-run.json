@@ -1,0 +1,48 @@
+{
+  "mission": "R04-RUNTIME-READINESS-035",
+  "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+  "expectGerer": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+  "source": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-034/after-OCD9It1uKFhOoWNF.json",
+  "passed": 9,
+  "failed": 0,
+  "results": [
+    {
+      "name": "pin installed Gerer SHA 44a7064d",
+      "ok": true
+    },
+    {
+      "name": "R04-A valid → ASK_TELEPHONE",
+      "ok": true
+    },
+    {
+      "name": "R04-B invalid stays ASK_EMAIL",
+      "ok": true
+    },
+    {
+      "name": "R04-C expired no email capture",
+      "ok": true
+    },
+    {
+      "name": "R01 non-regression ASK_PRENOM active",
+      "ok": true
+    },
+    {
+      "name": "R02 non-regression ASK_PRENOM expired",
+      "ok": true
+    },
+    {
+      "name": "R03 non-regression explicit resume",
+      "ok": true
+    },
+    {
+      "name": "runner stub contract offline (no network)",
+      "ok": true
+    },
+    {
+      "name": "hygiene scanner on redacted R04 sample",
+      "ok": true
+    }
+  ],
+  "r04Runtime": "NOT_AUTHORIZED",
+  "live": "NO-GO"
+}

@@ -1,0 +1,43 @@
+{
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+  "versionCounter": 7,
+  "nodes": 134,
+  "edges": 137,
+  "activeIds": [],
+  "chatPublic": true,
+  "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+  "postgres": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "ollama": "dxzHqBq8Q60R8BOz",
+  "urlsOk": true,
+  "networkOk": true,
+  "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "pg": "1|8|2|0",
+  "statuses": "ABANDONED|1\nCONFIRMED|1",
+  "open": "0",
+  "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT|CREATE_APPOINTMENT|Dupont|+33000000000|f",
+  "attempt": "ad71a155-4d3a-45b9-8445-2ec98377feaa|CONFIRMED|REC008-MOCK-0001|55555555-5555-4555-8555-555555555555|f|f||70be27adb09e1877e38f17d0c85b4f5156bd0b5065befc70d0aedf28a5534ce8|2026-10-31 16:14:05.717271+01|2026-10-31 16:14:06.425766+01",
+  "abandoned": "8ae63b62-9f87-4a15-9011-4554b7766918|ABANDONED|f|f",
+  "mock": {
+    "scenario": "created",
+    "total": 4,
+    "byPath": {
+      "GET /services 200": 1,
+      "GET /appointments/availability 200": 1,
+      "GET /_meta 404": 1,
+      "POST /appointments 201": 1
+    },
+    "distinctKeys": 1
+  },
+  "postAppointments": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  },
+  "ok": true
+}

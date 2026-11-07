@@ -1,0 +1,24 @@
+{
+  "ready": true,
+  "reason": "ok",
+  "expectedModel": "qwen2.5:1.5b",
+  "modelPresent": true,
+  "expiresAt": "2026-11-06T18:53:56.271837419Z",
+  "expiresInMs": 556750,
+  "memOk": true,
+  "memNote": "free_mem_ok:504658657.28",
+  "warmVerified": true,
+  "chatTimeoutMs": 180000,
+  "http200NotEnough": true,
+  "psError": null,
+  "memSample": {
+    "memUsageBytes": 1105954078.72,
+    "memLimitBytes": 1610612736,
+    "raw": "1.03GiB / 1.5GiB"
+  },
+  "timeoutPolicy": {
+    "chatTimeoutMs": 180000,
+    "basis": "warm_verified_via_api_ps"
+  },
+  "inferencePerformed": false
+}

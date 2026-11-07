@@ -1,0 +1,11 @@
+{
+  "tag": "fatal",
+  "ts": "2026-11-06T17:51:31.983Z",
+  "activatedFlag": false,
+  "verified": false,
+  "safeDeclared": false,
+  "note": "Webhooks cleared alone never proves server idle",
+  "issues": [
+    "no session — cannot verify REST state"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "id": "R02-RUNTIME-025",
+  "shortId": "R025",
+  "title": "QA — R02 session expirée + Camille → session_expired, prenom null, pas ASK_EMAIL",
+  "mode": "offline-post-campaign-review",
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "campaignResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r02-025/campaign-result.json",
+    "r02Result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r02-025/R02-result.json",
+    "r02Http": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r02-025/R02-http.json",
+    "r02After": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r02-025/R02-after.json",
+    "postflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r02-025/safety-postflight-success.json",
+    "assertFn": "assertR02 in n8n/proposed/.../runtime-013/run-runtime-013.js"
+  },
+  "observed": {
+    "campaignGlobalVerdict": "PASS",
+    "r02Verdict": "PASS",
+    "httpStatus": 200,
+    "httpType": "session_expired",
+    "beforeStep": "ASK_PRENOM",
+    "afterStep": "ASK_PRENOM",
+    "afterPrenom": null,
+    "prenomIsNull": true,
+    "ttlAfter": false,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "retried": false,
+    "liveTouched": false,
+    "fingerprintFinal": "1|14|4|0"
+  },
+  "assertions": {
+    "R02-H01": {
+      "assert": "sendMessage HTTP 200 + type session_expired",
+      "verdict": "PASS",
+      "evidence": ["httpStatus=200", "httpType=session_expired", "retried=false"]
+    },
+    "R02-M01": {
+      "assert": "prenom reste null (pas de capture Camille)",
+      "verdict": "PASS",
+      "evidence": ["afterPrenom=null", "prenomIsNull=true"]
+    },
+    "R02-M02": {
+      "assert": "conversation_step reste ASK_PRENOM (pas ASK_EMAIL)",
+      "verdict": "PASS",
+      "evidence": ["beforeStep=ASK_PRENOM", "afterStep=ASK_PRENOM"]
+    },
+    "R02-M03": {
+      "assert": "TTL non renouvelé",
+      "verdict": "PASS",
+      "evidence": ["ttlAfter=false", "expiresAt inchangé"]
+    },
+    "R02-M05": {
+      "assert": "aucun POST CreateAppointment",
+      "verdict": "PASS",
+      "evidence": ["mockPostsDelta=0", "mockClaimsDelta=0"]
+    },
+    "zeroRetry": {
+      "assert": "aucun retry automatique",
+      "verdict": "PASS",
+      "evidence": ["retried=false", "un seul message Camille"]
+    }
+  },
+  "httpVsBusiness": {
+    "httpTransport": "PASS (HTTP 200)",
+    "businessSuccess": "PASS (session_expired ; prenom null ; step ASK_PRENOM ; Δ POST=0)",
+    "note": "HTTP 200 seul ne suffit pas ; ici transport et métier concordent (refus de capture sur session expirée)"
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "R02-RUNTIME-025 offline QA review",
+    "reason": "Contrat R02 satisfait : type=session_expired, prenom=null, step=ASK_PRENOM (pas ASK_EMAIL), mockPostsDelta=0, retried=false. LIVE non touché."
+  },
+  "goNoGo": {
+    "declareBusinessPassR02": "GO — PASS métier R02 clos",
+    "r03": "NO-GO — non exécuté ; autorisation distincte requise",
+    "autoNextPhase": "NO-GO",
+    "live": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas de retry",
+    "pas de capture prenom",
+    "pas d'avancée vers ASK_EMAIL",
+    "pas de POST CreateAppointment (Δ=0)",
+    "pas de CLAIM (Δ=0)",
+    "pas de toucher LIVE",
+    "R03 non autorisé par ce verdict",
+    "cette revue n'autorise pas la phase suivante"
+  ]
+}

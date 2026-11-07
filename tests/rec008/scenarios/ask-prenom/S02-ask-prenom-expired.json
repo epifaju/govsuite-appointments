@@ -1,0 +1,27 @@
+{
+  "id": "S02-ask-prenom-expired",
+  "family": "ask-prenom",
+  "mode": "offline",
+  "phaseRef": "ASK-PRENOM-READINESS-007",
+  "required": true,
+  "handler": "askPrenom.s02Expired",
+  "simulation": true,
+  "runtimeRequired": true,
+  "runtimeRequiredReason": "type session_expired HTTP, TTL PG non renouvelé, flags draft PG, mock=0",
+  "sourceWorkflow": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/after-OCD9It1uKFhOoWNF.json",
+  "sourceSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "description": "S02: session EXPIRÉE ASK_PRENOM + Camille → session_expired, brouillon/TTL inchangés, prenom non capturé, no CLAIM/POST.",
+  "fixtureSession": "rec008-syn-s02-ask-prenom-expired",
+  "input": { "chatInput": "Camille", "llmIntent": "GET_SERVICES" },
+  "expects": {
+    "sessionExpired": true,
+    "refreshSessionTtl": false,
+    "preserveDraft": true,
+    "prenomAbsent": true,
+    "replyType": "session_expired",
+    "noClaimOrPost": true
+  },
+  "evidenceLimits": "simulation:true — PASS offline ≠ PASS runtime",
+  "relatedOffline": ["T02-ask-prenom-after-ttl-routing"],
+  "isolationNote": "Ne pas réutiliser cette session pour S03 sans reset autorisé"
+}

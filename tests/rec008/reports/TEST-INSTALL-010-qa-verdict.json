@@ -1,0 +1,47 @@
+{
+  "mission": "TEST-INSTALL-010",
+  "agent": "qa-automation",
+  "at": "2026-11-05T20:04:00Z",
+  "mode": "offline-only",
+  "runtimeExecuted": false,
+  "installExecuted": false,
+  "putExecuted": false,
+  "artefactsReviewed": [
+    "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-010/PREFLIGHT.json",
+    "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-010/STOP.json",
+    "tests/rec008/readiness/R009-install-runtime-campaigns.json"
+  ],
+  "deliverables": {
+    "1_postflightAssertions": {
+      "status": "N/A",
+      "detail": "Install non faite — aucun contrôle postflight applicable"
+    },
+    "2_catalogueR01R03": {
+      "execution": "NO-GO",
+      "R01": "NO-GO",
+      "R02": "NO-GO",
+      "R03": "NO-GO"
+    },
+    "3_verdictQa": {
+      "value": "FAIL",
+      "cause": "préflight",
+      "installAuthorized": false
+    }
+  },
+  "preflightGate": {
+    "preflightOk": false,
+    "verdict": "FAIL",
+    "stopReason": "connectivity",
+    "stopReasonSecondary": "test-stack-down",
+    "baseUrl": "http://127.0.0.1:5682",
+    "tcpReachable": false,
+    "n8nTestContainerPresent": false
+  },
+  "httpVsMetier": {
+    "httpObserved": "N/A — n8n TEST injoignable, aucune requête métier",
+    "metierSuccess": "N/A — install non faite"
+  },
+  "verdict": "FAIL",
+  "halt": true,
+  "catalogPath": "tests/rec008/readiness/R010-install-010-qa-verdict.json"
+}

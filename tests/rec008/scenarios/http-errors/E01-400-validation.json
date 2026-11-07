@@ -1,0 +1,12 @@
+{
+  "id": "E01-400-validation",
+  "family": "http-errors",
+  "mode": "offline",
+  "required": true,
+  "handler": "http.classify400",
+  "description": "HTTP 400 métier : classifieur VC9 → REJECTED (pas CONFIRMED).",
+  "expects": {
+    "httpOutcome": "REJECTED",
+    "runtimeRequired": true
+  }
+}

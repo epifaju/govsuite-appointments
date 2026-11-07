@@ -1,0 +1,57 @@
+{
+  "phase": "8F-2B49-P4F",
+  "at": "2026-11-02T07:55:48.877Z",
+  "workflowId": "OCD9It1uKFhOoWNF",
+  "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+  "versionCounter": 8,
+  "active": false,
+  "activeVersionId": null,
+  "jsonSha256": "b08556caec837f9b095ab4707d530e21ea549aa5a4549e4224fe9919ff3f35ea",
+  "nodes": 134,
+  "edges": 137,
+  "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "nodeShas": {
+    "Charger état conversation": "5c97358c2fbbe7030e96c71cfb6e0d54e24bd287a69b04160bc443ca1a7647f0",
+    "Joindre tentative de session": "16d906cf9e704d849b36ecfaa2cb5fdb953e9a17bc3af1eb05b9e7867f67cf14",
+    "Parser intention": "9bd88cf2d06756eee42acc113fb9a0140d701a155fa86b84c53aaf946d678765",
+    "Gérer collecte progressive": "4d980798c138420e662841b25296d60d53b9b1ef4d1771068f74ba71d4354904",
+    "Réponse générale": "6a0f36a3764b99a2632cae0233ed81ecdecd2d70e231fb41021be312c2a88499",
+    "Sauvegarder état conversation": "90b97d408fc27dfaaea934be9972ce86d628025660043aa456c6a0eb438274ee",
+    "Finaliser état création": "098081de361477f8ad9f9adb634895ec4fdbd7ec49abc05a22bca28217c6a182"
+  },
+  "settings": {
+    "availableInMCP": false,
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "credentialsReferenced": {
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz"
+  },
+  "urls": [
+    "http://rec008-mock:8080/services",
+    "http://rec008-mock:8080/appointments/availability",
+    "http://rec008-mock:8080/appointments",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/cancel",
+    "http://rec008-mock:8080/appointments/reschedule",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/manage",
+    "http://rec008-mock:8080/appointments/availability",
+    "http://rec008-mock:8080/appointments/manage"
+  ],
+  "chatTrigger": {
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "parameters": {
+      "public": true,
+      "options": {
+        "responseMode": "lastNode"
+      }
+    }
+  }
+}

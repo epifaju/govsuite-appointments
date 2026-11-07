@@ -1,0 +1,309 @@
+# DIAG-014 — proposed MINIMAL patch for run-runtime-013.js
+# NOT APPLIED by n8n-developer. Parent applies under review.
+# Zero retry: activate / chat / POST métier remain fetchOnce ×1.
+# No workflow edit. No activation in this DIAG.
+
+--- a/n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/run-runtime-013.js
++++ b/n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/run-runtime-013.js
+@@
+ const CHAT_TIMEOUT_MS = 45000;
+ const FINGERPRINT_AFTER_SEED = '1|14|4|0';
++const REST_TIMEOUT_MS = 30000;
++
++/** Module ref for fatal safety postflight (cookie headers only; never log). */
++let sessionRef = null;
++
++function withClose(headers) {
++  return { ...(headers || {}), Connection: 'close' };
++}
+
+@@
+ /** Single fetch — NO retry (mission rule). */
+ async function fetchOnce(url, opts, timeoutMs) {
+   const controller = new AbortController();
+   const timer = setTimeout(() => controller.abort(), timeoutMs);
+   const started = Date.now();
+   try {
+-    const res = await fetch(url, { ...opts, signal: controller.signal });
++    const res = await fetch(url, {
++      ...opts,
++      headers: withClose(opts && opts.headers),
++      signal: controller.signal,
++    });
+     const text = await res.text();
+     return {
+       ok: res.ok,
+       status: res.status,
+       elapsedMs: Date.now() - started,
+       text,
+       headers: res.headers,
+       aborted: false,
+       retried: false,
+     };
+   } catch (e) {
+     return {
+       ok: false,
+       status: 0,
+       elapsedMs: Date.now() - started,
+       text: '',
+       headers: null,
+       aborted: String(e.name || '') === 'AbortError',
+-      error: String(e.message || e),
++      error: String(e.message || e),
++      errorName: e && e.name ? String(e.name) : null,
++      errorCode: (e && (e.code || (e.cause && e.cause.code))) || null,
++      causeCode: e && e.cause && e.cause.code ? String(e.cause.code) : null,
++      causeMessage: e && e.cause ? String(e.cause.message || e.cause) : null,
+       retried: false,
+     };
+   } finally {
+     clearTimeout(timer);
+   }
+ }
+
+ async function login() {
+   const res = await fetchOnce(
+     BASE + '/rest/login',
+     {
+       method: 'POST',
+-      headers: { 'content-type': 'application/json' },
++      headers: withClose({ 'content-type': 'application/json' }),
+       body: JSON.stringify({
+         emailOrLdapLoginId: envValue('REC008_N8N_OWNER_EMAIL'),
+         password: envValue('REC008_N8N_OWNER_PASSWORD'),
+       }),
+     },
+-    30000,
++    REST_TIMEOUT_MS,
+   );
+   if (!res.ok || res.status !== 200) {
+-    throw new Error(`login failed HTTP ${res.status}`);
++    throw Object.assign(new Error(`login failed HTTP ${res.status}`), {
++      code: res.errorCode || res.causeCode || null,
++      cause: res.causeCode ? { code: res.causeCode, message: res.causeMessage } : null,
++    });
+   }
+-  // Re-fetch with native fetch to get set-cookie (fetchOnce drops headers utility)
+-  const loginRes = await fetch(BASE + '/rest/login', {
+-    method: 'POST',
+-    headers: { 'content-type': 'application/json' },
+-    body: JSON.stringify({
+-      emailOrLdapLoginId: envValue('REC008_N8N_OWNER_EMAIL'),
+-      password: envValue('REC008_N8N_OWNER_PASSWORD'),
+-    }),
+-  });
+-  const cookie = (loginRes.headers.getSetCookie ? loginRes.headers.getSetCookie() : [])
++  if (!res.headers) {
++    throw Object.assign(new Error('login headers missing after fetchOnce'), {
++      code: res.errorCode || res.causeCode || null,
++    });
++  }
++  const cookie = (res.headers.getSetCookie ? res.headers.getSetCookie() : [])
+     .map((i) => i.split(';')[0])
+     .join('; ');
+-  if (loginRes.status !== 200 || !cookie) throw new Error('login cookie missing');
++  if (!cookie) throw new Error('login cookie missing');
+   return { cookie, accept: 'application/json', 'content-type': 'application/json' };
+ }
+
+ async function getWorkflow(session) {
+-  const res = await fetch(BASE + '/rest/workflows/' + WF_ID, { headers: session });
+-  const json = await res.json();
+-  return { status: res.status, data: json.data || json };
++  const res = await fetchOnce(
++    BASE + '/rest/workflows/' + WF_ID,
++    { method: 'GET', headers: withClose(session) },
++    REST_TIMEOUT_MS,
++  );
++  if (res.status === 0 || res.error) {
++    return {
++      status: 0,
++      data: null,
++      aborted: res.aborted,
++      error: res.error || 'getWorkflow transport failure',
++      errorCode: res.errorCode || null,
++      causeCode: res.causeCode || null,
++      causeMessage: res.causeMessage || null,
++      retried: false,
++    };
++  }
++  let json = null;
++  try {
++    json = res.text ? JSON.parse(res.text) : null;
++  } catch {
++    json = null;
++  }
++  return {
++    status: res.status,
++    data: (json && json.data) || json,
++    aborted: false,
++    error: null,
++    retried: false,
++  };
+ }
+
+ async function getActiveIds(session) {
+-  const res = await fetch(BASE + '/rest/active-workflows', { headers: session });
+-  const json = await res.json();
+-  return (json.data || json || []).map((x) => x.id || x).filter(Boolean);
++  const res = await fetchOnce(
++    BASE + '/rest/active-workflows',
++    { method: 'GET', headers: withClose(session) },
++    REST_TIMEOUT_MS,
++  );
++  if (res.status === 0 || res.error) {
++    return {
++      ids: [],
++      status: 0,
++      aborted: res.aborted,
++      error: res.error || 'getActiveIds transport failure',
++      causeCode: res.causeCode || null,
++      retried: false,
++    };
++  }
++  let json = null;
++  try {
++    json = res.text ? JSON.parse(res.text) : null;
++  } catch {
++    json = null;
++  }
++  return {
++    ids: (json.data || json || []).map((x) => x.id || x).filter(Boolean),
++    status: res.status,
++    aborted: false,
++    error: null,
++    retried: false,
++  };
+ }
+
+ async function activate(session) {
+   const res = await fetchOnce(
+     BASE + '/rest/workflows/' + WF_ID + '/activate',
+     {
+       method: 'POST',
+-      headers: session,
++      headers: withClose(session),
+       body: JSON.stringify({ versionId: EXPECT_VERSION_ID }),
+     },
+     60000,
+   );
+@@
+
+ async function deactivate(session, tag) {
+   const res = await fetchOnce(
+     BASE + '/rest/workflows/' + WF_ID + '/deactivate',
+-    { method: 'POST', headers: session, body: '{}' },
++    { method: 'POST', headers: withClose(session), body: '{}' },
+     60000,
+   );
+   const after = await getWorkflow(session);
+   const activeIds = await getActiveIds(session);
+@@
+-    activeIds,
++    activeIds: Array.isArray(activeIds) ? activeIds : activeIds.ids || [],
++    getWorkflowError: after.error || null,
++    getActiveIdsError: (activeIds && activeIds.error) || null,
+@@
+-  if (out.active || out.activeVersionId || out.activeIds.length > 0 || out.webhookRows > 0) {
++  if (out.active || out.activeVersionId || out.activeIds.length > 0 || out.webhookRows > 0) {
+@@
+
+@@ preflight
+   const wf = await getWorkflow(session);
++  if (wf.status === 0 || wf.error) {
++    out.issues.push(`getWorkflow transport: ${wf.error || 'status 0'} cause=${wf.causeCode || '?'}`);
++    out.ok = false;
++    writeJson('preflight.json', out);
++    return out;
++  }
+   const nodes = (wf.data && wf.data.nodes) || [];
+   const gerer = gererSha(nodes);
+   const activeIds = await getActiveIds(session);
++  const activeIdList = Array.isArray(activeIds) ? activeIds : activeIds.ids || [];
++  if (!Array.isArray(activeIds) && activeIds.error) {
++    out.issues.push(`getActiveIds transport: ${activeIds.error}`);
++  }
+@@
+-    activeIds,
++    activeIds: activeIdList,
+@@
+-  if (out.workflow.active || out.workflow.activeVersionId || activeIds.length) {
++  if (out.workflow.active || out.workflow.activeVersionId || activeIdList.length) {
+@@
+
+@@ runScenario — replace bare throw path at pre-activate getWorkflow
+   const preWf = await getWorkflow(session);
++  if (preWf.status === 0 || preWf.error) {
++    result.issues.push(
++      `transport failure before activate; cause=${preWf.causeCode || preWf.errorCode || '?'}; scenario not executed; no retry`,
++    );
++    result.verdict = 'UNCERTAIN';
++    result.transport = {
++      phase: `${sc.id}-pre-activate`,
++      error: preWf.error,
++      causeCode: preWf.causeCode || null,
++      retried: false,
++    };
++    writeJson(`${sc.id}-result.json`, result);
++    return result;
++  }
+   if (preWf.data && preWf.data.active === true) {
+@@
+
+@@ main
+   console.error('=== RUNTIME-013 login ===');
+   const session = await login();
++  sessionRef = session;
+@@
+     if (r.verdict !== 'PASS') {
+       writeJson('campaign-result.json', {
+         verdict: r.verdict,
+         stoppedAfter: sc.id,
+         results: results.map((x) => ({ id: x.id, verdict: x.verdict, issues: x.issues })),
+       });
+@@
+
+ main().catch(async (e) => {
+   console.error('FATAL', e);
+   writeJson('campaign-fatal.json', {
+     error: String(e.message || e),
++    name: e && e.name ? String(e.name) : null,
++    code: e && (e.code || (e.cause && e.cause.code)) ? String(e.code || e.cause.code) : null,
++    cause: e && e.cause
++      ? { code: e.cause.code || null, message: String(e.cause.message || e.cause) }
++      : null,
+     stack: String(e.stack || ''),
+     detail: e.detail || null,
+   });
++  // Safety postflight: one deactivate attempt max; never retry activate/chat/POST.
++  try {
++    let safety = { attempted: false };
++    if (sessionRef) {
++      safety.attempted = true;
++      try {
++        safety.deactivate = await deactivate(sessionRef, 'fatal-safety');
++      } catch (de) {
++        safety.deactivateError = String(de.message || de);
++      }
++      const wf = await getWorkflow(sessionRef);
++      const act = await getActiveIds(sessionRef);
++      safety.workflow = {
++        status: wf.status,
++        active: wf.data && wf.data.active === true,
++        activeVersionId: (wf.data && wf.data.activeVersionId) || null,
++        error: wf.error || null,
++        causeCode: wf.causeCode || null,
++      };
++      safety.activeIds = Array.isArray(act) ? act : act.ids || [];
++      safety.fingerprint = fingerprint();
++    }
++    writeJson('fatal-safety-postflight.json', safety);
++  } catch (_) {}
+   process.exit(1);
+ });
+
+# NOTES FOR PARENT APPLYING THIS PATCH
+# 1. When rewriting getActiveIds call sites, always use `.ids` (preflight + deactivate already sketched).
+# 2. In runScenario transport UNCERTAIN branch use phase: `${sc.id}-pre-activate` (not the R01 placeholder typo above).
+# 3. Prefer a clean mechanical edit over applying this text as a blind unified diff — markers are intent patches.
+# 4. Keep sendMessageOnce / activate body unchanged aside from withClose via fetchOnce headers merge.

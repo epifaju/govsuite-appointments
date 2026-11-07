@@ -1,0 +1,71 @@
+{
+  "phase": "8F-2B49-P4G1",
+  "at": "2026-11-02T08:07:31.855Z",
+  "observed": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounter": 9,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "activeIds": [],
+    "webhookRowsBefore": 0,
+    "urlsCount": 10,
+    "urlsOk": true,
+    "postgresIds": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "nodeShas": {
+      "Charger état conversation": "fca043913c5a27f7cc1e82261f8a1908a43ee8ad9d356eabec9de68a5f97ff8b",
+      "Joindre tentative de session": "c295cd4851cf045230a33346987536670f80b58db75b1334daafcc7da2a4b3d4",
+      "Parser intention": "bd0bf9db4db88cb563d5b0766d528ec00894e3fb3843e260aa95031c52e35357",
+      "Gérer collecte progressive": "5bc5b967c71e219c88f1bfc6f8c2a70b7ef2e79d2a56475733650c0d20855e6e",
+      "Réponse générale": "d58106f6f7fdc27efba1c2211e0aefa7c3945f3944745ba9dae4f50ae8e03373",
+      "Sauvegarder état conversation": "7c8597781429d7c282e69b908ae28bebcb97f6a84650423cfbd48b67fef00387"
+    },
+    "nodeShaOk": {
+      "Charger état conversation": true,
+      "Joindre tentative de session": true,
+      "Parser intention": true,
+      "Gérer collecte progressive": true,
+      "Réponse générale": true,
+      "Sauvegarder état conversation": true
+    },
+    "pg": "1|11|4|0",
+    "open": "0",
+    "mockPosts": 0,
+    "getAvailability": 0,
+    "getServices": 0,
+    "mockScenario": "created",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "networkOk": true
+  },
+  "checks": {
+    "inactive": true,
+    "versionId": true,
+    "versionCounter": true,
+    "graph": true,
+    "finaliserSha": true,
+    "nodeShas": true,
+    "noOtherActive": true,
+    "noActiveWebhooks": true,
+    "urlsOk": true,
+    "credentialsTest": true,
+    "networkOk": true,
+    "pg": true,
+    "open": true,
+    "mockPosts": true,
+    "getAvailability": true,
+    "getServices": true,
+    "mockScenario": true,
+    "live": true,
+    "mailpit": true
+  },
+  "preflightOk": true
+}

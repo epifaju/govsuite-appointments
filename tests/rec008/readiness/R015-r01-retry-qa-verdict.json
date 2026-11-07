@@ -1,0 +1,97 @@
+{
+  "id": "RUNTIME-R01-RETRY-015",
+  "shortId": "R015",
+  "title": "QA offline — R01 chat timeout ; métier NOT_EVALUATED ; zero retry",
+  "mode": "offline-post-stop-review",
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "r01Result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r01-015/R01-result.json",
+    "campaignResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r01-015/campaign-result.json",
+    "r01Http": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r01-015/R01-http.json",
+    "safetyPostflight": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r01-015/safety-postflight-stop-R01.json"
+  },
+  "observed": {
+    "sessionId": "rec008-runtime013-r01-active",
+    "messageAttempted": "Camille",
+    "http": {
+      "ok": false,
+      "status": 0,
+      "elapsedMs": 45018,
+      "aborted": true,
+      "error": "This operation was aborted",
+      "retried": false
+    },
+    "campaign": {
+      "verdict": "UNCERTAIN",
+      "stoppedAfter": "R01",
+      "issue": "HTTP transport UNCERTAIN (timeout/abort) — no retry performed"
+    },
+    "sessionBeforeAfterUnchanged": true,
+    "conversationStep": "ASK_PRENOM",
+    "prenomStillNull": true,
+    "fingerprintBefore": "1|14|4|0",
+    "fingerprintAfter": "1|14|4|0",
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "deactivateVerified": true,
+    "workflowActiveAfterStop": false
+  },
+  "assertions": {
+    "R01-H01": {
+      "assert": "sendMessage HTTP 200 + JSON",
+      "verdict": "UNCERTAIN",
+      "reason": "transport timeout/abort (~45s) ; status 0 ; no response body"
+    },
+    "R01-M01": {
+      "assert": "prenom=Camille",
+      "verdict": "NOT_EVALUATED",
+      "reason": "no successful chat response ; prenom still null"
+    },
+    "R01-M02": {
+      "assert": "conversation_step=ASK_EMAIL",
+      "verdict": "NOT_EVALUATED",
+      "reason": "step remains ASK_PRENOM"
+    },
+    "R01-M03": {
+      "assert": "nom preserved",
+      "verdict": "NOT_EVALUATED",
+      "reason": "post-message métier path not confirmed (timeout)"
+    },
+    "R01-M04": {
+      "assert": "pending_action=CREATE_APPOINTMENT",
+      "verdict": "NOT_EVALUATED",
+      "reason": "state unchanged ; no métier confirmation"
+    },
+    "zeroRetry": {
+      "assert": "no automatic retry after timeout",
+      "verdict": "PASS",
+      "evidence": ["http.retried=false", "campaign issue: no retry performed", "single R01 result only"]
+    }
+  },
+  "httpVsBusiness": {
+    "httpTransport": "UNCERTAIN (timeout/abort ~45018 ms)",
+    "businessSuccess": "NOT_EVALUATED",
+    "note": "HTTP abort ≠ FAIL métier ; success métier non affirmable sans réponse"
+  },
+  "globalVerdict": {
+    "value": "UNCERTAIN",
+    "scope": "RUNTIME-R01-RETRY-015 offline review",
+    "reason": "R01 chat timed out (~45s abort). Métier assertions NOT_EVALUATED. Zero retry confirmed. Campaign stopped after R01. Session/fingerprint unchanged; workflow inactive postflight."
+  },
+  "goNoGo": {
+    "declareBusinessPass": "NO-GO",
+    "autoRetrySameTimeout": "NO-GO",
+    "autoNextPhase": "NO-GO",
+    "rerunRuntime": "GO-CONDITIONAL — autorisation distincte + préflight frais ; conserver clé d'idempotence / ne pas relancer le même POST sans ordre",
+    "live": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas de retry après timeout",
+    "pas de nouvelle activation n8n dans cette revue",
+    "pas de nouveau sendMessage / chat",
+    "pas de POST CreateAppointment",
+    "pas de toucher LIVE",
+    "cette revue n'autorise pas la phase suivante"
+  ]
+}

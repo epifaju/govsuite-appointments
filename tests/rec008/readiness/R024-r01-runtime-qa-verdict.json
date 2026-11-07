@@ -1,0 +1,82 @@
+{
+  "id": "R01-RUNTIME-024",
+  "shortId": "R024",
+  "title": "QA — R01 ASK_PRENOM + Camille → ASK_EMAIL (runtime TEST)",
+  "mode": "offline-post-campaign-review",
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "campaignResult": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/artifacts-r01-024/campaign-result.json",
+    "r01Result": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r01-024/R01-result.json",
+    "r01Http": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/evidence-r01-024/R01-http.json",
+    "contract": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/runner-021/R01-CONTRACT.md",
+    "missionReport": "docs/recovery/GOVSUITE_MULTIAGENT_R01_RUNTIME_024_REPORT.md"
+  },
+  "observed": {
+    "campaignGlobalVerdict": "PASS",
+    "r01Verdict": "PASS",
+    "httpStatus": 200,
+    "httpType": "create_appointment_question",
+    "beforeStep": "ASK_PRENOM",
+    "afterStep": "ASK_EMAIL",
+    "afterPrenom": "Camille",
+    "prenomIsNull": false,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "retried": false,
+    "liveTouched": false,
+    "fingerprintFinal": "1|14|4|0"
+  },
+  "assertions": {
+    "R01-H01": {
+      "assert": "sendMessage HTTP 200 + JSON métier",
+      "verdict": "PASS",
+      "evidence": ["httpStatus=200", "httpType=create_appointment_question"]
+    },
+    "R01-M01": {
+      "assert": "prenom=Camille",
+      "verdict": "PASS",
+      "evidence": ["afterPrenom=Camille", "prenomIsNull=false"]
+    },
+    "R01-M02": {
+      "assert": "conversation_step=ASK_EMAIL",
+      "verdict": "PASS",
+      "evidence": ["beforeStep=ASK_PRENOM", "afterStep=ASK_EMAIL"]
+    },
+    "R01-M05": {
+      "assert": "aucun POST CreateAppointment",
+      "verdict": "PASS",
+      "evidence": ["mockPostsDelta=0", "mockClaimsDelta=0"]
+    },
+    "zeroRetry": {
+      "assert": "aucun retry automatique",
+      "verdict": "PASS",
+      "evidence": ["retried=false", "un seul message Camille"]
+    }
+  },
+  "httpVsBusiness": {
+    "httpTransport": "PASS (HTTP 200)",
+    "businessSuccess": "PASS (Camille + ASK_EMAIL ; Δ POST=0)",
+    "note": "HTTP 200 seul ne suffit pas ; ici transport et métier concordent"
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "R01-RUNTIME-024 offline QA review",
+    "reason": "Contrat R01 satisfait : ASK_PRENOM→ASK_EMAIL, prenom=Camille, HTTP 200, mockPostsDelta=0, retried=false. LIVE non touché."
+  },
+  "goNoGo": {
+    "declareBusinessPassR01": "GO — PASS métier R01 clos",
+    "r02": "NO-GO — non exécuté ; autorisation distincte requise",
+    "r03": "NO-GO — non exécuté ; autorisation distincte requise",
+    "autoNextPhase": "NO-GO",
+    "live": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas de retry",
+    "pas de POST CreateAppointment (Δ=0)",
+    "pas de CLAIM (Δ=0)",
+    "pas de toucher LIVE",
+    "R02/R03 non autorisés par ce verdict",
+    "cette revue n'autorise pas la phase suivante"
+  ]
+}

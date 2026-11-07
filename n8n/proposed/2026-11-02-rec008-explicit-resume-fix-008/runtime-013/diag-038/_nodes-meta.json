@@ -1,0 +1,826 @@
+{
+  "Parser intention": {
+    "type": "n8n-nodes-base.code",
+    "id": "f1de6301-4c83-4b1a-9725-5c0e71d454f4",
+    "sha256": "1f4c08392875e66b484337d6786f4fc2ef9c987becdfcef26cb1a13dde7aebf2",
+    "jsLen": 20379,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Fusionner état conversation"
+      }
+    ]
+  },
+  "Fusionner état conversation": {
+    "type": "n8n-nodes-base.code",
+    "id": "a45da867-7ef8-4c77-8123-9d83d2d3ee53",
+    "sha256": "d1c7f99122e1bdb4ae18e0636bbee9d36af816084300c3336eaa6acb57ac79b1",
+    "jsLen": 24518,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Gérer collecte progressive"
+      }
+    ]
+  },
+  "Gérer collecte progressive": {
+    "type": "n8n-nodes-base.code",
+    "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+    "sha256": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "jsLen": 30504,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Sauvegarder état conversation"
+      }
+    ]
+  },
+  "Préparer réponse création": {
+    "type": "n8n-nodes-base.code",
+    "id": "9dbe54e0-291a-4285-aea4-1a1aab1771b8",
+    "sha256": "4dffeee457aff1de1ca2f0111c18f546c3941a8322ecdcd484c14f7d65dcb0f9",
+    "jsLen": 5173,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Finaliser état création"
+      }
+    ]
+  },
+  "Demander paramètres création": {
+    "type": "n8n-nodes-base.code",
+    "id": "af55b1f6-2083-43d9-9f8d-59961eb7c0e9",
+    "sha256": "1d9c8c00810731d4e47851452ad0dd16ad79433e43bcabed4b33ed38607a6c14",
+    "jsLen": 4786,
+    "outs": []
+  },
+  "Décider action tentative": {
+    "type": "n8n-nodes-base.code",
+    "id": "00000000-0000-4000-8000-000000008e03",
+    "sha256": "eb7b8e3e3da17a1c5c514cf6ef149af6ba8b0c238fd27b3c8549d1f9390c9f95",
+    "jsLen": 2420,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Aiguiller tentative"
+      }
+    ]
+  },
+  "Joindre tentative de session": {
+    "type": "n8n-nodes-base.code",
+    "id": "00000000-0000-4000-8000-000000008e02",
+    "sha256": "0c37fc84b02e13ec690e700f7d1d8151c97c5ef2867ce972e6f8bcec5d595a13",
+    "jsLen": 1067,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Comprendre la demande"
+      }
+    ]
+  },
+  "Préparer corps figé": {
+    "type": "n8n-nodes-base.code",
+    "id": "00000000-0000-4000-8000-000000008e05",
+    "sha256": "22c7698c56d31183ea05c5c90f901632a96398eb2c60b3f8091341bfb9f92623",
+    "jsLen": 1438,
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Calculer empreinte du corps"
+      }
+    ]
+  },
+  "Router intention": {
+    "type": "n8n-nodes-base.switch",
+    "id": "76b1c4b4-4354-4a4f-bb8b-ad32078eb8b5",
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Appeler GetServices"
+      },
+      {
+        "outType": "main",
+        "branch": 1,
+        "to": "Valider paramètres disponibilité"
+      },
+      {
+        "outType": "main",
+        "branch": 2,
+        "to": "Décider action tentative"
+      },
+      {
+        "outType": "main",
+        "branch": 3,
+        "to": "Valider token consultation"
+      },
+      {
+        "outType": "main",
+        "branch": 4,
+        "to": "Confirmation déjà demandée ?"
+      },
+      {
+        "outType": "main",
+        "branch": 5,
+        "to": "Router étape replanification"
+      },
+      {
+        "outType": "main",
+        "branch": 6,
+        "to": "Réponse générale"
+      },
+      {
+        "outType": "main",
+        "branch": 7,
+        "to": "Réponse générale"
+      }
+    ],
+    "rulesCount": 7
+  },
+  "Sauvegarder état conversation": {
+    "type": "n8n-nodes-base.postgres",
+    "id": "bafca305-8288-4b8e-9fc3-ed06a2eba826",
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Router intention"
+      }
+    ],
+    "hasQuery": true
+  },
+  "Comprendre la demande": {
+    "type": "@n8n/n8n-nodes-langchain.chainLlm",
+    "id": "0f90ff9a-cf84-4f9d-a6f5-84391e3bdbac",
+    "outs": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Parser intention"
+      }
+    ],
+    "keys": [
+      "text",
+      "batching",
+      "messages",
+      "promptType"
+    ],
+    "textLen": 67
+  },
+  "createBranchFromRouter": {
+    "name": "Router intention",
+    "children": [
+      {
+        "name": "Appeler GetServices",
+        "children": [
+          {
+            "name": "Préparer réponse services",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Valider paramètres disponibilité",
+        "children": [
+          {
+            "name": "Disponibilité prête ?",
+            "children": [
+              {
+                "name": "Appeler GetAvailability",
+                "children": [
+                  {
+                    "name": "Préparer réponse disponibilité",
+                    "children": [
+                      {
+                        "name": "Mémoriser créneaux proposés",
+                        "children": [
+                          {
+                            "name": "Restaurer réponse disponibilité",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Demander paramètres disponibilité",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Décider action tentative",
+        "children": [
+          {
+            "name": "Aiguiller tentative",
+            "children": [
+              {
+                "name": "Tirer aléa de tentative",
+                "children": [
+                  {
+                    "name": "Préparer corps figé",
+                    "children": [
+                      {
+                        "name": "Calculer empreinte du corps",
+                        "children": [
+                          {
+                            "name": "Insérer tentative",
+                            "children": [
+                              {
+                                "name": "Composer récapitulatif",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer réclamation ou reprise",
+                "children": [
+                  {
+                    "name": "Réclamer tentative",
+                    "children": [
+                      {
+                        "name": "Normaliser acquisition",
+                        "children": [
+                          {
+                            "name": "Réclamation gagnée ?",
+                            "children": [
+                              {
+                                "name": "Appliquer corps gagnant",
+                                "children": [
+                                  {
+                                    "name": "Corps figé présent ?",
+                                    "children": [
+                                      {
+                                        "name": "Appeler CreateAppointment",
+                                        "stop": true
+                                      },
+                                      {
+                                        "name": "Réponse corps absent",
+                                        "stop": true
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "Réponse réclamation perdue",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer reprise",
+                "children": [
+                  {
+                    "name": "Reprendre tentative",
+                    "children": [
+                      {
+                        "name": "Normaliser acquisition",
+                        "children": [
+                          {
+                            "name": "Réclamation gagnée ?",
+                            "children": [
+                              {
+                                "name": "Appliquer corps gagnant",
+                                "children": [
+                                  {
+                                    "name": "Corps figé présent ?",
+                                    "children": [
+                                      {
+                                        "name": "Appeler CreateAppointment",
+                                        "stop": true
+                                      },
+                                      {
+                                        "name": "Réponse corps absent",
+                                        "stop": true
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "Réponse réclamation perdue",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer abandon ou modification",
+                "children": [
+                  {
+                    "name": "Abandonner tentative",
+                    "children": [
+                      {
+                        "name": "Abandon sans reprise de collecte ?",
+                        "children": [
+                          {
+                            "name": "Effacer brouillon abandonné",
+                            "children": [
+                              {
+                                "name": "Réponse demande abandonnée",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Mettre à jour champ modifié",
+                            "children": [
+                              {
+                                "name": "Question après modification",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer abandon ou modification",
+                "children": [
+                  {
+                    "name": "Abandonner tentative",
+                    "children": [
+                      {
+                        "name": "Abandon sans reprise de collecte ?",
+                        "children": [
+                          {
+                            "name": "Effacer brouillon abandonné",
+                            "children": [
+                              {
+                                "name": "Réponse demande abandonnée",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Mettre à jour champ modifié",
+                            "children": [
+                              {
+                                "name": "Question après modification",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer abandon ou modification",
+                "children": [
+                  {
+                    "name": "Abandonner tentative",
+                    "children": [
+                      {
+                        "name": "Abandon sans reprise de collecte ?",
+                        "children": [
+                          {
+                            "name": "Effacer brouillon abandonné",
+                            "children": [
+                              {
+                                "name": "Réponse demande abandonnée",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Mettre à jour champ modifié",
+                            "children": [
+                              {
+                                "name": "Question après modification",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Demander paramètres création",
+                "children": []
+              },
+              {
+                "name": "Réponse attente de bail",
+                "children": []
+              },
+              {
+                "name": "Réponse référence déjà connue",
+                "children": []
+              },
+              {
+                "name": "Expirer tentatives en attente",
+                "children": [
+                  {
+                    "name": "Effacer collecte expirée",
+                    "children": [
+                      {
+                        "name": "Réponse attente expirée",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Effacer collecte orpheline",
+                "children": [
+                  {
+                    "name": "Réponse collecte orpheline",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Valider paramètres création",
+                "children": [
+                  {
+                    "name": "Création prête ?",
+                    "children": [
+                      {
+                        "name": "Refus création sans réclamation",
+                        "children": []
+                      },
+                      {
+                        "name": "Demander paramètres création",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Valider token consultation",
+        "children": [
+          {
+            "name": "Consultation prête ?",
+            "children": [
+              {
+                "name": "Appeler GetAppointment",
+                "children": [
+                  {
+                    "name": "Préparer réponse consultation",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Demander token consultation",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Confirmation déjà demandée ?",
+        "children": [
+          {
+            "name": "Analyser confirmation annulation",
+            "children": [
+              {
+                "name": "Confirmation reconnue ?",
+                "children": [
+                  {
+                    "name": "Confirmation annulation ?",
+                    "children": [
+                      {
+                        "name": "Appeler CancelAppointment",
+                        "children": [
+                          {
+                            "name": "Préparer réponse annulation",
+                            "children": [
+                              {
+                                "name": "Finaliser état annulation",
+                                "children": [
+                                  {
+                                    "name": "Restaurer réponse annulation",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Préparer réponse abandon annulation",
+                        "children": [
+                          {
+                            "name": "Finaliser abandon annulation",
+                            "children": [
+                              {
+                                "name": "Restaurer réponse abandon annulation",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Redemander confirmation annulation",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Valider token annulation",
+            "children": [
+              {
+                "name": "Annulation prête ?",
+                "children": [
+                  {
+                    "name": "Charger rendez-vous pour annulation",
+                    "children": [
+                      {
+                        "name": "Préparer confirmation annulation",
+                        "children": [
+                          {
+                            "name": "Mémoriser confirmation annulation",
+                            "children": [
+                              {
+                                "name": "Restaurer réponse confirmation",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Demander token annulation",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Router étape replanification",
+        "children": [
+          {
+            "name": "Charger rendez-vous à replanifier",
+            "children": [
+              {
+                "name": "Préparer étape nouvelle période",
+                "children": [
+                  {
+                    "name": "Mémoriser étape replanification",
+                    "children": [
+                      {
+                        "name": "Restaurer réponse replanification",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Préparer recherche replanification",
+            "children": [
+              {
+                "name": "Rechercher nouveaux créneaux1",
+                "children": [
+                  {
+                    "name": "Préparer réponse disponibilité replanification2",
+                    "children": [
+                      {
+                        "name": "Mémoriser créneaux replanification",
+                        "children": [
+                          {
+                            "name": "Restaurer réponse replanification créneaux",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Valider token replanification",
+            "children": [
+              {
+                "name": "Token replanification prêt ?",
+                "children": [
+                  {
+                    "name": "Charger rendez-vous à replanifier2",
+                    "children": [
+                      {
+                        "name": "Controle replannification",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Demander token replanification",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Confirmation déjà demandée ?1",
+            "children": [
+              {
+                "name": "Analyser confirmation replanification",
+                "children": [
+                  {
+                    "name": "Confirmation reconnue ?1",
+                    "children": [
+                      {
+                        "name": "Confirmation replanification ?",
+                        "children": [
+                          {
+                            "name": "Préparer appel replanification",
+                            "children": [
+                              {
+                                "name": "Valider paramètres replanification",
+                                "children": [
+                                  {
+                                    "name": "Replanification prête ?",
+                                    "children": [
+                                      {
+                                        "name": "Appeler RescheduleAppointment",
+                                        "stop": true
+                                      },
+                                      {
+                                        "name": "Demander paramètres replanification",
+                                        "stop": true
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "name": "Préparer abandon replanification",
+                            "children": [
+                              {
+                                "name": "Finaliser abandon replanification",
+                                "children": [
+                                  {
+                                    "name": "Restaurer réponse abandon",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Redemander confirmation replanification",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Préparer confirmation replanification",
+                "children": [
+                  {
+                    "name": "Mémoriser confirmation replanification",
+                    "children": [
+                      {
+                        "name": "Restaurer réponse confirmation replanification",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Réponse générale",
+        "children": []
+      },
+      {
+        "name": "Réponse générale",
+        "children": []
+      }
+    ]
+  },
+  "upstreamToGerer": {
+    "Chat": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Charger état conversation"
+      }
+    ],
+    "Charger": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Lire tentative de session"
+      }
+    ],
+    "LireTentative": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Joindre tentative de session"
+      }
+    ],
+    "Joindre": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Comprendre la demande"
+      }
+    ],
+    "Comprendre": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Parser intention"
+      }
+    ],
+    "Parser": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Fusionner état conversation"
+      }
+    ],
+    "Fusionner": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Gérer collecte progressive"
+      }
+    ],
+    "Gerer": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Sauvegarder état conversation"
+      }
+    ],
+    "Sauvegarder": [
+      {
+        "outType": "main",
+        "branch": 0,
+        "to": "Router intention"
+      }
+    ]
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "phase": "8F-2B49-P4E",
+  "mode": "offline-unit-fixtures",
+  "ttlConversationHours": 2,
+  "cases": [
+    {
+      "id": "TC01",
+      "name": "Session active ASK_NOM + nom libre",
+      "fixture": "active_ask_nom",
+      "message": "Dupont",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "forceCreate": true,
+        "captureStepAfter": "ASK_PRENOM",
+        "nom": "Dupont",
+        "claimOrPost": false,
+        "preserveBusiness": true
+      }
+    },
+    {
+      "id": "TC02",
+      "name": "Session active ASK_PRENOM + Camille",
+      "fixture": "active_ask_prenom",
+      "message": "Camille",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "forceCreate": true,
+        "captureStepAfter": "ASK_EMAIL",
+        "prenom": "Camille",
+        "nom": "Dupont",
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC03",
+      "name": "Session active ASK_EMAIL + e-mail valide",
+      "fixture": "active_ask_email",
+      "message": "camille.dupont@example.test",
+      "llmIntent": "GENERAL",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "captureStepAfter": "ASK_TELEPHONE",
+        "email": "camille.dupont@example.test",
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC04",
+      "name": "Session active ASK_TELEPHONE + téléphone valide",
+      "fixture": "active_ask_telephone",
+      "message": "+33601020304",
+      "llmIntent": "GENERAL",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "captureStepAfter": "AWAIT_CREATE_CONFIRMATION",
+        "telephone": "+33601020304",
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC05",
+      "name": "Session active ASK_PRENOM + LLM GET_SERVICES",
+      "fixture": "active_ask_prenom",
+      "message": "Camille",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "forceCreate": true,
+        "notIntent": "GET_SERVICES",
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC06",
+      "name": "Session expirée + Camille",
+      "fixture": "expired_ask_prenom",
+      "message": "Camille",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "intent": "GENERAL",
+        "sessionExpired": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "preserveDraft": true,
+        "refreshSessionTtl": false,
+        "draftNom": "Dupont"
+      }
+    },
+    {
+      "id": "TC07",
+      "name": "Session expirée + oui",
+      "fixture": "expired_ask_prenom",
+      "message": "oui",
+      "llmIntent": "CREATE_APPOINTMENT",
+      "expect": {
+        "intent": "GENERAL",
+        "sessionExpired": true,
+        "claimOrPost": false,
+        "forceCreate": false,
+        "preserveDraft": true
+      }
+    },
+    {
+      "id": "TC08",
+      "name": "Session active attente confirmation + oui",
+      "fixture": "active_await_confirmation",
+      "message": "oui",
+      "llmIntent": "GENERAL",
+      "expect": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "AFFIRM",
+        "claimOrPost": true,
+        "sessionExpired": false
+      }
+    },
+    {
+      "id": "TC09",
+      "name": "Session active attente confirmation + non",
+      "fixture": "active_await_confirmation",
+      "message": "non",
+      "llmIntent": "CREATE_APPOINTMENT",
+      "expect": {
+        "createDecision": "NEGATIVE",
+        "claimOrPost": false,
+        "notCreateDecision": "AFFIRM"
+      }
+    },
+    {
+      "id": "TC10",
+      "name": "Session active attente confirmation + modifier le nom",
+      "fixture": "active_await_confirmation",
+      "message": "modifier le nom",
+      "llmIntent": "GENERAL",
+      "expect": {
+        "createDecision": "MODIFY",
+        "modifyField": "nom",
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC11",
+      "name": "Commande explicite d'abandon en collecte",
+      "fixture": "active_ask_prenom",
+      "message": "abandonner",
+      "llmIntent": "GENERAL",
+      "expect": {
+        "createDecision": "NEGATIVE",
+        "claimOrPost": false,
+        "authorizedClear": true
+      }
+    },
+    {
+      "id": "TC12",
+      "name": "Sauvegarde avec champ absent",
+      "kind": "save",
+      "existing": { "nom": "Dupont", "prenom": null, "pending_action": "CREATE_APPOINTMENT" },
+      "payload": { "sessionId": "s1", "intent": "CREATE_APPOINTMENT" },
+      "expect": { "nom": "Dupont", "pending_action": "CREATE_APPOINTMENT" }
+    },
+    {
+      "id": "TC13",
+      "name": "Sauvegarde avec NULL autorisé",
+      "kind": "save",
+      "existing": { "nom": "Dupont", "prenom": "Camille", "pending_action": "CREATE_APPOINTMENT" },
+      "payload": {
+        "sessionId": "s1",
+        "nom": null,
+        "prenom": null,
+        "pendingAction": null,
+        "_authorizedNulls": ["nom", "prenom", "pendingAction"]
+      },
+      "expect": { "nom": null, "prenom": null, "pending_action": null }
+    },
+    {
+      "id": "TC14",
+      "name": "Sauvegarde avec NULL non autorisé",
+      "kind": "save",
+      "existing": {
+        "nom": "Dupont",
+        "service": "PASSEPORT",
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM"
+      },
+      "payload": {
+        "sessionId": "s1",
+        "intent": "GET_SERVICES",
+        "nom": null,
+        "service": null,
+        "pendingAction": null,
+        "conversationStep": null,
+        "refreshSessionTtl": false
+      },
+      "expect": {
+        "nom": "Dupont",
+        "service": "PASSEPORT",
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "intent": "GET_SERVICES"
+      }
+    },
+    {
+      "id": "TC15",
+      "name": "Tentative UNCERTAIN : aucune nouvelle création implicite",
+      "fixture": "uncertain_open",
+      "message": "oui",
+      "llmIntent": "CREATE_APPOINTMENT",
+      "expect": {
+        "createDecision": "RESUME",
+        "claimOrPost": false,
+        "noteIncludes": "replay_only"
+      }
+    },
+    {
+      "id": "TC16",
+      "name": "Tentative EXPIRED : aucune réutilisation de clé",
+      "fixture": "expired_attempt",
+      "message": "reprendre",
+      "llmIntent": "CREATE_APPOINTMENT",
+      "expect": {
+        "reuseIdempotencyKey": false,
+        "claimOrPost": false
+      }
+    },
+    {
+      "id": "TC17",
+      "name": "Session active à la limite exacte du TTL",
+      "fixture": "ttl_boundary_active_exact",
+      "message": "Camille",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "sessionExpired": true,
+        "intent": "GENERAL",
+        "claimOrPost": false,
+        "preserveDraft": true
+      }
+    },
+    {
+      "id": "TC18",
+      "name": "Session expirée juste après la limite du TTL",
+      "fixture": "ttl_boundary_just_after",
+      "message": "Camille",
+      "llmIntent": "GET_SERVICES",
+      "expect": {
+        "sessionExpired": true,
+        "intent": "GENERAL",
+        "claimOrPost": false,
+        "preserveDraft": true
+      }
+    }
+  ]
+}

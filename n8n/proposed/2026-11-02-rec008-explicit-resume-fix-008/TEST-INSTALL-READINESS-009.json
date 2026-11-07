@@ -1,0 +1,202 @@
+{
+  "mission": "TEST-INSTALL-READINESS-009",
+  "mode": "offline",
+  "shas": {
+    "p4f": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "before": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "after": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c"
+  },
+  "shaChecks": {
+    "afterMatchesExpected849201dd": true,
+    "beforeMatchesExpected6284f867": true,
+    "beforeEqualsP4f": true,
+    "afterDiffersBefore": true,
+    "afterDiffersP4f": true
+  },
+  "counts": {
+    "nodesBefore": 134,
+    "nodesAfter": 134,
+    "nodesP4f": 134,
+    "connectionKeysBefore": 99,
+    "connectionKeysAfter": 99,
+    "idsEqualBeforeAfter": true,
+    "idsEqualP4fAfter": true
+  },
+  "topMeta": {
+    "before": {
+      "id": "OCD9It1uKFhOoWNF",
+      "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+      "active": false,
+      "isArchived": false,
+      "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "versionCounter": 9,
+      "pinDataKeys": [],
+      "settings": {
+        "availableInMCP": false,
+        "executionOrder": "v1",
+        "saveDataSuccessExecution": "none",
+        "saveDataErrorExecution": "none",
+        "saveManualExecutions": false,
+        "saveExecutionProgress": false
+      },
+      "staticData": null,
+      "meta": null,
+      "tags": [],
+      "triggerCount": 1
+    },
+    "after": {
+      "id": "OCD9It1uKFhOoWNF",
+      "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+      "active": false,
+      "isArchived": false,
+      "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "versionCounter": 9,
+      "pinDataKeys": [],
+      "settings": {
+        "availableInMCP": false,
+        "executionOrder": "v1",
+        "saveDataSuccessExecution": "none",
+        "saveDataErrorExecution": "none",
+        "saveManualExecutions": false,
+        "saveExecutionProgress": false
+      },
+      "staticData": null,
+      "meta": null,
+      "tags": [],
+      "triggerCount": 1
+    },
+    "p4f": {
+      "id": "OCD9It1uKFhOoWNF",
+      "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+      "active": false,
+      "isArchived": false,
+      "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "versionCounter": 9,
+      "pinDataKeys": [],
+      "settings": {
+        "availableInMCP": false,
+        "executionOrder": "v1",
+        "saveDataSuccessExecution": "none",
+        "saveDataErrorExecution": "none",
+        "saveManualExecutions": false,
+        "saveExecutionProgress": false
+      },
+      "staticData": null,
+      "meta": null,
+      "tags": [],
+      "triggerCount": 1
+    },
+    "metaEqualBeforeAfter": true,
+    "metaEqualP4fAfter": true,
+    "topKeysEqual": true
+  },
+  "connections": {
+    "connSameBeforeAfter": true,
+    "connSameP4fAfter": true
+  },
+  "credentials": {
+    "credSameBeforeAfter": true,
+    "credSameP4fAfter": true,
+    "count": 31
+  },
+  "webhooks": {
+    "whSameBeforeAfter": true,
+    "whSameP4fAfter": true,
+    "list": [
+      {
+        "id": "ba906f67-abda-47cf-aa75-c630cf7ed283",
+        "name": "Lorsqu'un message de chat est reçu",
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603"
+      }
+    ]
+  },
+  "sql": {
+    "sqlSameBeforeAfter": true,
+    "sqlSameP4fAfter": true,
+    "sauvParamsSame": true,
+    "sqlNodeCount": 30
+  },
+  "changedBeforeAfter": [
+    {
+      "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+      "name": "Gérer collecte progressive",
+      "type": "n8n-nodes-base.code",
+      "metaSame": true,
+      "otherParamsSame": true,
+      "jsOnly": true,
+      "jsShaLeft": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+      "jsShaRight": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+      "jsLenDelta": 967
+    }
+  ],
+  "changedP4fAfter": [
+    {
+      "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+      "name": "Gérer collecte progressive",
+      "type": "n8n-nodes-base.code",
+      "metaSame": true,
+      "otherParamsSame": true,
+      "jsOnly": true,
+      "jsShaLeft": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+      "jsShaRight": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+      "jsLenDelta": 967
+    }
+  ],
+  "changedP4fBefore": [],
+  "patch": {
+    "gererPresent": true,
+    "hasMarker": true,
+    "hasEarlyReturn": true,
+    "earlyBeforeAsk": true,
+    "markerIdx": 5695,
+    "returnAfterMarker": 5950,
+    "askNomIdx": 19857,
+    "phraseArraysAfter": [
+      "['reprendre', 'reprendre ma demande', 'continuer', 'continuer ma demande']"
+    ],
+    "phraseArraysBefore": [
+      "['reprendre', 'reprendre ma demande', 'continuer', 'continuer ma demande']"
+    ],
+    "phraseArraysUnchanged": true,
+    "phraseCountAfter": {
+      "literalPresent": true,
+      "phraseCount": 4
+    },
+    "phraseCountBefore": {
+      "literalPresent": true,
+      "phraseCount": 4
+    },
+    "allowlistLiteral": "['reprendre', 'reprendre ma demande', 'continuer', 'continuer ma demande']",
+    "allowlistUnchanged": true,
+    "patchZoneAfter": "ts: previous.available_slots ?? x.availableSlots ?? null,\n        sessionExpired: true,\n        refreshSessionTtl: false,\n        preserveDraft: true,\n        originalMessage: message\n      }\n    }];\n  }\n  // reprise explicite : poursuivre CREATE sans CLAIM/POST automatique\n  // EXPLICIT-RESUME-FIX-008: early return AFTER flags, BEFORE field capture\n  x.refreshSessionTtl = true;\n  x.sessionExpired = false;\n  x.preserveDraft = true;\n  if (previousPendingAction === 'CREATE_APPOINTMENT') {\n    x.intent = 'CREATE_APPOINTMENT';\n  }\n  return [{\n    json: {\n      ...x,\n      pendingAction: previousPendingAction,\n      conversationStep: previousConversationStep,\n      nom: previous.nom ?? x.nom ?? null,\n      prenom: previous.prenom ?? x.prenom ?? null,\n      email: previous.email ?? x.email ?? null,\n      telephone: previous.telephone ?? x.telephone ?? null,\n      service: previous.service ?? x.service ?? null,\n      site: previous.site ?? x.site ?? null,\n      dateDebut: previous.date_debut ?? x.dateDebut ?? null,\n      dateFin: previous.date_fin ?? ",
+    "patchZoneBefore": " preserveDraft: true,\n        originalMessage: message\n      }\n    }];\n  }\n  // reprise explicite : poursuivre CREATE sans CLAIM/POST automatique\n  x.refreshSessionTtl = true;\n  x.sessionExpired = false;\n  x.preserveDraft = true;\n  if (previousPendingAction === 'CREATE_APPOINTMENT') {\n    x.intent = 'CREATE_APPOINTMENT';\n  }\n}\nif (\n  createDecision === 'NEGATIVE' &&\n  previousPendingAction === 'CREATE_APPOINTMENT' &&\n  ['ASK_NOM', 'ASK_PRENOM', 'ASK_EMAIL', 'ASK_TELEPHONE', 'ASK_CREATE_SLOT'].in",
+    "resumePredAfterPreview": "explicitResumeMsg = ['reprendre', 'reprendre ma demande', 'continuer', 'continuer ma demande']\n  .includes(resumeFolded);\nif (\n  sessionExpiredFlag &&\n  !(openAttemptStatus === 'UNCERTAIN' || openAttemptStatus === 'SUBMITTING')\n) {\n  if (!explicitResumeMsg) {\n    return [{\n      json: {\n        ...x,\n        intent: 'GENERAL',\n        pendingAction: previousPendingAction,\n        conversationStep: previousConversationStep,\n        nom: previous.nom ?? x.nom ?? null,\n        prenom: previous.pren",
+    "resumePredBeforePreview": "explicitResumeMsg = ['reprendre', 'reprendre ma demande', 'continuer', 'continuer ma demande']\n  .includes(resumeFolded);\nif (\n  sessionExpiredFlag &&\n  !(openAttemptStatus === 'UNCERTAIN' || openAttemptStatus === 'SUBMITTING')\n) {\n  if (!explicitResumeMsg) {\n    return [{\n      json: {\n        ...x,\n        intent: 'GENERAL',\n        pendingAction: previousPendingAction,\n        conversationStep: previousConversationStep,\n        nom: previous.nom ?? x.nom ?? null,\n        prenom: previous.pren",
+    "jsShaBefore": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+    "jsShaAfter": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "live": {
+    "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+    "active": false,
+    "nameIsTest": true,
+    "livePathHints": [],
+    "proposedPathOnly": true
+  },
+  "controls": {
+    "sha849201dd": true,
+    "singleGererNode": true,
+    "idsUnchanged": true,
+    "connectionsUnchanged": true,
+    "credentialsUnchanged": true,
+    "webhooksUnchanged": true,
+    "notLive": true,
+    "noSqlChange": true,
+    "earlyReturnPresent": true,
+    "allowlist4Phrases": true,
+    "beforeEqualsVc9P4f": true,
+    "metaUnchanged": true
+  },
+  "allPass": true,
+  "verdict": "PASS"
+}

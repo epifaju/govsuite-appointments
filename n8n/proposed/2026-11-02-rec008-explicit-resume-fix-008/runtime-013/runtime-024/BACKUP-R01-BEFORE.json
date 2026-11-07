@@ -1,0 +1,19 @@
+{
+  "session_id": "rec008-runtime013-r01-active",
+  "conversation_step": "ASK_PRENOM",
+  "pending_action": "CREATE_APPOINTMENT",
+  "slot_id_present": true,
+  "slot_id_synth": "33333333-3333-4333-8333-333333333301",
+  "prenom_null": true,
+  "prenom_len": 0,
+  "nom_present": true,
+  "nom_len": 6,
+  "last_user_message_len": 0,
+  "has_camille": false,
+  "expires_at": "2026-11-06 01:05:47.184139+01",
+  "ttl_future": false,
+  "date_debut": "2026-11-10",
+  "date_fin": "2026-11-14",
+  "slots_len": 1,
+  "updated_at": "2026-11-05 23:05:47.184139+01"
+}

@@ -1,0 +1,20 @@
+{
+  "mission": "W03101-TEST-INSTALL-READINESS-033",
+  "installed": false,
+  "putExecuted": false,
+  "candidate": {
+    "path": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/after-OCD9It1uKFhOoWNF.W03101-candidate.json",
+    "workflowFileSha256": "57e08d2281247cf2030ae2734d6c096cdad9c049a53a120cce796fcb11c7d8af",
+    "gererJsSha256": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "replacements": 4
+  },
+  "testInstalledBaseline": {
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererJsSha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "fix008FileReference": {
+    "path": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+    "gererJsSha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "mission": "035-workflow-contract-readonly",
+  "mode": "docs-only",
+  "mutated": false,
+  "putRecommended": false,
+  "r04Runtime": "NOT_AUTHORIZED",
+  "sources": {
+    "diag034After": "../diag-034/after-OCD9It1uKFhOoWNF.json",
+    "diag034Result": "../diag-034/RESULT.json",
+    "diag034Postflight": "../diag-034/POSTFLIGHT.json",
+    "diag034Sha256": "../diag-034/SHA256.json",
+    "diag035Preflight": "./PREFLIGHT.json"
+  },
+  "pin": {
+    "workflowId": "OCD9It1uKFhOoWNF",
+    "versionCounter": 11,
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "active": false,
+    "activeVersionId": null,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "gererName": "Gérer collecte progressive",
+    "gererFix": "W-031-01",
+    "gererSha256": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "gererShaPrefix": "44a7064d…",
+    "settings": {
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "doNotModify": true
+    },
+    "chatTrigger": {
+      "present": true,
+      "name": "Lorsqu'un message de chat est reçu",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "workflowActive": false,
+      "webhooksRegistered": 0
+    }
+  },
+  "crossCheck": {
+    "diag034AfterMatchesPreflight035": true,
+    "gererShaMatch": true,
+    "inactiveMatch": true,
+    "webhooksZeroMatch": true,
+    "settingsNoneMatch": true
+  },
+  "campaignContract": {
+    "messagesPerScenario": 1,
+    "conversationStepInitial": "ASK_EMAIL",
+    "retried": false,
+    "r04C": {
+      "ttl": "EXPIRED",
+      "captureEmail": false,
+      "expectSessionExpired": true,
+      "expectRefreshSessionTtl": false,
+      "expectStepNot": "ASK_TELEPHONE"
+    },
+    "resumePath": "unchanged-vs-FIX-008",
+    "w03101NonResumeIdentity": "previous.<field> ?? null"
+  },
+  "gates": {
+    "docs": "PASS",
+    "R04-RUNTIME": "NOT_AUTHORIZED",
+    "live": "NO-GO",
+    "autoNext": "NO-GO",
+    "putIn035": "NOT_RECOMMENDED"
+  },
+  "verdict": "PASS"
+}

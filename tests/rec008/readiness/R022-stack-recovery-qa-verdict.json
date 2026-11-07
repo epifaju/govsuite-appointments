@@ -1,0 +1,191 @@
+{
+  "id": "TEST-STACK-RECOVERY-022",
+  "shortId": "R022",
+  "title": "QA verdict — post-recovery stack TEST + intégrité runner 021 / TTL (pas d'exécution métier)",
+  "mode": "offline-evidence-review",
+  "tsReview": "2026-11-06T18:16:00.000Z",
+  "executedRuntime": false,
+  "executedBusiness": false,
+  "chatTriggerUsed": false,
+  "activationExecuted": false,
+  "postCreateAppointment": false,
+  "pgMutated": false,
+  "ttlRefreshExecuted": false,
+  "env": "TEST",
+  "live": false,
+  "sources": {
+    "poststart": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-022/POSTSTART.json",
+    "diagnostic": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-022/DIAGNOSTIC.json",
+    "commands": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/stack-recovery-022/COMMANDS.json",
+    "missionReport": "docs/recovery/GOVSUITE_MULTIAGENT_TEST_STACK_RECOVERY_022_REPORT.md",
+    "runner021Offline": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/runner-021/OFFLINE-TEST-RESULTS.json",
+    "priorRecoveryQa": "tests/rec008/readiness/R011-stack-recovery-qa-verdict.json"
+  },
+  "parentFactsAccepted": {
+    "POSTSTART.ok": true,
+    "runner021Offline": "18/18 PASS",
+    "TTL_REFRESH_REQUIRED": true,
+    "chat": "none"
+  },
+  "httpVsBusiness": {
+    "httpTransport": "PASS",
+    "businessSuccess": "NOT_EVALUATED",
+    "note": "healthz/login/workflow HTTP 200 = transport uniquement ; aucun chat → aucun succès métier affirmé"
+  },
+  "postRecoveryAssertions": {
+    "status": "PASS",
+    "checks": [
+      {
+        "id": "PR-01-poststart-ok",
+        "assert": "POSTSTART.ok === true ; issues=[]",
+        "observed": { "ok": true, "issues": [] },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PR-02-healthz-transport",
+        "assert": "n8n healthz HTTP 200 (transport)",
+        "observed": { "status": 200 },
+        "verdict": "PASS",
+        "scope": "transport-only"
+      },
+      {
+        "id": "PR-03-workflow-vc10-inactive",
+        "assert": "workflow OCD9It1uKFhOoWNF inactive ; VC10 ; 134/137 ; webhooks=0 ; running=0",
+        "observed": {
+          "id": "OCD9It1uKFhOoWNF",
+          "active": false,
+          "activeVersionId": null,
+          "versionCounter": 10,
+          "nodes": 134,
+          "edges": 137,
+          "webhookRows": 0,
+          "runningExecutions": 0
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PR-04-safety-flags",
+        "assert": "liveProbed=false ; pgMutated=false ; n8nActivated=false ; chatTriggerUsed=false ; ollamaInference=false",
+        "observed": {
+          "liveProbed": false,
+          "pgMutated": false,
+          "n8nActivated": false,
+          "chatTriggerUsed": false,
+          "ollamaInference": false
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PR-05-pg-fingerprint-fixtures",
+        "assert": "fingerprint 1|14|4|0 ; openAttempts=0 ; 3 fixtures synthétiques présentes (SELECT only)",
+        "observed": {
+          "fingerprint": "1|14|4|0",
+          "openAttempts": 0,
+          "fixtureSessions": [
+            "rec008-runtime013-r01-active",
+            "rec008-runtime013-r02-expired",
+            "rec008-runtime013-r03-resume"
+          ]
+        },
+        "verdict": "PASS",
+        "mode": "read-only-select"
+      },
+      {
+        "id": "PR-06-ttl-r01-expired",
+        "assert": "R01 ttl_future=false → TTL_REFRESH_REQUIRED=true ; refresh hors périmètre 022",
+        "observed": {
+          "r01_ttl_future": false,
+          "r02_ttl_future": false,
+          "r03_ttl_future": false,
+          "TTL_REFRESH_REQUIRED": true,
+          "ttlRefreshIn022": false
+        },
+        "verdict": "PASS",
+        "gateImpact": "blocks R01 campaign until distinct TTL refresh mission"
+      },
+      {
+        "id": "PR-07-runner-021-integrity",
+        "assert": "SHA match + gate/180s/no-retry/classify/settle/runningExec ; offline 18/18",
+        "observed": {
+          "shaMatch": true,
+          "sha256": "1ab9465a720aa64925e633e5665eea3bafbe42225ac3e728bceea9f177ac5826",
+          "hasGate": true,
+          "has180s": true,
+          "hasNoRetry": true,
+          "hasClassify": true,
+          "hasSettle": true,
+          "hasRunningExec": true,
+          "offlineTests": { "total": 18, "failed": 0, "pass": true }
+        },
+        "verdict": "PASS"
+      },
+      {
+        "id": "PR-08-no-chat",
+        "assert": "aucun Chat Trigger / message métier dans 022",
+        "observed": { "chatTriggerUsed": false, "parentFact": "pas de chat" },
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "knownResiduals": [
+    {
+      "id": "RES-01-exit-255-root",
+      "class": "INCONCLUSIVE",
+      "note": "cause OS exacte du Exited 255 absente — n'invalide pas la recovery Up"
+    },
+    {
+      "id": "RES-02-execution-entity-zero",
+      "class": "INCONCLUSIVE",
+      "note": "execution_entity=0 malgré saveData*=all (trou observabilité 021 — hors claim métier 022)"
+    }
+  ],
+  "goNoGo": {
+    "stackTestOperational": "GO",
+    "prepCampaignR01": {
+      "decision": "GO-CONDITIONAL",
+      "conditions": [
+        "refresh TTL R01 autorisé (mission/auth distincte)",
+        "warm Ollama + gate /api/ps",
+        "runner 021 SHA/gates OK (déjà satisfait post-022)",
+        "préflight VC10 frais"
+      ],
+      "authorizedNow": false
+    },
+    "campaignR01Conversational": "NO-GO",
+    "campaignR02": "NO-GO",
+    "campaignR03": "NO-GO",
+    "autoNextPhase": "NO-GO",
+    "reason": "Recovery + runner offline PASS ; R01 ttl_future=false → TTL_REFRESH_REQUIRED ; aucun chat exécuté ; recovery ≠ autorisation campagne"
+  },
+  "stopCriteriaHonored": [
+    "0 retry réseau auto",
+    "pas de chat / activation / PUT",
+    "pas de POST CreateAppointment",
+    "pas de refresh TTL dans 022",
+    "pas de mutation PG métier",
+    "LIVE non sondé",
+    "pas d'auto-next phase"
+  ],
+  "verdictThisMission": {
+    "value": "PASS",
+    "scope": "stack-recovery-poststart + runner-021-offline + ttl-gate",
+    "recoveryOk": true,
+    "runner021Ok": true,
+    "campaignsAuthorized": false,
+    "ttlRefreshRequired": true,
+    "reason": "POSTSTART.ok=true ; runner 021 18/18 + SHA match ; workflow VC10 inactive ; fixtures intactes ; TTL R01 expiré → campagne NO-GO ; HTTP≠métier."
+  },
+  "commandsDocumented": {
+    "offlineNote": "Aucun runtime métier lancé dans R022 QA. Revue d'artefacts uniquement.",
+    "alreadyDone": [
+      "docker start TEST (hors QA)",
+      "POSTSTART checks → ok=true",
+      "node …/runner-021/offline-runner-readiness.test.cjs → 18/18"
+    ],
+    "futureWhenAuthorized": [
+      "mission TTL refresh R01 (auth distincte)",
+      "warm Ollama /api/ps",
+      "préflight VC10 + campagne R01 (auth distincte)"
+    ]
+  }
+}

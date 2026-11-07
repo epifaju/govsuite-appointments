@@ -1,0 +1,30 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "parserRecognizesGetAvailability": true,
+  "dateNormalizationPresent": true,
+  "serviceSiteExtractionPresent": true,
+  "getAvailabilityMethod": "GET",
+  "getAvailabilityUrl": "http://rec008-mock:8080/appointments/availability",
+  "getAvailabilityIsGet": true,
+  "availFirstNode": "Valider paramètres disponibilité",
+  "intentNodes": [
+    "Comprendre la demande",
+    "Parser intention",
+    "Router intention",
+    "Fusionner état conversation",
+    "Gérer collecte progressive"
+  ],
+  "pathFromAvailSample": [
+    "Appeler GetAvailability",
+    "Préparer réponse disponibilité",
+    "Mémoriser créneaux proposés",
+    "Restaurer réponse disponibilité"
+  ],
+  "reachCreateFromAvailBranch": false,
+  "reachCreateFromGetNode": false,
+  "abandonedExcludedFromOpenSelect": true,
+  "newSessionIndependent": true,
+  "safeToActivate": true,
+  "routerMapsGetAvailabilityToValidate": true
+}

@@ -1,0 +1,18 @@
+# PROPOSED_FIX.diff.txt — W-031-01 MINIMAL (non installé)
+# Nœud: Gérer collecte progressive
+# Zone: sessionExpired && !explicitResumeMsg ONLY
+# Identité: nom/prenom/email/telephone — pas de fallback x.*
+# Branche reprendre: inchangée (previous ?? x)
+# Parser / Fusionner / Sauvegarder: inchangés
+
+--- Gerer_collecte_progressive.BEFORE.js
++++ Gerer_collecte_progressive.AFTER.js
+@@ expired non-resume identity @@
+-        nom: previous.nom ?? x.nom ?? null,
++        nom: previous.nom ?? null,
+-        prenom: previous.prenom ?? x.prenom ?? null,
++        prenom: previous.prenom ?? null,
+-        email: previous.email ?? x.email ?? null,
++        email: previous.email ?? null,
+-        telephone: previous.telephone ?? x.telephone ?? null,
++        telephone: previous.telephone ?? null,

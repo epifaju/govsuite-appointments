@@ -1,0 +1,13 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "collectsPrenomFromAskPrenom": true,
+  "transitionsToAskEmailWhenPrenomPresent": true,
+  "preservesNomAndSlot": true,
+  "insertOnlyWhenIdentityComplete": true,
+  "decideDefaultCollect": true,
+  "validerReachCreate": false,
+  "demanderReachCreate": false,
+  "askEmailTextPresent": true,
+  "safeToActivate": true
+}

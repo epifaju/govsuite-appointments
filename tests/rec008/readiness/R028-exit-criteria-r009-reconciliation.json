@@ -1,0 +1,220 @@
+{
+  "id": "EXIT-CRITERIA-028",
+  "shortId": "R028",
+  "apDoc": "AP-DOC-01",
+  "title": "Réconciliation catalogue R009 ↔ preuves runtime R024–R026 (docs only)",
+  "mode": "docs-only-offline-reconciliation",
+  "env": "TEST",
+  "live": false,
+  "executedRuntime": false,
+  "sources": {
+    "catalog": "tests/rec008/readiness/R009-install-runtime-campaigns.json",
+    "fixturesR009": [
+      "tests/rec008/fixtures/install-readiness-009/r01-active-camille-state.json",
+      "tests/rec008/fixtures/install-readiness-009/r02-expired-camille-state.json",
+      "tests/rec008/fixtures/install-readiness-009/r03-expired-resume-state.json"
+    ],
+    "report009": "docs/recovery/GOVSUITE_MULTIAGENT_TEST_INSTALL_READINESS_009_REPORT.md",
+    "report019": "docs/recovery/GOVSUITE_MULTIAGENT_R013_FIXTURES_REALIGN_019_REPORT.md",
+    "report027": "docs/recovery/GOVSUITE_MULTIAGENT_REC008_CONSOLIDATED_REVIEW_027_REPORT.md",
+    "qaR024": "tests/rec008/readiness/R024-r01-runtime-qa-verdict.json",
+    "qaR025": "tests/rec008/readiness/R025-r02-runtime-qa-verdict.json",
+    "qaR026": "tests/rec008/readiness/R026-r03-runtime-qa-verdict.json"
+  },
+  "exitCriteriaE1E7": {
+    "E1": {
+      "id": "E1",
+      "criterion": "FIX-008 installé TEST (VC10, Gérer SHA f75d4984…)",
+      "state": "SATISFIED",
+      "evidence": ["012+", "report027 §6.1", "VC10 versionCounter=10"]
+    },
+    "E2": {
+      "id": "E2",
+      "criterion": "Fixtures runtime OPTION A (slot_id + dates + available_slots) avant R0x",
+      "state": "SATISFIED_RUNTIME",
+      "debt": "FIXTURE-JSON-R009-SLOT-NULL",
+      "evidence": ["REALIGN-019", "SEED.sql OPTION A", "report019"]
+    },
+    "E3": {
+      "id": "E3",
+      "criterion": "R01 runtime PASS — ASK_PRENOM actif + Camille → ASK_EMAIL",
+      "state": "SATISFIED",
+      "evidence": ["R024", "artifacts-r01-024"]
+    },
+    "E4": {
+      "id": "E4",
+      "criterion": "R02 runtime PASS — session expirée + Camille → session_expired, prenom null",
+      "state": "SATISFIED",
+      "evidence": ["R025", "artifacts-r02-025"]
+    },
+    "E5": {
+      "id": "E5",
+      "criterion": "R03 runtime PASS — session expirée + reprendre → TTL+, ASK_PRENOM, prenom null",
+      "state": "SATISFIED",
+      "evidence": ["R026", "artifacts-r03-026"]
+    },
+    "E6": {
+      "id": "E6",
+      "criterion": "Postflight idle + isolation TEST + evidence QA indépendante PASS (1 msg, 0 retry, mock Δ0)",
+      "state": "SATISFIED",
+      "evidence": ["R024–R026 nonActionsConfirmed", "fingerprint 1|14|4|0", "liveTouched=false"]
+    },
+    "E7": {
+      "id": "E7",
+      "criterion": "Catalogue R009 réconcilié formellement avec preuves R024–R026 (AP-DOC-01)",
+      "state": "SATISFIED",
+      "evidence": ["R028 this artifact", "matrix below"]
+    }
+  },
+  "matrix": [
+    {
+      "scenario": "R01",
+      "catalogId": "R009.campaigns.R01",
+      "runtimeMission": "R01-RUNTIME-024",
+      "etatInitial": {
+        "catalogFixture": "ASK_PRENOM actif ; nom=Dupont ; prenom=null ; expires_at > NOW ; session rec008-syn-r009-r01-active-camille",
+        "runtimeActual": "ASK_PRENOM actif OPTION A (slot_id …301, dates, available_slots len=1) ; session rec008-runtime013-r01-active ; TTL rafraîchi pré-campagne"
+      },
+      "message": "Camille",
+      "attendu": {
+        "http": "200 + JSON parseable",
+        "metier": "prenom=Camille ; conversation_step=ASK_EMAIL ; CLAIM/POST Δ=0 ; 0 retry",
+        "catalogAsserts": ["R01-H01", "R01-M01", "R01-M02", "R01-A01", "R01-A02"]
+      },
+      "preuve": {
+        "qa": "tests/rec008/readiness/R024-r01-runtime-qa-verdict.json",
+        "campaign": "n8n/proposed/.../runtime-013/artifacts-r01-024/",
+        "observed": {
+          "httpStatus": 200,
+          "httpType": "create_appointment_question",
+          "afterStep": "ASK_EMAIL",
+          "afterPrenom": "Camille",
+          "mockPostsDelta": 0,
+          "retried": false
+        }
+      },
+      "verdict": "PASS",
+      "catalogVsRuntime": "ALIGNÉ métier ; écarts doc : session_id catalogue ≠ runtime ; fixture JSON R009 slot_id null vs OPTION A runtime"
+    },
+    {
+      "scenario": "R02",
+      "catalogId": "R009.campaigns.R02",
+      "runtimeMission": "R02-RUNTIME-025",
+      "etatInitial": {
+        "catalogFixture": "ASK_PRENOM expiré ; nom=Dupont ; prenom=null ; expires_at ≤ NOW ; session rec008-syn-r009-r02-expired-camille",
+        "runtimeActual": "ASK_PRENOM expiré OPTION A (slot_id …302) ; session rec008-runtime013-r02-expired"
+      },
+      "message": "Camille",
+      "attendu": {
+        "http": "200 + type session_expired",
+        "metier": "prenom null ; step=ASK_PRENOM ; TTL non renouvelé ; CLAIM/POST Δ=0 ; 0 retry",
+        "catalogAsserts": ["R02-H01", "R02-M01", "R02-M02", "R02-M04", "R02-M05", "R02-A01", "R02-A02"]
+      },
+      "preuve": {
+        "qa": "tests/rec008/readiness/R025-r02-runtime-qa-verdict.json",
+        "campaign": "n8n/proposed/.../runtime-013/artifacts-r02-025/",
+        "observed": {
+          "httpStatus": 200,
+          "httpType": "session_expired",
+          "afterStep": "ASK_PRENOM",
+          "afterPrenom": null,
+          "ttlAfter": false,
+          "mockPostsDelta": 0,
+          "retried": false
+        }
+      },
+      "verdict": "PASS",
+      "catalogVsRuntime": "ALIGNÉ métier ; IDs d'assert runtime remappés (R025 R02-M01=prenom vs catalogue R02-M01=type) — sémantique OK ; dette slot_id JSON",
+      "assertIdNote": "Catalogue R02-M01=reply.type ; R025 R02-H01 porte session_expired et R02-M01=prenom. Contrats équivalents."
+    },
+    {
+      "scenario": "R03",
+      "catalogId": "R009.campaigns.R03",
+      "runtimeMission": "R03-RUNTIME-026",
+      "etatInitial": {
+        "catalogFixture": "ASK_PRENOM expiré ; nom=Dupont ; prenom=null ; expires_at ≤ NOW ; session rec008-syn-r009-r03-expired-resume",
+        "runtimeActual": "ASK_PRENOM expiré OPTION A (slot_id …303) ; session rec008-runtime013-r03-resume"
+      },
+      "message": "reprendre",
+      "attendu": {
+        "http": "200 + JSON parseable ; type ≠ session_expired",
+        "metier": "TTL+ ; step=ASK_PRENOM ; prenom null ; nom préservé ; invite prénom ; CLAIM/POST Δ=0 ; 0 retry ; rejet VC9-actual (prenom=reprendre)",
+        "catalogAsserts": ["R03-H01", "R03-M01", "R03-M02", "R03-M03", "R03-M04", "R03-M06", "R03-A01", "R03-A02"]
+      },
+      "preuve": {
+        "qa": "tests/rec008/readiness/R026-r03-runtime-qa-verdict.json",
+        "campaign": "n8n/proposed/.../runtime-013/artifacts-r03-026/",
+        "observed": {
+          "httpStatus": 200,
+          "httpType": "create_appointment_question",
+          "httpAsksPrenom": true,
+          "afterStep": "ASK_PRENOM",
+          "afterPrenom": null,
+          "ttlBefore": false,
+          "ttlAfter": true,
+          "nomPreserved": true,
+          "mockPostsDelta": 0,
+          "retried": false
+        }
+      },
+      "verdict": "PASS",
+      "catalogVsRuntime": "ALIGNÉ métier (contrat FIX-008) ; session_id / slot JSON dette ; R03-M05 intent/pending non listé séparément dans R026 mais nom/step/TTL/invite couverts"
+    }
+  ],
+  "debts": [
+    {
+      "id": "FIXTURE-JSON-R009-SLOT-NULL",
+      "severity": "Medium",
+      "summary": "Fixtures JSON install-readiness-009 : slot_id null / available_slots [] ; runtime 019–026 = OPTION A (slot UUID synthétique + jsonb len 1 + dates).",
+      "impact": "Un reseed depuis les JSON R009 seuls reviendrait hors OPTION A et pourrait rejouer le routage DIAG-017 (step hors ASK_PRENOM).",
+      "authority": "SEED.sql / REALIGN-019 font autorité pour runtime ; JSON R009 restent catalogue pré-OPTION A.",
+      "recommendedFix": "AP-DOC-02 : aligner les 3 JSON R009 sur OPTION A (sans mutation PG dans cette mission).",
+      "status": "OPEN"
+    },
+    {
+      "id": "SESSION-ID-CATALOG-VS-RUNTIME",
+      "severity": "Low",
+      "summary": "session_id catalogue R009 (rec008-syn-r009-*) ≠ runtime013 (rec008-runtime013-*).",
+      "impact": "Documentation / traçabilité ; pas d'échec métier observé.",
+      "recommendedFix": "Annoter mapping dans catalogue R009 (fait partiellement ici) ; ne pas fusionner IDs sans mission seed.",
+      "status": "DOCUMENTED"
+    },
+    {
+      "id": "ASSERT-ID-REMAP-R02",
+      "severity": "Low",
+      "summary": "IDs d'assertions R02 catalogue ≠ numérotation R025 (sémantique identique).",
+      "impact": "Confusion lecture croisée catalogue ↔ QA.",
+      "recommendedFix": "Table de mapping dans AP-DOC-02 ou mise à jour douce des IDs R025.",
+      "status": "DOCUMENTED"
+    }
+  ],
+  "httpVsBusiness": {
+    "note": "HTTP 200 ≠ succès métier automatique. R01/R03 type create_appointment_question ; R02 type session_expired — transport PASS et métier PASS concordent dans les trois cas.",
+    "r01": { "http": "PASS", "business": "PASS" },
+    "r02": { "http": "PASS", "business": "PASS" },
+    "r03": { "http": "PASS", "business": "PASS" }
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "EXIT-CRITERIA-028 / AP-DOC-01 docs-only reconciliation",
+    "reason": "E1–E7 satisfaits pour le sous-périmètre ASK-PRENOM/FIX-008. Matrice R01/R02/R03 = PASS chacun. Dette fixtures JSON R009 slot_id null ouverte (n'invalide pas les PASS runtime OPTION A)."
+  },
+  "goNoGo": {
+    "askPrenomCatalogClosure": "GO — catalogue R009 formellement réconcilié avec R024–R026",
+    "fixtureJsonRealignApDoc02": "GO conditionnel (docs/fixtures JSON only ; pas de runtime)",
+    "rejeuR01R02R03": "NO-GO",
+    "createE2E": "NO-GO",
+    "claimPost": "NO-GO",
+    "live": "NO-GO",
+    "autoNextPhase": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas d'exécution runtime",
+    "pas d'activation n8n",
+    "pas de POST CreateAppointment",
+    "pas de mutation PG",
+    "pas de modification fixtures JSON (dette notée seulement)",
+    "pas de toucher LIVE",
+    "cette réconciliation n'autorise pas la phase runtime suivante"
+  ]
+}

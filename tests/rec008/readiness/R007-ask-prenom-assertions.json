@@ -1,0 +1,57 @@
+{
+  "id": "READINESS-007",
+  "title": "Assertions ASK_PRENOM S01–S03 (offline catalog + future runtime)",
+  "status": "catalog-ready",
+  "executedRuntime": false,
+  "sourceSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+  "scenarios": {
+    "S01": {
+      "offlineScenario": "S01-ask-prenom-active",
+      "runtimeRequired": true,
+      "alignedWithVc9": true,
+      "assertions": [
+        "HTTP 200",
+        "prenom=Camille",
+        "conversation_step=ASK_EMAIL",
+        "nom preserved",
+        "CLAIM=0 POST=0",
+        "deactivate"
+      ]
+    },
+    "S02": {
+      "offlineScenario": "S02-ask-prenom-expired",
+      "runtimeRequired": true,
+      "alignedWithVc9": true,
+      "assertions": [
+        "type=session_expired",
+        "refreshSessionTtl=false",
+        "prenom still null",
+        "step ASK_PRENOM",
+        "CLAIM=0 POST=0",
+        "deactivate"
+      ]
+    },
+    "S03": {
+      "offlineScenario": "S03-ask-prenom-explicit-resume-vc9-actual",
+      "runtimeRequired": true,
+      "alignedWithVc9": true,
+      "alignedWithProductBrief": false,
+      "divergence": "VC9 captures reprendre as prenom and advances to ASK_EMAIL; brief expected ASK_PRENOM + prenom null + invite prenom",
+      "briefRuntime": "NO-GO until code fix (skip field collect on explicitResumeMsg)",
+      "vc9ActualRuntime": "GO only to confirm buggy capture — not recommended as acceptance of product intent"
+    }
+  },
+  "negative": {
+    "N01": "expired must not capture prenom",
+    "N02": "brief S03 diverges from VC9 (PASS when divergence detected)"
+  },
+  "goNoGo": {
+    "offlinePrep": "GO",
+    "runtimeS01": "GO sous autorisation + fixtures appliquées",
+    "runtimeS02": "GO sous autorisation + fixtures appliquées",
+    "runtimeS03Brief": "NO-GO — contradiction VC9",
+    "live": "NO-GO",
+    "autoNext": "NO-GO"
+  }
+}

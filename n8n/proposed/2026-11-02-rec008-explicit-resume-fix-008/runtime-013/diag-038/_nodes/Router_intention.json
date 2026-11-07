@@ -1,0 +1,177 @@
+{
+  "rules": {
+    "values": [
+      {
+        "outputKey": "GET_SERVICES",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "24f25540-c69c-44fc-a838-ce6d16291548",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "GET_SERVICES"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "GET_AVAILABILITY",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cdc9461a-81d6-4012-80ae-caa075ed7cf0",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "GET_AVAILABILITY"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "CREATE_APPOINTMENT",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "552433bb-275d-44a5-98ce-f0880043ce6e",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "CREATE_APPOINTMENT"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "GET_APPOINTMENT",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "ff45535a-8b14-44c4-b072-93ed0a722854",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "GET_APPOINTMENT"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "CANCEL_APPOINTMENT",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "edac3557-ca95-4b07-9a36-c2f6f5158c82",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "CANCEL_APPOINTMENT"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "RESCHEDULE_APPOINTMENT",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "29b7bdc6-96a0-4c79-9850-65e1117ca3c0",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "RESCHEDULE_APPOINTMENT"
+            }
+          ]
+        },
+        "renameOutput": true
+      },
+      {
+        "outputKey": "GENERAL",
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e9be7b1b-8ef5-44c9-aa38-f533d25c3836",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.intent }}",
+              "rightValue": "GENERAL"
+            }
+          ]
+        },
+        "renameOutput": true
+      }
+    ]
+  },
+  "options": {
+    "fallbackOutput": "extra"
+  }
+}

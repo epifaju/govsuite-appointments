@@ -1,0 +1,17 @@
+{
+  "suite": "explicit-resume-fix-008",
+  "at": "2026-11-05T19:44:18.944Z",
+  "durationMs": 13,
+  "verdict": "ERROR",
+  "failedIds": [
+    "bootstrap"
+  ],
+  "counts": {},
+  "results": [],
+  "securityViolations": [],
+  "notes": [
+    "simulation:true — PASS technique offline ≠ PASS runtime",
+    "Candidat non installé TEST",
+    "Workflow VC9 original inchangé"
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "SECURITY-POST-R0X-029",
+  "shortId": "R029",
+  "title": "Critères tests sécurité R04–R07 (assertions, STOP, mock Δ, PII) — docs only",
+  "mode": "docs-only-security-criteria",
+  "env": "TEST",
+  "live": false,
+  "executedRuntime": false,
+  "status": "PROPOSED",
+  "sources": {
+    "criteriaDoc": "docs/recovery/REC008_R04_R07_SECURITY_TEST_CRITERIA.md",
+    "stopDoc": "tests/rec008/runtime/STOP-CONDITIONS-R04-R07.md",
+    "exitCriteria028": "docs/recovery/REC008_ASK_PRENOM_EXIT_CRITERIA.md",
+    "report027": "docs/recovery/GOVSUITE_MULTIAGENT_REC008_CONSOLIDATED_REVIEW_027_REPORT.md",
+    "report028": "docs/recovery/GOVSUITE_MULTIAGENT_EXIT_CRITERIA_028_REPORT.md",
+    "contract018": "docs/recovery/GOVSUITE_MULTIAGENT_CREATE_FLOW_CONTRACT_018_REPORT.md",
+    "safety": ".cursor/rules/govsuite-safety.mdc"
+  },
+  "gates": {
+    "R04": { "prep": "GO", "runtime": "NO-GO", "cfE": "CF-E1" },
+    "R05": { "prep": "GO", "runtime": "NO-GO", "cfE": "CF-E1" },
+    "R06": { "prep": "GO", "runtime": "NO-GO", "cfE": "CF-E2" },
+    "R07": { "prep": "GO", "runtime": "NO-GO", "cfE": "CF-E3", "requires": ["security-auditor GO", "rec008-mock proven"] },
+    "LIVE": { "prep": "N/A", "runtime": "NO-GO" },
+    "autoNext": "NO-GO",
+    "replayR01R03": "NO-GO"
+  },
+  "mockDeltaPolicy": {
+    "R04": { "mockPostsDelta": 0, "mockClaimsDelta": 0, "availServicesDelta": 0 },
+    "R05": { "mockPostsDelta": 0, "mockClaimsDelta": 0, "availServicesDelta": 0 },
+    "R06": { "mockPostsDelta": 0, "mockClaimsDelta": 0, "availServicesDelta": 0 },
+    "R07": { "mockPostsDelta": 1, "mockClaimsDelta": 1, "availServicesDelta": 0, "livePosts": 0 },
+    "note": "Δ0 on R01–R06 is conversational anti-regression, not anti-double-booking proof"
+  },
+  "commonAssertions": [
+    { "id": "SEC-C01", "assert": "TEST port/compose isolation (:5682)", "onFail": "STOP test-live-confusion" },
+    { "id": "SEC-C02", "assert": "liveTouched=false", "onFail": "STOP/FAIL isolation" },
+    { "id": "SEC-C03", "assert": "exactly 1 chat message; retried=false", "onFail": "FAIL/STOP retry-performed" },
+    { "id": "SEC-C04", "assert": "timeout/ambiguous → UNCERTAIN; no second send", "onFail": "STOP timeout-or-transport" },
+    { "id": "SEC-C05", "assert": "CreateAppointment URLs → rec008-mock", "onFail": "STOP urls-or-credentials" },
+    { "id": "SEC-C06", "assert": "postflight idle webhooks/running", "onFail": "STOP deactivate-failed" },
+    { "id": "SEC-C07", "assert": "artefacts sans secret/PII citoyen", "onFail": "FAIL hygiene PII" },
+    { "id": "SEC-C08", "assert": "PG fingerprint drift → UNCERTAIN/FAIL; never fix LIVE", "onFail": "STOP pg-or-live-changed" }
+  ],
+  "scenarios": {
+    "R04": {
+      "title": "ASK_EMAIL → ASK_TELEPHONE",
+      "messageClass": "synthetic_email",
+      "assertions": ["R04-H01", "R04-M01", "R04-M02", "R04-M03", "R04-S01", "R04-S02", "R04-S03", "R04-P01"],
+      "forbid": ["CLAIM", "POST CreateAppointment", "retry", "LIVE"]
+    },
+    "R05": {
+      "title": "ASK_TELEPHONE → AWAIT_CREATE_CONFIRMATION/recap",
+      "messageClass": "synthetic_phone",
+      "assertions": ["R05-H01", "R05-M01", "R05-M02", "R05-M03", "R05-S01", "R05-S02", "R05-S03", "R05-P01"],
+      "forbid": ["CLAIM", "POST CreateAppointment", "retry", "LIVE"]
+    },
+    "R06": {
+      "title": "AFFIRM confirmation without CLAIM/POST",
+      "messageClass": "affirm_explicit",
+      "assertions": ["R06-H01", "R06-M01", "R06-M02", "R06-M03", "R06-S01", "R06-S02", "R06-S03", "R06-S04", "R06-P01"],
+      "forbid": ["CLAIM", "POST CreateAppointment", "retry", "LIVE", "confirm-without-slotId"],
+      "risk": "skipCreateProgression"
+    },
+    "R07": {
+      "title": "AFFIRM + CLAIM + POST mock CreateAppointment",
+      "messageClass": "affirm_then_claim_post_mock",
+      "assertions": ["R07-H01", "R07-M01", "R07-M02", "R07-S01", "R07-S02", "R07-S03", "R07-S04", "R07-S05", "R07-P01"],
+      "forbid": ["POST live/prod", "second POST", "retry after timeout", "LIVE"],
+      "allow": ["exactly one mock POST", "exactly one CLAIM"]
+    }
+  },
+  "piiPolicy": {
+    "fixtures": "synthetic only (Dupont/Camille/example.test/+33000000000)",
+    "reports": "mask email/phone as present+length or irreversible hash; no secrets",
+    "historicalDebt": "B9 Low — synthetic names in clear in prior artefacts"
+  },
+  "stopCodes": {
+    "preflight": [
+      "auth-missing",
+      "prep-confused-as-runtime",
+      "test-live-confusion",
+      "createappointment-unguarded",
+      "mock-not-anchored",
+      "open-attempts-unexpected",
+      "target-state-mismatch",
+      "pii-fixture-real",
+      "r07-without-security-go",
+      "ask-prenom-closure-as-create-go",
+      "connectivity"
+    ],
+    "during": [
+      "timeout-or-transport",
+      "second-message",
+      "retry-performed",
+      "createappointment-post",
+      "createappointment-live",
+      "claim-on-r04-r06",
+      "sql-mutation-extra",
+      "cross-scenario-send"
+    ],
+    "postflight": [
+      "claim-or-post-delta",
+      "live-touched",
+      "pii-in-report",
+      "pii-cleartext-email",
+      "pii-cleartext-phone",
+      "secret-or-token-cleartext",
+      "deactivate-failed",
+      "phase-auto-advance"
+    ]
+  },
+  "globalVerdict": {
+    "value": "PASS",
+    "scope": "SECURITY-POST-R0X-029 docs-only criteria package",
+    "reason": "Critères sécurité R04–R07 formalisés (assertions, STOP, mock Δ, PII, gates prep vs runtime). Runtime R04–R07 et LIVE restent NO-GO."
+  },
+  "goNoGo": {
+    "prepR04R07": "GO",
+    "runtimeR04": "NO-GO",
+    "runtimeR05": "NO-GO",
+    "runtimeR06": "NO-GO",
+    "runtimeR07": "NO-GO",
+    "live": "NO-GO",
+    "autoNext": "NO-GO"
+  },
+  "nonActionsConfirmed": [
+    "pas d'exécution runtime",
+    "pas d'activation n8n",
+    "pas de POST CreateAppointment",
+    "pas de CLAIM",
+    "pas de toucher LIVE",
+    "pas de mutation PG/Docker",
+    "clôture ASK_PRENOM 028 non étendue à CREATE"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "invalidCreate": {
+    "messageClass": "non_email",
+    "llmIntent": "CREATE_APPOINTMENT",
+    "step": "ASK_EMAIL",
+    "emailPresent": false,
+    "decideErr": null,
+    "decideKeys": [
+      "sessionId",
+      "conversationStep",
+      "attemptAction",
+      "modifyField",
+      "openAttempt",
+      "reference",
+      "ready",
+      "claimAcquired"
+    ],
+    "decideAction": "COLLECT",
+    "decideRedacted": {
+      "action": null,
+      "attemptAction": "COLLECT",
+      "decision": null,
+      "next": null,
+      "branch": null,
+      "route": null,
+      "createDecision": null,
+      "conversationStep": "ASK_EMAIL"
+    },
+    "demErr": null,
+    "demTextHasEmailWord": true,
+    "demTextLen": 40
+  },
+  "invalidGeneral": {
+    "messageClass": "non_email",
+    "llmIntent": "GENERAL",
+    "step": "ASK_EMAIL",
+    "emailPresent": false,
+    "decideErr": null,
+    "decideKeys": [
+      "sessionId",
+      "conversationStep",
+      "attemptAction",
+      "modifyField",
+      "openAttempt",
+      "reference",
+      "ready",
+      "claimAcquired"
+    ],
+    "decideAction": "COLLECT",
+    "decideRedacted": {
+      "action": null,
+      "attemptAction": "COLLECT",
+      "decision": null,
+      "next": null,
+      "branch": null,
+      "route": null,
+      "createDecision": null,
+      "conversationStep": "ASK_EMAIL"
+    },
+    "demErr": null,
+    "demTextHasEmailWord": true,
+    "demTextLen": 40
+  },
+  "validCreate": {
+    "messageClass": "email_like",
+    "llmIntent": "CREATE_APPOINTMENT",
+    "step": "ASK_TELEPHONE",
+    "emailPresent": true,
+    "decideErr": null,
+    "decideKeys": [
+      "sessionId",
+      "conversationStep",
+      "attemptAction",
+      "modifyField",
+      "openAttempt",
+      "reference",
+      "ready",
+      "claimAcquired"
+    ],
+    "decideAction": "COLLECT",
+    "decideRedacted": {
+      "action": null,
+      "attemptAction": "COLLECT",
+      "decision": null,
+      "next": null,
+      "branch": null,
+      "route": null,
+      "createDecision": null,
+      "conversationStep": "ASK_TELEPHONE"
+    },
+    "demErr": null,
+    "demTextHasEmailWord": false,
+    "demTextLen": 43
+  }
+}

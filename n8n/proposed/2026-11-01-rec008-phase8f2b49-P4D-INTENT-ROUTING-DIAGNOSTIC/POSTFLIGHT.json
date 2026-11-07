@@ -1,0 +1,58 @@
+{
+  "phase": "8F-2B49-P4D",
+  "at": "2026-11-01T20:49:10.278Z",
+  "mode": "read-only-postflight",
+  "expected": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "pg": "1|11|4|0",
+    "open": "0",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "observed": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "activeIds": [],
+    "pg": "1|11|4|0",
+    "open": "0",
+    "statusCounts": [
+      "ABANDONED|1",
+      "CONFIRMED|2",
+      "EXPIRED|1"
+    ],
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "preflightAt": "2026-11-01T20:48:45.693Z",
+  "postflight": {
+    "matchesExpected": true,
+    "unchangedVsPreflight": true,
+    "noChatNoActivateNoPut": true,
+    "noSqlMutation": true,
+    "noMockChange": true,
+    "noLiveExecution": true,
+    "historicalArtefactsUntouched": true
+  },
+  "postflightOk": true
+}

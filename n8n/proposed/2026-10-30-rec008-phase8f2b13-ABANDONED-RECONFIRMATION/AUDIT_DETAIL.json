@@ -1,0 +1,39 @@
+{
+  "decideFull": "const saved = $json;\nlet collected = {};\nlet joined = {};\n\ntry { collected = $('Gérer collecte progressive').item.json ?? {}; } catch (e) { collected = {}; }\ntry { joined = $('Joindre tentative de session').item.json ?? {}; } catch (e) { joined = {}; }\n\nconst decision = collected.createDecision || null;\nconst openAttempt = joined.openAttempt || null;\nconst status = openAttempt ? openAttempt.status : null;\nconst now = Date.now();\nconst leaseUntil = openAttempt && openAttempt.leaseUntil ? new Date(openAttempt.leaseUntil).getTime() : null;\nconst expiresAt = openAttempt && openAttempt.expiresAt ? new Date(openAttempt.expiresAt).getTime() : null;\nconst leaseExpired = leaseUntil !== null && leaseUntil <= now;\nconst waitExpired = expiresAt !== null && expiresAt <= now;\n\nlet attemptAction = 'COLLECT';\n\nif (status === 'UNCERTAIN' || (status === 'SUBMITTING' && leaseExpired)) {\n  attemptAction = 'RESUME';\n} else if (status === 'SUBMITTING') {\n  attemptAction = 'WAIT';\n} else if (status === 'AWAITING_CONFIRMATION' && waitExpired) {\n  attemptAction = 'EXPIRE';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'AFFIRM') {\n  attemptAction = 'CLAIM';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'NEGATIVE') {\n  attemptAction = 'ABANDON';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'MODIFY') {\n  attemptAction = 'MODIFY';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'RESTART') {\n  attemptAction = 'RESTART';\n} else if (status === 'AWAITING_CONFIRMATION') {\n  attemptAction = 'ASK';\n} else if (decision === 'INSERT') {\n  attemptAction = 'INSERT';\n} else if (!status && (saved.conversationStep === 'AWAIT_CREATE_CONFIRMATION' || collected.conversationStep === 'AWAIT_CREATE_CONFIRMATION')) {\n  attemptAction = 'RESET_STALE';\n} else if (decision === 'RECALL' || (status === 'CONFIRMED' && decision === 'AFFIRM')) {\n  attemptAction = 'RECALL';\n} else if (decision === 'RESUME') {\n  attemptAction = 'RESUME';\n} else if (decision === 'EXPIRE') {\n  attemptAction = 'EXPIRE';\n}\n\nreturn [{\n  json: {\n    sessionId: saved.sessionId || joined.sessionId || null,\n    conversationStep: saved.conversationStep || collected.conversationStep || null,\n    attemptAction,\n    modifyField: collected.modifyField || null,\n    openAttempt,\n    reference: saved.reference || (openAttempt && openAttempt.reference) || null,\n    ready: false,\n    claimAcquired: false\n  }\n}];",
+  "openSelectNodes": [
+    {
+      "name": "Lire tentative de session",
+      "type": "n8n-nodes-base.postgres",
+      "querySnippet": "SELECT\n  id::text AS attempt_id,\n  status AS attempt_status,\n  appointment_reference,\n  lease_until,\n  expires_at,\n  resume_count\nFROM public.ai_appointment_attempt\nWHERE session_id = $1\n  AND status IN ('AWAITING_CONFIRMATION', 'SUBMITTING', 'UNCERTAIN', 'CONFIRMED')\nORDER BY created_at DESC\nLIMIT 1;"
+    },
+    {
+      "name": "Insérer tentative",
+      "type": "n8n-nodes-base.postgres",
+      "querySnippet": "WITH input AS (\n  SELECT $1::jsonb AS data\n)\nINSERT INTO public.ai_appointment_attempt (\n  id, session_id, idempotency_key, request_payload, request_fingerprint, status, expires_at\n)\nSELECT\n  (data->>'attemptId')::uuid,\n  data->>'sessionId',\n  data->>'idempotencyKey',\n  data->'requestPayload',\n  data->>'fingerprint',\n  'AWAITING_CONFIRMATION',\n  NOW() + INTERVAL '2 hours'\nFROM input\nWHERE (data->>'idempotencyKey') ~ '^[A-Za-z0-9._~-]{16,128}$'\n  AND (data->'requestPayload'->>'cleIdempotence') = data->>'idempotencyKey'\nRETURNING id::text AS attempt_id, status;"
+    }
+  ],
+  "ruleTargets": {
+    "INSERT": "Tirer aléa de tentative",
+    "CLAIM": "Préparer réclamation ou reprise",
+    "RESUME": "Préparer reprise",
+    "ABANDON": "Préparer abandon ou modification",
+    "MODIFY": "Préparer abandon ou modification",
+    "RESTART": "Préparer abandon ou modification",
+    "ASK": "Demander paramètres création",
+    "WAIT": "Réponse attente de bail",
+    "RECALL": "Réponse référence déjà connue",
+    "EXPIRE": "Expirer tentatives en attente",
+    "RESET_STALE": "Effacer collecte orpheline"
+  },
+  "claimCodeHead": "WITH input AS (\n  SELECT $1::jsonb AS data\n),\nentropy AS (\n  SELECT 'own-' || encode(public.gen_random_bytes(16), 'hex') AS lease_owner\n)\nSELECT f.acquired, f.attempt_id::text, f.attempt_status, f.request_payload, f.idempotency_key, f.request_fingerprint, f.resume_count, e.lease_owner\nFROM input\nCROSS JOIN entropy e\nCROSS JOIN LATERAL public.reclamer_tentative_rendez_vous(\n  (input.data->>'attemptId')::uuid,\n  input.data->>'sessionId',\n  e.lease_owner\n) AS f;",
+  "insertCodeHead": "WITH input AS (\n  SELECT $1::jsonb AS data\n)\nINSERT INTO public.ai_appointment_attempt (\n  id, session_id, idempotency_key, request_payload, request_fingerprint, status, expires_at\n)\nSELECT\n  (data->>'attemptId')::uuid,\n  data->>'sessionId',\n  data->>'idempotencyKey',\n  data->'requestPayload',\n  data->>'fingerprint',\n  'AWAITING_CONFIRMATION',\n  NOW() + INTERVAL '2 hours'\nFROM input\nWHERE (data->>'idempotencyKey') ~ '^[A-Za-z0-9._~-]{16,128}$'\n  AND (data->'requestPayload'->>'cleIdempotence') = data->>'idempotencyKey'\nRETURNING id::text AS attempt_id, status;",
+  "parserOuiHead": [
+    "se() |     .normalize('NFD') |     .replace(/[\\u0300-\\u036f]/g, '') |     .replace(/[.!?;:,]+$/g, '') |     .replace(/\\s+/g, ' ') |     .trim(); | } |  | const affirmativeDecisions = new Set([ |   'oui', 'oui je confirme', 'je confirme', 'confirmer', |   'd\\'accord', 'daccord', 'ok', 'yes' | ]); | const negativeDecisions = new Set([ |   'non', 'non merci', 'je ne confirme pas', 'annu",
+    "  .normalize('NFD') |     .replace(/[\\u0300-\\u036f]/g, '') |     .replace(/[.!?;:,]+$/g, '') |     .replace(/\\s+/g, ' ') |     .trim(); | } |  | const affirmativeDecisions = new Set([ |   'oui', 'oui je confirme', 'je confirme', 'confirmer', |   'd\\'accord', 'daccord', 'ok', 'yes' | ]); | const negativeDecisions = new Set([ |   'non', 'non merci', 'je ne confirme pas', 'annuler', |  "
+  ],
+  "gererAwaitHead": [
+    "TE_APPOINTMENT'; |     if (createDecision === 'RECALL') conversationStep = 'CREATE_RECALL'; |     else if (createDecision === 'RESUME') conversationStep = 'CREATE_UNCERTAIN'; |     else conversationStep = 'AWAIT_CREATE_CONFIRMATION'; |   } |  |   else if (slotId) { |  |     if (!nom) { |  |       conversationStep = |         'ASK_NOM'; |  |     } else if (!prenom) { |  |       conversationStep = |         'ASK_PRENOM'; |  |     } el",
+    "mail)) { |  |       conversationStep = |         'ASK_EMAIL'; |  |     } else if (!isValidPhone(telephone)) { |  |       conversationStep = |         'ASK_TELEPHONE'; |  |     } else { |  |       conversationStep = |         'AWAIT_CREATE_CONFIRMATION'; |       if (previous.conversation_step !== 'AWAIT_CREATE_CONFIRMATION') { |         createDecision = 'INSERT'; |       } |     } |   } |  |   // -----------------------------------------",
+    " (!isValidPhone(telephone)) { |  |       conversationStep = |         'ASK_TELEPHONE'; |  |     } else { |  |       conversationStep = |         'AWAIT_CREATE_CONFIRMATION'; |       if (previous.conversation_step !== 'AWAIT_CREATE_CONFIRMATION') { |         createDecision = 'INSERT'; |       } |     } |   } |  |   // ---------------------------------------------------- |   // Pas encore de créneau |   // --------------------------"
+  ]
+}

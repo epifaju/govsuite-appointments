@@ -1,0 +1,10 @@
+{
+  "id": "U01-resume-same-key",
+  "family": "uncertain-resume",
+  "mode": "offline",
+  "matrixRef": "C9",
+  "required": true,
+  "handler": "uncertain.resume",
+  "description": "Tentative UNCERTAIN + oui → createDecision RESUME (sans HTTP).",
+  "expects": { "createDecision": "RESUME", "noCreateAppointmentPost": true }
+}

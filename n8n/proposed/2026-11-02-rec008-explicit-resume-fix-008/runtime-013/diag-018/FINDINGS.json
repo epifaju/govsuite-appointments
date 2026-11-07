@@ -1,0 +1,24 @@
+{
+  "mission": "CREATE-FLOW-CONTRACT-018",
+  "ts": "2026-11-05T21:55:00.000Z",
+  "liveTouched": false,
+  "activated": false,
+  "putWorkflow": false,
+  "pgMutated": false,
+  "recommendation": "A",
+  "businessDecisionRequired": false,
+  "prdSection": "6.2",
+  "order": "ASK_CREATE_SERVICE → SITE → DATE_RANGE → READY_CREATE_SEARCH → ASK_CREATE_SLOT → ASK_NOM → ASK_PRENOM → ASK_EMAIL → ASK_TELEPHONE",
+  "askPrenomWithoutSlotNatural": false,
+  "askPrenomWithoutSlotViaSeedOnly": true,
+  "optionBPatch": {
+    "retained": false,
+    "path": "../diag-017/proposed-patch/",
+    "afterSha": "23524b5d075d3fc136904b9a7fb00bba5e06f5ec858afa669e62d1d619685961"
+  },
+  "offlineTests": { "pass": true, "count": 14 },
+  "verdict": "PASS",
+  "install017": "NO-GO",
+  "seedMutate": "NO-GO-in-018",
+  "r01Campaign": "NO-GO"
+}

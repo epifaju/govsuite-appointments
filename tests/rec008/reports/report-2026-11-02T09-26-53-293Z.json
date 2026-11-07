@@ -1,0 +1,1122 @@
+{
+  "suite": "rec008-offline-vc9",
+  "generatedAt": "2026-11-02T09:26:53.293Z",
+  "env": "TEST",
+  "liveTouched": false,
+  "mode": "offline",
+  "workflow": {
+    "label": "VC9",
+    "path": "C:\\Open Source PME\\govsuite-appointments\\n8n\\proposed\\2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL\\after-OCD9It1uKFhOoWNF.json",
+    "sha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766"
+  },
+  "counts": {
+    "PASS": 13,
+    "FAIL": 0,
+    "ERROR": 0,
+    "INCONCLUSIVE": 0,
+    "NOT_IMPLEMENTED": 9,
+    "SKIPPED": 0
+  },
+  "countablePass": 13,
+  "blockingFailures": 0,
+  "verdict": "FAIL",
+  "summary": "Suite offline VC9. PASS uniquement sur assertions exécutées. skeletonOnly → NOT_IMPLEMENTED.",
+  "results": [
+    {
+      "id": "X01-double-oui-lease",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "id": "K01-positive-oui",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "durationMs": 16,
+      "id": "K02-negative-non",
+      "family": "confirmation",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "confirm.abandon",
+      "verdict": "PASS",
+      "reason": "Abandon + null auth OK (VM + SQL sim)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive",
+        "Sauvegarder état conversation (simulation)"
+      ],
+      "assertions": [
+        {
+          "id": "negative_decision",
+          "expected": "NEGATIVE",
+          "observed": "NEGATIVE",
+          "verdict": "PASS"
+        },
+        {
+          "id": "pending_cleared",
+          "expected": null,
+          "observed": null,
+          "verdict": "PASS"
+        },
+        {
+          "id": "step_cleared",
+          "expected": null,
+          "observed": null,
+          "verdict": "PASS"
+        },
+        {
+          "id": "authorized_nulls",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "preserve_draft_false",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "null_unauthorized_keeps",
+          "expected": "Dupont",
+          "observed": "Dupont",
+          "verdict": "PASS"
+        },
+        {
+          "id": "null_authorized_clears",
+          "expected": null,
+          "observed": null,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "managed": {
+          "sessionId": "rec008-syn-identity-01",
+          "intent": "GENERAL",
+          "service": null,
+          "site": null,
+          "dateDebut": null,
+          "dateFin": null,
+          "slotId": null,
+          "token": null,
+          "newSlotId": null,
+          "selectedSlotIndex": null,
+          "selectedSlot": null,
+          "availableSlots": null,
+          "reference": null,
+          "nom": null,
+          "prenom": null,
+          "email": null,
+          "telephone": null,
+          "originalMessage": "non",
+          "confidence": 0,
+          "llmIntent": "GENERAL",
+          "memoryDebug": {
+            "currentIntent": "CREATE_APPOINTMENT",
+            "detectedCurrentIntent": "CREATE_APPOINTMENT",
+            "previousPendingAction": "CREATE_APPOINTMENT",
+            "previousConversationStep": "ASK_PRENOM",
+            "hasExplicitBusinessIntent": true,
+            "explicitRestart": false,
+            "explicitCreateRestart": false,
+            "explicitRescheduleRestart": false,
+            "explicitCancelRestart": false,
+            "explicitGetRestart": false,
+            "actionChanged": false,
+            "startingNewAction": false,
+            "continuingPreviousAction": true,
+            "slotSelectionFromAvailability": false,
+            "previousService": "PASSEPORT",
+            "previousSite": "PARIS",
+            "previousDateDebut": null,
+            "previousDateFin": null,
+            "previousToken": null,
+            "previousAvailableSlotsCount": 0,
+            "selectedSlotIndex": null,
+            "selectedSlotFound": false,
+            "resolvedService": "PASSEPORT",
+            "resolvedSite": "PARIS",
+            "resolvedDateDebut": null,
+            "resolvedDateFin": null,
+            "resolvedToken": null,
+            "resolvedSlotId": "11111111-1111-4111-8111-111111111111",
+            "resolvedNewSlotId": null,
+            "finalIntent": "CREATE_APPOINTMENT"
+          },
+          "pendingAction": null,
+          "conversationStep": null,
+          "refreshSessionTtl": true,
+          "preserveDraft": false,
+          "_authorizedNulls": [
+            "pendingAction",
+            "conversationStep",
+            "nom",
+            "prenom",
+            "email",
+            "telephone",
+            "service",
+            "site",
+            "dateDebut",
+            "dateFin",
+            "slotId",
+            "availableSlots",
+            "selectedSlotIndex"
+          ],
+          "createDecision": "NEGATIVE"
+        }
+      }
+    },
+    {
+      "durationMs": 11,
+      "id": "K03-await-no-reserve",
+      "family": "confirmation",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "confirm.awaitNoReserve",
+      "verdict": "PASS",
+      "reason": "No reservation without confirm (parser decision only)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "ambiguous_or_not_affirm",
+          "expected": true,
+          "observed": "AMBIGUOUS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "would_not_create",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "createDecision": "AMBIGUOUS",
+        "note": "Absence de POST CreateAppointment simulée (harness offline ne fait jamais HTTP)."
+      }
+    },
+    {
+      "durationMs": 6,
+      "id": "K04-modify-field",
+      "family": "confirmation",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "confirm.modifyField",
+      "verdict": "PASS",
+      "reason": "Modify field OK",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "modify_decision",
+          "expected": "MODIFY",
+          "observed": "MODIFY",
+          "verdict": "PASS"
+        },
+        {
+          "id": "modify_field_nom",
+          "expected": "nom",
+          "observed": "nom",
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "createDecision": "MODIFY",
+        "modifyField": "nom"
+      }
+    },
+    {
+      "id": "C01-collect-without-confirm",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "durationMs": 6,
+      "id": "C02-ask-nom",
+      "family": "conversational",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "identity.askNom",
+      "verdict": "PASS",
+      "reason": "Identity capture OK (VM simulation)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "parser_locks_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "managed_intent_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "field_captured",
+          "expected": "Dupont",
+          "observed": "Dupont",
+          "verdict": "PASS"
+        },
+        {
+          "id": "next_step",
+          "expected": "ASK_PRENOM",
+          "observed": "ASK_PRENOM",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "parserIntent": "CREATE_APPOINTMENT",
+        "managed": {
+          "intent": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_PRENOM",
+          "nom": "Dupont",
+          "pendingAction": "CREATE_APPOINTMENT"
+        }
+      }
+    },
+    {
+      "durationMs": 5,
+      "id": "C03-ask-prenom",
+      "family": "conversational",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "identity.askPrenom",
+      "verdict": "PASS",
+      "reason": "Identity capture OK (VM simulation)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "parser_locks_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "managed_intent_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "field_captured",
+          "expected": "Camille",
+          "observed": "Camille",
+          "verdict": "PASS"
+        },
+        {
+          "id": "next_step",
+          "expected": "ASK_EMAIL",
+          "observed": "ASK_EMAIL",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "parserIntent": "CREATE_APPOINTMENT",
+        "managed": {
+          "intent": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_EMAIL",
+          "prenom": "Camille",
+          "pendingAction": "CREATE_APPOINTMENT"
+        }
+      }
+    },
+    {
+      "durationMs": 5,
+      "id": "C04-ask-email",
+      "family": "conversational",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "identity.askEmail",
+      "verdict": "PASS",
+      "reason": "Identity capture OK (VM simulation)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "parser_locks_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "managed_intent_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "field_captured",
+          "expected": "camille.dupont@example.test",
+          "observed": "camille.dupont@example.test",
+          "verdict": "PASS"
+        },
+        {
+          "id": "next_step",
+          "expected": "ASK_TELEPHONE",
+          "observed": "ASK_TELEPHONE",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "parserIntent": "CREATE_APPOINTMENT",
+        "managed": {
+          "intent": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_TELEPHONE",
+          "email": "camille.dupont@example.test",
+          "pendingAction": "CREATE_APPOINTMENT"
+        }
+      }
+    },
+    {
+      "durationMs": 7,
+      "id": "C05-ask-telephone",
+      "family": "conversational",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "identity.askTelephone",
+      "verdict": "PASS",
+      "reason": "Identity capture OK (VM simulation)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "parser_locks_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "managed_intent_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "field_captured",
+          "expected": "+33000000001",
+          "observed": "+33000000001",
+          "verdict": "PASS"
+        },
+        {
+          "id": "next_step",
+          "expected": "AWAIT_CREATE_CONFIRMATION",
+          "observed": "AWAIT_CREATE_CONFIRMATION",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "parserIntent": "CREATE_APPOINTMENT",
+        "managed": {
+          "intent": "CREATE_APPOINTMENT",
+          "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+          "telephone": "+33000000001",
+          "pendingAction": "CREATE_APPOINTMENT"
+        }
+      }
+    },
+    {
+      "id": "E01-400-validation",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "id": "E02-409-slot-unavailable",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "id": "E03-500-server",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "id": "I01-second-oui-same-key",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "id": "I02-key-body-conflict",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "durationMs": 0,
+      "id": "R01-p4d-p4g1-coverage",
+      "family": "regression",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "regression.markers",
+      "verdict": "PASS",
+      "reason": "Markers VC9 présents sur nœuds critiques",
+      "nodes": [
+        "Charger état conversation",
+        "Joindre tentative de session",
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive",
+        "Réponse générale",
+        "Sauvegarder état conversation"
+      ],
+      "assertions": [
+        {
+          "id": "node_sha_Charger état conversation",
+          "expected": "sha256 present",
+          "observed": "ba174e1e632f19e3",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Joindre tentative de session",
+          "expected": "sha256 present",
+          "observed": "0c37fc84b02e13ec",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Parser intention",
+          "expected": "sha256 present",
+          "observed": "1f4c08392875e66b",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Fusionner état conversation",
+          "expected": "sha256 present",
+          "observed": "d1c7f99122e1bdb4",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Gérer collecte progressive",
+          "expected": "sha256 present",
+          "observed": "16c3d063dee7f32d",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Réponse générale",
+          "expected": "sha256 present",
+          "observed": "dd5eff4bcad6f800",
+          "verdict": "PASS"
+        },
+        {
+          "id": "node_sha_Sauvegarder état conversation",
+          "expected": "sha256 present",
+          "observed": "0f864cbcfb199515",
+          "verdict": "PASS"
+        },
+        {
+          "id": "marker_Parser intention",
+          "expected": "P4E/P4F START PARSER",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "marker_Gérer collecte progressive",
+          "expected": "P4E/P4F START GERER",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "marker_Réponse générale",
+          "expected": "session_expired",
+          "observed": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "durationMs": 2,
+      "id": "R02-sql-contracts",
+      "family": "regression",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "sql.contracts",
+      "verdict": "PASS",
+      "reason": "Contrats SQL Charger/Sauvegarder OK",
+      "nodes": [
+        "Charger état conversation",
+        "Sauvegarder état conversation"
+      ],
+      "assertions": [
+        {
+          "id": "C1_no_ttl_filter_where",
+          "expected": "WHERE without expires_at > NOW()",
+          "observed": "WHERE s.session_id = $1\n",
+          "verdict": "PASS"
+        },
+        {
+          "id": "C3_session_found",
+          "expected": "TRUE AS session_found",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "C4_session_expired_flag",
+          "expected": "session_expired computed flag",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "C6_from_limit",
+          "expected": "FROM ai_conversation_state LIMIT 1",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S1_authorizedNulls",
+          "expected": "_authorizedNulls",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S3_any_authorized",
+          "expected": "= ANY (p.authorized_nulls)",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S4_refresh_ttl_coalesce",
+          "expected": "refresh_session_ttl present",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S5_plus_2h",
+          "expected": "INTERVAL '2 hours'",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S9_for_update",
+          "expected": "FOR UPDATE",
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "S10_on_conflict",
+          "expected": "ON CONFLICT (session_id) DO UPDATE",
+          "observed": true,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "staticAnalysis": true
+      }
+    },
+    {
+      "id": "O01-transport-timeout",
+      "verdict": "NOT_IMPLEMENTED",
+      "reason": "skeletonOnly=true interdit comme PASS — scénario non branché",
+      "assertions": [],
+      "nodes": [],
+      "durationMs": 0
+    },
+    {
+      "durationMs": 12,
+      "id": "T01-expired-session-no-implicit-resume",
+      "family": "ttl",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "ttl.expiredFreeText",
+      "verdict": "PASS",
+      "reason": "Expired session free-text OK (VM + SQL sim)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive",
+        "Réponse générale",
+        "Sauvegarder état conversation (simulation)"
+      ],
+      "assertions": [
+        {
+          "id": "session_expired_flag",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "refresh_ttl_false",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "preserve_draft",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "pending_preserved",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "step_preserved",
+          "expected": "ASK_PRENOM",
+          "observed": "ASK_PRENOM",
+          "verdict": "PASS"
+        },
+        {
+          "id": "nom_preserved",
+          "expected": "Dupont",
+          "observed": "Dupont",
+          "verdict": "PASS"
+        },
+        {
+          "id": "not_get_services",
+          "expected": "GENERAL",
+          "observed": "GENERAL",
+          "verdict": "PASS"
+        },
+        {
+          "id": "reply_type",
+          "expected": "session_expired",
+          "observed": "session_expired",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "save_sim_ttl_not_refreshed",
+          "expected": "2026-10-31T00:00:00.000Z",
+          "observed": "2026-10-31T00:00:00.000Z",
+          "verdict": "PASS"
+        },
+        {
+          "id": "save_sim_draft_kept",
+          "expected": "ASK_PRENOM",
+          "observed": "ASK_PRENOM",
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "managed": {
+          "intent": "GENERAL",
+          "sessionExpired": true,
+          "refreshSessionTtl": false,
+          "preserveDraft": true,
+          "pendingAction": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_PRENOM",
+          "nom": "Dupont"
+        },
+        "replyType": "session_expired",
+        "saveSim": {
+          "pending_action": "CREATE_APPOINTMENT",
+          "conversation_step": "ASK_PRENOM",
+          "nom": "Dupont",
+          "expires_at": "2026-10-31T00:00:00.000Z",
+          "intent": "GENERAL"
+        }
+      }
+    },
+    {
+      "durationMs": 7,
+      "id": "T02-ask-prenom-after-ttl-routing",
+      "family": "ttl",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "ttl.expiredFreeText",
+      "verdict": "PASS",
+      "reason": "Expired session free-text OK (VM + SQL sim)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive",
+        "Réponse générale",
+        "Sauvegarder état conversation (simulation)"
+      ],
+      "assertions": [
+        {
+          "id": "session_expired_flag",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "refresh_ttl_false",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "preserve_draft",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "pending_preserved",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "step_preserved",
+          "expected": "ASK_PRENOM",
+          "observed": "ASK_PRENOM",
+          "verdict": "PASS"
+        },
+        {
+          "id": "nom_preserved",
+          "expected": "Dupont",
+          "observed": "Dupont",
+          "verdict": "PASS"
+        },
+        {
+          "id": "not_get_services",
+          "expected": "GENERAL",
+          "observed": "GENERAL",
+          "verdict": "PASS"
+        },
+        {
+          "id": "reply_type",
+          "expected": "session_expired",
+          "observed": "session_expired",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "save_sim_ttl_not_refreshed",
+          "expected": "2026-10-31T00:00:00.000Z",
+          "observed": "2026-10-31T00:00:00.000Z",
+          "verdict": "PASS"
+        },
+        {
+          "id": "save_sim_draft_kept",
+          "expected": "ASK_PRENOM",
+          "observed": "ASK_PRENOM",
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "managed": {
+          "intent": "GENERAL",
+          "sessionExpired": true,
+          "refreshSessionTtl": false,
+          "preserveDraft": true,
+          "pendingAction": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_PRENOM",
+          "nom": "Dupont"
+        },
+        "replyType": "session_expired",
+        "saveSim": {
+          "pending_action": "CREATE_APPOINTMENT",
+          "conversation_step": "ASK_PRENOM",
+          "nom": "Dupont",
+          "expires_at": "2026-10-31T00:00:00.000Z",
+          "intent": "GENERAL"
+        }
+      }
+    },
+    {
+      "durationMs": 6,
+      "id": "T03-explicit-resume",
+      "family": "ttl",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "ttl.explicitResume",
+      "verdict": "PASS",
+      "reason": "Explicit resume OK (VM simulation)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "resume_intent_create",
+          "expected": "CREATE_APPOINTMENT",
+          "observed": "CREATE_APPOINTMENT",
+          "verdict": "PASS"
+        },
+        {
+          "id": "refresh_ttl_true",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "session_expired_cleared",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        },
+        {
+          "id": "preserve_draft",
+          "expected": true,
+          "observed": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_claim_post",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "managed": {
+          "sessionId": "rec008-syn-identity-01",
+          "intent": "CREATE_APPOINTMENT",
+          "service": "PASSEPORT",
+          "site": "PARIS",
+          "dateDebut": null,
+          "dateFin": null,
+          "slotId": "11111111-1111-4111-8111-111111111111",
+          "token": null,
+          "newSlotId": null,
+          "selectedSlotIndex": null,
+          "selectedSlot": null,
+          "availableSlots": [],
+          "reference": null,
+          "nom": "Dupont",
+          "prenom": "reprendre",
+          "email": null,
+          "telephone": null,
+          "originalMessage": "reprendre",
+          "confidence": 0,
+          "llmIntent": "GENERAL",
+          "memoryDebug": {
+            "currentIntent": "CREATE_APPOINTMENT",
+            "detectedCurrentIntent": "CREATE_APPOINTMENT",
+            "previousPendingAction": "CREATE_APPOINTMENT",
+            "previousConversationStep": "ASK_PRENOM",
+            "hasExplicitBusinessIntent": true,
+            "explicitRestart": false,
+            "explicitCreateRestart": false,
+            "explicitRescheduleRestart": false,
+            "explicitCancelRestart": false,
+            "explicitGetRestart": false,
+            "actionChanged": false,
+            "startingNewAction": false,
+            "continuingPreviousAction": true,
+            "slotSelectionFromAvailability": false,
+            "previousService": "PASSEPORT",
+            "previousSite": "PARIS",
+            "previousDateDebut": null,
+            "previousDateFin": null,
+            "previousToken": null,
+            "previousAvailableSlotsCount": 0,
+            "selectedSlotIndex": null,
+            "selectedSlotFound": false,
+            "resolvedService": "PASSEPORT",
+            "resolvedSite": "PARIS",
+            "resolvedDateDebut": null,
+            "resolvedDateFin": null,
+            "resolvedToken": null,
+            "resolvedSlotId": "11111111-1111-4111-8111-111111111111",
+            "resolvedNewSlotId": null,
+            "finalIntent": "CREATE_APPOINTMENT"
+          },
+          "refreshSessionTtl": true,
+          "sessionExpired": false,
+          "preserveDraft": true,
+          "pendingAction": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_EMAIL",
+          "createDecision": null,
+          "modifyField": null,
+          "stateReady": {
+            "createServicePending": false,
+            "createSitePending": false,
+            "createDateRangePending": false,
+            "createSlotPending": false,
+            "createSearch": false,
+            "createAppointment": false,
+            "getAppointment": false,
+            "cancelLookup": false,
+            "cancelConfirmationPending": false,
+            "rescheduleToken": false,
+            "rescheduleDateRangePending": false,
+            "rescheduleSearch": false,
+            "rescheduleSlotPending": false,
+            "rescheduleConfirmationPending": false
+          },
+          "collectionDebug": {
+            "rawXIntent": "CREATE_APPOINTMENT",
+            "rawLlmIntent": "GENERAL",
+            "parserIntent": "CREATE_APPOINTMENT",
+            "currentIntent": "CREATE_APPOINTMENT",
+            "previousIntent": "CREATE_APPOINTMENT",
+            "previousPendingAction": "CREATE_APPOINTMENT",
+            "previousConversationStep": "ASK_PRENOM",
+            "fusionActionChanged": false,
+            "fusionExplicitRestart": false,
+            "fusionStartingNewAction": false,
+            "newBusinessAction": false,
+            "finalIntent": "CREATE_APPOINTMENT",
+            "finalPendingAction": "CREATE_APPOINTMENT",
+            "finalConversationStep": "ASK_EMAIL",
+            "resolvedService": "PASSEPORT",
+            "resolvedSite": "PARIS",
+            "resolvedDateDebut": null,
+            "resolvedDateFin": null,
+            "resolvedToken": null,
+            "resolvedSlotId": "11111111-1111-4111-8111-111111111111",
+            "resolvedNewSlotId": null,
+            "selectedSlotIndex": null,
+            "availableSlotsCount": 0,
+            "creationServicePending": false,
+            "creationSitePending": false,
+            "creationDateRangePending": false,
+            "creationSlotPending": false,
+            "creationSearchReady": false,
+            "creationComplete": false,
+            "getAppointmentReady": false,
+            "cancelLookupReady": false,
+            "cancelConfirmationPending": false,
+            "rescheduleTokenReady": false,
+            "rescheduleDateRangePending": false,
+            "rescheduleSearchReady": false,
+            "rescheduleSlotPending": false,
+            "rescheduleConfirmationPending": false
+          }
+        }
+      }
+    },
+    {
+      "durationMs": 5,
+      "id": "U01-resume-same-key",
+      "family": "uncertain-resume",
+      "workflowVersionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "workflowSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+      "handler": "uncertain.resume",
+      "verdict": "PASS",
+      "reason": "UNCERTAIN → RESUME decision OK (no HTTP)",
+      "nodes": [
+        "Parser intention",
+        "Fusionner état conversation",
+        "Gérer collecte progressive"
+      ],
+      "assertions": [
+        {
+          "id": "resume_decision",
+          "expected": "RESUME",
+          "observed": "RESUME",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no_http",
+          "expected": false,
+          "observed": false,
+          "verdict": "PASS"
+        }
+      ],
+      "observed": {
+        "simulation": true,
+        "createDecision": "RESUME"
+      }
+    }
+  ],
+  "notes": [
+    "Simulations VM jsCode + contrats SQL statiques / merge simulé.",
+    "Ne prouve pas à elle seule le runtime n8n ou PostgreSQL.",
+    "Guards: fetch/http/pg module blocked; write allowlist reports/tmp.",
+    "Violations sécurité: 0"
+  ],
+  "security": {
+    "guardsInstalled": true,
+    "violations": [],
+    "declarativeOnly": [
+      "Allowlist path agents Cursor",
+      "Interdiction LIVE agents (rules)",
+      "Absence d’activation n8n (process)"
+    ]
+  }
+}

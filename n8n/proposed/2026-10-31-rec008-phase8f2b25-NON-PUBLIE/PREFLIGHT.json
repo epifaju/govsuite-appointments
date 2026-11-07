@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+  "versionCounter": 7,
+  "active": false,
+  "liveFinaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "pg": "1|8|2|0",
+  "synExists": "0",
+  "mockPosts": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "schema": {
+    "columns": "reference:varchar:nullable=YES\nsession_id:varchar:nullable=NO\ntoken:uuid:nullable=YES",
+    "constraints": "ai_conversation_state_pkey:PRIMARY KEY (id)\nai_conversation_state_session_id_key:UNIQUE (session_id)"
+  }
+}

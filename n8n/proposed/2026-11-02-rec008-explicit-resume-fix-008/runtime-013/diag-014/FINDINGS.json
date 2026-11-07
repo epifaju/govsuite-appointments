@@ -1,0 +1,65 @@
+{
+  "mission": "N8N-REST-TRANSPORT-DIAG-014",
+  "ts": "2026-11-05T20:51:30.000Z",
+  "liveTouched": false,
+  "r0xExecuted": false,
+  "workflowMutated": false,
+  "dockerMutated": false,
+  "pgMutated": false,
+  "fingerprint": "1|14|4|0",
+  "incident013": {
+    "locus": "getWorkflow bare fetch → TypeError fetch failed",
+    "file": "run-runtime-013.js:~L278 (pre-DIAG-014)",
+    "beforeActivate": true,
+    "messageSent": false,
+    "causeCapturedInFatal": false,
+    "narrativeCauseCode": "UND_ERR_SOCKET (parent console; not in campaign-fatal.json)"
+  },
+  "architecture": {
+    "publishProxy": "raw TCP pipe 127.0.0.1:5682 → rec008-n8n:5678 (publish/proxy.mjs)",
+    "httpAwareProxy": false,
+    "serverDefaultConnection": "keep-alive (observed on healthz)"
+  },
+  "probes": {
+    "file": "PROBES.json",
+    "count": 7,
+    "authLoginPost": false,
+    "socketCloseReproduced": false,
+    "healthz": "200",
+    "restUnauth": "401"
+  },
+  "rootCause": {
+    "runnerDefectConfirmed": {
+      "confidence": "CONFIRMED",
+      "items": [
+        "getWorkflow/getActiveIds used bare fetch without try/catch → FATAL throw",
+        "fetchOnce/fatal omitted cause.code",
+        "double login POST",
+        "main.catch lacked safety postflight / verified safeDeclared"
+      ]
+    },
+    "networkSocketClose": {
+      "confidence": "INCONCLUSIVE",
+      "hypothesis": "stale HTTP keep-alive across raw TCP publish proxy after idle/busy gap",
+      "reproducedNow": false,
+      "dockerProvenCause": false
+    }
+  },
+  "runnerPatch": {
+    "applied": true,
+    "file": "../run-runtime-013.js",
+    "changes": [
+      "Connection: close on REST via restHeaders",
+      "getWorkflow/getActiveIds via fetchOnce + transportError",
+      "pre-activate transport → UNCERTAIN (no throw)",
+      "single login",
+      "errInfo cause capture in fatal",
+      "safetyPostflight with safeDeclared only if verified"
+    ],
+    "zeroRetryActivateChatPreserved": true
+  },
+  "offlineTests": {
+    "file": "OFFLINE-TEST-RESULTS.json",
+    "pass": true
+  }
+}

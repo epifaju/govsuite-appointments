@@ -1,0 +1,134 @@
+{
+  "mission": "R01-PREFLIGHT-023",
+  "ts": "2026-11-06T18:39:39.585Z",
+  "liveProbed": false,
+  "pgMutated": false,
+  "ttlSqlExecuted": false,
+  "n8nActivated": false,
+  "chatTriggerUsed": false,
+  "ollamaInference": false,
+  "issues": [],
+  "docker": [
+    "govsuite-rec008-test-rec008-mock-1\tUp 25 minutes",
+    "govsuite-rec008-test-rec008-ollama-1\tUp 54 minutes",
+    "govsuite-rec008-test-rec008-publish-1\tUp 25 minutes",
+    "govsuite-rec008-test-rec008-n8n-1\tUp 25 minutes",
+    "govsuite-rec008-test-rec008-postgres-1\tUp 25 minutes (healthy)"
+  ],
+  "healthz": {
+    "status": 200
+  },
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "activeIds": [],
+    "webhookRows": 0,
+    "runningExecutions": 0
+  },
+  "observability": {
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": true,
+    "executionEntityCount": 0,
+    "executionsApiStatus": 200,
+    "retentionCause": "INCONCLUSIVE",
+    "alternativeProofs": [
+      "PG updated_at triplet + classifyPostflight",
+      "Ollama /api/ps snapshots",
+      "running executions poll",
+      "webhook deactivate verify"
+    ],
+    "retentionBlocksR01": false,
+    "note": "saveData*=all but entity=0 historically; accept alternatives — do not PUT in 023"
+  },
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "r01": {
+    "session_id": "rec008-runtime013-r01-active",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "slot_id_present": true,
+    "prenom_null": true,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "ttl_future": false,
+    "expires_at": "2026-11-06 01:05:47.184139+01",
+    "available_slots_len": 1,
+    "date_debut": "2026-11-10",
+    "date_fin": "2026-11-14",
+    "nom_present": true
+  },
+  "r02": {
+    "session_id": "rec008-runtime013-r02-expired",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "slot_id_present": true,
+    "prenom_null": true,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "ttl_future": false,
+    "expires_at": "2026-11-05 22:05:47.184139+01",
+    "available_slots_len": 1,
+    "date_debut": "2026-11-10",
+    "date_fin": "2026-11-14",
+    "nom_present": true
+  },
+  "r03": {
+    "session_id": "rec008-runtime013-r03-resume",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "slot_id_present": true,
+    "prenom_null": true,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "ttl_future": false,
+    "expires_at": "2026-11-05 22:05:47.184139+01",
+    "available_slots_len": 1,
+    "date_debut": "2026-11-10",
+    "date_fin": "2026-11-14",
+    "nom_present": true
+  },
+  "ttl": {
+    "r01_ttl_future": false,
+    "TTL_REFRESH_REQUIRED": true,
+    "ttlSqlPrepared": true,
+    "ttlSqlPath": "preflight-023/TTL-REFRESH-R01.sql",
+    "executedIn023": false
+  },
+  "ollama": {
+    "modelListed": true,
+    "apiPs": {
+      "models": []
+    },
+    "gateReady": false,
+    "gateReason": "model_absent_from_api_ps",
+    "memSample": "16.64MiB / 1.5GiB",
+    "inferencePerformed": false,
+    "warmupRequiredBeforeR01": true,
+    "warmupProcedure": "preflight-023/WARMUP-PROCEDURE.md"
+  },
+  "runner": {
+    "sha256": "ef79972a87f1f6796b646864912fc495ddd65cac5ee1df71545386ff5462fe23",
+    "sha021": "1ab9465a720aa64925e633e5665eea3bafbe42225ac3e728bceea9f177ac5826",
+    "changedSince021": true,
+    "changeNote": "assertR01 +slotIdPresent before/after (023)",
+    "hasGate": true,
+    "has180": true,
+    "hasNoRetry": true,
+    "hasClassify": true,
+    "hasSlotAssert": true
+  },
+  "ok": true,
+  "gateR01Campaign": "NO-GO",
+  "gateR01PrepNext": "GO-CONDITIONAL-need-TTL-and-warm"
+}

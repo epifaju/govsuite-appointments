@@ -1,0 +1,27 @@
+{
+  "type": "n8n-nodes-base.if",
+  "parameters": {
+    "options": {},
+    "conditions": {
+      "options": {
+        "version": 2,
+        "leftValue": "",
+        "caseSensitive": true,
+        "typeValidation": "strict"
+      },
+      "combinator": "and",
+      "conditions": [
+        {
+          "id": "8e18b9be-5923-498f-bbe9-3fddab6397af",
+          "operator": {
+            "type": "boolean",
+            "operation": "true",
+            "singleValue": true
+          },
+          "leftValue": "={{ $json.ready }}",
+          "rightValue": true
+        }
+      ]
+    }
+  }
+}

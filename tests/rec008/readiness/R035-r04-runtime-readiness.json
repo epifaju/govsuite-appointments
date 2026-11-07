@@ -1,0 +1,22 @@
+{
+  "mission": "R04-RUNTIME-READINESS-035",
+  "readiness": "PASS",
+  "r04Runtime": "NOT_AUTHORIZED",
+  "r05r07": "NO-GO",
+  "live": "NO-GO",
+  "installedBaseline": {
+    "versionCounter": 11,
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "active": false
+  },
+  "scenarios": {
+    "R04-A": { "offline": "PASS", "runtimeGate": "GO_IF_AUTHORIZED", "runtime": "NOT_AUTHORIZED" },
+    "R04-B": { "offline": "PASS", "runtimeGate": "GO_IF_AUTHORIZED", "runtime": "NOT_AUTHORIZED" },
+    "R04-C": { "offline": "PASS", "runtimeGate": "GO_IF_AUTHORIZED", "runtime": "NOT_AUTHORIZED", "residual": "last_user_message_len_only" }
+  },
+  "offline": { "passed": 9, "failed": 0, "report": "tests/rec008/reports/R035-offline-readiness-run.json" },
+  "sqlApplied": false,
+  "runnerExecuted": false,
+  "retentionWindowOpened": false
+}

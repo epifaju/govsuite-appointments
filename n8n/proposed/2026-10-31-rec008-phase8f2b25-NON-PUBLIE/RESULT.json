@@ -1,0 +1,78 @@
+{
+  "phase": "8F-2B25",
+  "pass": true,
+  "verdict": "PASS",
+  "goInstall": "GO",
+  "candidateSha256": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+  "finaliserAfterSha256": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "a1": {
+    "ok": true,
+    "success": true,
+    "dollar3": false,
+    "reference": "REC008-RUNTIME-NULL-003",
+    "tokenNull": true,
+    "boundP3": "__ABSENT__"
+  },
+  "a2": {
+    "ok": true,
+    "success": true,
+    "dollar3": false,
+    "uuidType": false,
+    "reference": "REC008-RUNTIME-TOKEN-004",
+    "token": "22222222-2222-4222-8222-222222222222"
+  },
+  "a3": {
+    "ok": true,
+    "success": false,
+    "invalidUuid": true,
+    "errMsg": "Failed query: UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = NULLIF($2::text, ''),\n    token = NULLIF(NULLIF($3::text, ''), '__ABSENT__')::uuid,\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+    "noPersist": true,
+    "upstreamValidationRecommended": "Validate UUID format before Finaliser (or in Paramètres clôture) so invalid tokens never reach PostgreSQL cast."
+  },
+  "noClaim": true,
+  "noPost": true,
+  "noMainPut": true,
+  "cleanup": {
+    "targetedId": "rec008-8f2b25-runtime-01",
+    "beforeDelete": "rec008-8f2b25-runtime-01",
+    "remaining": "0",
+    "ok": true
+  },
+  "postflight": {
+    "main": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+      "versionCounter": 7,
+      "nodes": 134,
+      "edges": 137,
+      "finaliserSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+      "unchangedFromInstalled": true
+    },
+    "pg": "1|8|2|0",
+    "syntheticRemaining": "0",
+    "realSession": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "intent": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "hasToken": false,
+      "nom": "Dupont",
+      "telephone": "+33000000000",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "last_user_message": "oui"
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "histFp": "bc130f1e5d86669f9650ffa8b8f83cbb",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  }
+}

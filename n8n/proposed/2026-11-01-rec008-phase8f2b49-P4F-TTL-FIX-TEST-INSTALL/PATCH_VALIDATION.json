@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "phase": "8F-2B49-P4F",
+  "at": "2026-11-02T07:56:32.214Z",
+  "beforeSha": "b08556caec837f9b095ab4707d530e21ea549aa5a4549e4224fe9919ff3f35ea",
+  "candidateSha": "9a9786cac897e5c8d48c50f6929d4142f5d482b2ed9ed6230e99b45725148ac1",
+  "graph": {
+    "nodes": 134,
+    "edges": 137
+  },
+  "changedNodes": [
+    "Charger état conversation",
+    "Gérer collecte progressive",
+    "Joindre tentative de session",
+    "Parser intention",
+    "Réponse générale",
+    "Sauvegarder état conversation"
+  ],
+  "nodeShas": {
+    "Charger état conversation": {
+      "before": "5c97358c2fbbe7030e96c71cfb6e0d54e24bd287a69b04160bc443ca1a7647f0",
+      "after": "fca043913c5a27f7cc1e82261f8a1908a43ee8ad9d356eabec9de68a5f97ff8b"
+    },
+    "Joindre tentative de session": {
+      "before": "16d906cf9e704d849b36ecfaa2cb5fdb953e9a17bc3af1eb05b9e7867f67cf14",
+      "after": "c295cd4851cf045230a33346987536670f80b58db75b1334daafcc7da2a4b3d4"
+    },
+    "Parser intention": {
+      "before": "9bd88cf2d06756eee42acc113fb9a0140d701a155fa86b84c53aaf946d678765",
+      "after": "bd0bf9db4db88cb563d5b0766d528ec00894e3fb3843e260aa95031c52e35357"
+    },
+    "Gérer collecte progressive": {
+      "before": "4d980798c138420e662841b25296d60d53b9b1ef4d1771068f74ba71d4354904",
+      "after": "5bc5b967c71e219c88f1bfc6f8c2a70b7ef2e79d2a56475733650c0d20855e6e"
+    },
+    "Réponse générale": {
+      "before": "6a0f36a3764b99a2632cae0233ed81ecdecd2d70e231fb41021be312c2a88499",
+      "after": "d58106f6f7fdc27efba1c2211e0aefa7c3945f3944745ba9dae4f50ae8e03373"
+    },
+    "Sauvegarder état conversation": {
+      "before": "90b97d408fc27dfaaea934be9972ce86d628025660043aa456c6a0eb438274ee",
+      "after": "7c8597781429d7c282e69b908ae28bebcb97f6a84650423cfbd48b67fef00387"
+    }
+  },
+  "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+  "urlsCount": 10,
+  "urlsOk": true,
+  "credentialsUnchanged": true,
+  "connectionsUnchanged": true,
+  "settingsUnchanged": true,
+  "validation": {
+    "sessionAbsent": {
+      "demonstrated": true,
+      "note": "Charger alwaysOutputData + Joindre: sans ligne → sessionFound falsy, sessionExpired false"
+    },
+    "expiredWithOpenAttempt": {
+      "demonstrated": true,
+      "note": "Parser/Gérer exemptent UNCERTAIN/SUBMITTING/AWAITING du blocage GENERAL"
+    },
+    "explicitResume": {
+      "demonstrated": true
+    },
+    "refreshSessionTtlFalse": {
+      "demonstrated": true
+    },
+    "authorizedNulls": {
+      "demonstrated": true,
+      "note": "P4F corrige P4E (? sur array) → text[] + = ANY"
+    },
+    "sqlParams": {
+      "demonstrated": true
+    },
+    "legitimatePurges": {
+      "demonstrated": true,
+      "note": "Nœuds UPDATE dédiés (Finaliser/abandon) inchangés; Sauvegarder accepte _authorizedNulls"
+    }
+  },
+  "fixCNote": "Sémantique _authorizedNulls corrigée (text[] / = ANY) vs P4E jsonb ?"
+}

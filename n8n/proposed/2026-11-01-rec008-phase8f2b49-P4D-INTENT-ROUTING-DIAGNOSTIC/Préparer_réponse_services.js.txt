@@ -1,0 +1,51 @@
+const services = $json.services ?? [];
+
+if (services.length === 0) {
+  return [{
+    json: {
+      type: "services",
+      title: "Services consulaires disponibles",
+      services: [],
+      text: "Aucun service consulaire n'est disponible actuellement."
+    }
+  }];
+}
+
+let text = "📋 Voici les services consulaires actuellement disponibles :\n\n";
+
+services.forEach((service, index) => {
+  text += `${index + 1}. **${service.nom ?? service.code}**\n`;
+
+  if (service.description) {
+    text += `   📝 ${service.description}\n`;
+  }
+
+  if (service.duree_minutes != null) {
+    text += `   ⏱️ Durée : ${service.duree_minutes} minutes\n`;
+  }
+
+  if (service.capacite_par_creneau != null) {
+    text += `   👥 Capacité par créneau : ${service.capacite_par_creneau}\n`;
+  }
+
+  text += "\n";
+});
+
+text += "💬 Pour obtenir les disponibilités d'un service, indiquez simplement le service, le site et la période souhaitée.";
+
+const servicesNormalises = services.map(service => ({
+  code: service.code,
+  nom: service.nom,
+  description: service.description,
+  duree: service.duree_minutes,
+  capacite: service.capacite_par_creneau
+}));
+
+return [{
+  json: {
+    type: "services",
+    title: "Services consulaires disponibles",
+    services: servicesNormalises,
+    text
+  }
+}];

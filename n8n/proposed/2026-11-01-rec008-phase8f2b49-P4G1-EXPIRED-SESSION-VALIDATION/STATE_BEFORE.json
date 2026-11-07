@@ -1,0 +1,45 @@
+{
+  "sessionId": "rec008-8f2b1-slot-01",
+  "snap": {
+    "sessionId": "rec008-8f2b1-slot-01",
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_CREATE_SERVICE",
+    "expiresAt": "2026-10-31 00:59:54.370387+01",
+    "updatedAt": "2026-10-30 22:59:54.370387+01",
+    "flags": {
+      "service": false,
+      "site": false,
+      "dateDebut": false,
+      "dateFin": false,
+      "slotId": false,
+      "selectedSlotIndex": true,
+      "availableSlots": true,
+      "slotsLen": 0,
+      "nom": false,
+      "prenom": false,
+      "email": false,
+      "telephone": false,
+      "reference": false,
+      "token": false
+    },
+    "lastUserMessagePreviewLen": 15,
+    "lastUserMessageStartsWithCamille": false,
+    "draftFingerprint": "37df03c884bc12ee2e5849ac36c9f4e1",
+    "slotsFingerprint": "fd838dea4b2d12b826297cc085b00469"
+  },
+  "attempts": {
+    "total": 0,
+    "byStatus": [],
+    "open": 0,
+    "hasIdempotencyKey": 0
+  },
+  "justification": {
+    "priority": "collecte CREATE interrompue",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_CREATE_SERVICE",
+    "expired": true,
+    "openAttempts": 0,
+    "excludedPurgedP4": "rec008-8f2b49-edit-01"
+  }
+}

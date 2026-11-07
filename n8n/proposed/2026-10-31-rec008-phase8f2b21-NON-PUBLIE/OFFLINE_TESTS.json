@@ -1,0 +1,328 @@
+{
+  "pass": true,
+  "tests": [
+    {
+      "id": "T1",
+      "title": "HTTP 201 référence + token",
+      "pass": true,
+      "detail": {
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          "tok-gestion-real-001"
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": "tok-gestion-real-001",
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        },
+        "pub": {
+          "hasRef": true,
+          "hasToken": true
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "title": "HTTP 201 référence sans token",
+      "pass": true,
+      "detail": {
+        "legacy": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001"
+        ],
+        "legacyEffect": {
+          "wouldExecute": false,
+          "error": "there is no parameter $3",
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001"
+        },
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": null,
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T3",
+      "title": "HTTP 200 REPLAYED sans token",
+      "pass": true,
+      "detail": {
+        "classified": {
+          "httpOutcome": "CONFIRMED",
+          "appointmentReference": "REC008-MOCK-0001",
+          "appointment": {
+            "reference": "REC008-MOCK-0001"
+          },
+          "replayed": true
+        },
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": null,
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T4",
+      "title": "token explicitement NULL",
+      "pass": true,
+      "detail": {
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": null,
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T5",
+      "title": "token_gestion explicitement NULL",
+      "pass": true,
+      "detail": {
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          ""
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": null,
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T6",
+      "title": "token sous token_gestion",
+      "pass": true,
+      "detail": {
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "REC008-MOCK-0001",
+          "tok-gestion-real-001"
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": "tok-gestion-real-001",
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T7",
+      "title": "référence absente",
+      "pass": true,
+      "detail": {
+        "fixed": [
+          "rec008-8f2b14-new-01",
+          "",
+          "tok-gestion-real-001"
+        ],
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": null,
+          "token": "tok-gestion-real-001",
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T8",
+      "title": "réponse HTTP malformée",
+      "pass": true,
+      "detail": {
+        "httpOutcome": "UNCERTAIN",
+        "appointmentReference": null,
+        "appointment": null,
+        "replayed": false
+      }
+    },
+    {
+      "id": "T9",
+      "title": "tentative déjà CONFIRMED",
+      "pass": true,
+      "detail": {
+        "action": "FINALIZE_SESSION_ONLY",
+        "claim": false,
+        "post": false,
+        "reference": "REC008-MOCK-0001",
+        "inventToken": false
+      }
+    },
+    {
+      "id": "T10",
+      "title": "tentative UNCERTAIN",
+      "pass": true,
+      "detail": {
+        "status": "UNCERTAIN"
+      }
+    },
+    {
+      "id": "T11",
+      "title": "tentative ABANDONED",
+      "pass": true,
+      "detail": {
+        "id": "8ae63b62-9f87-4a15-9011-4554b7766918",
+        "status": "ABANDONED"
+      }
+    },
+    {
+      "id": "T12",
+      "title": "aucune régénération de clé",
+      "pass": true,
+      "detail": {
+        "touchesKey": false
+      }
+    },
+    {
+      "id": "T13",
+      "title": "aucun POST supplémentaire",
+      "pass": true,
+      "detail": {
+        "touchesPost": false
+      }
+    },
+    {
+      "id": "T14",
+      "title": "aucune fuite clé ; pas de token fictif",
+      "pass": true,
+      "detail": {
+        "textPreview": "Rendez-vous confirmé\nRéférence : REC008-MOCK-0001\nToken de gestion : Non disponible\n"
+      }
+    },
+    {
+      "id": "T15",
+      "title": "paramètres SQL liés y compris $3",
+      "pass": true,
+      "detail": {
+        "cases": [
+          [
+            "rec008-8f2b14-new-01",
+            "REC008-MOCK-0001",
+            ""
+          ],
+          [
+            "rec008-8f2b14-new-01",
+            "REC008-MOCK-0001",
+            ""
+          ],
+          [
+            "rec008-8f2b14-new-01",
+            "REC008-MOCK-0001",
+            ""
+          ],
+          [
+            "rec008-8f2b14-new-01",
+            "REC008-MOCK-0001",
+            ""
+          ],
+          [
+            "rec008-8f2b14-new-01",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "id": "T16",
+      "title": "nettoyage de session",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "T17",
+      "title": "conservation référence confirmée",
+      "pass": true,
+      "detail": {
+        "effect": {
+          "wouldExecute": true,
+          "error": null,
+          "sessionId": "rec008-8f2b14-new-01",
+          "reference": "REC008-MOCK-0001",
+          "token": null,
+          "clearsCollection": true,
+          "conversationStep": null,
+          "pendingAction": null
+        }
+      }
+    },
+    {
+      "id": "T18",
+      "title": "ABANDONED inchangée (Finaliser hors tentatives)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "id": "T19",
+      "title": "graphe et credentials inchangés",
+      "pass": true,
+      "detail": {
+        "modified": [
+          "Finaliser état création"
+        ],
+        "nodes": 134,
+        "edges": 137
+      }
+    },
+    {
+      "id": "T20",
+      "title": "aucun accès GovSuite LIVE",
+      "pass": true,
+      "detail": {
+        "urlsCount": 10
+      }
+    }
+  ]
+}

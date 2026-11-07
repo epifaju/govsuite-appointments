@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "isolatedExecutionWorks": true,
+  "observedDollar3OnAbsentToken": true,
+  "endpoint": "POST /rest/workflows/{ephemeralId}/run",
+  "payload": {
+    "triggerToStartFrom": {
+      "name": "Manual Trigger"
+    },
+    "destinationNode": {
+      "nodeName": "Finaliser état création",
+      "mode": "inclusive"
+    }
+  },
+  "proof": "Ephemeral inactive workflow created; ManualRunDto executed Finaliser with installed query+queryReplacement and TEST credential; n8n resolved named Code stubs; PostgreSQL node returned there is no parameter $3 when token absent despite || empty-string coerce — proving expressions were evaluated and empty $3 segment is still omitted by n8n Postgres queryReplacement binding.",
+  "dry": {
+    "tag": "MECHANISM_DRY",
+    "runStatus": 200,
+    "executionId": "26",
+    "execStatus": "error",
+    "dollar3Error": true,
+    "errorMessage": "there is no parameter $3",
+    "sessionAfter": null,
+    "queryReplacementInstalled": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+    "expressionsEvaluated": true,
+    "usedInstalledSql": true,
+    "usedTestCredential": true
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "phase": "8F-2B46",
+  "at": "2026-11-01T13:11:38.590Z",
+  "mode": "read-only",
+  "restrictions": {
+    "noChat": true,
+    "noActivate": true,
+    "noPut": true,
+    "noSqlMutation": true,
+    "noMockMutation": true,
+    "noLiveBusinessCall": true
+  },
+  "preflight": {
+    "workflow": {
+      "id": "OCD9It1uKFhOoWNF",
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+      "versionCounter": 8,
+      "nodes": 134,
+      "edges": 137,
+      "activeIds": [],
+      "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "finaliserHasAbsent": true,
+      "finaliserHasUuidCast": true,
+      "webhookRows": []
+    },
+    "settings": {
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "saveExecutionProgress": false
+    },
+    "n8nEnv": {
+      "GENERIC_TIMEZONE": "Europe/Paris",
+      "TZ": "Europe/Paris"
+    },
+    "pg": "1|10|4|0",
+    "open": "0",
+    "statusCounts": [
+      "ABANDONED|1",
+      "CONFIRMED|2",
+      "EXPIRED|1"
+    ],
+    "attempt": {
+      "id": "d566fc28-02de-4ae1-afbb-6f7d81362d4d",
+      "status": "CONFIRMED",
+      "submittedAt": "2026-11-01 14:02:05.862032+01",
+      "confirmedAt": "2026-11-01 14:02:06.617353+01",
+      "appointmentReference": "REC008-MOCK-0001",
+      "appointmentId": "55555555-5555-4555-8555-555555555555",
+      "hasIdempotencyKey": false,
+      "hasRequestPayload": false,
+      "hasFingerprint": true,
+      "fingerprintFp12": "1aa346780669",
+      "hasLeaseOwner": false,
+      "hasLeaseUntil": false
+    },
+    "session": {
+      "sessionId": "rec008-8f2b37-new-01",
+      "conversation_step": "",
+      "pending_action": "",
+      "intent": "",
+      "reference": "REC008-MOCK-0001",
+      "tokenEmpty": true,
+      "identityEmpty": true,
+      "last_user_message": "oui"
+    },
+    "historical": {
+      "sessionId": "rec008-8f2b14-new-01",
+      "reference": "REC008-MOCK-0001",
+      "conversation_step": ""
+    },
+    "mock": {
+      "scenario": "created",
+      "total": 3,
+      "posts": 1,
+      "getAvailability": 2,
+      "post201": 1,
+      "distinctKeys": 1,
+      "byPath": {
+        "GET /appointments/availability 200": 2,
+        "POST /appointments 201": 1
+      }
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "containers": {
+      "n8n": "Status=running Started=2026-11-01T10:33:58.920577134Z Restarts=0",
+      "publish": "Status=running Started=2026-11-01T10:33:59.108477811Z Restarts=0",
+      "postgres": "Status=running Health=healthy",
+      "mock": "Status=running"
+    }
+  },
+  "executionsApi": {
+    "listStatus": 200,
+    "filter": "limit=10&workflowId=OCD9It1uKFhOoWNF",
+    "count": 0,
+    "summary": [],
+    "allRecentCount": 0,
+    "allRecentSummary": [],
+    "sqlite": {
+      "total": 1,
+      "byWorkflow": [
+        {
+          "workflowId": "OCD9It1uKFhOoWNF",
+          "c": 1
+        }
+      ],
+      "byModeStatus": [
+        {
+          "mode": "webhook",
+          "status": "running",
+          "c": 1
+        }
+      ]
+    },
+    "softDeletedStub": {
+      "id": 45,
+      "workflowId": "OCD9It1uKFhOoWNF",
+      "workflowVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+      "mode": "webhook",
+      "status": "running",
+      "finished": 0,
+      "startedAtUtc": "2026-11-01 13:00:57.384",
+      "stoppedAt": null,
+      "deletedAtUtc": "2026-11-01 12:02:06.873",
+      "deletedAtNote": "UTC wall coincides with workflow.success 14:02:06+01; soft-delete on success due to saveDataSuccessExecution=none",
+      "executionDataPresent": true,
+      "executionDataLen": 1312,
+      "payloadInspected": false
+    },
+    "eventLogCorroboration": [
+      {
+        "ts": "2026-11-01T14:00:57.459+01:00",
+        "eventName": "n8n.workflow.started",
+        "mode": "webhook"
+      },
+      {
+        "ts": "2026-11-01T14:02:05.821+01:00",
+        "eventName": "n8n.node.started",
+        "nodeName": "Réclamer tentative"
+      },
+      {
+        "ts": "2026-11-01T14:02:05.869+01:00",
+        "eventName": "n8n.node.finished",
+        "nodeName": "Réclamer tentative"
+      },
+      {
+        "ts": "2026-11-01T14:02:06.607+01:00",
+        "eventName": "n8n.node.started",
+        "nodeName": "Clôturer confirmation"
+      },
+      {
+        "ts": "2026-11-01T14:02:06.620+01:00",
+        "eventName": "n8n.node.finished",
+        "nodeName": "Clôturer confirmation"
+      },
+      {
+        "ts": "2026-11-01T14:02:06.722+01:00",
+        "eventName": "n8n.node.started",
+        "nodeName": "Finaliser état création"
+      },
+      {
+        "ts": "2026-11-01T14:02:06.806+01:00",
+        "eventName": "n8n.node.finished",
+        "nodeName": "Finaliser état création"
+      },
+      {
+        "ts": "2026-11-01T14:02:06.872+01:00",
+        "eventName": "n8n.workflow.success",
+        "success": true,
+        "mode": "webhook"
+      }
+    ],
+    "restWhyEmpty": "API /rest/executions excludes soft-deleted rows (deletedAt set at success); saveDataSuccessExecution=none prevents durable successful execution listing"
+  },
+
+  "checks": {
+    "workflowOk": true,
+    "attemptOk": true,
+    "sessionOk": true,
+    "pgOk": true,
+    "mockOk": true,
+    "liveOk": true,
+    "mailOk": true,
+    "saveSettingsExplainNoExec": true,
+    "noActiveWebhook": true
+  },
+  "expectedAfter45": {
+    "pg": "1|10|4|0",
+    "open": "0",
+    "statusCounts": [
+      "ABANDONED|1",
+      "CONFIRMED|2",
+      "EXPIRED|1"
+    ],
+    "mockPosts": 1,
+    "getAvailability": 2,
+    "post201": 1,
+    "attemptStatus": "CONFIRMED",
+    "attemptRef": "REC008-MOCK-0001",
+    "attemptApptId": "55555555-5555-4555-8555-555555555555",
+    "sessionClean": true,
+    "sessionRef": "REC008-MOCK-0001",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "active": false,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a"
+  },
+  "evidenceLevel": "indirect_strong",
+  "preflightOk": true,
+  "postflight": {
+    "noNewAttempt": true,
+    "noStatusChange": true,
+    "noNewMockPost": true,
+    "noExtraAvailability": true,
+    "sessionUnchangedSince45": true,
+    "workflowInactive": true,
+    "noEmail": true,
+    "liveUnchanged": true
+  },
+  "postflightOk": true
+}

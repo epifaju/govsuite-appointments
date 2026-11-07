@@ -1,0 +1,9 @@
+{
+  "id": "K04-modify-field",
+  "family": "confirmation",
+  "mode": "offline",
+  "required": true,
+  "handler": "confirm.modifyField",
+  "description": "modifier le nom en AWAIT_CREATE_CONFIRMATION → MODIFY/nom.",
+  "expects": { "createDecision": "MODIFY", "modifyField": "nom" }
+}

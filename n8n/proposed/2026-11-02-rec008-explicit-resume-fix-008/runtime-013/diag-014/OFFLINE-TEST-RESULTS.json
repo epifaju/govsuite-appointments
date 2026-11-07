@@ -1,0 +1,60 @@
+{
+  "ts": "2026-11-05T21:00:13.169Z",
+  "tests": [
+    {
+      "name": "T1_errInfo_cause_code",
+      "ok": true
+    },
+    {
+      "name": "T2_fetchOnce_no_throw_on_destroy",
+      "ok": true
+    },
+    {
+      "name": "T3_fetchOnce_ok_connection_close",
+      "ok": true
+    },
+    {
+      "name": "T4_single_attempt_no_internal_retry",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_no_fetchRetry_helper",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_getWorkflow_uses_fetchOnce",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_connection_close",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_safety_postflight",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_preactivate_uncertain",
+      "ok": true
+    },
+    {
+      "name": "T5_runner_single_login",
+      "ok": true
+    },
+    {
+      "name": "T6_stale_keepalive_vs_connection_close",
+      "ok": true
+    },
+    {
+      "name": "T6_observation",
+      "ok": true,
+      "reused": {
+        "ok": true,
+        "status": 200
+      },
+      "freshStatus": 200,
+      "hits": 3
+    }
+  ],
+  "pass": true
+}

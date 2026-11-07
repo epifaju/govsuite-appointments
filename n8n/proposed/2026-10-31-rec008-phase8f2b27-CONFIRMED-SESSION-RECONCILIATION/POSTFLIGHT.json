@@ -1,0 +1,37 @@
+{
+  "main": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "activeIds": []
+  },
+  "pg": "1|8|2|0",
+  "open": "0",
+  "sessionFinal": {
+    "session_id": "rec008-8f2b14-new-01",
+    "reference": "REC008-MOCK-0001",
+    "token": null,
+    "conversation_step": null,
+    "pending_action": null,
+    "intent": null,
+    "service": null,
+    "nom": null,
+    "last_user_message": "oui"
+  },
+  "confirmedAttemptUnchanged": true,
+  "abandonedAttemptUnchanged": true,
+  "otherSessionsFpUnchanged": true,
+  "attemptsFpUnchanged": true,
+  "rendezVousFpUnchanged": true,
+  "mockPosts": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status": 200,
+  "elapsedMs": 48345,
+  "json": {
+    "type": "session_expired",
+    "text": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."
+  },
+  "textPreview": "{\"type\":\"session_expired\",\"text\":\"Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.\"}",
+  "aborted": false,
+  "error": null,
+  "transportError": null,
+  "causeCode": null,
+  "timeoutMs": 180000,
+  "retried": false
+}

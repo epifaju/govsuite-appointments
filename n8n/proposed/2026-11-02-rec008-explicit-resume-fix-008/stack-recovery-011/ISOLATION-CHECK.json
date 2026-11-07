@@ -1,0 +1,17 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:14:00Z",
+  "fromContainer": "govsuite-rec008-test-rec008-n8n-1",
+  "probes": [
+    { "target": "govsuite-postgres:5432", "expect": "forbidden", "result": "timeout", "ok": true },
+    { "target": "govsuite-n8n:5678", "expect": "forbidden", "result": "timeout", "ok": true },
+    { "target": "rec008-postgres:5432", "expect": "allowed", "result": "connect-ok", "ok": true },
+    { "target": "rec008-mock:8080", "expect": "allowed", "result": "open", "ok": true }
+  ],
+  "networks": [
+    "govsuite-rec008-test_rec008_test (internal:true)",
+    "govsuite-rec008-test_rec008_publish (publish only)"
+  ],
+  "liveContainersUntouched": true,
+  "verdict": "PASS"
+}

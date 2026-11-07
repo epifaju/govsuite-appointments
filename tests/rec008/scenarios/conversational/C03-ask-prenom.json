@@ -1,0 +1,9 @@
+{
+  "id": "C03-ask-prenom",
+  "family": "conversational",
+  "mode": "offline",
+  "required": true,
+  "handler": "identity.askPrenom",
+  "description": "ASK_PRENOM actif + Camille malgré LLM GET_SERVICES → CREATE + capture prénom.",
+  "expects": { "field": "prenom", "nextStep": "ASK_EMAIL" }
+}

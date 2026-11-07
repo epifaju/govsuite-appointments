@@ -1,0 +1,28 @@
+{
+  "mission": "R01-RUNNER-READINESS-021",
+  "ts": "2026-11-06T17:48:00.000Z",
+  "liveProbed": false,
+  "preflightOk": false,
+  "preflightPartial": true,
+  "reason": "Stack TEST not fully Up — offline runner work continued; no start/compose mutate",
+  "docker": [
+    "govsuite-rec008-test-rec008-mock-1\tExited (255)",
+    "govsuite-rec008-test-rec008-ollama-1\tUp",
+    "govsuite-rec008-test-rec008-publish-1\tExited (255)",
+    "govsuite-rec008-test-rec008-n8n-1\tExited (255)",
+    "govsuite-rec008-test-rec008-postgres-1\tExited (255)"
+  ],
+  "healthz5682": 0,
+  "workflowChecks": "skipped_n8n_down",
+  "pgChecks": "skipped_postgres_down",
+  "isolation": {
+    "n8nTestPort": 5682,
+    "livePortForbidden": 5680,
+    "liveTouched": false
+  },
+  "issues": [
+    "n8n TEST not Up",
+    "postgres TEST not Up",
+    "n8n healthz failed"
+  ]
+}

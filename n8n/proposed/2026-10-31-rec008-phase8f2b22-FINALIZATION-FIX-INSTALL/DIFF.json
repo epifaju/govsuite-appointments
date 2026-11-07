@@ -1,0 +1,20 @@
+{
+  "changed": [
+    "Finaliser état création"
+  ],
+  "finaliserBeforeSha": "27b731befac7d1877cbf75b4ad9195089ea6d5bf353409665f07733716e78766",
+  "finaliserAfterSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "candidateSha": "2263c4bbe906129e89b8ac6b860299d523042c455897c5f7f8426dabcde43c72",
+  "beforeSha": "cbb56243bf997dbda3c97c1418593297d2a6858fb17c07132a456b564b526ba1",
+  "payloadSha": "836dd30f1bfb71aa5df1710d6db48c87c0bc85df189161a5bb1be24e81b3ef5c",
+  "queryReplacementBefore": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference }},{{ $('Paramètres clôture confirmation').item.json.appointment.token_gestion || $('Paramètres clôture confirmation').item.json.appointment.token }}",
+  "queryReplacementAfter": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+  "queryTokenLinesBefore": [
+    "reference = $2,",
+    "token = $3,"
+  ],
+  "queryTokenLinesAfter": [
+    "reference = NULLIF($2::text, ''),",
+    "token = NULLIF($3::text, ''),"
+  ]
+}

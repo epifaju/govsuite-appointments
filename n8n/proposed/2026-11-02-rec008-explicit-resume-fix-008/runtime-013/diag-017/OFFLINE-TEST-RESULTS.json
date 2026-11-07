@@ -1,0 +1,71 @@
+{
+  "ts": "2026-11-05T21:50:30.286Z",
+  "gererJsShaVc10": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "expectedSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+  "shaMatch": true,
+  "proposedAfterSha": "23524b5d075d3fc136904b9a7fb00bba5e06f5ec858afa669e62d1d619685961",
+  "proposedAfterExpected": "23524b5d075d3fc136904b9a7fb00bba5e06f5ec858afa669e62d1d619685961",
+  "vc10R01": {
+    "conversationStep": "ASK_CREATE_DATE_RANGE",
+    "prenom": null,
+    "nom": "Dupont",
+    "intent": "CREATE_APPOINTMENT",
+    "slotId": null
+  },
+  "pass": true,
+  "tests": [
+    {
+      "name": "T1_vc10_R01_Camille_diverges_to_ASK_CREATE_DATE_RANGE",
+      "ok": true
+    },
+    {
+      "name": "T1b_first_divergence_is_slotId_gate",
+      "ok": true
+    },
+    {
+      "name": "T2_reprendre_on_active_ASK_PRENOM_vc10_same_trap",
+      "ok": true
+    },
+    {
+      "name": "T3_ambiguous_text_vc10",
+      "ok": true
+    },
+    {
+      "name": "T4_empty_message_vc10",
+      "ok": true
+    },
+    {
+      "name": "T5_fixed_R01_Camille_ASK_EMAIL",
+      "ok": true
+    },
+    {
+      "name": "T6_fixed_with_slot_still_ASK_EMAIL",
+      "ok": true
+    },
+    {
+      "name": "T7_llm_fake_intent_irrelevant_when_pending_CREATE",
+      "ok": true
+    },
+    {
+      "name": "T8_gerer_source_contains_slotId_gate",
+      "ok": true
+    },
+    {
+      "name": "T9_expired_Camille_no_capture",
+      "ok": true
+    },
+    {
+      "name": "T10_expired_reprendre_no_prenom",
+      "ok": true
+    },
+    {
+      "name": "T11_fixed_active_reprendre_not_prenom",
+      "ok": true
+    },
+    {
+      "name": "T12_proposed_after_sha_and_markers",
+      "ok": true
+    }
+  ],
+  "rootCause": "Gérer §12.3 identity capture and §12.4 identity ladder are gated on slotId; without slotId, CREATE falls through to ASK_CREATE_DATE_RANGE when service+site set and dates missing — prenom never captured from Camille."
+}

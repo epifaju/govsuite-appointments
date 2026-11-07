@@ -1,0 +1,78 @@
+{
+  "mission": "035-preflight-test-readonly",
+  "ts": "2026-11-06T23:01:46.364Z",
+  "isolation": {
+    "n8nTestPort": 5682,
+    "livePortForbidden": 5680,
+    "liveTouched": false,
+    "liveProbed": false,
+    "putUsed": false,
+    "dockerMutated": false,
+    "pgMutated": false
+  },
+  "issues": [],
+  "stopConditions": [],
+  "docker": [
+    {
+      "name": "govsuite-rec008-test-rec008-mock-1",
+      "status": "Up 5 hours"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-ollama-1",
+      "status": "Up 5 hours"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-publish-1",
+      "status": "Up 5 hours"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-n8n-1",
+      "status": "Up 5 hours"
+    },
+    {
+      "name": "govsuite-rec008-test-rec008-postgres-1",
+      "status": "Up 5 hours (healthy)"
+    }
+  ],
+  "healthz": {
+    "status": 200,
+    "body": "{\"status\":\"ok\"}",
+    "transportError": null
+  },
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "http": 200,
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "versionCounter": 11,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "gererFound": true,
+    "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "gererShaPrefix": "44a7064d…",
+    "activeIds": [],
+    "webhookRows": 0,
+    "runningExecutions": 0
+  },
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "expect": {
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "versionCounter": 11,
+    "gererSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "active": false,
+    "webhookRows": 0,
+    "running": 0,
+    "openAttempts": 0
+  },
+  "ok": true,
+  "gate": "GO-PREFLIGHT",
+  "verdict": "PASS"
+}

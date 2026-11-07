@@ -1,0 +1,15 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "collectsNomFromAskNom": true,
+  "askNomBlockSample": "",
+  "transitionsToAskPrenomWhenNomPresent": true,
+  "preservesSlotWhileCollecting": true,
+  "insertOnlyWhenIdentityComplete": true,
+  "decideDefaultCollect": true,
+  "decideInsertRequiresDecisionInsert": true,
+  "validerReachCreate": false,
+  "demanderReachCreate": false,
+  "askPrenomTextPresent": true,
+  "safeToActivate": true
+}

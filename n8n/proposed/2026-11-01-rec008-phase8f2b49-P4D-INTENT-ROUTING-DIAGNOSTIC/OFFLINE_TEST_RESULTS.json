@@ -1,0 +1,152 @@
+{
+  "payload": {
+    "phase": "8F-2B49-P4D",
+    "at": "2026-11-01T20:49:10.212Z",
+    "passCount": 6,
+    "total": 6,
+    "allPass": true,
+    "results": [
+      {
+        "id": "T1",
+        "name": "Mémoire ASK_PRENOM + LLM GET_SERVICES → conserve CREATE et capture prénom",
+        "pass": true
+      },
+      {
+        "id": "T2",
+        "name": "Sans mémoire + LLM GET_SERVICES → intent services et pending null (purge UPSERT)",
+        "pass": true
+      },
+      {
+        "id": "T3",
+        "name": "Parser actuel laisse passer GET_SERVICES en ASK_PRENOM",
+        "pass": true
+      },
+      {
+        "id": "T4",
+        "name": "Parser proposé force CREATE_APPOINTMENT pour Camille en ASK_PRENOM",
+        "pass": true
+      },
+      {
+        "id": "T5",
+        "name": "Parser proposé : Camille verrouillé CREATE ; non laisse l’intent LLM (pas de forçage)",
+        "pass": true
+      },
+      {
+        "id": "T6",
+        "name": "Mémoire ASK_NOM + LLM CREATE → continuation",
+        "pass": true
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "T1",
+      "name": "Mémoire ASK_PRENOM + LLM GET_SERVICES → conserve CREATE et capture prénom",
+      "pass": true,
+      "detail": {
+        "id": "T1",
+        "name": "Mémoire ASK_PRENOM + LLM GET_SERVICES → conserve CREATE et capture prénom",
+        "expect": true,
+        "f": {
+          "intent": "CREATE_APPOINTMENT",
+          "continuingPreviousAction": true,
+          "actionChanged": false,
+          "startingNewAction": false,
+          "wiped": false,
+          "previousPendingAction": "CREATE_APPOINTMENT",
+          "previousConversationStep": "ASK_PRENOM",
+          "message": "Camille"
+        },
+        "c": {
+          "intent": "CREATE_APPOINTMENT",
+          "pendingAction": "CREATE_APPOINTMENT",
+          "conversationStep": "ASK_EMAIL",
+          "nom": "Dupont",
+          "prenom": "Camille"
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "name": "Sans mémoire + LLM GET_SERVICES → intent services et pending null (purge UPSERT)",
+      "pass": true,
+      "detail": {
+        "id": "T2",
+        "name": "Sans mémoire + LLM GET_SERVICES → intent services et pending null (purge UPSERT)",
+        "expect": true,
+        "f": {
+          "intent": "GET_SERVICES",
+          "continuingPreviousAction": false,
+          "actionChanged": false,
+          "startingNewAction": false,
+          "wiped": true,
+          "previousPendingAction": null,
+          "previousConversationStep": null,
+          "message": "Camille"
+        },
+        "c": {
+          "intent": "GET_SERVICES",
+          "pendingAction": null,
+          "conversationStep": null,
+          "nom": null,
+          "prenom": null
+        }
+      }
+    },
+    {
+      "id": "T3",
+      "name": "Parser actuel laisse passer GET_SERVICES en ASK_PRENOM",
+      "pass": true,
+      "detail": {
+        "id": "T3",
+        "name": "Parser actuel laisse passer GET_SERVICES en ASK_PRENOM",
+        "expect": true,
+        "got": "GET_SERVICES"
+      }
+    },
+    {
+      "id": "T4",
+      "name": "Parser proposé force CREATE_APPOINTMENT pour Camille en ASK_PRENOM",
+      "pass": true,
+      "detail": {
+        "id": "T4",
+        "name": "Parser proposé force CREATE_APPOINTMENT pour Camille en ASK_PRENOM",
+        "expect": true,
+        "got": "CREATE_APPOINTMENT"
+      }
+    },
+    {
+      "id": "T5",
+      "name": "Parser proposé : Camille verrouillé CREATE ; non laisse l’intent LLM (pas de forçage)",
+      "pass": true,
+      "detail": {
+        "id": "T5",
+        "name": "Parser proposé : Camille verrouillé CREATE ; non laisse l’intent LLM (pas de forçage)",
+        "expect": true,
+        "non": "GET_SERVICES",
+        "locked": "CREATE_APPOINTMENT",
+        "note": "Sur override, le Parser complet applique ensuite NEGATIVE/MODIFY/AFFIRM"
+      }
+    },
+    {
+      "id": "T6",
+      "name": "Mémoire ASK_NOM + LLM CREATE → continuation",
+      "pass": true,
+      "detail": {
+        "id": "T6",
+        "name": "Mémoire ASK_NOM + LLM CREATE → continuation",
+        "expect": true,
+        "f": {
+          "intent": "CREATE_APPOINTMENT",
+          "continuingPreviousAction": true,
+          "actionChanged": false,
+          "startingNewAction": false,
+          "wiped": false,
+          "previousPendingAction": "CREATE_APPOINTMENT",
+          "previousConversationStep": "ASK_NOM",
+          "message": "Dupont"
+        }
+      }
+    }
+  ]
+}

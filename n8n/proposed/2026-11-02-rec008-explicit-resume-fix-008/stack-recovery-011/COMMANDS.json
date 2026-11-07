@@ -1,0 +1,103 @@
+{
+  "mission": "TEST-STACK-RECOVERY-011",
+  "at": "2026-11-05T20:11:02Z",
+  "note": "Commandes réellement exécutées — ordre strict, noms exacts uniquement. Aucun compose down/up, prune, LIVE, PUT n8n.",
+  "commands": [
+    {
+      "name": "preflight-docker-ps",
+      "command": "docker ps -a --filter name=govsuite-rec008-test",
+      "class": "read",
+      "exitCode": 0,
+      "ok": true
+    },
+    {
+      "name": "preflight-inspect-exited",
+      "command": "docker inspect govsuite-rec008-test-rec008-{postgres,mock,n8n,publish}-1",
+      "class": "read",
+      "exitCode": 0,
+      "ok": true
+    },
+    {
+      "name": "preflight-port-5682",
+      "command": "netstat -ano | findstr :5682",
+      "class": "read",
+      "exitCode": 0,
+      "ok": true,
+      "output": "empty (port libre)"
+    },
+    {
+      "name": "start-postgres",
+      "command": "docker start govsuite-rec008-test-rec008-postgres-1",
+      "class": "write-minimal",
+      "exitCode": 0,
+      "ok": true,
+      "output": "govsuite-rec008-test-rec008-postgres-1",
+      "at": "2026-11-05T20:10:55.7795669Z"
+    },
+    {
+      "name": "start-mock",
+      "command": "docker start govsuite-rec008-test-rec008-mock-1",
+      "class": "write-minimal",
+      "exitCode": 0,
+      "ok": true,
+      "output": "govsuite-rec008-test-rec008-mock-1",
+      "at": "2026-11-05T20:10:56.2979326Z"
+    },
+    {
+      "name": "pg_isready",
+      "command": "docker exec govsuite-rec008-test-rec008-postgres-1 pg_isready -U postgres -d govsuite_rec008_test",
+      "class": "read-runtime",
+      "exitCode": 0,
+      "ok": true,
+      "output": "/var/run/postgresql:5432 - accepting connections",
+      "at": "2026-11-05T20:10:59.1925622Z",
+      "note": "Bounded local readiness wait; first success used; not HTTP retry after ambiguous failure"
+    },
+    {
+      "name": "start-n8n",
+      "command": "docker start govsuite-rec008-test-rec008-n8n-1",
+      "class": "write-minimal",
+      "exitCode": 0,
+      "ok": true,
+      "output": "govsuite-rec008-test-rec008-n8n-1",
+      "at": "2026-11-05T20:10:59.9472342Z"
+    },
+    {
+      "name": "start-publish",
+      "command": "docker start govsuite-rec008-test-rec008-publish-1",
+      "class": "write-minimal",
+      "exitCode": 0,
+      "ok": true,
+      "output": "govsuite-rec008-test-rec008-publish-1",
+      "at": "2026-11-05T20:11:01.9092471Z"
+    },
+    {
+      "name": "postcheck-docker-ps",
+      "command": "docker ps -a --filter name=govsuite-rec008-test",
+      "class": "read",
+      "exitCode": 0,
+      "ok": true
+    },
+    {
+      "name": "postcheck-healthz",
+      "command": "curl.exe -s http://127.0.0.1:5682/healthz",
+      "class": "read",
+      "exitCode": 0,
+      "ok": true,
+      "httpStatus": 200,
+      "body": "{\"status\":\"ok\"}",
+      "note": "Preceded by bounded local readiness wait (Invoke-WebRequest) until n8n behind publish accepted connections; final confirm via curl.exe"
+    }
+  ],
+  "notExecuted": [
+    "docker compose down",
+    "docker compose up",
+    "force-recreate",
+    "prune",
+    "docker start/stop on govsuite-n8n",
+    "docker start/stop on govsuite-postgres",
+    "docker start/stop on ollama",
+    "PUT n8n",
+    "POST CreateAppointment"
+  ]
+}

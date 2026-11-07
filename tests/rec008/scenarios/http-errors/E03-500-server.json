@@ -1,0 +1,12 @@
+{
+  "id": "E03-500-server",
+  "family": "http-errors",
+  "mode": "offline",
+  "required": true,
+  "handler": "http.classify500",
+  "description": "HTTP 500 : classifieur VC9 → UNCERTAIN (jamais succès métier).",
+  "expects": {
+    "httpOutcome": "UNCERTAIN",
+    "runtimeRequired": true
+  }
+}

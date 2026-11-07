@@ -1,0 +1,179 @@
+{
+  "Parser intention": {
+    "main": [
+      [
+        {
+          "node": "Fusionner état conversation",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Router intention": {
+    "main": [
+      [
+        {
+          "node": "Appeler GetServices",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Valider paramètres disponibilité",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Décider action tentative",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Valider token consultation",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Confirmation déjà demandée ?",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Router étape replanification",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Réponse générale",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Réponse générale",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Création prête ?": {
+    "main": [
+      [
+        {
+          "node": "Refus création sans réclamation",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Demander paramètres création",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Comprendre la demande": {
+    "main": [
+      [
+        {
+          "node": "Parser intention",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Charger état conversation": {
+    "main": [
+      [
+        {
+          "node": "Lire tentative de session",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Gérer collecte progressive": {
+    "main": [
+      [
+        {
+          "node": "Sauvegarder état conversation",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Fusionner état conversation": {
+    "main": [
+      [
+        {
+          "node": "Gérer collecte progressive",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Sauvegarder état conversation": {
+    "main": [
+      [
+        {
+          "node": "Router intention",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Lorsqu'un message de chat est reçu": {
+    "main": [
+      [
+        {
+          "node": "Charger état conversation",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Lire tentative de session": {
+    "main": [
+      [
+        {
+          "node": "Joindre tentative de session",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  },
+  "Joindre tentative de session": {
+    "main": [
+      [
+        {
+          "node": "Comprendre la demande",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "phase": "8F-2B15",
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "parserRecognizesJePrendsLeN": true,
+  "parserSlotRegex": "\\b(?:je\\s+)?(?:prends?|choisis?|sélectionne|selectionne|réserve|reserve)\\s+(?:le\\s+)?(?:créneau\\s+|creneau\\s+)?(\\d+)\\b",
+  "parserSetsCreateOnSlotChoice": true,
+  "fusionPreservesServiceSiteDatesOnAvailabilityToCreate": true,
+  "fusionResolvesIndexToUuid": true,
+  "gererResolvesIndexToSlotId": true,
+  "gererAskNomWhenSlotWithoutIdentity": true,
+  "routerCreateGoesToDecide": true,
+  "decideWithoutOpenAttemptIsCollect": true,
+  "collectCannotReachCreateAppointment": true,
+  "claimPathCanReachCreateButRequiresOpenAwaitingAndAffirm": true,
+  "safeToActivate": true,
+  "notes": [
+    "Je prends le 1. → selectedSlotIndex=1 → intent CREATE_APPOINTMENT.",
+    "Fusionner: GET_AVAILABILITY→CREATE keeps service/site/dates/availableSlots and resolves UUID.",
+    "Gérer: with slotId and no nom → ASK_NOM; createDecision INSERT only when identity complete.",
+    "Décider without open attempt → COLLECT → Valider/Demander; CreateAppointment not reachable."
+  ]
+}

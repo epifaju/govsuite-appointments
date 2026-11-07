@@ -1,0 +1,19 @@
+{
+  "_comment": "Identités fictives uniquement — ne pas remplacer par des données personnelles réelles.",
+  "identities": [
+    {
+      "id": "syn-01",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.dupont@example.test",
+      "telephone": "+33000000001"
+    },
+    {
+      "id": "syn-02",
+      "nom": "Martin",
+      "prenom": "Alex",
+      "email": "alex.martin@example.test",
+      "telephone": "+33000000002"
+    }
+  ]
+}

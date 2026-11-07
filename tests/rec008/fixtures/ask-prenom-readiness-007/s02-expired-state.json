@@ -1,0 +1,33 @@
+{
+  "fixtureId": "R007-S02",
+  "applied": false,
+  "applyForbiddenUntilAuthorized": true,
+  "sessionId": "rec008-syn-s02-ask-prenom-expired",
+  "env": "TEST",
+  "purpose": "Précondition S02 — session EXPIRÉE ASK_PRENOM (indépendante de S03)",
+  "row": {
+    "session_id": "rec008-syn-s02-ask-prenom-expired",
+    "intent": "GENERAL",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_PRENOM",
+    "nom": "Dupont",
+    "prenom": null,
+    "email": null,
+    "telephone": null,
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "available_slots": [],
+    "expires_at_policy": "NOW() - interval '1 hour'",
+    "notes": "Synthetic only — distinct from S03"
+  },
+  "selectPreflight": [
+    "expires_at <= NOW()",
+    "pending_action = CREATE_APPOINTMENT",
+    "conversation_step = ASK_PRENOM",
+    "nom IS NOT NULL",
+    "prenom IS NULL",
+    "open attempts = 0"
+  ],
+  "message": "Camille",
+  "doNotReuseForS03WithoutReset": true
+}

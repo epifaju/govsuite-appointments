@@ -1,0 +1,19 @@
+{
+  "id": "T01-expired-session-no-implicit-resume",
+  "family": "ttl",
+  "mode": "offline",
+  "phaseRef": "P4G1/VC9",
+  "required": true,
+  "handler": "ttl.expiredFreeText",
+  "description": "VC9: session expirée chargée avec sessionExpired=true; message libre Camille → session_expired, brouillon préservé, TTL non prolongé, pas de CLAIM/POST.",
+  "fixtureSession": "rec008-syn-expired-01",
+  "expects": {
+    "sessionExpired": true,
+    "replyType": "session_expired",
+    "preserveDraft": true,
+    "refreshSessionTtl": false,
+    "noImplicitContinuation": true,
+    "noClaimOrPost": true,
+    "loaderReturnsEmpty": false
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "mission": "TEST-STACK-RECOVERY-022",
+  "ts": "2026-11-06T18:15:09.254Z",
+  "liveProbed": false,
+  "pgMutated": false,
+  "n8nActivated": false,
+  "chatTriggerUsed": false,
+  "ollamaInference": false,
+  "issues": [],
+  "healthz": {
+    "status": 200
+  },
+  "login": {
+    "status": 200,
+    "cookiePresent": true
+  },
+  "workflow": {
+    "http": 200,
+    "id": "OCD9It1uKFhOoWNF",
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "nodeCount": 134,
+    "edgeCount": 137,
+    "gererSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "activeIds": [],
+    "webhookRows": 0,
+    "runningExecutions": 0,
+    "executionsApiStatus": 200
+  },
+  "observability": {
+    "settingsHttp": 200,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": true,
+    "executionEntityCount": 0,
+    "executionEntityError": null,
+    "note": "readonly — not modified; sqlite count via node:sqlite after better-sqlite3 miss"
+  },
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "fixtures": [
+    {
+      "session_id": "rec008-runtime013-r01-active",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "slot_id_present": true,
+      "prenom_null": true,
+      "prenom_len": 0,
+      "last_user_message_len": 0,
+      "last_user_message_has_camille": false,
+      "ttl_future": false,
+      "expires_at": "2026-11-06 01:05:47.184139+01",
+      "available_slots_len": 1,
+      "date_debut": "2026-11-10",
+      "date_fin": "2026-11-14",
+      "nom_present": true
+    },
+    {
+      "session_id": "rec008-runtime013-r02-expired",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "slot_id_present": true,
+      "prenom_null": true,
+      "prenom_len": 0,
+      "last_user_message_len": 0,
+      "last_user_message_has_camille": false,
+      "ttl_future": false,
+      "expires_at": "2026-11-05 22:05:47.184139+01",
+      "available_slots_len": 1,
+      "date_debut": "2026-11-10",
+      "date_fin": "2026-11-14",
+      "nom_present": true
+    },
+    {
+      "session_id": "rec008-runtime013-r03-resume",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "slot_id_present": true,
+      "prenom_null": true,
+      "prenom_len": 0,
+      "last_user_message_len": 0,
+      "last_user_message_has_camille": false,
+      "ttl_future": false,
+      "expires_at": "2026-11-05 22:05:47.184139+01",
+      "available_slots_len": 1,
+      "date_debut": "2026-11-10",
+      "date_fin": "2026-11-14",
+      "nom_present": true
+    }
+  ],
+  "ttl": {
+    "r01_ttl_future": false,
+    "r02_ttl_future": false,
+    "r03_ttl_future": false,
+    "TTL_REFRESH_REQUIRED": true
+  },
+  "runner021": {
+    "sha256": "1ab9465a720aa64925e633e5665eea3bafbe42225ac3e728bceea9f177ac5826",
+    "expect": "1ab9465a720aa64925e633e5665eea3bafbe42225ac3e728bceea9f177ac5826",
+    "shaMatch": true,
+    "hasGate": true,
+    "has180s": true,
+    "hasNoRetry": true,
+    "hasClassify": true,
+    "hasSettle": true,
+    "hasRunningExec": true
+  },
+  "ok": true
+}

@@ -1,0 +1,39 @@
+{
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "nodes": 134,
+  "edges": 137,
+  "activeIds": [],
+  "urlsCount": 10,
+  "urlsOk": true,
+  "postgres": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "pg": "1|8|2|0",
+  "statuses": "ABANDONED|1\nCONFIRMED|1",
+  "open": "0",
+  "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT",
+  "attempt": "CONFIRMED|REC008-MOCK-0001|f|f|",
+  "mock": {
+    "scenario": "created",
+    "total": 4,
+    "byPath": {
+      "GET /services 200": 1,
+      "GET /appointments/availability 200": 1,
+      "GET /_meta 404": 1,
+      "POST /appointments 201": 1
+    },
+    "distinctKeys": 1
+  },
+  "postAppointments": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  },
+  "ok": true,
+  "note": "postflight identical checks; no PUT/activation/chat/POST"
+}

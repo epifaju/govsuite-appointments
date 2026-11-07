@@ -1,0 +1,24 @@
+{
+  "id": "T03-explicit-resume",
+  "family": "ttl",
+  "mode": "offline",
+  "phaseRef": "P4G2/VC9",
+  "required": true,
+  "handler": "ttl.explicitResume",
+  "description": "Session expirée + message « reprendre » → reprise CREATE contrôlée, refresh TTL, pas de CLAIM/POST auto.",
+  "readinessRef": "READINESS-005",
+  "readinessCatalog": "tests/rec008/readiness/R005-p4g2-explicit-resume-assertions.json",
+  "evidenceClass": "offlineAlreadyOk",
+  "runtimeRequired": true,
+  "runtimeRequiredReason": "HTTP 200 réel, type réponse, TTL PG +2h, intent/pending/step PG, draft flags/slots, CLAIM=0 POST=0 mock, deactivate — catalogue R005",
+  "expects": {
+    "explicitResume": true,
+    "refreshSessionTtl": true,
+    "noClaimOrPost": true
+  },
+  "runtimeTargetWhenAuthorized": {
+    "sessionId": "rec008-8f2b1-slot-01",
+    "chatInput": "reprendre",
+    "executeNow": false
+  }
+}

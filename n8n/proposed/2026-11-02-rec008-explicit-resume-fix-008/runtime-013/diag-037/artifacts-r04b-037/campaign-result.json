@@ -1,0 +1,13 @@
+{
+  "verdict": "UNCERTAIN",
+  "stoppedAfter": "R04-B",
+  "results": [
+    {
+      "id": "R04-B",
+      "verdict": "UNCERTAIN",
+      "issues": [
+        "stability:final_state_indeterminate:http_not_ok_indeterminate"
+      ]
+    }
+  ]
+}

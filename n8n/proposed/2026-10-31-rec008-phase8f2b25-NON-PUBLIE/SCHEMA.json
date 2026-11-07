@@ -1,0 +1,4 @@
+{
+  "columns": "reference:varchar:nullable=YES\nsession_id:varchar:nullable=NO\ntoken:uuid:nullable=YES",
+  "constraints": "ai_conversation_state_pkey:PRIMARY KEY (id)\nai_conversation_state_session_id_key:UNIQUE (session_id)"
+}

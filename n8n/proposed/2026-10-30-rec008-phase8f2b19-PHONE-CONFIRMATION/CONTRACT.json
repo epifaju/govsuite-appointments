@@ -1,0 +1,25 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "phoneValidationPresent": true,
+  "askTelephoneCollectsPhone": true,
+  "completeIdentitySetsAwaitAndInsert": true,
+  "decideMapsInsert": true,
+  "aiguillerHasInsert": true,
+  "insertFirstNode": "Tirer aléa de tentative",
+  "insertReachCreateAppointment": false,
+  "insertPathSample": [
+    "Tirer aléa de tentative",
+    "Préparer corps figé",
+    "Calculer empreinte du corps",
+    "Insérer tentative",
+    "Composer récapitulatif"
+  ],
+  "insertCreatesAwaiting": true,
+  "claimSeparateFromInsert": true,
+  "safeToActivate": true,
+  "notes": [
+    "Phone completes identity → createDecision INSERT → Décider INSERT → Tirer aléa / Insérer tentative → récap ASK.",
+    "CreateAppointment only via CLAIM after Affirm; INSERT branch must not reach it."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "mission": "W03101-TEST-INSTALL-034",
+  "verdict": "PASS",
+  "fixInstalled": "YES",
+  "putStatus": 200,
+  "putCount": 1,
+  "putAttempted": true,
+  "method": "jsCode-only",
+  "fullCandidateImport": false,
+  "candidateFileSha": "57e08d2281247cf2030ae2734d6c096cdad9c049a53a120cce796fcb11c7d8af",
+  "backupSha": "a68ea471af4166957f834610af9f7074e7c1475ddcd0fb3a5d202a9c0979a0ba",
+  "backupFile": "backup-pre-w03101-2026-11-06T22-53-40-165Z.json",
+  "payloadSha": "01ab6d2e90d0b232c4a71d80e493caaebf890acb9c33357c573f8127d62bc3a1",
+  "afterFileSha": "c0fbc8a0adf6bfd97477b2c3a4d6e38f9e7f2732634b0321b8d277144b0e6dc8",
+  "before": {
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+  },
+  "after": {
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "versionCounter": 11,
+    "gererJsSha": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+    "active": false,
+    "activeVersionId": null
+  },
+  "changedAfter": [
+    {
+      "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+      "name": "Gérer collecte progressive"
+    }
+  ],
+  "checks": {
+    "putStatus200": true,
+    "sameId": true,
+    "nodes134": true,
+    "edges137": true,
+    "onlyGererChanged": true,
+    "gererJsSha": true,
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "inactive": true,
+    "noActiveWorkflows": true,
+    "webhooksZero": true,
+    "urlsMock": true,
+    "pgCred": true,
+    "finaliserUnchanged": true,
+    "pgStable": true,
+    "openZero": true,
+    "mockPostDelta0": true,
+    "mockClaimDelta0": true,
+    "versionBumped": true,
+    "versionCounter11Preferred": true
+  },
+  "pg": {
+    "before": "1|14|4|0",
+    "after": "1|14|4|0",
+    "openBefore": "0",
+    "openAfter": "0",
+    "driftDocumented": null
+  },
+  "mock": {
+    "beforeTotal": 0,
+    "afterTotal": 0,
+    "postCreateBefore": 0,
+    "postCreateAfter": 0,
+    "claimsBefore": 0,
+    "claimsAfter": 0,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0
+  },
+  "webhooks": {
+    "before": 0,
+    "after": 0
+  },
+  "dockerMutate": false,
+  "activation": false,
+  "chat": false,
+  "liveTouched": false,
+  "rollbackExecuted": false,
+  "r04Runtime": "NO-GO",
+  "r05r07": "NO-GO",
+  "live": "NO-GO"
+}

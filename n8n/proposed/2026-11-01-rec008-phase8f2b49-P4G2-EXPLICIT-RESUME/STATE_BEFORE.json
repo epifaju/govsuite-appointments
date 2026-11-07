@@ -1,0 +1,52 @@
+{
+  "sessionId": "rec008-8f2b1-slot-01",
+  "snap": {
+    "sessionId": "rec008-8f2b1-slot-01",
+    "intent": "GENERAL",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_CREATE_SERVICE",
+    "expiresAt": "2026-10-31 00:59:54.370387+01",
+    "updatedAt": "2026-11-02 09:08:48.413196+01",
+    "flags": {
+      "service": false,
+      "site": false,
+      "dateDebut": false,
+      "dateFin": false,
+      "slotId": false,
+      "selectedSlotIndex": true,
+      "availableSlots": true,
+      "slotsLen": 0,
+      "nom": false,
+      "prenom": false,
+      "email": false,
+      "telephone": false,
+      "reference": false,
+      "token": false
+    },
+    "lastUserMessagePreviewLen": 7,
+    "lastUserMessagePreview": "Camille",
+    "lastUserMessageStartsWithCamille": true,
+    "lastUserMessageIsReprendre": false,
+    "draftFingerprint": "403712507f9ca224e28e70d83c042a5f",
+    "slotsFingerprint": "fd838dea4b2d12b826297cc085b00469"
+  },
+  "attempts": {
+    "total": 0,
+    "byStatus": [],
+    "open": 0,
+    "hasIdempotencyKey": 0
+  },
+  "stillExpired": "t",
+  "targetChecks": {
+    "exists": true,
+    "expired": true,
+    "intentGeneral": true,
+    "pendingCreate": true,
+    "stepAskService": true,
+    "availableSlotsPresent": true,
+    "noServiceSiteSlotIdentity": true,
+    "noOpenAttempts": true,
+    "noAttempts": true
+  },
+  "targetOk": true
+}

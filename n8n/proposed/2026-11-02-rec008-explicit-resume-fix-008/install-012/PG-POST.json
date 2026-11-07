@@ -1,0 +1,32 @@
+{
+  "mission": "TEST-INSTALL-RETRY-012",
+  "at": "2026-11-05T20:21:00Z",
+  "phase": "post-PUT",
+  "mode": "SELECT-only",
+  "container": "govsuite-rec008-test-rec008-postgres-1",
+  "database": "govsuite_rec008_test",
+  "mutation": false,
+  "liveTouched": false,
+  "queries": {
+    "counts": "SELECT (SELECT count(*) FROM rendez_vous),(SELECT count(*) FROM ai_conversation_state),(SELECT count(*) FROM ai_appointment_attempt),(SELECT count(*) FROM notifications);",
+    "openAttempts": "SELECT count(*) FROM ai_appointment_attempt WHERE status IN ('AWAITING_CONFIRMATION','SUBMITTING','UNCERTAIN');"
+  },
+  "counts": {
+    "rendez_vous": 1,
+    "ai_conversation_state": 11,
+    "ai_appointment_attempt": 4,
+    "notifications": 0,
+    "fingerprint": "1|11|4|0"
+  },
+  "openAttempts": 0,
+  "expected": {
+    "fingerprint": "1|11|4|0",
+    "openAttempts": 0,
+    "source": "PREFLIGHT.json / RESULT.json pg.before"
+  },
+  "preflightFingerprint": "1|11|4|0",
+  "preflightOpenAttempts": 0,
+  "drift": false,
+  "pgUnchangedAfterPut": true,
+  "verdict": "PASS"
+}

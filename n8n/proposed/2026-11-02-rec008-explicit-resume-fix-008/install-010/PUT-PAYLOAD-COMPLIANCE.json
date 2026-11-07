@@ -1,0 +1,160 @@
+{
+  "mission": "TEST-INSTALL-010",
+  "mode": "offline",
+  "executed": false,
+  "putExecuted": false,
+  "apiCalled": false,
+  "workflowId": "OCD9It1uKFhOoWNF",
+  "candidatePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+  "baselinePath": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/before-OCD9It1uKFhOoWNF.json",
+  "putSchemaReference": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/install.js (read-only; not executed)",
+  "shaRecalc": {
+    "candidateFileSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+    "expectedCandidateSha256": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+    "candidateShaMatch": true,
+    "baselineBeforeVc9Sha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "expectedBaselineSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+    "baselineShaMatch": true,
+    "gererJsCodeAfterSha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "expectedGererJsCodeAfterSha256": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "gererJsCodeShaMatch": true,
+    "gererJsCodeBeforeSha256": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+    "gererParamsAfterSha256": "4a94125b3ab79a37598b40dea9b0bb18611c30f883ab835bfd5ea4bd1aefb833",
+    "gererParamsBeforeSha256": "5bc5b967c71e219c88f1bfc6f8c2a70b7ef2e79d2a56475733650c0d20855e6e"
+  },
+  "nodeDiffVsBefore": {
+    "nodesBefore": 134,
+    "nodesAfter": 134,
+    "changedNodesCount": 1,
+    "changedNodes": [
+      {
+        "name": "Gérer collecte progressive",
+        "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+        "kind": "modified",
+        "parametersChangedKeys": ["jsCode"],
+        "onlyJsCodeChanged": true
+      }
+    ],
+    "connectionsEqual": true,
+    "settingsEqual": true,
+    "nameEqual": true,
+    "staticDataEqual": true,
+    "pinDataEqual": true,
+    "credentialsUntouched": true,
+    "confirmOneNodeGererJsCodeOnly": true
+  },
+  "candidateActiveGuard": {
+    "candidateActive": false,
+    "candidateActiveVersionId": null,
+    "baselineActive": false,
+    "payloadMustOmitOrKeepActiveFalse": true,
+    "p4fPatternOmitsActiveField": true,
+    "stopIfPayloadActiveTruthy": true
+  },
+  "putBodyFields": {
+    "pattern": "P4F install.js lines 211-225 adapted for FIX-008 single TARGET",
+    "construction": {
+      "remote": "GET current TEST workflow OCD9It1uKFhOoWNF (runtime; not done here)",
+      "candidate": "after-OCD9It1uKFhOoWNF.json",
+      "nodes": "deep-copy remote.nodes; replace parameters only for TARGETS from candidate",
+      "TARGETS": ["Gérer collecte progressive"],
+      "note": "Unlike P4F (6 TARGETS), FIX-008 patches exactly 1 node parameters.jsCode"
+    },
+    "include": [
+      { "field": "name", "source": "remote.name" },
+      {
+        "field": "nodes",
+        "source": "remote.nodes with Gérer collecte progressive.parameters from candidate"
+      },
+      { "field": "connections", "source": "remote.connections (unchanged)" },
+      {
+        "field": "settings",
+        "source": "remote.settings filtered to allowlist only",
+        "allowlist": [
+          "saveExecutionProgress",
+          "saveManualExecutions",
+          "saveDataErrorExecution",
+          "saveDataSuccessExecution",
+          "executionTimeout",
+          "errorWorkflow",
+          "timezone",
+          "executionOrder",
+          "callerPolicy",
+          "callerIds",
+          "timeSavedPerExecution",
+          "redactionPolicy",
+          "availableInMCP",
+          "customTelemetryTags"
+        ],
+        "candidateSettingsKeysPresent": [
+          "availableInMCP",
+          "executionOrder",
+          "saveDataSuccessExecution",
+          "saveDataErrorExecution",
+          "saveManualExecutions",
+          "saveExecutionProgress"
+        ],
+        "candidateSettingsKeysWithinAllowlist": true
+      },
+      {
+        "field": "staticData",
+        "source": "remote.staticData === undefined ? null : remote.staticData"
+      },
+      {
+        "field": "pinData",
+        "source": "remote.pinData === undefined ? {} : remote.pinData"
+      }
+    ],
+    "exclude": [
+      "id",
+      "active",
+      "activeVersion",
+      "activeVersionId",
+      "checksum",
+      "createdAt",
+      "updatedAt",
+      "description",
+      "isArchived",
+      "meta",
+      "nodeGroups",
+      "parentFolder",
+      "scopes",
+      "shared",
+      "sourceWorkflowId",
+      "tags",
+      "triggerCount",
+      "versionId",
+      "versionCounter"
+    ],
+    "activeRule": {
+      "mustNotSetActiveTrue": true,
+      "p4fCheck": "if (payload.active) stop('payload-active')",
+      "recommended": "omit active from PUT body (P4F); never send active:true",
+      "candidateExportActive": false
+    },
+    "doNotPutFullExportRaw": "Do not PUT the full after-*.json export as-is; strip metadata and omit active like P4F"
+  },
+  "simulatedPayloadOffline": {
+    "note": "Built offline from before + candidate Gérer.parameters only; no API",
+    "topKeys": ["name", "nodes", "connections", "settings", "staticData", "pinData"],
+    "hasActiveField": false,
+    "simulatedChangedNodes": ["Gérer collecte progressive"],
+    "payloadSha256": "baafc1d99341cb4cbc1dcc38f024d1f0592ada75ae56f1083eb88c1ce2f26154",
+    "payloadBytes": 249691
+  },
+  "nonRegressionsToVerifyAtInstall": [
+    "remote inactive before PUT (active=false, activeVersionId=null)",
+    "exactly 1 node parameters change: Gérer collecte progressive",
+    "connections / settings / credentials / webhooks unchanged",
+    "Finaliser état création unchanged",
+    "SQL Charger/Sauvegarder unchanged",
+    "active remains false after PUT; no activate/publish",
+    "0 CreateAppointment POST; 0 chat; 0 SQL mutation",
+    "no automatic retry on timeout"
+  ],
+  "verdict": {
+    "readyForPutOffline": "PASS",
+    "meaning": "Offline SHA + single-node jsCode diff + P4F-aligned PUT field list OK. Does NOT authorize real PUT, activation, or next phase.",
+    "installNow": false
+  }
+}

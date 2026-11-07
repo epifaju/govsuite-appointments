@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "mission": "TEST-INSTALL-RETRY-012",
+  "verdict": "PASS",
+  "putStatus": 200,
+  "putCount": 1,
+  "putAttempted": true,
+  "candidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "backupSha": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "backupFile": "backup-pre-fix008-2026-11-05T20-20-12-227Z.json",
+  "payloadSha": "baafc1d99341cb4cbc1dcc38f024d1f0592ada75ae56f1083eb88c1ce2f26154",
+  "before": {
+    "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+    "versionCounter": 9,
+    "gererJsSha": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961"
+  },
+  "after": {
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "gererJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "active": false,
+    "activeVersionId": null
+  },
+  "changedAfter": [
+    {
+      "id": "cc3403f1-6f07-4ab5-ab26-b0fee396a46d",
+      "name": "Gérer collecte progressive"
+    }
+  ],
+  "checks": {
+    "putStatus200": true,
+    "sameId": true,
+    "nodes134": true,
+    "edges137": true,
+    "onlyGererChanged": true,
+    "gererJsSha": true,
+    "marker": true,
+    "connectionsUnchanged": true,
+    "settingsUnchanged": true,
+    "inactive": true,
+    "noActiveWorkflows": true,
+    "urlsMock": true,
+    "pgCred": true,
+    "finaliserUnchanged": true,
+    "pgUnchanged": true,
+    "openZero": true,
+    "mockPostUnchanged": true,
+    "versionBumped": true
+  },
+  "pg": {
+    "before": "1|11|4|0",
+    "after": "1|11|4|0",
+    "openBefore": "0",
+    "openAfter": "0"
+  },
+  "mock": {
+    "beforeTotal": 0,
+    "afterTotal": 0,
+    "postCreateBefore": 0,
+    "postCreateAfter": 0
+  },
+  "dockerMutate": false,
+  "activation": false,
+  "chat": false,
+  "liveTouch": false
+}

@@ -1,0 +1,77 @@
+{
+  "versionId": "e84ee0d2-7af9-417e-8d47-0a28580dccac",
+  "versionCounter": 6,
+  "parserAffirmOnlyInAwait": true,
+  "decideAffirmToClaim": true,
+  "claimFirstNode": "Préparer réclamation ou reprise",
+  "claimPathSample": [
+    "Préparer réclamation ou reprise",
+    "Réclamer tentative",
+    "Réclamation gagnée ?",
+    "Appliquer corps gagnant",
+    "Réponse réclamation perdue",
+    "Corps figé présent ?",
+    "Appeler CreateAppointment",
+    "Réponse corps absent",
+    "Classer réponse HTTP",
+    "Classer délai HTTP",
+    "Aiguiller résultat HTTP",
+    "Réponse résultat incertain",
+    "Préparer réponse création",
+    "Finaliser état création"
+  ],
+  "claimReachCreate": true,
+  "claimReachCancel": false,
+  "claimReachLive": false,
+  "createUrl": "http://rec008-mock:8080/appointments",
+  "createMethod": "POST",
+  "createTargetsMockOnly": true,
+  "claimSqlSamples": [
+    {
+      "name": "Parser intention",
+      "type": "n8n-nodes-base.code",
+      "snippet": "let raw =\n  $json.text ??\n  $json.output ??\n  $json.response ??\n  '';\n\nraw = String(raw)\n  .trim()\n  .replace(/^```json\\s*/i, '')\n  .replace(/^```\\s*/i, '')\n  .replace(/\\s*```$/i, '')\n  .trim();\n\nlet parsed = {};\n\ntry {\n  parsed = JSON.parse(raw);\n} catch (e) {\n  parsed = {};\n}\n\n// ======================================================\n// TRIGGER CHAT\n// ======================================================\n\nconst trigger =\n  $(\"Lorsqu'un message de chat est reçu\").item.json;\n\nconst originalMessage =\n  String(trigger.chatInput ?? '').trim();\n\nconst message =\n  originalMessage.toLowerCase();\n\n\n// ======================================================\n// MEMOIRE POSTGRESQL DU TOUR PRECEDENT\n// ======================================================\n\nlet previous = {};\n\ntry {\n  previous =\n    $('Joindre tentative de session').item.json ?? {};\n} catch (e) {\n  try {\n    previous =\n      $('Charger état conversation').item.json ?? {};\n  } catch (e2) {\n    previous = {};\n  }\n}\n\nconst previousPendingAction =\n  previous.pending_action ??\n  null;\n\nconst previousConversationStep =\n  previous.conversation_step ??\n  null;\n\nfunction stripDecision(value) {\n  return String(value || '')\n    .trim()"
+    },
+    {
+      "name": "Fusionner état conversation",
+      "type": "n8n-nodes-base.code",
+      "snippet": "const current = { ...$json };\n\nlet previous = {};\n\ntry {\n  previous =\n    $('Joindre tentative de session').item.json ?? {};\n} catch (e) {\n  try {\n    previous =\n      $('Charger état conversation').item.json ?? {};\n  } catch (e2) {\n    previous = {};\n  }\n}\n\n// ======================================================\n// 1. UTILITAIRES\n// ======================================================\n\nfunction hasValue(value) {\n  return (\n    value !== null &&\n    value !== undefined &&\n    value !== '' &&\n    value !== 'null' &&\n    value !== 'undefined'\n  );\n}\n\nfunction pick(newValue, oldValue) {\n\n  if (hasValue(newValue)) {\n    return newValue;\n  }\n\n  if (hasValue(oldValue)) {\n    return oldValue;\n  }\n\n  return null;\n}\n\nfunction normalizeSlots(value) {\n\n  if (!value) {\n    return [];\n  }\n\n  if (Array.isArray(value)) {\n    return value;\n  }\n\n  if (typeof value === 'string') {\n\n    try {\n      const parsed = JSON.parse(value);\n\n      return Array.isArray(parsed)\n        ? parsed\n        : [];\n\n    } catch (e) {\n      return [];\n    }\n  }\n\n  return [];\n}\n\nfunction isValidUUID(value) {\n\n  if (!value) {\n    return false;\n  }\n\n  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}"
+    },
+    {
+      "name": "Valider paramètres création",
+      "type": "n8n-nodes-base.code",
+      "snippet": "const routed = $json;\nlet collected = {};\n\ntry {\n  collected = $('Gérer collecte progressive').item.json ?? {};\n} catch (e) {\n  collected = {};\n}\n\nconst hasValue = (v) =>\n  v !== undefined &&\n  v !== null &&\n  !(typeof v === 'string' && v.trim() === '');\n\nconst pick = (key) =>\n  hasValue(routed[key]) ? routed[key] : hasValue(collected[key]) ? collected[key] : null;\n\n// Informative hydration only: business fields from Gérer when the\n// routing payload (Décider) intentionally omits them.\n// Authorization flags stay those of the routed item.\nconst x = {\n  ...routed,\n  slotId: pick('slotId'),\n  nom: pick('nom'),\n  prenom: pick('prenom'),\n  email: pick('email'),\n  telephone: pick('telephone'),\n  intent: pick('intent'),\n  pendingAction: pick('pendingAction'),\n  conversationStep:\n    routed.conversationStep ??\n    collected.conversationStep ??\n    null,\n  createDecision:\n    routed.createDecision ??\n    collected.createDecision ??\n    null,\n  claimAcquired: routed.claimAcquired === true\n};\n\nconst missing = [];\n\n// ------------------------------------------------------\n// Vérification des champs obligatoires\n// ------------------------------------------------------\n\nif (!x.slotId) {\n  miss"
+    },
+    {
+      "name": "Lire tentative de session",
+      "type": "n8n-nodes-base.postgres",
+      "snippet": "SELECT\n  id::text AS attempt_id,\n  status AS attempt_status,\n  appointment_reference,\n  lease_until,\n  expires_at,\n  resume_count\nFROM public.ai_appointment_attempt\nWHERE session_id = $1\n  AND status IN ('AWAITING_CONFIRMATION', 'SUBMITTING', 'UNCERTAIN', 'CONFIRMED')\nORDER BY created_at DESC\nLIMIT 1;"
+    },
+    {
+      "name": "Décider action tentative",
+      "type": "n8n-nodes-base.code",
+      "snippet": "const saved = $json;\nlet collected = {};\nlet joined = {};\n\ntry { collected = $('Gérer collecte progressive').item.json ?? {}; } catch (e) { collected = {}; }\ntry { joined = $('Joindre tentative de session').item.json ?? {}; } catch (e) { joined = {}; }\n\nconst decision = collected.createDecision || null;\nconst openAttempt = joined.openAttempt || null;\nconst status = openAttempt ? openAttempt.status : null;\nconst now = Date.now();\nconst leaseUntil = openAttempt && openAttempt.leaseUntil ? new Date(openAttempt.leaseUntil).getTime() : null;\nconst expiresAt = openAttempt && openAttempt.expiresAt ? new Date(openAttempt.expiresAt).getTime() : null;\nconst leaseExpired = leaseUntil !== null && leaseUntil <= now;\nconst waitExpired = expiresAt !== null && expiresAt <= now;\n\nlet attemptAction = 'COLLECT';\n\nif (status === 'UNCERTAIN' || (status === 'SUBMITTING' && leaseExpired)) {\n  attemptAction = 'RESUME';\n} else if (status === 'SUBMITTING') {\n  attemptAction = 'WAIT';\n} else if (status === 'AWAITING_CONFIRMATION' && waitExpired) {\n  attemptAction = 'EXPIRE';\n} else if (status === 'AWAITING_CONFIRMATION' && decision === 'AFFIRM') {\n  attemptAction = 'CLAIM';\n} else if (status === 'AWAITING_CO"
+    },
+    {
+      "name": "Réclamer tentative",
+      "type": "n8n-nodes-base.postgres",
+      "snippet": "WITH input AS (\n  SELECT $1::jsonb AS data\n),\nentropy AS (\n  SELECT 'own-' || encode(public.gen_random_bytes(16), 'hex') AS lease_owner\n)\nSELECT f.acquired, f.attempt_id::text, f.attempt_status, f.request_payload, f.idempotency_key, f.request_fingerprint, f.resume_count, e.lease_owner\nFROM input\nCROSS JOIN entropy e\nCROSS JOIN LATERAL public.reclamer_tentative_rendez_vous(\n  (input.data->>'attemptId')::uuid,\n  input.data->>'sessionId',\n  e.lease_owner\n) AS f;"
+    },
+    {
+      "name": "Appliquer corps gagnant",
+      "type": "n8n-nodes-base.code",
+      "snippet": "const acquired = $json.acquired === true;\nlet payload = $json.request_payload;\nif (typeof payload === 'string') {\n  try { payload = JSON.parse(payload); } catch (e) { payload = null; }\n}\nconst key = $json.idempotency_key;\nconst leaseOwner = String($json.lease_owner || '');\nconst ownerOk = /^own-[0-9a-f]{32}$/.test(leaseOwner);\nif (!acquired || !payload || !key || payload.cleIdempotence !== key || !ownerOk) {\n  return [{ json: { httpReady: false, text: 'La confirmation n\\'a pas obtenu le droit d\\'envoyer la demande. Aucune nouvelle demande n\\'est créée.' } }];\n}\nconst frozenBody = JSON.stringify({\n  slotId: String(payload.slotId || '').trim().toLowerCase(),\n  nom: payload.nom,\n  prenom: payload.prenom,\n  email: payload.email,\n  telephone: payload.telephone,\n  numeroDocument: payload.numeroDocument ?? '',\n  langue: payload.langue ?? 'fr',\n  cleIdempotence: key\n});\nlet prep = {};\ntry { prep = $('Préparer réclamation ou reprise').item.json ?? {}; } catch (e) { prep = {}; }\nif (!prep.attemptId) {\n  try { prep = $('Préparer reprise').item.json ?? {}; } catch (e) { prep = prep || {}; }\n}\nreturn [{\n  json: {\n    httpReady: true,\n    ready: true,\n    claimAcquired: true,\n    frozenBody,\n   "
+    }
+  ],
+  "httpResultNodeNames": [
+    "Finaliser état création",
+    "Finaliser abandon annulation",
+    "Finaliser état annulation",
+    "Finaliser abandon replanification",
+    "Aiguiller résultat HTTP"
+  ],
+  "mockScenarioDefault": "created",
+  "mockCreatedReturns201": true,
+  "mockAppointmentsPostPath": true,
+  "safeToActivate": true
+}

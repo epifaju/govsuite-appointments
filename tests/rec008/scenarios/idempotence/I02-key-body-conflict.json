@@ -1,0 +1,14 @@
+{
+  "id": "I02-key-body-conflict",
+  "family": "idempotence",
+  "mode": "offline",
+  "matrixRef": "C11",
+  "required": true,
+  "handler": "http.classifyIdempotencyConflict",
+  "description": "Conflit clé/corps : classifieur VC9 409 IDEMPOTENCY_KEY_CONFLICT → REJECTED + sim KEY_CONFLICT.",
+  "expects": {
+    "httpOutcome": "REJECTED",
+    "simIssue": "KEY_CONFLICT",
+    "runtimeRequired": true
+  }
+}

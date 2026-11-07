@@ -1,0 +1,65 @@
+{
+  "mission": "R01-PREFLIGHT-023",
+  "pass": true,
+  "total": 14,
+  "failed": [],
+  "tests": [
+    {
+      "name": "ttl_sql_single_session_only",
+      "ok": true
+    },
+    {
+      "name": "ttl_compliant_session",
+      "ok": true
+    },
+    {
+      "name": "ttl_incoherent_session_rejected",
+      "ok": true
+    },
+    {
+      "name": "ttl_unknown_session_rejected",
+      "ok": true
+    },
+    {
+      "name": "ttl_no_r02_r03_mutation",
+      "ok": true
+    },
+    {
+      "name": "ollama_gate_ready",
+      "ok": true
+    },
+    {
+      "name": "ollama_gate_not_ready",
+      "ok": true
+    },
+    {
+      "name": "execution_still_active",
+      "ok": true
+    },
+    {
+      "name": "executions_api_unavailable",
+      "ok": true
+    },
+    {
+      "name": "timeout_late_write",
+      "ok": true
+    },
+    {
+      "name": "postflight_unobservable",
+      "ok": true
+    },
+    {
+      "name": "no_automatic_retry",
+      "ok": true
+    },
+    {
+      "name": "assertR01_slotIdPresent_after",
+      "ok": true
+    },
+    {
+      "name": "runner_timeout_180_warm",
+      "ok": true
+    }
+  ],
+  "runnerSha256": "ef79972a87f1f6796b646864912fc495ddd65cac5ee1df71545386ff5462fe23"
+}

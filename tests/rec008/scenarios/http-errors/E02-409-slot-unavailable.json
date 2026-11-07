@@ -1,0 +1,13 @@
+{
+  "id": "E02-409-slot-unavailable",
+  "family": "http-errors",
+  "mode": "offline",
+  "matrixRef": "C12",
+  "required": true,
+  "handler": "http.classifySlotUnavailable",
+  "description": "HTTP 409 créneau : classifieur VC9 → SLOT_UNAVAILABLE.",
+  "expects": {
+    "httpOutcome": "SLOT_UNAVAILABLE",
+    "runtimeRequired": true
+  }
+}

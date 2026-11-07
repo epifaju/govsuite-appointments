@@ -1,0 +1,11 @@
+--- queryReplacement BEFORE
+={{ $('Lorsqu\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}
+--- queryReplacement AFTER
+={{ $('Lorsqu\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '__ABSENT__') }}
+
+--- token/reference SQL BEFORE
+    reference = NULLIF($2::text, ''),
+    token = NULLIF($3::text, ''),
+--- token/reference SQL AFTER
+    reference = NULLIF($2::text, ''),
+    token = NULLIF(NULLIF($3::text, ''), '__ABSENT__')::uuid,

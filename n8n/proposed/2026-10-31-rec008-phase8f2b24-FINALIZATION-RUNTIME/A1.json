@@ -1,0 +1,54 @@
+{
+  "a1": {
+    "tag": "A1",
+    "runStatus": 200,
+    "executionId": "27",
+    "execStatus": "error",
+    "dollar3Error": true,
+    "errorMessage": "there is no parameter $3",
+    "sessionAfter": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "intent": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "hasToken": false,
+      "nom": "Runtime",
+      "telephone": "+33000000001",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "",
+      "last_user_message": "synthetic-init"
+    },
+    "queryReplacementInstalled": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}",
+    "expressionsEvaluated": true,
+    "usedInstalledSql": true,
+    "usedTestCredential": true,
+    "expectedSuccess": false,
+    "sessionUnchangedFromInit": true,
+    "okScenario": true
+  },
+  "integrityA1": {
+    "pg": "1|9|2|0",
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "realSession": {
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "intent": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "hasToken": false,
+      "nom": "Dupont",
+      "telephone": "+33000000000",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "last_user_message": "oui"
+    },
+    "histFp": "bc130f1e5d86669f9650ffa8b8f83cbb",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "ok": true
+  }
+}

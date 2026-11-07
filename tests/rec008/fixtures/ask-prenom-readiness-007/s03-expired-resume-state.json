@@ -1,0 +1,43 @@
+{
+  "fixtureId": "R007-S03",
+  "applied": false,
+  "applyForbiddenUntilAuthorized": true,
+  "sessionId": "rec008-syn-s03-ask-prenom-resume",
+  "env": "TEST",
+  "purpose": "Précondition S03 — session EXPIRÉE ASK_PRENOM indépendante (ne pas dériver de S02)",
+  "row": {
+    "session_id": "rec008-syn-s03-ask-prenom-resume",
+    "intent": "GENERAL",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_PRENOM",
+    "nom": "Dupont",
+    "prenom": null,
+    "email": null,
+    "telephone": null,
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "available_slots": [],
+    "expires_at_policy": "NOW() - interval '1 hour'",
+    "notes": "Synthetic twin of S02 shape — separate session_id required"
+  },
+  "selectPreflight": [
+    "expires_at <= NOW()",
+    "pending_action = CREATE_APPOINTMENT",
+    "conversation_step = ASK_PRENOM",
+    "nom IS NOT NULL",
+    "prenom IS NULL",
+    "open attempts = 0",
+    "session_id != S02 session"
+  ],
+  "message": "reprendre",
+  "briefExpectedAfter": {
+    "conversation_step": "ASK_PRENOM",
+    "prenom": null,
+    "status": "BLOCKED_BY_VC9_DIVERGENCE"
+  },
+  "vc9ActualExpectedAfter": {
+    "conversation_step": "ASK_EMAIL",
+    "prenom": "reprendre",
+    "refreshSessionTtl": true
+  }
+}

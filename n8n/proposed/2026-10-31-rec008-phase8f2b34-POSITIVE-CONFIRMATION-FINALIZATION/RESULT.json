@@ -1,0 +1,130 @@
+{
+  "phase": "8F-2B34",
+  "sessionId": "rec008-8f2b28-new-01",
+  "targetAttemptId": "57bf7de8-9a5e-469d-858a-a6bd389223e6",
+  "chatInputAuthorized": "oui",
+  "executed": false,
+  "messageSent": false,
+  "activationPerformed": false,
+  "postCreateAppointmentPerformed": false,
+  "stopped": true,
+  "stopReasons": [
+    "attempt-expired",
+    "mock-counters-reset-after-stack-restart"
+  ],
+  "verdict": "FAIL",
+  "goNoGo": "NO-GO",
+  "note": "STOP bloquant avant activation: tentative AWAITING_CONFIRMATION expirée (secsLeft négatif). Aucun TTL prolongé. Aucun message oui. Aucun POST. Conteneurs TEST redémarrés pour accès lecture seule (compteurs mock remis à 0 — écart expliqué).",
+  "preflight": {
+    "workflow": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+      "versionCounter": 8,
+      "nodes": 134,
+      "edges": 137,
+      "activeIds": [],
+      "chatPublic": true,
+      "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+      "postgres": [
+        "Fs0l0058q5CEadRw"
+      ],
+      "ollama": "dxzHqBq8Q60R8BOz",
+      "urlsOk": true,
+      "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "networkOk": true
+    },
+    "pg": "1|9|3|0",
+    "open": "1",
+    "statusCounts": [
+      "ABANDONED|1",
+      "AWAITING_CONFIRMATION|1",
+      "CONFIRMED|1"
+    ],
+    "target": {
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "AWAIT_CREATE_CONFIRMATION",
+      "pending_action": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "camille.essai@example.test",
+      "telephone": "+33000000000",
+      "last_user_message": "+33000000000"
+    },
+    "historical": {
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "REC008-MOCK-0001",
+      "token": "",
+      "last_user_message": "oui"
+    },
+    "attempt": {
+      "id": "57bf7de8-9a5e-469d-858a-a6bd389223e6",
+      "session_id": "rec008-8f2b28-new-01",
+      "status": "AWAITING_CONFIRMATION",
+      "expiresAt": "2026-11-01 00:30:40.55687+01",
+      "secsLeft": -40031,
+      "stillValid": false,
+      "hasIdempotencyKey": true,
+      "idempotencyKeyLength": 71,
+      "idempotencyKeyFp12": "3864497c21f6",
+      "hasRequestPayload": true,
+      "hasFingerprint": true,
+      "fingerprintFp12": "81bd3c88c8e5",
+      "hasLeaseOwner": false,
+      "hasLeaseUntil": false,
+      "appointmentReference": "",
+      "appointmentId": "",
+      "submittedAt": "",
+      "confirmedAt": "",
+      "payload": {
+        "slotId": "33333333-3333-4333-8333-333333333333",
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.essai@example.test",
+        "telephone": "+33000000000",
+        "hasIdempotencyField": true
+      },
+      "keyMatchesPayload": true,
+      "createdAt": "2026-10-31 22:30:40.559864+01",
+      "updatedAt": "2026-10-31 22:30:40.559864+01"
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "otherFp": "f997dc2ace8e8a06197a12243ead6ac1",
+    "histAttemptsFp": "d8f8fce311723e9f34e84ecdb60c0279",
+    "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "mock": {
+      "scenario": "created",
+      "posts": 0,
+      "getAvailability": 0,
+      "total": 0,
+      "byPath": {},
+      "distinctKeys": 0
+    },
+    "mockSha": "845c9f6be8b099e0a2068379f6e8f3a12a90aec73f2c496e1a25898b4d225535",
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    },
+    "checks": {
+      "workflowOk": true,
+      "pgOk": true,
+      "sessionOk": true,
+      "attemptFieldsOk": true,
+      "temporalOk": false,
+      "mockExpectedOk": false,
+      "liveOk": true
+    }
+  }
+}

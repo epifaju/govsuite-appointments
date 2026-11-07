@@ -1,0 +1,19 @@
+{
+  "error": "fetch failed",
+  "stack": "TypeError: fetch failed\n    at node:internal/deps/undici/undici:13510:13\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async login (C:\\Open Source PME\\govsuite-appointments\\n8n\\proposed\\2026-11-02-rec008-explicit-resume-fix-008\\runtime-013\\run-runtime-013.js:325:22)\n    at async main (C:\\Open Source PME\\govsuite-appointments\\n8n\\proposed\\2026-11-02-rec008-explicit-resume-fix-008\\runtime-013\\run-runtime-013.js:1176:15)",
+  "detail": null,
+  "transportError": {
+    "name": "TypeError",
+    "message": "fetch failed",
+    "cause": {
+      "name": "Error",
+      "message": "connect ECONNREFUSED 127.0.0.1:5682",
+      "code": "ECONNREFUSED",
+      "errno": -4078,
+      "syscall": "connect",
+      "address": "127.0.0.1",
+      "port": 5682
+    }
+  },
+  "retried": false
+}

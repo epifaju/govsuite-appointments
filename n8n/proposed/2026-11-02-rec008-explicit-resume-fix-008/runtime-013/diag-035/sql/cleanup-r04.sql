@@ -1,0 +1,24 @@
+-- =============================================================================
+-- MISSION 035 — cleanup-r04.sql (ROLLBACK ciblé R04-035 uniquement)
+-- =============================================================================
+-- Scope DELETE : session_id préfixe / liste R04-035 seulement
+-- N'inclut PAS : rec008-runtime013-r01-active | r02-expired | r03-resume
+-- N'inclut PAS : truncate, DROP, DELETE sans filtre, LIVE
+-- =============================================================================
+-- NOT AUTHORIZED — ne pas exécuter sans autorisation cleanup runtime explicite.
+-- Script commenté volontairement ; décommenter uniquement sous ordre humain.
+-- =============================================================================
+
+-- DELETE FROM public.ai_conversation_state
+-- WHERE session_id IN (
+--   'rec008-r04a-035-active-ask-email',
+--   'rec008-r04b-035-active-ask-email',
+--   'rec008-r04c-035-expired-ask-email'
+-- );
+
+-- Vérification post-cleanup (Present/Len — pas de PII clair) :
+-- SELECT session_id
+-- FROM public.ai_conversation_state
+-- WHERE session_id LIKE 'rec008-r04%-035-%'
+-- ORDER BY session_id;
+-- Attendu : 0 lignes.

@@ -1,0 +1,13 @@
+{
+  "tag": "R04-A-post",
+  "status": 200,
+  "aborted": false,
+  "transportError": null,
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+  "versionCounter": 11,
+  "activeIds": [],
+  "webhookRows": 0,
+  "verified": true
+}

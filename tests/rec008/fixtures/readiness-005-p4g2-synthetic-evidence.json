@@ -1,0 +1,130 @@
+{
+  "_comment": "Forme d'évidence synthétique pour évaluer le catalogue READINESS-005 hors ligne. Pas une preuve runtime ; pas de PII réelle. Alignée sur le contrat historique P4G2 (session rec008-8f2b1-slot-01 + reprendre).",
+  "meta": {
+    "env": "TEST",
+    "liveTouched": false,
+    "simulation": true,
+    "executedRuntime": false,
+    "sessionId": "rec008-8f2b1-slot-01",
+    "chatInput": "reprendre"
+  },
+  "cases": {
+    "historicalPassShape": {
+      "label": "Forme PASS historique (figée) — pour valider le classifieur, pas pour rejouer",
+      "preflight": {
+        "sessionExists": true,
+        "sessionExpired": true,
+        "intent": "GENERAL",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "conversationStep": "ASK_CREATE_SERVICE",
+        "openAttempts": 0,
+        "liveFingerprint": "a2dea067599fd4f0a5f857551adc67cc",
+        "workflowActive": false
+      },
+      "message": {
+        "status": 200,
+        "transportFailure": null,
+        "count": 1,
+        "retryCount": 0,
+        "responseJson": {
+          "type": "create_appointment_question",
+          "conversationStep": "ASK_CREATE_SERVICE",
+          "ready": false,
+          "claimAcquired": false,
+          "hasAppointmentCreated": false
+        }
+      },
+      "comparisons": {
+        "ttlRenewed": true,
+        "ttlPolicyOk": true,
+        "expiresStillFuture": true,
+        "intentBefore": "GENERAL",
+        "intentAfter": "CREATE_APPOINTMENT",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "conversationStep": "ASK_CREATE_SERVICE",
+        "draftMetierPreserved": true,
+        "slotsPreserved": true,
+        "flagsPreserved": true,
+        "pendingPreserved": true,
+        "slotsFingerprintUnchanged": true,
+        "attemptsTotal": 0
+      },
+      "antiReservation": {
+        "claimAcquired": false,
+        "postDelta": 0,
+        "getAvailabilityDelta": 0,
+        "getServicesDelta": 0,
+        "openAttempts": 0,
+        "hasIdempotencyKey": 0,
+        "cancelSeen": false
+      },
+      "deactivate": {
+        "active": false,
+        "activeVersionId": null,
+        "webhookRows": 0,
+        "versionCounter": 9
+      },
+      "isolation": {
+        "liveFingerprintAfter": "a2dea067599fd4f0a5f857551adc67cc",
+        "mailpitUnchanged": true
+      },
+      "expectedAggregate": "PASS"
+    },
+    "failClaimOrPost": {
+      "label": "FAIL hardStop si POST Δ > 0",
+      "inherits": "historicalPassShape",
+      "overrides": {
+        "antiReservation": { "postDelta": 1, "claimAcquired": true }
+      },
+      "expectedAggregate": "FAIL"
+    },
+    "failWrongType": {
+      "label": "FAIL si type session_expired (reprise non reconnue)",
+      "inherits": "historicalPassShape",
+      "overrides": {
+        "message": {
+          "status": 200,
+          "transportFailure": null,
+          "count": 1,
+          "retryCount": 0,
+          "responseJson": {
+            "type": "session_expired",
+            "conversationStep": "ASK_CREATE_SERVICE",
+            "ready": false,
+            "claimAcquired": false,
+            "hasAppointmentCreated": false
+          }
+        }
+      },
+      "expectedAggregate": "FAIL"
+    },
+    "uncertainTimeout": {
+      "label": "UNCERTAIN sur timeout transport — pas de retry",
+      "inherits": "historicalPassShape",
+      "overrides": {
+        "message": {
+          "status": null,
+          "transportFailure": "timeout",
+          "count": 1,
+          "retryCount": 0,
+          "responseJson": null
+        }
+      },
+      "expectedAggregate": "UNCERTAIN"
+    },
+    "uncertainDeactivateUnread": {
+      "label": "UNCERTAIN si deactivate illisible après message OK",
+      "inherits": "historicalPassShape",
+      "overrides": {
+        "deactivate": {
+          "active": null,
+          "activeVersionId": "unknown",
+          "webhookRows": null,
+          "versionCounter": 9,
+          "unreadable": true
+        }
+      },
+      "expectedAggregate": "UNCERTAIN"
+    }
+  }
+}

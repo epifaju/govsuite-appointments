@@ -1,0 +1,31 @@
+{
+  "fixtureId": "R035-R04-C-ARTIFACT",
+  "campaignId": "R04-C",
+  "synthetic": true,
+  "env": "TEST",
+  "live": false,
+  "purpose": "Exemple artefact campagne R04-C expurgé (Present/Len only) — hygiene scanner",
+  "sourceStateFixture": "tests/rec008/fixtures/r04-offline-readiness-031/r04-c-expired-ask-email-state.json",
+  "artifact": {
+    "sessionIdHash": "c3d4e5f607189abc",
+    "conversationStep": "ASK_EMAIL",
+    "emailPresent": false,
+    "emailLen": 0,
+    "emailValide": false,
+    "prenomPresent": true,
+    "prenomLen": 7,
+    "nomPresent": true,
+    "nomLen": 6,
+    "slotIdPresent": true,
+    "ttlActive": false,
+    "sessionExpired": true,
+    "refreshSessionTtl": false,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "claimAcquired": false,
+    "retried": false,
+    "lastUserMessageClass": "email_like",
+    "lastUserMessageLen": 24
+  },
+  "forbiddenKeys": ["email", "nom", "prenom", "telephone", "last_user_message"]
+}

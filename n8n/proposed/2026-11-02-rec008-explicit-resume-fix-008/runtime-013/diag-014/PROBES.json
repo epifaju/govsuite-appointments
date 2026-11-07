@@ -1,0 +1,134 @@
+{
+  "ts": "2026-11-05T20:48:25.487Z",
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "global-fetch-healthz",
+      "status": 200,
+      "elapsedMs": 173,
+      "ok": true,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P2-1",
+      "kind": "http-keepalive-healthz",
+      "status": 200,
+      "elapsedMs": 29,
+      "ok": true,
+      "err": null,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P2-2",
+      "kind": "http-keepalive-healthz",
+      "status": 200,
+      "elapsedMs": 22,
+      "ok": true,
+      "err": null,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P2-3",
+      "kind": "http-keepalive-healthz",
+      "status": 200,
+      "elapsedMs": 10,
+      "ok": true,
+      "err": null,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P2-4",
+      "kind": "http-keepalive-healthz",
+      "status": 200,
+      "elapsedMs": 6,
+      "ok": true,
+      "err": null,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P2-5",
+      "kind": "http-keepalive-healthz",
+      "status": 200,
+      "elapsedMs": 7,
+      "ok": true,
+      "err": null,
+      "conn": "keep-alive"
+    },
+    {
+      "id": "P3-1",
+      "kind": "http-fresh-close-healthz",
+      "status": 200,
+      "elapsedMs": 45,
+      "ok": true,
+      "err": null,
+      "conn": "close"
+    },
+    {
+      "id": "P3-2",
+      "kind": "http-fresh-close-healthz",
+      "status": 200,
+      "elapsedMs": 367,
+      "ok": true,
+      "err": null,
+      "conn": "close"
+    },
+    {
+      "id": "P3-3",
+      "kind": "http-fresh-close-healthz",
+      "status": 200,
+      "elapsedMs": 14,
+      "ok": true,
+      "err": null,
+      "conn": "close"
+    },
+    {
+      "id": "P4a",
+      "kind": "before-idle",
+      "status": 200,
+      "elapsedMs": 11,
+      "ok": true
+    },
+    {
+      "id": "P4b",
+      "kind": "after-4s-idle-reuse",
+      "status": 200,
+      "elapsedMs": 27,
+      "ok": true,
+      "err": null
+    },
+    {
+      "id": "P4c",
+      "kind": "after-15s-idle-reuse",
+      "status": 200,
+      "elapsedMs": 16,
+      "ok": true,
+      "err": null
+    },
+    {
+      "id": "P5",
+      "kind": "rest-unauth-GET",
+      "status": 401,
+      "elapsedMs": 63,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"error\",\"message\":\"Unauthorized\"}",
+      "err": null
+    },
+    {
+      "id": "P6",
+      "kind": "fetch-after-2.5s-busy-rest-unauth",
+      "status": 401,
+      "elapsedMs": 2606,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"error\",\"message\":\"Unauthorize"
+    },
+    {
+      "id": "P7",
+      "kind": "HEAD-healthz",
+      "status": 200,
+      "elapsedMs": 35,
+      "ok": true,
+      "err": null
+    }
+  ],
+  "note": "GET/HEAD only; no login POST"
+}

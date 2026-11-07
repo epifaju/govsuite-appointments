@@ -1,0 +1,40 @@
+{
+  "mission": "TEST-STACK-RECOVERY-022",
+  "liveProbed": false,
+  "initial": {
+    "n8n": { "status": "exited", "exitCode": 255, "oomKilled": false, "error": "", "finishedAt": "2026-11-06T17:45:27.528589567Z" },
+    "postgres": { "status": "exited", "exitCode": 255, "oomKilled": false, "error": "", "finishedAt": "2026-11-06T17:45:27.524085255Z" },
+    "mock": { "status": "exited", "exitCode": 255, "oomKilled": false, "error": "", "finishedAt": "2026-11-06T17:45:27.528571424Z" },
+    "publish": { "status": "exited", "exitCode": 255, "oomKilled": false, "error": "", "finishedAt": "2026-11-06T17:45:27.528716641Z" },
+    "ollama": { "status": "running", "restartPolicy": "unless-stopped", "note": "FinishedAt same window then restarted; Up before recovery" }
+  },
+  "cause": {
+    "classification": "docker_runtime_unclean_stop",
+    "confidence": "high_operational",
+    "demonstrated": false,
+    "status": "INCONCLUSIVE_as_root_proof",
+    "rationale": [
+      "Exit 255 simultaneous on 4 containers within ~10ms",
+      "OOMKilled=false",
+      "State.Error empty",
+      "Logs show no crash before stop (PG checkpoints; n8n MCP DNS noise)",
+      "Ollama survived via unless-stopped (same pattern as recovery-011)",
+      "Port 5682 free before start"
+    ],
+    "rejected": ["application_crash_solo", "oom", "compose_config_error"],
+    "not_asserted": "Windows/Docker Desktop reboot without OS event log"
+  },
+  "isolation": {
+    "project": "govsuite-rec008-test",
+    "db": "govsuite_rec008_test",
+    "volumes": [
+      "govsuite-rec008-test_rec008_postgres_data",
+      "govsuite-rec008-test_rec008_n8n_data",
+      "govsuite-rec008-test_rec008_ollama_data"
+    ],
+    "networks": ["govsuite-rec008-test_rec008_test (internal)", "govsuite-rec008-test_rec008_publish"],
+    "publishBind": "127.0.0.1:5682",
+    "liveVolumesReferenced": false,
+    "goDockerStart": true
+  }
+}

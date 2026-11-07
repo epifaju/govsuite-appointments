@@ -1,0 +1,31 @@
+SELECT
+    s.session_id,
+    s.intent,
+    s.service,
+    s.site,
+    s.date_debut,
+    s.date_fin,
+    s.slot_id,
+    s.token,
+    s.new_slot_id,
+    s.reference,
+    s.nom,
+    s.prenom,
+    s.email,
+    s.telephone,
+    s.pending_action,
+    s.conversation_step,
+    s.available_slots,
+    s.selected_slot_index,
+    s.last_user_message,
+    s.created_at,
+    s.updated_at,
+    s.expires_at,
+    TRUE AS session_found,
+    (s.expires_at IS NOT NULL AND s.expires_at <= NOW()) AS session_expired,
+    s.expires_at AS session_expires_at,
+    s.conversation_step AS "conversationStep",
+    s.pending_action AS "pendingAction"
+FROM ai_conversation_state AS s
+WHERE s.session_id = $1
+LIMIT 1;

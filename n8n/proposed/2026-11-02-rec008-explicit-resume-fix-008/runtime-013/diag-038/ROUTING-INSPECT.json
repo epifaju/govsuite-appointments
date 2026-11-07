@@ -1,0 +1,81 @@
+{
+  "demanderHasAskEmail": true,
+  "prepHasAskEmail": false,
+  "prepMentionsAppointmentCreated": true,
+  "routerOuts": [
+    {
+      "outType": "main",
+      "bi": 0,
+      "to": "Appeler GetServices",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 1,
+      "to": "Valider paramètres disponibilité",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 2,
+      "to": "Décider action tentative",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 3,
+      "to": "Valider token consultation",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 4,
+      "to": "Confirmation déjà demandée ?",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 5,
+      "to": "Router étape replanification",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 6,
+      "to": "Réponse générale",
+      "index": 0
+    },
+    {
+      "outType": "main",
+      "bi": 7,
+      "to": "Réponse générale",
+      "index": 0
+    }
+  ],
+  "fromGerer": [
+    {
+      "outType": "main",
+      "bi": 0,
+      "to": "Sauvegarder état conversation",
+      "index": 0
+    }
+  ],
+  "fromSauvegarder": [
+    {
+      "outType": "main",
+      "bi": 0,
+      "to": "Router intention",
+      "index": 0
+    }
+  ],
+  "fromDemander": [],
+  "fromPrep": [
+    {
+      "outType": "main",
+      "bi": 0,
+      "to": "Finaliser état création",
+      "index": 0
+    }
+  ],
+  "askEmailSnippet": "case 'ASK_EMAIL': text = \"📧 Quelle est votre **adresse e-mail** ?\"; break; // ==================================================== // Téléphone // ==================================================== case 'ASK_TELEPHONE': text = \"📱 Quel est "
+}

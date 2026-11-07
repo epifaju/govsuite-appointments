@@ -1,0 +1,151 @@
+# PROPOSED_WORKFLOW_PATCH.diff
+# Phase 8F-2B49-P4E — PROPOSITION HORS LIGNE — NON APPLIQUÉ
+# Cible future : workflow TEST OCD9It1uKFhOoWNF (VC8 → VC9 candidat)
+# LIVE : inchangé
+
+## Politique d'expiration retenue (résumé)
+# - Session active : charger + continuer collecte (priorité étape persistée).
+# - Session expirée sans tentative ouverte : charger pour diagnostic, répondre
+#   expiration, exiger reprise explicite (« reprendre ») ; ne pas prolonger TTL ;
+#   ne pas effacer le brouillon.
+# - Session expirée avec tentative ouverte : règles ai_appointment_attempt ;
+#   jamais réactiver EXPIRED ; jamais POST depuis message libre ;
+#   UNCERTAIN/SUBMITTING = RESUME replay only.
+# TTL conversationnel (ai_conversation_state.expires_at, 2h) ≠ TTL tentative.
+
+## Fix A — Charger état conversation
+--- a/nodes/Charger_etat_conversation.sql
++++ b/nodes/Charger_etat_conversation.sql
+@@
+-SELECT *
+-FROM ai_conversation_state
+-WHERE session_id = $1
+-  AND (
+-      expires_at IS NULL
+-      OR expires_at > NOW()
+-  )
+-LIMIT 1;
++SELECT
++    s.*,
++    TRUE AS session_found,
++    (s.expires_at IS NOT NULL AND s.expires_at <= NOW()) AS session_expired,
++    s.expires_at AS session_expires_at,
++    s.conversation_step AS "conversationStep",
++    s.pending_action AS "pendingAction"
++FROM ai_conversation_state AS s
++WHERE s.session_id = $1
++LIMIT 1;
+ # (voir PROPOSED_FIX_A.sql pour la version colonnes explicites)
+
+## Fix B — Parser intention (extrait à injecter après verrous ASK_TOKEN*)
+--- a/nodes/Parser_intention.js
++++ b/nodes/Parser_intention.js
+@@
++// --- P4E : drapeaux session (techniques, non publics) ---
++const sessionFound = previous.session_found === true || previous.sessionFound === true
++  || !!(previous.session_id || previous.pending_action || previous.conversation_step);
++const sessionExpired = previous.session_expired === true || previous.sessionExpired === true;
++const explicitResume = ['reprendre','reprendre ma demande','continuer','continuer ma demande']
++  .includes(decisionFolded);
++
++if (sessionFound && sessionExpired && !(openAttempt && ['UNCERTAIN','SUBMITTING','AWAITING_CONFIRMATION'].includes(openAttempt.status))) {
++  if (!(explicitResume && previousPendingAction === 'CREATE_APPOINTMENT')) {
++    intent = 'GENERAL';
++    // createDecision reste null → pas de CLAIM/POST
++  } else {
++    intent = 'CREATE_APPOINTMENT';
++  }
++} else if (
++  !sessionExpired &&
++  previousPendingAction === 'CREATE_APPOINTMENT' &&
++  ['ASK_NOM','ASK_PRENOM','ASK_EMAIL','ASK_TELEPHONE','ASK_CREATE_SLOT'].includes(previousConversationStep)
++) {
++  const explicitOverride =
++    affirmativeDecisions.has(decisionText) ||
++    affirmativeDecisions.has(decisionFolded) ||
++    negativeDecisions.has(decisionText) ||
++    negativeDecisions.has(decisionFolded) ||
++    !!modifyFieldOf(decisionFolded) ||
++    (/\b(prendre|reserver|creer)\b/.test(decisionFolded) && /\b(rendez-vous|rdv)\b/.test(decisionFolded));
++  if (!explicitOverride) {
++    intent = 'CREATE_APPOINTMENT';
++  }
++}
+
+## Fix B — Joindre tentative de session (normalisation drapeaux)
+--- a/nodes/Joindre_tentative_de_session.js
++++ b/nodes/Joindre_tentative_de_session.js
+@@
+ return [{
+   json: {
+     ...previous,
+     sessionId: previous.sessionId || previous.session_id || trigger.sessionId || null,
++    sessionFound: previous.session_found === true || previous.sessionFound === true
++      || !!(previous.session_id || previous.pending_action || previous.conversation_step),
++    sessionExpired: previous.session_expired === true || previous.sessionExpired === true,
++    sessionExpiresAt: previous.session_expires_at || previous.expires_at || null,
+     openAttempt
+   }
+ }];
+
+## Fix B — Gérer collecte progressive (branche expiration)
+--- a/nodes/Gerer_collecte_progressive.js
++++ b/nodes/Gerer_collecte_progressive.js
+@@
++const sessionExpired = previous.sessionExpired === true || previous.session_expired === true;
++if (sessionExpired && !(previous.openAttempt && ['UNCERTAIN','SUBMITTING'].includes(previous.openAttempt.status))) {
++  const resume = /^(reprendre|reprendre ma demande|continuer|continuer ma demande)$/i
++    .test(String(message).trim().normalize('NFD').replace(/\p{M}/gu,'').toLowerCase());
++  if (!resume) {
++    return [{ json: {
++      ...x,
++      intent: 'GENERAL',
++      // Conserver pending/step/métier dans le payload sans nullifier
++      pendingAction: previousPendingAction,
++      conversationStep: previousConversationStep,
++      nom: previous.nom ?? x.nom ?? null,
++      prenom: previous.prenom ?? x.prenom ?? null,
++      email: previous.email ?? x.email ?? null,
++      telephone: previous.telephone ?? x.telephone ?? null,
++      service: previous.service ?? x.service ?? null,
++      site: previous.site ?? x.site ?? null,
++      slotId: previous.slot_id ?? x.slotId ?? null,
++      sessionExpired: true,
++      refreshSessionTtl: false,
++      preserveDraft: true,
++      // pas de _authorizedNulls
++    }}];
++  }
++  // reprise explicite : refreshSessionTtl true + continuer CREATE
++}
+
+## Fix B — Réponse générale (message public sans flags techniques)
+--- a/nodes/Reponse_generale.js
++++ b/nodes/Reponse_generale.js
+@@
+-return[{json:{text:"Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."}}];
++let managed = {};
++try { managed = $('Gérer collecte progressive').item.json || {}; } catch (e) { managed = {}; }
++if (managed.sessionExpired === true && managed.preserveDraft === true) {
++  return [{ json: {
++    type: 'session_expired',
++    text: 'Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.'
++  }}];
++}
++return [{ json: {
++  type: 'general',
++  text: 'Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire.'
++}}];
+
+## Fix C — Sauvegarder état conversation
+# Remplacer la requête UPSERT par PROPOSED_FIX_C.sql
+# Points clés :
+#   - NULL non autorisé ne remplace plus la valeur existante
+#   - _authorizedNulls pour purges légitimes
+#   - refreshSessionTtl=false conserve expires_at (pas de prolongation silencieuse)
+
+## Hors périmètre de ce patch
+# - Aucune modification des workflows LIVE
+# - Aucun changement Docker Compose / mock
+# - Aucun nouveau nœud CLAIM / CreateAppointment
+# - Graphe : nodes/edges inchangés (134/137) — seuls paramètres de nœuds existants

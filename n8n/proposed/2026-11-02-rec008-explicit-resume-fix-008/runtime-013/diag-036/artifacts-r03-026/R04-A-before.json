@@ -1,0 +1,32 @@
+{
+  "session": {
+    "sessionIdHash": "8c11deb4b6550c18",
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "conversationStep": "ASK_EMAIL",
+    "expiresAt": "2026-11-07 02:16:58.263915+01",
+    "updatedAt": "2026-11-07 00:16:58.263915+01",
+    "ttlActive": true,
+    "sessionExpired": false,
+    "sessionExpiredNow": false,
+    "nomPresent": true,
+    "nomLen": 6,
+    "prenomPresent": true,
+    "prenomLen": 7,
+    "prenomIsNull": false,
+    "emailPresent": false,
+    "emailLen": 0,
+    "emailValide": false,
+    "telephonePresent": false,
+    "telephoneLen": 0,
+    "hasService": true,
+    "hasSite": true,
+    "hasAvailableSlots": true,
+    "slotIdPresent": true,
+    "lastUserMessageLen": 0
+  },
+  "fingerprint": "1|15|4|0",
+  "mockPosts": 0,
+  "mockClaims": 0,
+  "open": 0
+}

@@ -1,0 +1,28 @@
+{
+  "A": {
+    "name": "Isolated Finaliser / synthetic session",
+    "description": "Create a disposable synthetic ai_conversation_state row (or use a throwaway session_id). Invoke only Finaliser-equivalent SQL with three bound params (session, reference, token empty/present) via read-write psql under a later authorized phase — OR dry-run EXPLAIN with bound params. Prefer: execute the exact Finaliser UPDATE on a synthetic session that has no attempt, proving $1/$2/$3 bind and NULLIF behavior, then delete the synthetic session.",
+    "provesDollar3": true,
+    "needsClaim": false,
+    "needsPost": false,
+    "doubleCreateRisk": "none",
+    "pgEffects": "synthetic session only (insert+update+delete) if authorized; zero effect on rec008-8f2b14-new-01 and attempts",
+    "rollback": "easy (delete synthetic session)",
+    "traceability": "high (SQL logs / RETURNING)",
+    "safety": "highest"
+  },
+  "B": {
+    "name": "Full conversational path on new session",
+    "description": "Activate workflow, run full create flow on a new session through mock → one POST → Finaliser. Proves end-to-end including $3.",
+    "provesDollar3": true,
+    "needsClaim": true,
+    "needsPost": true,
+    "doubleCreateRisk": "one intentional mock POST; must not touch confirmed session",
+    "pgEffects": "new attempt + session mutations",
+    "rollback": "harder (new attempt residual)",
+    "traceability": "high but noisy",
+    "safety": "lower than A"
+  },
+  "recommendation": "A",
+  "recommendationReason": "Validates real PostgreSQL binding of $3 (including empty→NULL) with zero CLAIM/POST and no impact on the inconsistent confirmed session. Method B remains useful later as an integration test under separate authorization."
+}

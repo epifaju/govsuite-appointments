@@ -1,0 +1,1 @@
+{"type":"session_expired","text":"Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."}

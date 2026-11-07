@@ -1,0 +1,44 @@
+{
+  "active": false,
+  "activeVersionId": null,
+  "versionId": "32f405ee-424e-49af-8d4a-60598393849e",
+  "versionCounter": 7,
+  "nodes": 134,
+  "edges": 137,
+  "activeIds": [],
+  "chatPublic": true,
+  "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+  "postgres": [
+    "Fs0l0058q5CEadRw"
+  ],
+  "ollama": "dxzHqBq8Q60R8BOz",
+  "urlsOk": true,
+  "networkOk": true,
+  "liveFinaliserBeforeSha": "dfeaf3a439ea362bdf40453d27e25631274bc20ae9eb8d8aecb823a8118a741d",
+  "beforeSha": "2df97627118c840d59d8b3b9b97226106df082382b02b6c3c973d761142f8fb8",
+  "candidateSha": "b1fcf780ba1dfc06cb432c19a9cc25b8d658171b831256035974130cf4f7b293",
+  "pg": "1|8|2|0",
+  "statuses": "ABANDONED|1\nCONFIRMED|1",
+  "open": "0",
+  "session": "AWAIT_CREATE_CONFIRMATION|oui||CREATE_APPOINTMENT",
+  "attempt": "CONFIRMED|REC008-MOCK-0001|f|f|",
+  "abandoned": "ABANDONED",
+  "mock": {
+    "scenario": "created",
+    "total": 4,
+    "byPath": {
+      "GET /services 200": 1,
+      "GET /appointments/availability 200": 1,
+      "GET /_meta 404": 1,
+      "POST /appointments 201": 1
+    },
+    "distinctKeys": 1
+  },
+  "postAppointments": 1,
+  "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+  "mailpit": {
+    "messages": 5,
+    "unread": 2,
+    "dbSize": 98304
+  }
+}

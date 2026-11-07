@@ -1,0 +1,277 @@
+{
+  "phase": "8F-2B31",
+  "sessionId": "rec008-8f2b28-new-01",
+  "chatInput": "Camille",
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "chatPublic": true,
+    "webhookId": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "ollama": "dxzHqBq8Q60R8BOz",
+    "urlsOk": true,
+    "networkOk": true,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "pg": "1|9|2|0",
+    "open": "0",
+    "target": {
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "ASK_PRENOM",
+      "pending_action": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Dupont",
+      "available_slots": [
+        {
+          "id": "33333333-3333-4333-8333-333333333333",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "index": 1,
+          "service": "PASSEPORT",
+          "placesDisponibles": 2
+        }
+      ]
+    },
+    "historical": {
+      "intent": "",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "REC008-MOCK-0001",
+      "token": "",
+      "slot_id": "",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui",
+      "available_slots": []
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "sessionAttempts": "0",
+    "otherFp": "f997dc2ace8e8a06197a12243ead6ac1",
+    "attemptsFp": "d8f8fce311723e9f34e84ecdb60c0279",
+    "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "mockPosts": 1,
+    "getAvailability": 2,
+    "mock": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 2,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "activate": {
+    "status": 200,
+    "active": true,
+    "activeVersionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "activeIds": [
+      "OCD9It1uKFhOoWNF"
+    ],
+    "webhooks": [
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "GET",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      },
+      {
+        "workflowId": "OCD9It1uKFhOoWNF",
+        "method": "POST",
+        "webhookPath": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603/chat"
+      }
+    ]
+  },
+  "message": {
+    "status": 200,
+    "elapsedMs": 64864,
+    "transportFailure": null,
+    "responsePreview": "{\"sessionId\":\"rec008-8f2b28-new-01\",\"conversationStep\":\"ASK_EMAIL\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":\"CREATE_APPOINTMENT\",\"telephone\":null,\"missing\":[\"l'adresse e-mail\",\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":true,\"emailValide\":false,\"telephoneValide\":false},\"type\":\"create_appointment_question\",\"text\":\"📧 Quelle est votre **adresse e-mail** ?\"}",
+    "responseJson": {
+      "sessionId": "rec008-8f2b28-new-01",
+      "conversationStep": "ASK_EMAIL",
+      "attemptAction": "COLLECT",
+      "modifyField": null,
+      "openAttempt": null,
+      "reference": null,
+      "ready": false,
+      "claimAcquired": false,
+      "pendingAction": "CREATE_APPOINTMENT",
+      "telephone": null,
+      "missing": [
+        "l'adresse e-mail",
+        "le numéro de téléphone"
+      ],
+      "validation": {
+        "slotIdValide": true,
+        "emailValide": false,
+        "telephoneValide": false
+      },
+      "type": "create_appointment_question",
+      "text": "📧 Quelle est votre **adresse e-mail** ?"
+    },
+    "mockBefore": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 2,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "mockAfter": {
+      "scenario": "created",
+      "total": 5,
+      "byPath": {
+        "GET /services 200": 1,
+        "GET /appointments/availability 200": 2,
+        "GET /_meta 404": 1,
+        "POST /appointments 201": 1
+      },
+      "distinctKeys": 1
+    },
+    "getAvailabilityDelta": 0,
+    "getServicesDelta": 0,
+    "postBefore": 1,
+    "postAfter": 1,
+    "cancelSeen": false
+  },
+  "deactivate": {
+    "tag": "after-message",
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "activeIds": [],
+    "webhooks": 0
+  },
+  "after": {
+    "target": {
+      "intent": "CREATE_APPOINTMENT",
+      "service": "PASSEPORT",
+      "site": "PARIS",
+      "date_debut": "2026-11-03",
+      "date_fin": "2026-11-03",
+      "conversation_step": "ASK_EMAIL",
+      "pending_action": "CREATE_APPOINTMENT",
+      "reference": "",
+      "token": "",
+      "slot_id": "33333333-3333-4333-8333-333333333333",
+      "selected_slot_index": "1",
+      "nom": "Dupont",
+      "prenom": "Camille",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "Camille",
+      "available_slots": [
+        {
+          "id": "33333333-3333-4333-8333-333333333333",
+          "fin": "2026-11-03T09:30:00+01:00",
+          "site": "PARIS",
+          "debut": "2026-11-03T09:00:00+01:00",
+          "index": 1,
+          "service": "PASSEPORT",
+          "placesDisponibles": 2
+        }
+      ]
+    },
+    "historical": {
+      "intent": "",
+      "service": "",
+      "site": "",
+      "date_debut": "",
+      "date_fin": "",
+      "conversation_step": "",
+      "pending_action": "",
+      "reference": "REC008-MOCK-0001",
+      "token": "",
+      "slot_id": "",
+      "selected_slot_index": "",
+      "nom": "",
+      "prenom": "",
+      "email": "",
+      "telephone": "",
+      "last_user_message": "oui",
+      "available_slots": []
+    },
+    "confirmed": "CONFIRMED|REC008-MOCK-0001|f|f||2026-10-31 16:14:06.425766+01",
+    "abandoned": "ABANDONED||f|f||2026-10-31 00:40:51.295745+01",
+    "pg": "1|9|2|0",
+    "open": "0",
+    "sessionAttempts": "0",
+    "otherFp": "f997dc2ace8e8a06197a12243ead6ac1",
+    "attemptsFp": "d8f8fce311723e9f34e84ecdb60c0279",
+    "rdvFp": "8b43832366c8d9dc10b4bcb2ca8fd485",
+    "mockPosts": 1,
+    "getAvailability": 2,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "checks": {
+    "functionalOk": true,
+    "sessionOk": true,
+    "integrityOk": true,
+    "deactivateOk": true,
+    "asksEmail": true,
+    "reasksPrenom": false,
+    "reasksNom": false,
+    "reasksService": false,
+    "reasksSite": false,
+    "reasksAvailability": false,
+    "asksConfirmCreate": false,
+    "claimsCreated": false,
+    "claimAcquired": false,
+    "ready": false
+  },
+  "pass": true,
+  "uncertain": false,
+  "verdict": "PASS",
+  "goEmailCollection": "GO",
+  "noClaim": true,
+  "noPost": true,
+  "noPut": true,
+  "singleMessage": true
+}

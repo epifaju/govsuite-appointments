@@ -1,0 +1,107 @@
+{
+  "matchingConnectionKeys": [
+    "Ollama Chat Model",
+    "Valider paramètres création",
+    "Lorsqu'un message de chat est reçu"
+  ],
+  "demanderExact": null,
+  "respondLike": [
+    {
+      "name": "Lorsqu'un message de chat est reçu",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger"
+    },
+    {
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama"
+    }
+  ],
+  "inboundRespond": [],
+  "aiguiller": {
+    "main": [
+      [
+        {
+          "node": "Tirer aléa de tentative",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Préparer réclamation ou reprise",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Préparer reprise",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Préparer abandon ou modification",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Préparer abandon ou modification",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Préparer abandon ou modification",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Demander paramètres création",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Réponse attente de bail",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Réponse référence déjà connue",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Expirer tentatives en attente",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Effacer collecte orpheline",
+          "type": "main",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Valider paramètres création",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "tcp": {
+    "ok": true,
+    "elapsedMs": 9
+  },
+  "healthz": {
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 28,
+    "len": 15
+  },
+  "readiness": {
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 15,
+    "len": 15
+  }
+}

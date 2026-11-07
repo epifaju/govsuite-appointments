@@ -1,0 +1,34 @@
+{
+  "id": "S03-ask-prenom-explicit-resume-vc9-actual",
+  "family": "ask-prenom",
+  "mode": "offline",
+  "phaseRef": "ASK-PRENOM-READINESS-007",
+  "required": true,
+  "handler": "askPrenom.s03ResumeVc9Actual",
+  "simulation": true,
+  "runtimeRequired": true,
+  "runtimeRequiredReason": "TTL PG +2h, réponse Demander paramètres, absence CLAIM/POST mock, deactivate",
+  "sourceWorkflow": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/after-OCD9It1uKFhOoWNF.json",
+  "sourceSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "description": "S03 VC9-ACTUAL: expired ASK_PRENOM + reprendre → TTL+, CREATE, mais prenom=reprendre et step ASK_EMAIL (divergence vs brief produit).",
+  "fixtureSession": "rec008-syn-s03-ask-prenom-resume",
+  "input": { "chatInput": "reprendre", "llmIntent": "GENERAL" },
+  "expects": {
+    "refreshSessionTtl": true,
+    "intent": "CREATE_APPOINTMENT",
+    "pendingAction": "CREATE_APPOINTMENT",
+    "vc9Prenom": "reprendre",
+    "vc9NextStep": "ASK_EMAIL",
+    "nomPreserved": "Dupont",
+    "noClaimOrPost": true
+  },
+  "divergenceFromBrief": {
+    "briefExpectedStep": "ASK_PRENOM",
+    "briefExpectedPrenom": null,
+    "briefExpectedReply": "invite_prenom",
+    "severity": "Gérer capture le message reprendre comme prenom après reprise explicite; pas de skip collect sur allowlist resume."
+  },
+  "evidenceLimits": "simulation:true — PASS offline ≠ PASS runtime; reply invite via Demander paramètres hors VM Réponse générale",
+  "relatedOffline": ["T03-explicit-resume"],
+  "isolationNote": "Session distincte de S02; ne pas chaîner sans reset autorisé"
+}

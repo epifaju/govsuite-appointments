@@ -1,0 +1,77 @@
+{
+  "fixtureId": "R031-R04-A",
+  "campaignId": "R04-A",
+  "synthetic": true,
+  "applied": false,
+  "applyForbiddenUntilAuthorized": true,
+  "env": "TEST",
+  "live": false,
+  "purpose": "R04-A offline — ASK_EMAIL actif + email synthétique valide → ASK_TELEPHONE, sans CLAIM/POST",
+  "offlineRefs": {
+    "createFlow": "CREATE-FLOW-018",
+    "fix008": "identity.askEmail",
+    "postR01": "OPTION A slot_id présent"
+  },
+  "sessionId": "rec008-syn-r031-r04a-ask-email",
+  "row": {
+    "session_id": "rec008-syn-r031-r04a-ask-email",
+    "intent": "CREATE_APPOINTMENT",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_EMAIL",
+    "nom": "Dupont",
+    "prenom": "Camille",
+    "email": null,
+    "telephone": null,
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "date_debut": "2026-11-10",
+    "date_fin": "2026-11-20",
+    "slot_id": "11111111-1111-4111-8111-111111111301",
+    "selected_slot_index": 0,
+    "available_slots": [
+      {
+        "id": "11111111-1111-4111-8111-111111111301",
+        "label": "2026-11-12T09:00:00+01:00"
+      }
+    ],
+    "expires_at_policy": "NOW() + interval '2 hours'",
+    "ttlActive": true,
+    "openAttempts": 0
+  },
+  "message": {
+    "class": "email_synthetic_valid",
+    "value": "camille.r04a@example.test",
+    "note": "clair autorisé UNIQUEMENT dans fixtures/"
+  },
+  "messageCount": 1,
+  "retryForbidden": true,
+  "expected": {
+    "emailValide": true,
+    "emailPresent": true,
+    "conversationStep": "ASK_TELEPHONE",
+    "prenomPresent": true,
+    "prenomLen": 7,
+    "nomPresent": true,
+    "nomLen": 6,
+    "slotIdPresent": true,
+    "claimAcquired": false,
+    "mockPostsDelta": 0,
+    "mockClaimsDelta": 0,
+    "retried": false
+  },
+  "artifactExportShape": {
+    "sessionIdHash": "<sha256-16>",
+    "conversationStep": "ASK_TELEPHONE",
+    "emailPresent": true,
+    "emailLen": 24,
+    "emailValide": true,
+    "prenomPresent": true,
+    "prenomLen": 7,
+    "nomPresent": true,
+    "nomLen": 6,
+    "slotIdPresent": true,
+    "ttlActive": true,
+    "lastUserMessageClass": "email_like",
+    "lastUserMessageLen": 24
+  }
+}

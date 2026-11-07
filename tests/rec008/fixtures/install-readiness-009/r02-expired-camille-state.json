@@ -1,0 +1,43 @@
+{
+  "fixtureId": "R009-R02",
+  "campaignId": "R02",
+  "applied": false,
+  "applyForbiddenUntilAuthorized": true,
+  "sessionId": "rec008-syn-r009-r02-expired-camille",
+  "env": "TEST",
+  "live": false,
+  "purpose": "Précondition R02 — session EXPIRÉE ASK_PRENOM + free-text Camille (indépendante R01/R03)",
+  "offlineRefs": {
+    "fix008": "FIX008-S02",
+    "readiness007": "S02-ask-prenom-expired",
+    "fixtureR007": "tests/rec008/fixtures/ask-prenom-readiness-007/s02-expired-state.json"
+  },
+  "row": {
+    "session_id": "rec008-syn-r009-r02-expired-camille",
+    "intent": "GENERAL",
+    "pending_action": "CREATE_APPOINTMENT",
+    "conversation_step": "ASK_PRENOM",
+    "nom": "Dupont",
+    "prenom": null,
+    "email": null,
+    "telephone": null,
+    "service": "PASSEPORT",
+    "site": "PARIS",
+    "available_slots": [],
+    "expires_at_policy": "NOW() - interval '1 hour'",
+    "notes": "Synthetic only — distinct from R01 and R03; do not reuse for R03"
+  },
+  "selectPreflight": [
+    "expires_at <= NOW()",
+    "pending_action = CREATE_APPOINTMENT",
+    "conversation_step = ASK_PRENOM",
+    "nom IS NOT NULL",
+    "prenom IS NULL",
+    "open attempts = 0",
+    "session_id != R01 and != R03"
+  ],
+  "message": "Camille",
+  "messageCount": 1,
+  "retryForbidden": true,
+  "doNotReuseForR03WithoutReset": true
+}

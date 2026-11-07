@@ -1,0 +1,15 @@
+{
+  "id": "C01-collect-without-confirm",
+  "family": "conversational",
+  "mode": "offline",
+  "matrixRef": "C1",
+  "required": true,
+  "handler": "collect.fullWithoutConfirm",
+  "description": "Collecte complète jusqu'au récapitulatif sans confirmation — multi-tours VM jusqu'à AWAIT_CREATE_CONFIRMATION, aucun POST.",
+  "expects": {
+    "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+    "noCreateAppointmentPost": true,
+    "runtimeRequired": true,
+    "runtimeRequiredReason": "INSERT tentative AWAITING_CONFIRMATION + compteurs RDV réels"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "chatTrigger": {
+    "responseMode": "lastNode",
+    "rawOptions": {
+      "responseMode": "lastNode"
+    }
+  },
+  "comprendre": {
+    "type": "@n8n/n8n-nodes-langchain.chainLlm",
+    "keys": [
+      "text",
+      "batching",
+      "messages",
+      "promptType"
+    ],
+    "promptType": "define",
+    "text": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.chatInput }}",
+    "hasMessages": true,
+    "messagesPreview": {
+      "messageValues": [
+        {
+          "message": "Tu es le routeur d'intentions et extracteur de paramètres de GovSuite.\nRetourne uniquement un objet JSON valide, sans texte autour.\nIntentions autorisées: GET_SERVICES, GET_AVAILABILITY, CREATE_APPOINTMENT, GET_APPOINTMENT, CANCEL_APPOINTMENT, RESCHEDULE_APPOINTMENT, GENERAL.\nExtrais seulement les valeurs explicitement fournies; sinon null.\nChamps: intent, confidence, service, site, dateDebut, dateFin, slotId, token, newSlotId, nom, prenom, email, telephone.\nservice doit être en majuscules (PASSEPORT, VISA, LEGALISATION, ETAT_CIVIL). site en majuscules. Dates au format YYYY-MM-DD.\nN'invente jamais de valeur.\nFormat:\n{\"intent\":\"GET_SERVICES\",\"confidence\":0.99,\"service\":null,\"site\":null,\"dateDebut\":null,\"dateFin\":null,\"slotId\":null,\"token\":null,\"newSlotId\":null,\"nom\":null,\"prenom\":null,\"email\":null,\"telephone\":null}\n\n\nRÈGLES STRICTES DE CLASSIFICATION :\n\n- Mentionner une démarche comme \"renouvellement de passeport\",\n  \"demande de visa\", \"état civil\" ou \"légalisation\"\n  NE signifie PAS que l'utilisateur veut créer un rendez-vous.\n\n- CREATE_APPOINTMENT doit être utilisé UNIQUEMENT si l'utilisateur\n  exprime explicitement son intention de prendre ou réserver un rendez-vous.\n\nExemples CREATE_APPOINTMENT :\n\"Je veux prendre rendez-vous\"\n\"Je souhaite réserver un rendez-vous\"\n\"Réservez-moi ce créneau\"\n\"Je veux prendre le créneau suivant\"\n\n- Si l'utilisateur demande simplement une démarche consulaire,\n  par exemple :\n  \"renouvellement de passeport\"\n  \"je veux renouveler mon passeport\"\n  \"comment faire un passeport\"\n  utiliser GET_SERVICES.\n\n- Si l'utilisateur demande des horaires ou des créneaux :\n  utiliser GET_AVAILABILITY.\n\n- Ne jamais choisir CREATE_APPOINTMENT s'il n'existe pas\n  d'intention explicite de réservation."
+        }
+      ]
+    },
+    "batching": {}
+  },
+  "ollama": {
+    "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+    "model": "qwen2.5:1.5b",
+    "options": {
+      "numCtx": 1024,
+      "temperature": 0
+    }
+  },
+  "settings": {
+    "availableInMCP": false,
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  }
+}

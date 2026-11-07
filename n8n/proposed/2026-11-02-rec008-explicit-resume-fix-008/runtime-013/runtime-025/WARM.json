@@ -1,0 +1,65 @@
+{
+  "mission": "R02-RUNTIME-025-warm",
+  "ts": "2026-11-06T18:54:56.566Z",
+  "ollamaCalls": 1,
+  "retried": false,
+  "psBefore": {
+    "models": []
+  },
+  "gateBefore": {
+    "ready": false,
+    "reason": "model_absent_from_api_ps",
+    "expectedModel": "qwen2.5:1.5b",
+    "modelPresent": false,
+    "expiresAt": null,
+    "expiresInMs": null,
+    "memOk": true,
+    "memNote": null,
+    "warmVerified": false,
+    "chatTimeoutMs": null,
+    "http200NotEnough": true
+  },
+  "warm": {
+    "wallMs": 8443,
+    "done": true,
+    "responseLen": 302
+  },
+  "psAfter": {
+    "models": [
+      {
+        "name": "qwen2.5:1.5b",
+        "model": "qwen2.5:1.5b",
+        "size": 1446033920,
+        "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "1.5B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-11-06T19:05:05.380507398Z",
+        "size_vram": 0,
+        "context_length": 4096
+      }
+    ]
+  },
+  "gateAfter": {
+    "ready": true,
+    "reason": "ok",
+    "expectedModel": "qwen2.5:1.5b",
+    "modelPresent": true,
+    "expiresAt": "2026-11-06T19:05:05.380507398Z",
+    "expiresInMs": 599425,
+    "memOk": true,
+    "memNote": null,
+    "warmVerified": true,
+    "chatTimeoutMs": 180000,
+    "http200NotEnough": true
+  },
+  "mem": "1.207GiB / 1.5GiB",
+  "ok": true
+}

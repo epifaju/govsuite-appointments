@@ -1,0 +1,145 @@
+{
+  "mission": "EVIDENCE-OBSERVABILITY-030",
+  "ts": "2026-11-06T22:15:00.000Z",
+  "scope": "lecture seule — rétention exécutions n8n TEST",
+  "liveProbed": false,
+  "liveTouched": false,
+  "retentionMutated": false,
+  "dockerMutated": false,
+  "pgMutated": false,
+  "n8nActivated": false,
+  "chatTriggerUsed": false,
+  "putSettings": false,
+  "compose": {
+    "project": "govsuite-rec008-test",
+    "configFile": "n8n/proposed/2026-10-30-rec008-phase8e2b2-TEST-DEPLOY/docker-compose.rec008-test.yml",
+    "n8nImage": "docker.n8n.io/n8nio/n8n:2.32.6",
+    "volume": "govsuite-rec008-test_rec008_n8n_data -> /home/node/.n8n",
+    "EXECUTIONS_DATA_vars": "ABSENT",
+    "envKeysObserved": [
+      "GENERIC_TIMEZONE",
+      "N8N_DIAGNOSTICS_ENABLED",
+      "N8N_EDITOR_BASE_URL",
+      "N8N_ENCRYPTION_KEY",
+      "N8N_HOST",
+      "N8N_PERSONALIZATION_ENABLED",
+      "N8N_PORT",
+      "N8N_PROTOCOL",
+      "N8N_RELEASE_TYPE",
+      "N8N_SECURE_COOKIE",
+      "TZ",
+      "WEBHOOK_URL"
+    ]
+  },
+  "runtime": {
+    "n8nContainer": "govsuite-rec008-test-rec008-n8n-1",
+    "status": "running",
+    "startedAt": "2026-11-06T18:14:05.797160504Z",
+    "healthz": "ok",
+    "publish": "127.0.0.1:5682"
+  },
+  "sqlite": {
+    "execution_entity": 0,
+    "softDeleted": 0,
+    "execution_data": 0,
+    "execution_metadata": 0,
+    "relatedAllZero": true
+  },
+  "api": {
+    "login": 200,
+    "instanceSettings": {
+      "saveDataSuccessExecution": "all",
+      "saveDataErrorExecution": "all",
+      "saveExecutionProgress": false,
+      "saveManualExecutions": true
+    },
+    "workflowOCD9It1uKFhOoWNF": {
+      "active": false,
+      "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+      "versionCounter": 10,
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveExecutionProgress": false,
+      "saveManualExecutions": false
+    },
+    "executions": {
+      "running": { "status": 200, "count": 0 },
+      "all": { "status": 200, "count": 0 },
+      "workflow": { "status": 200, "count": 0 }
+    }
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "Workflow saveData*=none → succès non retenus / soft-delete",
+      "status": "Confirmée",
+      "evidence": "GET workflow.settings.saveDataSuccessExecution=none (et error=none) ; aligné 8F-2B46"
+    },
+    {
+      "id": "H2",
+      "text": "Instance saveData*=all mais aucun run depuis flip → count reste 0",
+      "status": "Réfutée_comme_cause_principale",
+      "evidence": "Le workflow n'est PAS en all ; le setting effectif workflow reste none. Absence de runs n'explique pas le mismatch instance/workflow."
+    },
+    {
+      "id": "H3",
+      "text": "Prune EXECUTIONS_DATA_* trop agressif",
+      "status": "Réfutée_pour_env_compose",
+      "evidence": "Aucune variable EXECUTIONS_DATA_* dans compose ni printenv conteneur. Soft-delete count=0 (pas de traces soft)."
+    },
+    {
+      "id": "H3b",
+      "text": "Prune interne défaut n8n a tout hard-purgé",
+      "status": "Inconclusive",
+      "evidence": "Tables vides compatibles avec soft-delete+purge OU jamais persisté ; non isolé sans fenêtre contrôlée"
+    },
+    {
+      "id": "H4",
+      "text": "Confusion instance /rest/settings vs workflow.settings",
+      "status": "Confirmée",
+      "evidence": "020/021/022/023 lisaient instance=all ; 030 montre workflow=none — cause du faux positif « all »"
+    },
+    {
+      "id": "H5",
+      "text": "API running ≠ archive historique",
+      "status": "Confirmée",
+      "evidence": "GET /rest/executions?status=running status=200 count=0 ; API opérationnelle sans archive"
+    },
+    {
+      "id": "H6",
+      "text": "Bug n8n 2.32.6 silencieux",
+      "status": "Inconclusive",
+      "evidence": "Comportement cohérent avec saveData*=none workflow ; bug non requis"
+    }
+  ],
+  "rootCause": {
+    "primary": "Workflow OCD9It1uKFhOoWNF.settings.saveDataSuccessExecution=none (et error=none) — rétention désactivée au niveau workflow",
+    "secondary": "Lectures antérieures sur /rest/settings (instance=all) ont masqué le setting effectif workflow",
+    "notProven": "Contribution éventuelle d'un prune hard interne post soft-delete"
+  },
+  "stopConditions": [
+    "LIVE sondé ou muté",
+    "PUT saveData* sans auth mission distincte",
+    "Ajout EXECUTIONS_DATA_* / recreate compose sans auth",
+    "POST CreateAppointment / activate webhook",
+    "Retry automatique après timeout réseau"
+  ],
+  "commandMatrix": {
+    "lecture": [
+      "docker ps --filter name=rec008",
+      "docker inspect … printenv / labels / mounts",
+      "sqlite readOnly execution_entity count",
+      "GET /healthz",
+      "GET /rest/login + /rest/settings + /rest/workflows/{id} + /rest/executions"
+    ],
+    "ecriture_interdite_sans_auth": [
+      "PUT /rest/workflows settings saveData*",
+      "docker compose up/down/recreate",
+      "EXECUTIONS_DATA_* env change",
+      "prune / volume rm",
+      "activate / chat / CreateAppointment"
+    ]
+  },
+  "verdict": "PASS",
+  "verdictNote": "Diagnostic lecture seule complet ; cause principale Confirmée (workflow saveData*=none). Rétention NON modifiée. LIVE non joint."
+}

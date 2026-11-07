@@ -1,0 +1,130 @@
+{
+  "createRouterTarget": {
+    "outType": "main",
+    "bi": 2,
+    "to": "Décider action tentative"
+  },
+  "nodes": {
+    "Décider action tentative": {
+      "exists": true,
+      "type": "n8n-nodes-base.code",
+      "inbound": [
+        {
+          "from": "Router intention",
+          "bi": 2
+        }
+      ],
+      "outs": [
+        {
+          "outType": "main",
+          "bi": 0,
+          "to": "Aiguiller tentative"
+        }
+      ]
+    },
+    "Demander paramètres création": {
+      "exists": true,
+      "type": "n8n-nodes-base.code",
+      "inbound": [
+        {
+          "from": "Création prête ?",
+          "bi": 1
+        },
+        {
+          "from": "Aiguiller tentative",
+          "bi": 6
+        }
+      ],
+      "outs": []
+    },
+    "Préparer réponse création": {
+      "exists": true,
+      "type": "n8n-nodes-base.code",
+      "inbound": [
+        {
+          "from": "Clôture confirmation enregistrée ?",
+          "bi": 0
+        }
+      ],
+      "outs": [
+        {
+          "outType": "main",
+          "bi": 0,
+          "to": "Finaliser état création"
+        }
+      ]
+    },
+    "Finaliser état création": {
+      "exists": true,
+      "type": "n8n-nodes-base.postgres",
+      "inbound": [
+        {
+          "from": "Préparer réponse création",
+          "bi": 0
+        }
+      ],
+      "outs": [
+        {
+          "outType": "main",
+          "bi": 0,
+          "to": "Restaurer réponse création"
+        }
+      ]
+    },
+    "Appeler CreateAppointment": {
+      "exists": true,
+      "type": "n8n-nodes-base.httpRequest",
+      "inbound": [
+        {
+          "from": "Corps figé présent ?",
+          "bi": 0
+        }
+      ],
+      "outs": [
+        {
+          "outType": "main",
+          "bi": 0,
+          "to": "Classer réponse HTTP"
+        },
+        {
+          "outType": "main",
+          "bi": 1,
+          "to": "Classer délai HTTP"
+        }
+      ]
+    },
+    "Créer rendez-vous": {
+      "exists": false,
+      "inbound": [],
+      "outs": []
+    },
+    "HTTP Request": {
+      "exists": false,
+      "inbound": [],
+      "outs": []
+    }
+  },
+  "createLike": [
+    "Demander paramètres disponibilité",
+    "Création prête ?",
+    "Appeler CreateAppointment",
+    "Préparer réponse création",
+    "Demander paramètres création",
+    "Demander paramètres replanification",
+    "Valider paramètres création",
+    "Finaliser état création",
+    "Restaurer réponse création",
+    "Lire tentative de session",
+    "Joindre tentative de session",
+    "Décider action tentative",
+    "Aiguiller tentative",
+    "Insérer tentative",
+    "Réclamer tentative",
+    "Reprendre tentative",
+    "Marquer tentative incertaine",
+    "Refus création sans réclamation",
+    "Abandonner tentative",
+    "Expirer tentatives en attente",
+    "Tirer aléa de tentative"
+  ]
+}

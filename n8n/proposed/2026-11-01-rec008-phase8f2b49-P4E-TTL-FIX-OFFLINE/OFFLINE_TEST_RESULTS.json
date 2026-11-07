@@ -1,0 +1,807 @@
+{
+  "payload": {
+    "phase": "8F-2B49-P4E",
+    "at": "2026-11-02T07:46:36.104Z",
+    "nowFrozen": "2026-11-02T08:00:00.000Z",
+    "passCount": 18,
+    "total": 18,
+    "allPass": true,
+    "results": [
+      {
+        "id": "TC01",
+        "name": "Session active ASK_NOM + nom libre",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC02",
+        "name": "Session active ASK_PRENOM + Camille",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC03",
+        "name": "Session active ASK_EMAIL + e-mail valide",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC04",
+        "name": "Session active ASK_TELEPHONE + téléphone valide",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC05",
+        "name": "Session active ASK_PRENOM + LLM GET_SERVICES",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC06",
+        "name": "Session expirée + Camille",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC07",
+        "name": "Session expirée + oui",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC08",
+        "name": "Session active attente confirmation + oui",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC09",
+        "name": "Session active attente confirmation + non",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC10",
+        "name": "Session active attente confirmation + modifier le nom",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC11",
+        "name": "Commande explicite d'abandon en collecte",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC12",
+        "name": "Sauvegarde avec champ absent",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC13",
+        "name": "Sauvegarde avec NULL autorisé",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC14",
+        "name": "Sauvegarde avec NULL non autorisé",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC15",
+        "name": "Tentative UNCERTAIN : aucune nouvelle création implicite",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC16",
+        "name": "Tentative EXPIRED : aucune réutilisation de clé",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC17",
+        "name": "Session active à la limite exacte du TTL",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "id": "TC18",
+        "name": "Session expirée juste après la limite du TTL",
+        "pass": true,
+        "failed": []
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "TC01",
+      "name": "Session active ASK_NOM + nom libre",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": true,
+        "forceCreate": true,
+        "claimOrPost": false,
+        "conversationStep": "ASK_NOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "note": "active_identity_collection_lock"
+      },
+      "capture": {
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "conversationStep": "ASK_PRENOM",
+        "captured": true
+      },
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_NOM",
+        "nom": null,
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:46:36.102Z",
+        "session_expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "Dupont",
+        "updated_at": "2026-11-02T07:46:36.102Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC02",
+      "name": "Session active ASK_PRENOM + Camille",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": true,
+        "forceCreate": true,
+        "claimOrPost": false,
+        "conversationStep": "ASK_PRENOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "note": "active_identity_collection_lock"
+      },
+      "capture": {
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": null,
+        "telephone": null,
+        "conversationStep": "ASK_EMAIL",
+        "captured": true
+      },
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:46:36.103Z",
+        "session_expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "Camille",
+        "updated_at": "2026-11-02T07:46:36.103Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC03",
+      "name": "Session active ASK_EMAIL + e-mail valide",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": true,
+        "forceCreate": true,
+        "claimOrPost": false,
+        "conversationStep": "ASK_EMAIL",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "note": "active_identity_collection_lock"
+      },
+      "capture": {
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.dupont@example.test",
+        "telephone": null,
+        "conversationStep": "ASK_TELEPHONE",
+        "captured": true
+      },
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_EMAIL",
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:46:36.103Z",
+        "session_expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "camille.dupont@example.test",
+        "updated_at": "2026-11-02T07:46:36.103Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC04",
+      "name": "Session active ASK_TELEPHONE + téléphone valide",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": true,
+        "forceCreate": true,
+        "claimOrPost": false,
+        "conversationStep": "ASK_TELEPHONE",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "note": "active_identity_collection_lock"
+      },
+      "capture": {
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.dupont@example.test",
+        "telephone": "+33601020304",
+        "conversationStep": "AWAIT_CREATE_CONFIRMATION",
+        "captured": true
+      },
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_TELEPHONE",
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.dupont@example.test",
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:46:36.103Z",
+        "session_expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "+33601020304",
+        "updated_at": "2026-11-02T07:46:36.103Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC05",
+      "name": "Session active ASK_PRENOM + LLM GET_SERVICES",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": true,
+        "forceCreate": true,
+        "claimOrPost": false,
+        "conversationStep": "ASK_PRENOM",
+        "pendingAction": "CREATE_APPOINTMENT",
+        "note": "active_identity_collection_lock"
+      },
+      "capture": {
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": null,
+        "telephone": null,
+        "conversationStep": "ASK_EMAIL",
+        "captured": true
+      },
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:46:36.103Z",
+        "session_expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "Camille",
+        "updated_at": "2026-11-02T07:46:36.103Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC06",
+      "name": "Session expirée + Camille",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "GENERAL",
+        "createDecision": null,
+        "sessionExpired": true,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "publicMessage": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.",
+        "note": "expired_no_silent_continue"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": true,
+        "sessionExpired": true,
+        "expires_at": "2026-11-02T07:55:00.000Z",
+        "session_expires_at": "2026-11-02T07:55:00.000Z",
+        "intent": "GENERAL",
+        "last_user_message": "Camille",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "session_expired",
+        "text": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."
+      }
+    },
+    {
+      "id": "TC07",
+      "name": "Session expirée + oui",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "GENERAL",
+        "createDecision": null,
+        "sessionExpired": true,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "publicMessage": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.",
+        "note": "expired_no_silent_continue"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": true,
+        "sessionExpired": true,
+        "expires_at": "2026-11-02T07:55:00.000Z",
+        "session_expires_at": "2026-11-02T07:55:00.000Z",
+        "intent": "GENERAL",
+        "last_user_message": "oui",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "session_expired",
+        "text": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."
+      }
+    },
+    {
+      "id": "TC08",
+      "name": "Session active attente confirmation + oui",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "AFFIRM",
+        "modifyField": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": false,
+        "forceCreate": false,
+        "claimOrPost": true,
+        "note": "await_confirmation_active"
+      },
+      "capture": null,
+      "saved": null,
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC09",
+      "name": "Session active attente confirmation + non",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "NEGATIVE",
+        "modifyField": null,
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": false,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "note": "await_confirmation_active"
+      },
+      "capture": null,
+      "saved": null,
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC10",
+      "name": "Session active attente confirmation + modifier le nom",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "MODIFY",
+        "modifyField": "nom",
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": false,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "note": "await_confirmation_active"
+      },
+      "capture": null,
+      "saved": null,
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC11",
+      "name": "Commande explicite d'abandon en collecte",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "NEGATIVE",
+        "sessionExpired": false,
+        "refreshSessionTtl": true,
+        "preserveDraft": false,
+        "authorizedClear": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "note": "explicit_abandon_during_collection"
+      },
+      "capture": null,
+      "saved": null,
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC12",
+      "name": "Sauvegarde avec champ absent",
+      "pass": true,
+      "failed": [],
+      "saved": {
+        "nom": "Dupont",
+        "prenom": null,
+        "pending_action": "CREATE_APPOINTMENT",
+        "intent": "CREATE_APPOINTMENT",
+        "updated_at": "2026-11-02T08:00:00.000Z",
+        "expires_at": "2026-11-02T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "TC13",
+      "name": "Sauvegarde avec NULL autorisé",
+      "pass": true,
+      "failed": [],
+      "saved": {
+        "nom": null,
+        "prenom": null,
+        "pending_action": null,
+        "updated_at": "2026-11-02T08:00:00.000Z",
+        "expires_at": "2026-11-02T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "TC14",
+      "name": "Sauvegarde avec NULL non autorisé",
+      "pass": true,
+      "failed": [],
+      "saved": {
+        "nom": "Dupont",
+        "service": "PASSEPORT",
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "intent": "GET_SERVICES",
+        "updated_at": "2026-11-02T08:00:00.000Z",
+        "expires_at": "2026-11-02T08:00:00.000Z"
+      }
+    },
+    {
+      "id": "TC15",
+      "name": "Tentative UNCERTAIN : aucune nouvelle création implicite",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": "RESUME",
+        "sessionExpired": false,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "note": "replay_only_uncertain_or_submitting"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "CREATE_UNCERTAIN",
+        "nom": "Dupont",
+        "prenom": "Camille",
+        "email": "camille.dupont@example.test",
+        "telephone": "+33601020304",
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": {
+          "id": "bbbbbbbb-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+          "status": "UNCERTAIN",
+          "expiresAt": "2026-11-02T09:00:00.000Z"
+        },
+        "session_expired": false,
+        "sessionExpired": false,
+        "expires_at": "2026-11-02T09:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "oui",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC16",
+      "name": "Tentative EXPIRED : aucune réutilisation de clé",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "CREATE_APPOINTMENT",
+        "createDecision": null,
+        "sessionExpired": true,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "reuseIdempotencyKey": false,
+        "note": "terminal_or_expired_attempt_no_key_reuse"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": null,
+        "conversation_step": null,
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": {
+          "id": "cccccccc-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+          "status": "EXPIRED",
+          "expiresAt": "2026-11-02T07:00:00.000Z"
+        },
+        "session_expired": true,
+        "sessionExpired": true,
+        "expires_at": "2026-11-02T07:00:00.000Z",
+        "intent": "CREATE_APPOINTMENT",
+        "last_user_message": "reprendre",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "general",
+        "text": "Je peux vous aider à consulter les services consulaires, rechercher des disponibilités, créer, consulter, annuler ou replanifier un rendez-vous. Indiquez simplement ce que vous souhaitez faire."
+      }
+    },
+    {
+      "id": "TC17",
+      "name": "Session active à la limite exacte du TTL",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "GENERAL",
+        "createDecision": null,
+        "sessionExpired": true,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "publicMessage": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.",
+        "note": "expired_no_silent_continue"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": true,
+        "sessionExpired": true,
+        "expires_at": "2026-11-02T08:00:00.000Z",
+        "session_expires_at": "2026-11-02T08:00:00.000Z",
+        "intent": "GENERAL",
+        "last_user_message": "Camille",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "session_expired",
+        "text": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."
+      }
+    },
+    {
+      "id": "TC18",
+      "name": "Session expirée juste après la limite du TTL",
+      "pass": true,
+      "failed": [],
+      "decision": {
+        "intent": "GENERAL",
+        "createDecision": null,
+        "sessionExpired": true,
+        "refreshSessionTtl": false,
+        "preserveDraft": true,
+        "forceCreate": false,
+        "claimOrPost": false,
+        "publicMessage": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande.",
+        "note": "expired_no_silent_continue"
+      },
+      "capture": null,
+      "saved": {
+        "session_id": "rec008-8f2b49-p4e-fixture",
+        "session_found": true,
+        "sessionFound": true,
+        "pending_action": "CREATE_APPOINTMENT",
+        "conversation_step": "ASK_PRENOM",
+        "nom": "Dupont",
+        "prenom": null,
+        "email": null,
+        "telephone": null,
+        "service": "PASSEPORT",
+        "site": "PARIS",
+        "slot_id": "33333333-3333-4333-8333-333333333333",
+        "date_debut": "2026-11-03",
+        "date_fin": "2026-11-03",
+        "openAttempt": null,
+        "session_expired": true,
+        "sessionExpired": true,
+        "expires_at": "2026-11-02T07:59:59.999Z",
+        "session_expires_at": "2026-11-02T07:59:59.999Z",
+        "intent": "GENERAL",
+        "last_user_message": "Camille",
+        "updated_at": "2026-11-02T07:46:36.104Z"
+      },
+      "public": {
+        "type": "session_expired",
+        "text": "Votre session de conversation a expiré. Pour reprendre la demande en cours, répondez « reprendre ». Sinon, formulez une nouvelle demande."
+      }
+    }
+  ]
+}

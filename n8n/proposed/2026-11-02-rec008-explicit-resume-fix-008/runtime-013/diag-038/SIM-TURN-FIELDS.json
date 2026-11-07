@@ -1,0 +1,1097 @@
+[
+  {
+    "case": "clean_llm_CREATE",
+    "threw": false,
+    "error": null,
+    "parser": {
+      "label": "parser",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "null": true
+      },
+      "dateFin": {
+        "present": true,
+        "null": true
+      },
+      "slotId": {
+        "present": true,
+        "null": true
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "null": true
+      },
+      "availableSlots": {
+        "present": false
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "fusion": {
+      "label": "fusion",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "managed": {
+      "label": "managed",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "conversationStep": {
+        "present": true,
+        "type": "string",
+        "len": 9,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    }
+  },
+  {
+    "case": "llm_pollutes_dateDebut_with_message",
+    "threw": false,
+    "error": null,
+    "parser": {
+      "label": "parser",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "null": true
+      },
+      "dateFin": {
+        "present": true,
+        "null": true
+      },
+      "slotId": {
+        "present": true,
+        "null": true
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "null": true
+      },
+      "availableSlots": {
+        "present": false
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "fusion": {
+      "label": "fusion",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "managed": {
+      "label": "managed",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "conversationStep": {
+        "present": true,
+        "type": "string",
+        "len": 9,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    }
+  },
+  {
+    "case": "llm_pollutes_slotId",
+    "threw": false,
+    "error": null,
+    "parser": {
+      "label": "parser",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "null": true
+      },
+      "dateFin": {
+        "present": true,
+        "null": true
+      },
+      "slotId": {
+        "present": true,
+        "null": true
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "null": true
+      },
+      "availableSlots": {
+        "present": false
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "fusion": {
+      "label": "fusion",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "managed": {
+      "label": "managed",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "conversationStep": {
+        "present": true,
+        "type": "string",
+        "len": 9,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    }
+  },
+  {
+    "case": "llm_pollutes_selectedSlotIndex",
+    "threw": false,
+    "error": null,
+    "parser": {
+      "label": "parser",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "null": true
+      },
+      "dateFin": {
+        "present": true,
+        "null": true
+      },
+      "slotId": {
+        "present": true,
+        "null": true
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "null": true
+      },
+      "availableSlots": {
+        "present": false
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "fusion": {
+      "label": "fusion",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "managed": {
+      "label": "managed",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "conversationStep": {
+        "present": true,
+        "type": "string",
+        "len": 9,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    }
+  },
+  {
+    "case": "llm_intent_GENERAL",
+    "threw": false,
+    "error": null,
+    "parser": {
+      "label": "parser",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "null": true
+      },
+      "dateFin": {
+        "present": true,
+        "null": true
+      },
+      "slotId": {
+        "present": true,
+        "null": true
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "null": true
+      },
+      "availableSlots": {
+        "present": false
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "fusion": {
+      "label": "fusion",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": false
+      },
+      "conversationStep": {
+        "present": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    },
+    "managed": {
+      "label": "managed",
+      "intent": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "pendingAction": {
+        "present": true,
+        "type": "string",
+        "len": 18,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "conversationStep": {
+        "present": true,
+        "type": "string",
+        "len": 9,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "email": {
+        "present": true,
+        "null": true
+      },
+      "dateDebut": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "dateFin": {
+        "present": true,
+        "type": "string",
+        "len": 10,
+        "looksUuid": false,
+        "looksDate": true,
+        "looksInt": false
+      },
+      "slotId": {
+        "present": true,
+        "type": "string",
+        "len": 36,
+        "looksUuid": true,
+        "looksDate": false,
+        "looksInt": false
+      },
+      "newSlotId": {
+        "present": true,
+        "null": true
+      },
+      "token": {
+        "present": true,
+        "null": true
+      },
+      "selectedSlotIndex": {
+        "present": true,
+        "type": "number",
+        "len": 1,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": true
+      },
+      "availableSlots": {
+        "present": true,
+        "type": "array",
+        "len": 1
+      },
+      "originalMessage": {
+        "present": true,
+        "type": "string",
+        "len": 12,
+        "looksUuid": false,
+        "looksDate": false,
+        "looksInt": false
+      }
+    }
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "ts": "2026-11-06T18:54:00.000Z",
+  "liveProbed": false,
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "ttl_refresh_r02": false,
+  "r02": {
+    "session_id": "rec008-runtime013-r02-expired",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "slot_id_present": true,
+    "prenom_null": true,
+    "nom_present": true,
+    "expires_strictly_past": true,
+    "ttl_future": false,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "expires_at": "2026-11-05 22:05:47.184139+01"
+  },
+  "r01_baseline_post024": {
+    "conversation_step": "ASK_EMAIL",
+    "prenom_null": false,
+    "prenom_len": 7,
+    "has_camille_msg": true,
+    "ttl_future": true,
+    "note": "state after R01-024 — must remain unchanged by R02"
+  },
+  "r03_baseline": {
+    "conversation_step": "ASK_PRENOM",
+    "prenom_null": true,
+    "ttl_future": false,
+    "has_camille": false
+  }
+}

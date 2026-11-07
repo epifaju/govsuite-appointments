@@ -1,0 +1,65 @@
+{
+  "ts": "2026-11-05T21:50:30.123Z",
+  "mission": "CREATE-FLOW-CONTRACT-018",
+  "pass": true,
+  "tests": [
+    {
+      "name": "N1_vc10_service_site_no_dates_is_date_range_not_identity",
+      "ok": true
+    },
+    {
+      "name": "N2_vc10_slot_without_nom_asks_nom",
+      "ok": true
+    },
+    {
+      "name": "N3_vc10_natural_ask_prenom_requires_slot",
+      "ok": true
+    },
+    {
+      "name": "F1_broken_seed_vc10_diverges",
+      "ok": true
+    },
+    {
+      "name": "F2_optionA_fixture_with_slot_passes_R01",
+      "ok": true
+    },
+    {
+      "name": "F3_optionB_patch_passes_broken_seed",
+      "ok": true
+    },
+    {
+      "name": "I1_vc10_never_await_confirm_without_slot_via_ladder",
+      "ok": true
+    },
+    {
+      "name": "I2_after_identity_complete_without_slot_not_confirm",
+      "ok": true
+    },
+    {
+      "name": "I3_with_slot_and_full_identity_awaits_confirm",
+      "ok": true
+    },
+    {
+      "name": "C1_after_active_reprendre_not_prenom",
+      "ok": true
+    },
+    {
+      "name": "C2_expired_camille_no_capture",
+      "ok": true
+    },
+    {
+      "name": "C3_expired_reprendre_no_prenom",
+      "ok": true
+    },
+    {
+      "name": "P1_vc10_change_message_keeps_identity_when_slot_stable",
+      "ok": true
+    },
+    {
+      "name": "S1_vc10_and_after_sha",
+      "ok": true
+    }
+  ],
+  "recommendationHint": "A",
+  "note": "offline simulation only; PRD §6.2 orders slot before identity"
+}

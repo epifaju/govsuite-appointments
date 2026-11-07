@@ -1,0 +1,63 @@
+{
+  "phase": "8F-2B49",
+  "mode": "read-only-static",
+  "scenario": "CONV-07",
+  "messageExact": "modifier le nom",
+  "workflowSourceNote": "Chaîne MODIFY lue depuis export after-OCD9It1uKFhOoWNF (8F-2B26) ; graphe runtime préflight 134/137, version e1b32992… / VC8 inchangée (corrections Finaliser uniquement documentées depuis).",
+  "path": [
+    "Joindre tentative de session (openAttempt AWAITING_CONFIRMATION)",
+    "Parser intention → createDecision=MODIFY, modifyField=nom",
+    "Gérer collecte progressive → skipCreateProgression=true (createDecision ≠ INSERT)",
+    "Décider action tentative → attemptAction=MODIFY",
+    "Aiguiller tentative sortie MODIFY (index 4)",
+    "Préparer abandon ou modification → modifyField=nom, conversationStep=ASK_NOM, clearDraft=false",
+    "Abandonner tentative → cloturer_tentative_rendez_vous(..., 'ABANDONED')",
+    "Abandon sans reprise de collecte ? → false (clearDraft≠true) → Mettre à jour champ modifié",
+    "Question après modification → type create_appointment_question, step ASK_NOM"
+  ],
+  "nodes": {
+    "Parser intention": {
+      "role": "Reconnaissance message entier normalisé ; exact 'modifier le nom' → modifyField=nom ; createDecision=MODIFY seulement si étape AWAIT_CREATE_CONFIRMATION ou openAttempt AWAITING_CONFIRMATION"
+    },
+    "Joindre tentative de session": {
+      "role": "Lit la tentative ouverte de session pour Décider / Aiguiller"
+    },
+    "Gérer collecte progressive": {
+      "role": "Si createDecision et ≠ INSERT → skipCreateProgression=true ; pas d'avancée brouillon ni INSERT"
+    },
+    "Décider action tentative": {
+      "role": "AWAITING_CONFIRMATION + MODIFY → attemptAction=MODIFY (pas CLAIM)"
+    },
+    "Aiguiller tentative": {
+      "role": "MODIFY et ABANDON/RESTART → Préparer abandon ou modification ; CLAIM/RESUME seuls mènent à Réclamer/Reprendre → éventuel POST"
+    },
+    "Préparer abandon ou modification": {
+      "role": "MODIFY: field=modifyField||nom, steps.nom=ASK_NOM, clearDraft=false ; ABANDON: field=all, clearDraft=true"
+    },
+    "Abandonner tentative": {
+      "role": "SQL cloturer_tentative_rendez_vous(id, sessionId, NULL, 'ABANDONED', NULL, NULL) depuis AWAITING_CONFIRMATION uniquement ; purge clé+corps+lease"
+    },
+    "Abandon sans reprise de collecte ?": {
+      "role": "clearDraft===true → Effacer brouillon ; sinon → Mettre à jour champ modifié"
+    },
+    "Mettre à jour champ modifié": {
+      "role": "pending_action=CREATE_APPOINTMENT ; conversation_step=ASK_NOM ; nom NULL si modifyField nom ; autres champs identité/métier conservés sauf cible"
+    },
+    "Question après modification": {
+      "role": "type=create_appointment_question ; text ASK_NOM = 'Quel nom souhaitez-vous indiquer ?'"
+    },
+    "Réclamer tentative": {
+      "role": "Hors chemin MODIFY — non atteignable depuis sortie Aiguiller MODIFY"
+    },
+    "Appeler CreateAppointment": {
+      "role": "Hors chemin MODIFY — parent unique Corps figé présent ? après CLAIM/RESUME gagnant"
+    }
+  },
+  "stateMachineAlignment": {
+    "REC_008_STATE_MACHINE": "AWAIT + Modification → ABANDONED, retour champ demandé, autres champs conservés, HTTP Non",
+    "REC_008_TEST_MATRIX_C5": "Modifier le nom → première tentative abandonnée sans HTTP",
+    "PHASE8F2A_C11": "modifier le nom → ABANDONED ; ASK_NOM ; 0 POST ; nouvelle clé au prochain INSERT",
+    "sqlPurge": "cloturer_tentative_rendez_vous ABANDONED pose idempotency_key=NULL et request_payload=NULL"
+  },
+  "workflowNotModified": true
+}

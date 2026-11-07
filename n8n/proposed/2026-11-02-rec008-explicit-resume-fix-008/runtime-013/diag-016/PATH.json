@@ -1,0 +1,47 @@
+{
+  "mission": "CHAT-TIMEOUT-DIAG-016",
+  "verdict": "UNCERTAIN",
+  "liveTouched": false,
+  "workflowMutated": false,
+  "source": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/install-012/after-OCD9It1uKFhOoWNF.json",
+  "workflow": {
+    "id": "OCD9It1uKFhOoWNF",
+    "name": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+    "versionId": "fd75ba32-f018-40e4-9f79-8f2a5400320b",
+    "versionCounter": 10,
+    "activeInExport": false,
+    "gererJsSha": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+    "fix008": true
+  },
+  "context015": {
+    "message": "Camille",
+    "step": "ASK_PRENOM",
+    "http": "abort ~45s status 0",
+    "pgUnchanged": true,
+    "lastUserMessageEmpty": true
+  },
+  "pathBeforeGerer": [
+    { "name": "Lorsqu'un message de chat est reçu", "type": "@n8n/n8n-nodes-langchain.chatTrigger", "role": "TRIGGER", "responseMode": "lastNode" },
+    { "name": "Charger état conversation", "type": "n8n-nodes-base.postgres", "role": "PG_SELECT" },
+    { "name": "Lire tentative de session", "type": "n8n-nodes-base.postgres", "role": "PG_SELECT" },
+    { "name": "Joindre tentative de session", "type": "n8n-nodes-base.code", "role": "CODE" },
+    { "name": "Comprendre la demande", "type": "@n8n/n8n-nodes-langchain.chainLlm", "role": "LLM", "modelNode": "Ollama Chat Model", "model": "qwen2.5:1.5b", "nodeTimeout": null },
+    { "name": "Parser intention", "type": "n8n-nodes-base.code", "role": "CODE" },
+    { "name": "Fusionner état conversation", "type": "n8n-nodes-base.code", "role": "CODE" },
+    { "name": "Gérer collecte progressive", "type": "n8n-nodes-base.code", "role": "CODE_FIX008" }
+  ],
+  "ollamaOnPath": true,
+  "postgresBeforeGerer": ["Charger état conversation", "Lire tentative de session"],
+  "firstPgWrite": "Sauvegarder état conversation",
+  "httpChatResponder": {
+    "mechanism": "chatTrigger responseMode=lastNode",
+    "respondToWebhook": false,
+    "expectedR01Leaf": "Demander paramètres création",
+    "expectedR01Route": "Sauvegarder → Router CREATE → Décider → Aiguiller COLLECT fallback → Valider paramètres création → Création prête?(false) → Demander paramètres création"
+  },
+  "hangHypothesis": {
+    "primary": "Comprendre la demande / Ollama Chat Model",
+    "confidence": "HIGH",
+    "rationale": "only unbounded external wait before Sauvegarder; 015 PG proves Sauvegarder never completed"
+  }
+}

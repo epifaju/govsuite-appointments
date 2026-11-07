@@ -1,0 +1,9 @@
+{
+  "id": "C05-ask-telephone",
+  "family": "conversational",
+  "mode": "offline",
+  "required": true,
+  "handler": "identity.askTelephone",
+  "description": "ASK_TELEPHONE actif + téléphone synthétique → CREATE + capture téléphone.",
+  "expects": { "field": "telephone", "nextStep": "AWAIT_CREATE_CONFIRMATION" }
+}

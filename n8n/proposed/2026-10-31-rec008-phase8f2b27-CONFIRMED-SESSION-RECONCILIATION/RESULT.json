@@ -1,0 +1,118 @@
+{
+  "phase": "8F-2B27",
+  "pass": true,
+  "verdict": "PASS",
+  "goNewConversationalSession": "GO",
+  "note": "PASS1/PASS2 executed in reconcile.js (exactly two SQL executions). complete-postflight.js only re-read state and finished n8n postflight after a transient fetch failure — no third UPDATE.",
+  "identities": {
+    "sessionId": "rec008-8f2b14-new-01",
+    "confirmedAttemptId": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+    "abandonedAttemptId": "8ae63b62-9f87-4a15-9011-4554b7766918",
+    "reference": "REC008-MOCK-0001"
+  },
+  "preflight": {
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+    "versionCounter": 8,
+    "nodes": 134,
+    "edges": 137,
+    "activeIds": [],
+    "postgres": [
+      "Fs0l0058q5CEadRw"
+    ],
+    "urlsOk": true,
+    "networkOk": true,
+    "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+    "chatWebhook": "a91c4e70-6b18-4f0d-9c55-2e7d8a14b603",
+    "pg": "1|8|2|0",
+    "statuses": "ABANDONED|1\nCONFIRMED|1",
+    "open": "0",
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "sqlAudit": {
+    "proposalPath": "C:/Open Source PME/govsuite-appointments/n8n/proposed/2026-10-31-rec008-phase8f2b23-RECONCILIATION-RUNTIME-AUDIT/RECONCILE_CONFIRMED_SESSION.proposed.sql",
+    "proposalSha256": "b574d34edd4df8e6c8b3870aaae0648963a5dc6b196a7cb2710c4282193c409c",
+    "executedFormMatchesProposalCore": true,
+    "columns": "available_slots:jsonb:null=YES\nconversation_step:varchar:null=YES\ndate_debut:date:null=YES\ndate_fin:date:null=YES\nemail:varchar:null=YES\nexpires_at:timestamptz:null=YES\nintent:varchar:null=YES\nnew_slot_id:uuid:null=YES\nnom:varchar:null=YES\npending_action:varchar:null=YES\nprenom:varchar:null=YES\nreference:varchar:null=YES\nselected_slot_index:int4:null=YES\nservice:varchar:null=YES\nsession_id:varchar:null=NO\nsite:varchar:null=YES\nslot_id:uuid:null=YES\ntelephone:varchar:null=YES\ntoken:uuid:null=YES\nupdated_at:timestamptz:null=NO",
+    "attemptCols": "appointment_id:uuid\nappointment_reference:varchar\nid:uuid\nidempotency_key:varchar\nlease_owner:varchar\nrequest_payload:jsonb\nsession_id:varchar\nstatus:varchar",
+    "bindings": {
+      "$1": "rec008-8f2b14-new-01",
+      "$2": "ad71a155-4d3a-45b9-8445-2ec98377feaa",
+      "$3": "REC008-MOCK-0001"
+    },
+    "securityConditions": [
+      "session_id exact match on attempt and state",
+      "attempt id exact uuid",
+      "status = CONFIRMED",
+      "appointment_reference = expected reference",
+      "UPDATE only when step AWAIT OR pending CREATE OR empty reference",
+      "no write to ai_appointment_attempt",
+      "token forced NULL (never invent)",
+      "RETURNING for atomic row count"
+    ]
+  },
+  "pass1": {
+    "label": "PASS1",
+    "raw": "1|1|REC008-MOCK-0001|",
+    "confirmed_matched": 1,
+    "sessions_updated": 1,
+    "reference_set": "REC008-MOCK-0001",
+    "step_after": null
+  },
+  "pass2": {
+    "label": "PASS2",
+    "raw": "1|0||",
+    "confirmed_matched": 1,
+    "sessions_updated": 0,
+    "reference_set": null,
+    "step_after": null
+  },
+  "postflight": {
+    "main": {
+      "active": false,
+      "activeVersionId": null,
+      "versionId": "e1b32992-bc68-46af-86ce-c80af46f5305",
+      "versionCounter": 8,
+      "nodes": 134,
+      "edges": 137,
+      "finaliserSha": "3fc500bfed99c202156005d252a864cdc25514c93e7e47c842ae896381e8ee7a",
+      "activeIds": []
+    },
+    "pg": "1|8|2|0",
+    "open": "0",
+    "sessionFinal": {
+      "session_id": "rec008-8f2b14-new-01",
+      "reference": "REC008-MOCK-0001",
+      "token": null,
+      "conversation_step": null,
+      "pending_action": null,
+      "intent": null,
+      "service": null,
+      "nom": null,
+      "last_user_message": "oui"
+    },
+    "confirmedAttemptUnchanged": true,
+    "abandonedAttemptUnchanged": true,
+    "otherSessionsFpUnchanged": true,
+    "attemptsFpUnchanged": true,
+    "rendezVousFpUnchanged": true,
+    "mockPosts": 1,
+    "gov": "13|14|12|48|0|a2dea067599fd4f0a5f857551adc67cc",
+    "mailpit": {
+      "messages": 5,
+      "unread": 2,
+      "dbSize": 98304
+    }
+  },
+  "noPut": true,
+  "noClaim": true,
+  "noPost": true,
+  "noActivation": true
+}

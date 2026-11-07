@@ -1,0 +1,26 @@
+{
+  "tag": "stop-R04-B",
+  "ts": "2026-11-06T23:27:43.601Z",
+  "activatedFlag": false,
+  "verified": true,
+  "safeDeclared": true,
+  "note": "Webhooks cleared alone never proves server idle",
+  "workflow": {
+    "status": 200,
+    "active": false,
+    "activeVersionId": null,
+    "versionId": "f5a9181f-ff8d-4301-976e-57add79badae",
+    "versionCounter": 11,
+    "transportError": null
+  },
+  "activeIds": [],
+  "activeTransportError": null,
+  "running": {
+    "available": true,
+    "count": 0,
+    "status": 200,
+    "transportError": null
+  },
+  "webhookRows": 0,
+  "webhooksClear": true
+}

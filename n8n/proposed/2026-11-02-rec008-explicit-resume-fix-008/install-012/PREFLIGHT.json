@@ -1,0 +1,29 @@
+{
+  "mission": "TEST-INSTALL-RETRY-012",
+  "preflightOk": true,
+  "at": "2026-11-05T20:20:12.273Z",
+  "base": "http://127.0.0.1:5682",
+  "workflowId": "OCD9It1uKFhOoWNF",
+  "versionId": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+  "versionCounter": 9,
+  "active": false,
+  "nodes": 134,
+  "edges": 137,
+  "candidateSha": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+  "gererJsBefore": "16c3d063dee7f32df970e1d7c0d8ad81eee56f6dd603a6949c1a89622b36c961",
+  "pgFingerprint": "1|11|4|0",
+  "openAttempts": "0",
+  "mock": {
+    "scenario": "created",
+    "total": 0,
+    "postCreate": 0
+  },
+  "containersUp": [
+    "govsuite-rec008-test-rec008-postgres-1",
+    "govsuite-rec008-test-rec008-mock-1",
+    "govsuite-rec008-test-rec008-n8n-1",
+    "govsuite-rec008-test-rec008-publish-1",
+    "govsuite-rec008-test-rec008-ollama-1"
+  ],
+  "dockerMutate": false
+}

@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "stopped": true,
+  "reason": "mechanism-nogo",
+  "detail": {
+    "reason": "exception",
+    "message": "fetch failed"
+  },
+  "verdict": "NO-GO"
+}

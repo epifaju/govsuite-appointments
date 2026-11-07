@@ -1,0 +1,7 @@
+{
+  "query": "UPDATE ai_conversation_state\nSET\n    intent = NULL,\n    service = NULL,\n    site = NULL,\n    date_debut = NULL,\n    date_fin = NULL,\n    slot_id = NULL,\n    new_slot_id = NULL,\n    available_slots = NULL,\n    selected_slot_index = NULL,\n\n    pending_action = NULL,\n    conversation_step = NULL,\n\n    nom = NULL,\n    prenom = NULL,\n    email = NULL,\n    telephone = NULL,\n\n    reference = NULLIF($2::text, ''),\n    token = NULLIF($3::text, ''),\n\n    updated_at = NOW(),\n    expires_at = NOW() + INTERVAL '2 hours'\n\nWHERE session_id = $1\n\nRETURNING *;",
+  "options": {
+    "queryReplacement": "={{ $('Lorsqu\\'un message de chat est reçu').item.json.sessionId }},{{ $('Paramètres clôture confirmation').item.json.appointmentReference || '' }},{{ (($('Paramètres clôture confirmation').item.json.appointment || {}).token_gestion || ($('Paramètres clôture confirmation').item.json.appointment || {}).token || '') }}"
+  },
+  "operation": "executeQuery"
+}

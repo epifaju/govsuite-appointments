@@ -1,0 +1,19 @@
+{
+  "_comment": "Tentatives synthétiques — statuts et clés fictives.",
+  "attempts": [
+    {
+      "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "session_id": "rec008-syn-await-confirm-01",
+      "status": "AWAITING_CONFIRMATION",
+      "idempotency_key": "idem-syn-001",
+      "body_fingerprint": "fp-syn-001"
+    },
+    {
+      "id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "session_id": "rec008-syn-uncertain-01",
+      "status": "UNCERTAIN",
+      "idempotency_key": "idem-syn-002",
+      "body_fingerprint": "fp-syn-002"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "status": 200,
+  "elapsedMs": 55244,
+  "json": {
+    "sessionId": "rec008-runtime013-r03-resume",
+    "conversationStep": "ASK_PRENOM",
+    "attemptAction": "COLLECT",
+    "modifyField": null,
+    "openAttempt": null,
+    "reference": null,
+    "ready": false,
+    "claimAcquired": false,
+    "pendingAction": "CREATE_APPOINTMENT",
+    "telephone": null,
+    "missing": [
+      "le prénom",
+      "l'adresse e-mail",
+      "le numéro de téléphone"
+    ],
+    "validation": {
+      "slotIdValide": true,
+      "emailValide": false,
+      "telephoneValide": false
+    },
+    "type": "create_appointment_question",
+    "text": "Merci. Quel est votre **prénom** ?"
+  },
+  "textPreview": "{\"sessionId\":\"rec008-runtime013-r03-resume\",\"conversationStep\":\"ASK_PRENOM\",\"attemptAction\":\"COLLECT\",\"modifyField\":null,\"openAttempt\":null,\"reference\":null,\"ready\":false,\"claimAcquired\":false,\"pendingAction\":\"CREATE_APPOINTMENT\",\"telephone\":null,\"missing\":[\"le prénom\",\"l'adresse e-mail\",\"le numéro de téléphone\"],\"validation\":{\"slotIdValide\":true,\"emailValide\":false,\"telephoneValide\":false},\"type\":\"create_appointment_question\",\"text\":\"Merci. Quel est votre **prénom** ?\"}",
+  "aborted": false,
+  "error": null,
+  "transportError": null,
+  "causeCode": null,
+  "timeoutMs": 180000,
+  "retried": false
+}

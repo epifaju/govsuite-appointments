@@ -1,0 +1,5 @@
+﻿e78b3670752e04a7189e0ab02056facd4df47aa0324c3ae65f5ca0e8971f09b1|govsuite-rec008-test-rec008-mock-1|Exited (255) 28 minutes ago
+fe1f98b94da20eb959a7a8d914b023e470b2a2c47e566ad43a4503069ddea5fd|govsuite-rec008-test-rec008-ollama-1|Up 28 minutes
+4eb6226d3e4694d3c6d2ba5cf71766697657fc62d44d808f8b006e2fa257d0a0|govsuite-rec008-test-rec008-publish-1|Exited (255) 28 minutes ago
+9296af917abe84b7d9099508e6c6d4693cb72121a2a00340c97eca2abf260cd1|govsuite-rec008-test-rec008-n8n-1|Exited (255) 28 minutes ago
+cc245dd588ad7b0ca2c43cd0d4bb1dc3d823be32bc1d880b157aa23400e1878d|govsuite-rec008-test-rec008-postgres-1|Exited (255) 28 minutes ago

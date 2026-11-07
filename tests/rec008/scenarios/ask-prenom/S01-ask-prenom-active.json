@@ -1,0 +1,23 @@
+{
+  "id": "S01-ask-prenom-active",
+  "family": "ask-prenom",
+  "mode": "offline",
+  "phaseRef": "ASK-PRENOM-READINESS-007",
+  "required": true,
+  "handler": "askPrenom.s01Active",
+  "simulation": true,
+  "runtimeRequired": true,
+  "runtimeRequiredReason": "HTTP 200, UPSERT prenom/step PG, mock CLAIM/POST=0, deactivate — hors VM",
+  "sourceWorkflow": "n8n/proposed/2026-11-01-rec008-phase8f2b49-P4F-TTL-FIX-TEST-INSTALL/after-OCD9It1uKFhOoWNF.json",
+  "sourceSha256": "6284f867054879d00292b45b5a8560f25dc778a56979ea354b18af2f5f82b889",
+  "description": "S01: session ACTIVE ASK_PRENOM + nom + message Camille → prenom capturé, step ASK_EMAIL, no CLAIM/POST.",
+  "fixtureSession": "rec008-syn-s01-ask-prenom-active",
+  "input": { "chatInput": "Camille", "llmIntent": "GET_SERVICES" },
+  "expects": {
+    "prenom": "Camille",
+    "nextStep": "ASK_EMAIL",
+    "noClaimOrPost": true
+  },
+  "evidenceLimits": "simulation:true — PASS offline ≠ PASS runtime",
+  "relatedOffline": ["C03-ask-prenom"]
+}

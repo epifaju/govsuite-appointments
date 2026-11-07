@@ -1,0 +1,53 @@
+{
+  "ts": "2026-11-06T21:35:00.000Z",
+  "liveProbed": false,
+  "fingerprint": "1|14|4|0",
+  "openAttempts": 0,
+  "ttl_refresh_manual_r03": false,
+  "runnerSha": "ef79972a87f1f6796b646864912fc495ddd65cac5ee1df71545386ff5462fe23",
+  "contract_r03": {
+    "message": "reprendre",
+    "match": "exact folded (explicitResumeMsg includes reprendre)",
+    "ttl_renew": true,
+    "prenom_null": true,
+    "step_after": "ASK_PRENOM",
+    "http_not": "session_expired",
+    "http_must_ask": "prenom",
+    "no_claim_no_post": true
+  },
+  "r03": {
+    "session_id": "rec008-runtime013-r03-resume",
+    "conversation_step": "ASK_PRENOM",
+    "pending_action": "CREATE_APPOINTMENT",
+    "slot_id_present": true,
+    "prenom_null": true,
+    "nom_present": true,
+    "nom_len": 6,
+    "available_slots_len": 1,
+    "date_debut": "2026-11-10",
+    "date_fin": "2026-11-14",
+    "expires_strictly_past": true,
+    "ttl_future": false,
+    "last_user_message_len": 0,
+    "has_camille": false,
+    "expires_at": "2026-11-05 22:05:47.184139+01"
+  },
+  "r01_baseline": {
+    "conversation_step": "ASK_EMAIL",
+    "prenom_null": false,
+    "prenom_len": 7,
+    "has_camille_msg": true,
+    "ttl_future": false,
+    "expires_at": "2026-11-06 21:45:56.755643+01",
+    "note": "TTL naturally past wall-clock since R01-024; fields otherwise post-024; must remain unchanged by R03"
+  },
+  "r02_baseline": {
+    "conversation_step": "ASK_PRENOM",
+    "prenom_null": true,
+    "ttl_future": false,
+    "has_camille_msg": true,
+    "last_user_message_len": 7,
+    "expires_at": "2026-11-05 22:05:47.184139+01",
+    "note": "post R02-025 technical last_user_message; must remain unchanged by R03"
+  }
+}

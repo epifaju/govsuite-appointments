@@ -1,0 +1,233 @@
+{
+  "mission": "033",
+  "verdict": "PASS",
+  "put": false,
+  "canonical": {
+    "id": {
+      "src": "OCD9It1uKFhOoWNF",
+      "cand": "OCD9It1uKFhOoWNF"
+    },
+    "name": {
+      "src": "REC008_TEST_ISOLE_134_NON_IMPORTE",
+      "cand": "REC008_TEST_ISOLE_134_NON_IMPORTE"
+    },
+    "active": {
+      "src": false,
+      "cand": false
+    },
+    "versionId": {
+      "src": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+      "cand": "e7867799-2a18-4aec-9ee5-3ba9cbc40766"
+    },
+    "nodeCount": {
+      "src": 134,
+      "cand": 134
+    },
+    "connectionsCount": {
+      "src": 137,
+      "cand": 137
+    },
+    "modifiedNodes": [
+      "Gérer collecte progressive"
+    ],
+    "gerer": {
+      "shaBefore": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+      "shaAfter": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+      "metaAfter": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+      "replacements": [
+        {
+          "line": 230,
+          "before": "nom: previous.nom ?? x.nom ?? null,",
+          "after": "nom: previous.nom ?? null,"
+        },
+        {
+          "line": 231,
+          "before": "prenom: previous.prenom ?? x.prenom ?? null,",
+          "after": "prenom: previous.prenom ?? null,"
+        },
+        {
+          "line": 232,
+          "before": "email: previous.email ?? x.email ?? null,",
+          "after": "email: previous.email ?? null,"
+        },
+        {
+          "line": 233,
+          "before": "telephone: previous.telephone ?? x.telephone ?? null,",
+          "after": "telephone: previous.telephone ?? null,"
+        }
+      ]
+    },
+    "topLevelDiffKeys": [],
+    "putForbidden": true,
+    "installedMeta": false
+  },
+  "findings": [
+    {
+      "name": "workflow.id",
+      "pass": true,
+      "detail": {
+        "src": "OCD9It1uKFhOoWNF",
+        "cand": "OCD9It1uKFhOoWNF",
+        "expected": "OCD9It1uKFhOoWNF"
+      }
+    },
+    {
+      "name": "nodeCount",
+      "pass": true,
+      "detail": {
+        "src": 134,
+        "cand": 134,
+        "expected": 134,
+        "meta": 134
+      }
+    },
+    {
+      "name": "connectionsCount",
+      "pass": true,
+      "detail": {
+        "src": 137,
+        "cand": 137
+      }
+    },
+    {
+      "name": "connectionsDeepEqual",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "onlyGererModified",
+      "pass": true,
+      "detail": {
+        "modified": [
+          "Gérer collecte progressive"
+        ],
+        "onlySrc": [],
+        "onlyCand": []
+      }
+    },
+    {
+      "name": "gererShaBefore",
+      "pass": true,
+      "detail": {
+        "computed": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+        "meta": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe",
+        "beforeFile": "f75d49849231f956bb9ae5383111ea84b362dc58de6711cc75d2e7e2a26917fe"
+      }
+    },
+    {
+      "name": "gererShaAfter",
+      "pass": true,
+      "detail": {
+        "computed": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+        "meta": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f",
+        "afterFile": "44a7064d12755a84dd256acae90abbf67a778178f9947eec3a36dc0c9abcad3f"
+      }
+    },
+    {
+      "name": "replacements",
+      "pass": true,
+      "detail": {
+        "changedLines": 4,
+        "lineCountMismatch": false,
+        "beforeLines": 1518,
+        "afterLines": 1518,
+        "meta": 4,
+        "details": [
+          {
+            "line": 230,
+            "before": "nom: previous.nom ?? x.nom ?? null,",
+            "after": "nom: previous.nom ?? null,"
+          },
+          {
+            "line": 231,
+            "before": "prenom: previous.prenom ?? x.prenom ?? null,",
+            "after": "prenom: previous.prenom ?? null,"
+          },
+          {
+            "line": 232,
+            "before": "email: previous.email ?? x.email ?? null,",
+            "after": "email: previous.email ?? null,"
+          },
+          {
+            "line": 233,
+            "before": "telephone: previous.telephone ?? x.telephone ?? null,",
+            "after": "telephone: previous.telephone ?? null,"
+          }
+        ]
+      }
+    },
+    {
+      "name": "candidateJsEqualsAfterFile",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "srcJsEqualsBeforeFile",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "topLevelUnchanged",
+      "pass": true,
+      "detail": {
+        "topDiff": []
+      }
+    },
+    {
+      "name": "noCredsChange",
+      "pass": true,
+      "detail": {
+        "credDiff": []
+      }
+    },
+    {
+      "name": "noTriggerChange",
+      "pass": true,
+      "detail": {
+        "triggerDiff": []
+      }
+    },
+    {
+      "name": "gererOnlyJsCodeChanged",
+      "pass": true,
+      "detail": {
+        "gererNonJsDiff": []
+      }
+    },
+    {
+      "name": "workflowFileSha",
+      "pass": true,
+      "detail": {
+        "candComputed": "57e08d2281247cf2030ae2734d6c096cdad9c049a53a120cce796fcb11c7d8af",
+        "candMeta": "57e08d2281247cf2030ae2734d6c096cdad9c049a53a120cce796fcb11c7d8af",
+        "srcComputed": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c",
+        "srcMeta": "849201ddd7cb17c158de292ed5479bfd024d83ac89b9a1f135b9422ae973618c"
+      }
+    },
+    {
+      "name": "versionId",
+      "pass": true,
+      "detail": {
+        "cand": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+        "src": "e7867799-2a18-4aec-9ee5-3ba9cbc40766",
+        "meta": "e7867799-2a18-4aec-9ee5-3ba9cbc40766"
+      }
+    },
+    {
+      "name": "activeUnchanged",
+      "pass": true,
+      "detail": {
+        "src": false,
+        "cand": false
+      }
+    }
+  ],
+  "artefacts": {
+    "source": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/after-OCD9It1uKFhOoWNF.json",
+    "candidate": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/after-OCD9It1uKFhOoWNF.W03101-candidate.json",
+    "sha256": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/SHA256.json",
+    "beforeJs": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/Gerer_collecte_progressive.BEFORE.js",
+    "afterJs": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/Gerer_collecte_progressive.AFTER.js",
+    "diff": "n8n/proposed/2026-11-02-rec008-explicit-resume-fix-008/runtime-013/diag-032/PROPOSED_FIX.diff.txt"
+  }
+}

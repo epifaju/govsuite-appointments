@@ -1,0 +1,20 @@
+{
+  "id": "T02-ask-prenom-after-ttl-routing",
+  "family": "ttl",
+  "mode": "offline",
+  "phaseRef": "P4D/P4E/VC9",
+  "required": true,
+  "handler": "ttl.expiredFreeText",
+  "description": "VC9: après TTL, prénom isolé Camille ne route pas en GET_SERVICES et ne purge pas le brouillon via UPSERT null.",
+  "fixtureSession": "rec008-syn-expired-01",
+  "input": { "chatInput": "Camille", "llmIntent": "GET_SERVICES" },
+  "expects": {
+    "sessionExpired": true,
+    "intent": "GENERAL",
+    "notGetServices": true,
+    "preserveDraft": true,
+    "refreshSessionTtl": false,
+    "noClaimOrPost": true,
+    "loaderReturnsEmpty": false
+  }
+}
